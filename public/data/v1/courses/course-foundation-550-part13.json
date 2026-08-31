@@ -1,0 +1,3987 @@
+{
+  "id": "course-foundation-550-part13",
+  "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 13 單元 (4801~4884 字)",
+  "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 13/13）",
+  "toeicScoreRange": "400-600",
+  "category": "綜合商務",
+  "level": "基礎",
+  "version": 1,
+  "words": [
+    {
+      "id": "tw_p_26038a54d78d",
+      "headword": "wipe off",
+      "normalizedHeadword": "wipe off",
+      "entryType": "phrase",
+      "definitionZh": "擦拭掉；清除（污漬、痕跡等）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "wipe off",
+            "wipes off",
+            "wiping off",
+            "wiped off"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_26038a54d78d_ex_1",
+          "english": "Please wipe off the whiteboard after the meeting to prepare for the next session.",
+          "chinese": "會議結束後，請擦拭掉白板，以便為下一次會議做準備。"
+        },
+        {
+          "id": "tw_p_26038a54d78d_ex_2",
+          "english": "The cleaning staff is responsible for wiping off fingerprints from the display cases.",
+          "chinese": "清潔人員負責擦拭掉展示櫃上的指紋。"
+        }
+      ],
+      "examTips": [
+        "常見搭配與情境：在 TOEIC Part 1 照片描述題中，此詞常出現在清潔或整理場景，如 'wipe off the table' 或 'wipe off the surface'。",
+        "商業隱喻用法：除了物理上的擦拭，在財務情境中可指「抹平、沖銷（債務）」或「（價值）蒸發」，例如 'wipe off the debt' 或 'wipe billions off the stock market value'。",
+        "易混淆詞辨析：須與 'wipe out' 區分，前者通常指擦掉表面的東西，後者則指徹底摧毀或滅絕。",
+        "聽力考點：在聽力測驗中，注意與其同義的 cleaning 動作，如 polish 或 scrub，這些詞在選項中常作為代換。",
+        "答題技巧：若在閱讀題中看到 wipe off 指涉資產或負債，應將其理解為「減少」或「消除」，而非物理性的清潔動作。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_5ba7a6098501",
+      "headword": "wireless",
+      "normalizedHeadword": "wireless",
+      "entryType": "word",
+      "definitionZh": "無線的；不使用電纜或線的",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "科技與技術支援",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "wireless",
+            "more wireless",
+            "most wireless"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_5ba7a6098501_ex_1",
+          "english": "Our company is transitioning to a wireless network to improve employee mobility and reduce cabling costs.",
+          "chinese": "我們公司正在轉向無線網路，以提高員工的移動性並降低電纜成本。"
+        },
+        {
+          "id": "tw_w_5ba7a6098501_ex_2",
+          "english": "The wireless headset allows for hands-free communication during conference calls.",
+          "chinese": "無線耳機允許在電話會議期間進行免提通訊。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：常用於 wireless network (無線網路)、wireless connection (無線連接)、wireless router (無線路由器) 以及 wireless mouse/keyboard (無線滑鼠/鍵盤)。",
+        "商業情境：在多益考試中，此單字常出現在「辦公室設施升級」或「IT 技術支援」的情境，例如員工討論將有線設備更換為無線設備以節省空間或提高效率。",
+        "易混淆詞辨析：須注意 wired (有線的) 與 wireless (無線的) 之對比，在聽力中若提到設備無法移動，通常是指 wired，若強調方便性則選 wireless。",
+        "常見考點：在 Part 7 的產品廣告或辦公室公告中，wireless 經常作為產品賣點出現；在聽力 Part 3 中，常與 connectivity (連線能力) 或 signal strength (訊號強度) 等詞彙一同出現。",
+        "答題注意事項：看到 wireless 時，應直覺聯想到與 Wi-Fi 或 Bluetooth (藍牙) 技術相關的應用，這有助於在理解技術類文章時快速掌握重點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_3ad36e61a364",
+      "headword": "wise",
+      "normalizedHeadword": "wise",
+      "entryType": "word",
+      "definitionZh": "聰明的；明智的；有智慧的",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "wiser",
+            "wisest"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_3ad36e61a364_ex_1",
+          "english": "It was a wise decision to invest in renewable energy.",
+          "chinese": "投資再生能源是一個明智的決定。"
+        },
+        {
+          "id": "tw_w_3ad36e61a364_ex_2",
+          "english": "She is known for her wise advice.",
+          "chinese": "她以其明智的建議而聞名。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞組：此單字常出現於 wise decision (明智的決定)、wise choice (明智的選擇) 及 wise investment (明智的投資)，多用於商業決策與財務規劃情境。",
+        "詞性辨析要點：在 Part 5 詞彙與語法題中，需特別區分 wise (形容詞)、wisely (副詞) 以及 wisdom (名詞)。例如在 It is wise to... 的結構中，wise 作為形容詞修飾虛主詞。",
+        "重要後綴用法：在 TOEIC 閱讀中，-wise 常作為後綴表示「方向」或「領域」，如 clockwise (順時針) 或 business-wise (就商業而言)，這對理解段落重點至關重要。",
+        "易混淆詞辨析：wise 強調「具有判斷力與遠見」，與 smart (聰明) 或 clever (靈巧) 不同；在正式商務書信中，使用 wise 更能展現對決策謹慎度的肯定。",
+        "考題應對技巧：在聽力測驗 Part 3 與 Part 4 中，若聽到 'That would be a wise move'，通常暗示說話者支持前述的建議或改進方案，是判斷人物態度與後續行動的重要線索。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_1ccba4adb26d",
+      "headword": "wish",
+      "normalizedHeadword": "wish",
+      "entryType": "word",
+      "definitionZh": "希望、期望；祝願",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "verb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "wish",
+            "wishes",
+            "wishing",
+            "wished"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wish",
+            "wishes"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_1ccba4adb26d_ex_1",
+          "english": "I wish to confirm my reservation for tomorrow morning.",
+          "chinese": "我希望確認我明天早上的預訂。"
+        },
+        {
+          "id": "tw_w_1ccba4adb26d_ex_2",
+          "english": "We wish you a successful business trip and a profitable quarter.",
+          "chinese": "祝您旅途順利，本季度業績豐厚。"
+        }
+      ],
+      "examTips": [
+        "語法重點：'wish' 常接虛擬語氣。對現在事實相反的願望使用過去式（如：I wish I were...），對過去遺憾則用過去完成式（如：I wish I had been...），這在閱讀測驗中常考語法時態。",
+        "區分 wish 與 hope：'hope' 用於可能實現的事情，而 'wish' 多用於表達難以實現的願望或正式請求。",
+        "商業書信應用：在正式書信結尾常用 'Best wishes'，或在詢問意願時使用 'If you wish to unsubscribe...' 作為 'want' 的正式替代詞。",
+        "常見搭配詞：'wish to do something'（等同於 want to）、'wish someone luck/success'（祝某人成功）。",
+        "聽力測驗陷阱：注意說話者使用 wish 時通常帶有「事與願違」或「遺憾」的情緒，有助於判斷對話隱含的意思或接下來的行動。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_be5dc139232d",
+      "headword": "wishes",
+      "normalizedHeadword": "wishes",
+      "entryType": "word",
+      "definitionZh": "願望；期望（通常指無法實現或不太可能實現的願望）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "noun",
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wishes"
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "wishes",
+            "wishing",
+            "wished"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_be5dc139232d_ex_1",
+          "english": "The company wishes its employees a happy and prosperous New Year.",
+          "chinese": "公司祝願所有員工新年快樂，萬事如意。"
+        },
+        {
+          "id": "tw_w_be5dc139232d_ex_2",
+          "english": "I wish our negotiations could lead to a mutually beneficial agreement.",
+          "chinese": "我希望我們的談判能達成互利的協議。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞組：常用於商務書信結尾，如「Best wishes」或「Warmest wishes」作為結語；動詞常用「extend one's wishes」(致上祝願) 或「express one's wishes」(表達意願)。",
+        "商業情境運用：常用於正式場合表達祝福，例如同仁升遷、退休或節慶時。此外，在正式條款或政策中，「if you wish to...」是「if you want to...」的更委婉且專業的替代說法。",
+        "易混淆詞辨析：需區分「wish」與「hope」。在動詞用法中，「hope」用於對未來可能發生之事的期待，而「wish」在表達渴望時常接虛擬語氣 (例如：I wish I had...)，用以表示目前與事實不符或極難實現的願望。",
+        "TOEIC 考點分析：在閱讀測驗 Part 7 的書信中，「Best wishes」是判斷書信結尾的重要標誌。在 Part 5 語法題中，需注意「wish + 賓語 + 賓語補足語」的用法，例如「wish you success」。",
+        "答題注意事項：當「wishes」作為名詞出現在聽力測驗中，通常與「祝賀」、「願望」或「正式意願」有關，考生應根據上下文判斷它是屬於社交禮儀中的祝福，還是合約條款中的個人意向。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_4efb34e9dc76",
+      "headword": "with the lights on",
+      "normalizedHeadword": "with the lights on",
+      "entryType": "phrase",
+      "definitionZh": "燈光未關閉的狀態；在燈光亮著的情況下",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adverbial phrase"
+      ],
+      "wordForms": [],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_4efb34e9dc76_ex_1",
+          "english": "Please leave the lights on when you're leaving early, so the security guard can see.",
+          "chinese": "如果你提前離開，請保持燈光亮著，以便保安能看見。"
+        },
+        {
+          "id": "tw_p_4efb34e9dc76_ex_2",
+          "english": "The manager requested that all employees keep the lights on in their workstations to conserve energy during the day.",
+          "chinese": "經理要求所有員工在白天保持工作站燈光亮著，以節省能源。"
+        }
+      ],
+      "examTips": [
+        "語法結構解析：此片語採用「with + 名詞 + 形容詞/副詞」的結構，用來描述某種伴隨狀態。在 TOEIC 中，這種結構常出現在 Part 1 照片描述與 Part 5 語法題中，用來精確說明場景細節。",
+        "照片描述題 (Part 1) 應用：在描述辦公室、會議室或工廠內景時，聽力選項可能出現此表達方式。考生需注意圖片中燈具是否發光，並區分動作（turning on the lights）與狀態（the lights are on / with the lights on）。",
+        "職場安全與操作規範：在 Part 7 的員工手冊或維修指引中，常出現類似結構來強調操作環境，例如：「Do not leave the server room with the cooling system off」或「Work only with the lights on to ensure safety」。",
+        "易混淆辨析：區分「turn on」（動詞短語，指切換開關的動作）與「on」（形容詞/副詞，指開啟的狀態）。TOEIC 考題常測試考生是否能根據上下文判斷需要的是動作動詞還是描述狀態的補語。",
+        "常見搭配詞組：此結構可靈活替換，常見於商務情境的包括：with the door closed (門關著)、with the engine running (引擎運轉中)、with the window open (窗戶開著) 等，皆屬重點考點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_fb0e357f892c",
+      "headword": "within",
+      "normalizedHeadword": "within",
+      "entryType": "word",
+      "definitionZh": "在...範圍內；在...期限內",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "preposition",
+        "adverb"
+      ],
+      "wordForms": [],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_fb0e357f892c_ex_1",
+          "english": "The report must be submitted within the next week.",
+          "chinese": "報告必須在下週內提交。"
+        },
+        {
+          "id": "tw_w_fb0e357f892c_ex_2",
+          "english": "All employees are expected to complete the training within three months.",
+          "chinese": "所有員工預計在三個月內完成培訓。"
+        }
+      ],
+      "examTips": [
+        "時間範疇考點：常接一段時間表示「在...之內」，例如 within 24 hours (24小時內) 或 within the next three days，需與 by (在某時間點之前) 做出區隔，within 強調的是整個期間的界限。",
+        "地點與距離應用：多益閱讀常考 within walking distance (在步行可達距離內) 的用法，常見於辦公室租賃或飯店說明的文章中，用以表達地理位置的便利性。",
+        "預算與權限規範：在商務情境中常出現 within budget (在預算內) 或 within the guidelines (在準則規範內)，這是 Part 5 介係詞填空題的常考搭配。",
+        "易混淆詞辨析：注意 within 與 in 的差異，within 帶有「不超過、在界限內」的嚴謹感，而 in 則僅單純表示在裡面。",
+        "聽力應試重點：在聽力測驗 Part 3 與 Part 4 中，若聽到 within，通常伴隨著截止日期或特定範圍限制，是作答時判斷正確選項(如時間限制)的重要關鍵語。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_f104fbb27c1c",
+      "headword": "without",
+      "normalizedHeadword": "without",
+      "entryType": "word",
+      "definitionZh": "沒有；不；缺乏",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "preposition",
+        "adverb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "preposition",
+          "forms": [
+            "without"
+          ]
+        },
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "without"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_f104fbb27c1c_ex_1",
+          "english": "We cannot proceed with the project without her approval.",
+          "chinese": "我們沒有她的批准就無法進行這個專案。"
+        },
+        {
+          "id": "tw_w_f104fbb27c1c_ex_2",
+          "english": "It's difficult to manage a team without clear communication.",
+          "chinese": "沒有清晰的溝通很難管理一個團隊。"
+        }
+      ],
+      "examTips": [
+        "語法結構：without 是介係詞，其後必須接名詞、代名詞或動名詞 (V-ing)，在 TOEIC Part 5 中常考後接動名詞的用法，例如 'without notifying us'。",
+        "常見商務片語：在合約或公司規定中極常出現 'without prior notice'（恕不另行通知）或 'without delay'（毫不延遲），務必熟記這些固定組合。",
+        "邏輯辨析：需區分介係詞 without 與連接詞 unless 的不同。without 後接名詞（如 without permission），而 unless 後接子句（如 unless permission is granted）。",
+        "聽力關鍵字：在 Part 3 或 Part 4 的對話中，without 常出現在條件限制情境，如 'The machine won't work without a key'，常用來考解決問題的先決條件。",
+        "閱讀推論：在 Part 7 閱讀中，'without exception'（毫無例外）常用來強調某項規則適用於所有人，是理解公司政策或規範時的重要指標。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_75dbdb487967",
+      "headword": "without delay",
+      "normalizedHeadword": "without delay",
+      "entryType": "phrase",
+      "definitionZh": "立即；毫不延遲",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adverb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "without delay"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_75dbdb487967_ex_1",
+          "english": "Please submit your expense report without delay to ensure timely reimbursement.",
+          "chinese": "請立即提交您的費用報表，以確保及時報銷。"
+        },
+        {
+          "id": "tw_p_75dbdb487967_ex_2",
+          "english": "The manager instructed the team to address the technical issue without delay.",
+          "chinese": "經理指示團隊立即處理技術問題。"
+        }
+      ],
+      "examTips": [
+        "同義詞辨析與替換：在 TOEIC 閱讀 Part 7 中，without delay 常作為 immediately、promptly 或 at once 的替換詞。考生應熟悉這些近義詞，以便在同義詞替換題中快速作答。",
+        "商業應用情境：此片語頻繁出現在物流運輸與客戶服務情境，如 'The order will be processed without delay' (訂單將立即處理) 或 'Please respond without delay' (請儘速回覆)，強調行動的急迫性。",
+        "聽力解題關鍵：在 Part 3 對話或 Part 4 簡短獨白中，若講者提到 without delay，通常是回答『接下來要做什麼 (What will the speaker do next?)』的關鍵線索。",
+        "搭配詞組 (Collocations)：常與行動導向的動詞連用，如 act, respond, ship, process, 或 implement。掌握這些搭配有助於在 Part 5 的填空題中根據上下文語境判斷答案。",
+        "詞性與結構注意：without delay 是介係詞短語，在句中充當副詞功能。需注意與 delayed (形容詞，意為被延誤的) 區分，後者常用於描述航班或進度延遲的情境。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_1f0f57e8ef41",
+      "headword": "without notice",
+      "normalizedHeadword": "without notice",
+      "entryType": "phrase",
+      "definitionZh": "未事先通知；突然地",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adverb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "without notice"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_1f0f57e8ef41_ex_1",
+          "english": "The company announced the restructuring without notice, causing disruption to many employees.",
+          "chinese": "公司未事先通知地宣布重組，導致許多員工的工作受到干擾。"
+        },
+        {
+          "id": "tw_p_1f0f57e8ef41_ex_2",
+          "english": "Due to unforeseen circumstances, the meeting has been cancelled without notice.",
+          "chinese": "由於突發狀況，會議將在未事先通知的情況下取消。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞組：最常出現在「subject to change without notice」（若有更改恕不另行通知），此句型頻繁出現於多益 Part 7 的廣告、行程表或政策說明。",
+        "商業情境運用：在法律合約或僱傭協議中，常用於「terminate the contract without notice」（無需預先通知即可終止合約），考生需理解這代表行動的即時性與權限。",
+        "相似詞辨析：需區別「without notice」（不予通知）與「until further notice」（在另行通知前）；前者指「沒有預警地發生」，後者指「目前的狀態會持續到有新消息為止」。",
+        "考點重點：多益 Part 5 常考介系詞填空，需根據前後文判斷是否具備「預先知會」的條件，若文章提到突發狀況，通常選 without。",
+        "聽力與理解技巧：在 Part 2 簡短對話或 Part 4 廣播中，若提到 policy changes without notice，通常是在解釋為何某項變動會引起顧客不滿或突發不便，抓住此關鍵字有助於掌握對話的核心衝突點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_4400cd059a6f",
+      "headword": "woman",
+      "normalizedHeadword": "woman",
+      "entryType": "word",
+      "definitionZh": "成年女性；女人",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "women"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_4400cd059a6f_ex_1",
+          "english": "The woman in the red dress is our new marketing manager.",
+          "chinese": "那位穿紅色洋裝的女人是我們新的行銷經理。"
+        },
+        {
+          "id": "tw_w_4400cd059a6f_ex_2",
+          "english": "She is a strong woman who has overcome many challenges in her career.",
+          "chinese": "她是一位堅強的女性，在職業生涯中克服了許多挑戰。"
+        }
+      ],
+      "examTips": [
+        "單複數辨析：在聽力測驗中，必須精確分辨單數 woman [ˈwʊmən] 與複數 women [ˈwɪmɪn] 的發音差異，這對於 Part 1 圖片描述題與 Part 3/4 的細節理解至關重要。",
+        "職場職稱變體：TOEIC 商業情境常出現其複合詞，如 businesswoman (商界女性)、spokeswoman (女性發言人) 或 chairwoman (女主席)，考生應熟悉這些職稱及其在正式書信中的應用。",
+        "聽力第一部分 (Photographs)：此單字常作為句子的主詞，考生應快速觀察圖片中女性的動作（如 operating a machine）或穿著（如 wearing a lab coat）以預測正確選項。",
+        "性別中立用語：現代多益考題常使用性別中立詞彙（如 chairperson 代替 chairwoman），但在提到特定人物時仍會使用 woman，考生需具備將兩者對應起來的能力。",
+        "常見搭配詞：在閱讀與聽力中常出現 'female candidate' (女性候選人) 或 'professional woman' (職場女性) 等表達方式，用於描述招募、人力資源或市場調查的情境中。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_4dbdd36a6ffb",
+      "headword": "women",
+      "normalizedHeadword": "women",
+      "entryType": "word",
+      "definitionZh": "女性；婦女（通常指成年女性）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "women"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_4dbdd36a6ffb_ex_1",
+          "english": "The company is committed to promoting gender equality and ensuring women have equal opportunities for advancement.",
+          "chinese": "公司致力於促進性別平等，並確保女性在晉升方面享有平等的機會。"
+        },
+        {
+          "id": "tw_w_4dbdd36a6ffb_ex_2",
+          "english": "The survey showed that women are increasingly seeking leadership roles in the workplace.",
+          "chinese": "調查顯示，女性越來越多地尋求職場中的領導職位。"
+        }
+      ],
+      "examTips": [
+        "注意單複數發音與辨析：'woman' (/ˈwʊmən/) 為單數，'women' (/ˈwɪmɪn/) 為複數。在聽力測驗第一部分照片題中，若圖片有多位女性，音檔提到 'A woman' 則為錯誤選項。",
+        "文法主謂一致性：'women' 是不規則複數名詞，字尾雖無 -s 但必須搭配複數動詞（如 are, have, do），這在多益第五部分短句填空是常見的基本考點。",
+        "商業與職場情境：常出現在多益閱讀的 HR 公告或報導中，常見詞組如 'women in leadership' (女性領導層) 或 'professional women' (職業女性)，與職場多元化（diversity）議題密切相關。",
+        "零售與行銷用語：在多益常見的廣告或百貨公司公告中，常出現 'women's wear' (女裝) 或 'women's apparel' (女性服飾)，需熟悉其所有格寫法。",
+        "聽力關鍵細節：在第二、三部分對話中，若題目問 'Who will attend the meeting?'，選項若出現 'Several women'，需從對話中確認提及的人數與性別是否一致。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_a83224d67546",
+      "headword": "won",
+      "normalizedHeadword": "won",
+      "entryType": "word",
+      "definitionZh": "贏得；獲勝",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "營運管理",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "won",
+            "wins",
+            "winning"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_a83224d67546_ex_1",
+          "english": "Our company won the contract after a competitive bidding process.",
+          "chinese": "經過激烈的競標程序，我們公司贏得了這份合約。"
+        },
+        {
+          "id": "tw_w_a83224d67546_ex_2",
+          "english": "The team won the championship with a last-minute goal.",
+          "chinese": "團隊在比賽最後一刻踢進一球，贏得了冠軍。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與商務情境：在多益考試中，'won' 常與商業成果連用，例如 'won a contract' (贏得合約)、'won the bid' (中標/得標) 或 'won an award' (獲獎)，常用於公司公告或商業新聞中。",
+        "易混淆詞辨析 (Win vs. Beat)：這是多益常見考點。'win' (won) 的受詞通常是「比賽、獎項、合約或戰爭」，而 'beat' (beat/beaten) 的受詞則是「競爭對手或敵人」。例如：'We won the competition' 但 'We beat our competitors'。",
+        "聽力與閱讀考點：在聽力第三、四部分或閱讀第七部分，'won' 常出現在描述業績增長或成功案例的對話中，例如 'won over the client' 表示「贏得客戶的青睞或支持」。",
+        "動詞三態變化：'won' 是不規則動詞 'win' 的過去式及過去分詞。在 Part 5 語法題中，需注意句子的時態完成式，如 'has won' 或 'have won' 用於表達至今已達成的成就。",
+        "答題注意事項：若在 Part 5 看到受詞是 'prize'、'promotion' 或 'deal'，應優先選擇 'won'。同時要注意 'won' 也是韓國貨幣單位「韓元」的名稱，在涉及旅遊或匯率的閱讀題目中需根據上下文判斷語意。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_340566adcb3e",
+      "headword": "wonder",
+      "normalizedHeadword": "wonder",
+      "entryType": "word",
+      "definitionZh": "驚奇；疑問；好奇",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "noun",
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wonder",
+            "wonders"
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "wonder",
+            "wonders",
+            "wondering",
+            "wondered"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_340566adcb3e_ex_1",
+          "english": "I wonder how much the new marketing campaign will cost.",
+          "chinese": "我想知道新的行銷活動會花多少錢。"
+        },
+        {
+          "id": "tw_w_340566adcb3e_ex_2",
+          "english": "The team members often wonder about the company's future strategy.",
+          "chinese": "團隊成員們常常好奇公司的未來策略。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與句型：在 TOEIC 閱讀與聽力中，wonder 經常與 if 或 whether 連用構成間接問句，例如 'I wonder if the shipment has arrived.'，這是商務溝通中常見的委婉詢問方式。",
+        "商務禮貌應用：在撰寫電子郵件或進行商務對話時，常使用進行式 'I am wondering' 或過去進行式 'I was wondering' 來表達請求或詢問，其語氣比直接使用 'I want to know' 更加客氣禮貌。",
+        "易混淆詞辨析：考生需特別注意 wonder (想知道/驚奇) 與 wander (漫遊/閒逛) 的拼寫與發音差異，後者通常涉及物理上的移動，而前者涉及心理狀態，聽力測驗常利用相似音進行干擾。",
+        "答題注意事項：當 wonder 作為動詞且後接疑問詞子句（如 who, what, how）時，子句應使用陳述句語序（主詞+動詞），而非疑問句語序，這在 Part 5 文法題中是常見考點。",
+        "固定片語：'No wonder' (難怪/並不意外) 常出現在 Part 3 對話或 Part 4 獨白中，用來回應某個已知的原因或結果，掌握此片語有助於理解對話者的態度。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_42823dcda7db",
+      "headword": "wonderful",
+      "normalizedHeadword": "wonderful",
+      "entryType": "word",
+      "definitionZh": "極好的；令人驚豔的；卓越的（用於表達對某事物的正面評價，通常帶有讚賞意味）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "wonderful",
+            "better",
+            "best"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_42823dcda7db_ex_1",
+          "english": "The presentation was wonderful, and the client expressed great interest in our proposal.",
+          "chinese": "簡報非常精彩，客戶也表達了對我們提案的濃厚興趣。"
+        },
+        {
+          "id": "tw_w_42823dcda7db_ex_2",
+          "english": "We received wonderful feedback from the team regarding the new project management system.",
+          "chinese": "我們收到了團隊對新項目管理系統的極佳回饋。"
+        }
+      ],
+      "examTips": [
+        "Common Collocations: Frequently used in formal and semi-formal business settings with nouns such as 'opportunity', 'news', 'experience', and 'performance'. For example, 'a wonderful opportunity for career growth'.",
+        "Exam Context (Part 7): Often appears in customer feedback, testimonials, or emails expressing gratitude. Recognizing 'wonderful' helps candidates identify the positive sentiment of a passage.",
+        "Confusion Alert: Distinguish 'wonderful' (adjective) from the verb 'wonder' (to be curious) and the verb 'wander' (to move about aimlessly). In TOEIC listening, 'I was wondering if...' is a common functional phrase that sounds similar but has a different meaning.",
+        "Synonym Paraphrasing: In reading comprehension questions, 'wonderful' is frequently paraphrased in the answer choices with words like 'excellent', 'superb', 'exceptional', or 'outstanding'.",
+        "Listening Strategy (Part 3 & 4): It is a key indicator of a speaker's positive attitude. If a speaker describes a proposal as 'wonderful', you can eliminate options suggesting hesitation, disapproval, or skepticism."
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_7cb777cbc04e",
+      "headword": "wondering",
+      "normalizedHeadword": "wondering",
+      "entryType": "word",
+      "definitionZh": "感到好奇、想知道（某事）；思考、考慮",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "verb",
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "wondering",
+            "wonders",
+            "wondered"
+          ]
+        },
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "wondering",
+            "more wondering",
+            "most wondering"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_7cb777cbc04e_ex_1",
+          "english": "I'm wondering if the new marketing strategy will increase sales.",
+          "chinese": "我在想新的行銷策略是否會增加銷售額。"
+        },
+        {
+          "id": "tw_w_7cb777cbc04e_ex_2",
+          "english": "We are wondering about the best way to handle this unexpected delay.",
+          "chinese": "我們正在考慮如何處理這一次意料之外的延遲。"
+        }
+      ],
+      "examTips": [
+        "禮貌請求的委婉語：在多益閱讀 Part 7 的電子郵件或聽力 Part 3 中，常以『I was wondering if...』作為開頭，這並非真的在『納悶』，而是用來提出委婉的請求或詢問，語氣比『Can you...』更為專業且客氣。",
+        "易混淆詞辨析：注意 wonder (想知道) 與 wander (漫遊/閒逛) 的區別。多益聽力中可能會利用這兩個詞的發音相似性來製造陷阱，wondering 通常接 if/whether 子句，而 wandering 則常接地點或方向。",
+        "常用搭配詞組：常見用法包含『wondering about the possibility of...』（考慮某事的可能性）以及『just wondering』（只是想請教一下），後者常用於非正式或半正式的商務溝通，用以減輕催促的壓力。",
+        "商業跟進情境：在商務書信中，當一段時間沒收到對方回覆時，可以用『I am wondering if you have had a chance to look at...』作為追蹤進度（Follow-up）的起手式，是多益職場情境的高頻句型。",
+        "考點注意事項：雖然『I was wondering』使用了過去進行式，但在語意上它是指『現在』的客氣詢問，考生在作答時應將其視為當下的請求，而非過去發生的動作。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_a76b40d76ce4",
+      "headword": "wood",
+      "normalizedHeadword": "wood",
+      "entryType": "word",
+      "definitionZh": "木材；木製物品；（比喻）堅韌的性格或態度",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "採購與物流",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wood",
+            "woods"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_a76b40d76ce4_ex_1",
+          "english": "The company is sourcing sustainable wood for the furniture production.",
+          "chinese": "該公司正在採購用於家具生產的可持續木材。"
+        },
+        {
+          "id": "tw_w_a76b40d76ce4_ex_2",
+          "english": "We need to ensure the wooden pallets are properly secured during shipment to prevent damage.",
+          "chinese": "我們需要確保在運輸過程中木質托盤得到妥善固定，以防止損壞。"
+        }
+      ],
+      "examTips": [
+        "多益第一部分(Part 1)圖片題常考詞，常描述辦公家具或室內裝潢，如 wooden desk (木製辦公桌) 或 hardwood floor (硬木地板)。",
+        "商業情境中常用於製造與採購，例如 wood pulp (木漿) 涉及造紙業，solid wood (實木) 常用於家具型錄或裝修報價單。",
+        "詞義區分：wood 當木材時多為不可數名詞，而 the woods 則指森林或林地，在閱讀測驗的地圖描述或觀光導覽中需注意。",
+        "聽力重點辨析：注意同音詞 would 的干擾，需憑藉上下文判斷，wood 常作為受詞或介系詞後的名詞。",
+        "常見搭配詞組包含 wood grain (木紋)、scrap wood (廢木材) 以及 wood paneling (木質鑲板)，常出現在辦公室設施維護或環境永續發展的閱讀篇章中。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_e3b006b35038",
+      "headword": "wooden",
+      "normalizedHeadword": "wooden",
+      "entryType": "word",
+      "definitionZh": "由木材製成的；木製的",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "採購與物流",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "wooden",
+            "woodier",
+            "woodiest"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_e3b006b35038_ex_1",
+          "english": "The company is sourcing wooden pallets for shipping the new product line.",
+          "chinese": "公司正在採購木製棧板來運輸新產品線。"
+        },
+        {
+          "id": "tw_w_e3b006b35038_ex_2",
+          "english": "The furniture department is looking for a supplier of high-quality wooden desks.",
+          "chinese": "家具部門正在尋找高品質木製辦公桌的供應商。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與詞組：wooden 常出現在描述辦公設備或環境的場景中，如 wooden chair (木椅)、wooden floor (木地板) 或 wooden frame (木框)。",
+        "聽力 Part 1 關鍵字：在第一部分的照片描述中，wooden 是描述背景物體的常見形容詞，考生若在照片中看到木製家具，應對此單字保持敏感度。",
+        "詞性辨析與字尾： wooden 是名詞 wood (木頭) 加上形容詞字尾 -en 構成，意為「木製的」。在 Part 5 語法題中，需辨別空格處應填入形容詞而非名詞。",
+        "商業與辦公情境：在閱讀測驗的採購訂單、目錄描述或辦公室搬遷公告中，wooden 常被用來詳細說明產品材質。",
+        "易混淆詞辨析：需區分 wooden (木製的) 與 woody (多木的、木質的)，在 TOEIC 中 wooden 幾乎都用於描述人工製品的材質，而 woody 多用於描述植物特徵或氣味。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_4c5de8268798",
+      "headword": "wool",
+      "normalizedHeadword": "wool",
+      "entryType": "word",
+      "definitionZh": "羊毛；毛線；毛織品",
+      "starRating": 3,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wool"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_4c5de8268798_ex_1",
+          "english": "This sweater is made from 100% pure wool.",
+          "chinese": "這件毛衣是100%純羊毛製成的。"
+        },
+        {
+          "id": "tw_w_4c5de8268798_ex_2",
+          "english": "She prefers wool blankets for their warmth.",
+          "chinese": "她偏愛羊毛毯的溫暖。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'wool coat' (羊毛大衣)、'pure wool' (純羊毛)、'wool blend' (混紡羊毛)，這些詞常出現在 TOEIC 第七部分閱讀的產品目錄或服飾訂單中。",
+        "商業情境應用：主要出現在零售業 (Retail) 與進出口貿易情境，用於描述商品材質，例如討論產品庫存清單中的 'wool sweaters' 或在品質保證書中註明材質成份。",
+        "易混淆詞與聽力辨析：在聽力測驗中需區分 'wool' 與發音相近的 'wood' (木材)，以及區別與其他材質如 'cotton' (棉)、'silk' (絲) 或 'synthetic' (人造纖維) 的差異。",
+        "聽力與閱讀考點：Part 1 圖片描述題中，若照片顯示冬季衣著，選項可能提及材質。在 Part 3 與 Part 4 的對話或廣播中，若涉及衣物退換貨或產品瑕疵，材質不符通常是關鍵的細節考點。",
+        "答題注意事項：閱讀題目時應注意細節描述，例如題目問及產品特點，若文中提到 '100% pure wool'，應與選項中的 'all-natural materials' 進行同義代換。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_8df306abc18f",
+      "headword": "word",
+      "normalizedHeadword": "word",
+      "entryType": "word",
+      "definitionZh": "字詞；用語；詞語",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun",
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "word",
+            "words"
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "word",
+            "words",
+            "wording",
+            "worded"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_8df306abc18f_ex_1",
+          "english": "The contract contains specific words that could be interpreted differently.",
+          "chinese": "這份合約包含一些可能被不同理解的特定字詞。"
+        },
+        {
+          "id": "tw_w_8df306abc18f_ex_2",
+          "english": "Please word your email carefully to avoid any misunderstandings.",
+          "chinese": "請仔細措辭，避免任何誤解。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'word of mouth' (口碑) 常出現於 Part 7 的行銷廣告文章中，表示透過口耳相傳的宣傳效果；'have a word with' (和某人談談) 則常出現在 Part 3 的職場對話情境。",
+        "商業情境：'get the word out' 常用於描述新產品發布或公司政策更新時的訊息傳播；'keep one's word' 在商務信用或合約履行背景中強調誠信。",
+        "易混淆辨析：在聽力測驗中需特別區分 'word'、'work' 與 'world' 的發音差異。此外，在閱讀測驗中 'word' 多指訊息或單字，而 'term' 則更常用於指代合約條款或專業術語。",
+        "考試考點：連接詞片語 'in other words' (換句話說) 是 Part 6 文章填空題的常客，用於重新解釋或補充前文的觀點。",
+        "答題注意：遇到 'word' 時應觀察其前後是否有介系詞構成固定用法，例如 'by word of mouth'，切勿僅從字面單字意義去解讀整句內容。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_a17c3ae236a4",
+      "headword": "words",
+      "normalizedHeadword": "words",
+      "entryType": "word",
+      "definitionZh": "詞語；語言表達；文字",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "words"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_a17c3ae236a4_ex_1",
+          "english": "The contract contains specific words that could have legal implications.",
+          "chinese": "這份合約包含一些可能具有法律影響的特定詞語。"
+        },
+        {
+          "id": "tw_w_a17c3ae236a4_ex_2",
+          "english": "Choose your words carefully when negotiating with a potential partner.",
+          "chinese": "與潛在合作夥伴談判時，請謹慎選擇你的措辭。"
+        }
+      ],
+      "examTips": [
+        "常見過渡詞：在閱讀測驗 Part 6 與 Part 7 中，'In other words'（換句話說）常用於進一步解釋複雜的商業政策或合約條款。",
+        "商業口語搭配：'Word of mouth'（口碑）是市場行銷情境中的核心詞彙，常出現在關於廣告效益的聽力測驗中。",
+        "訊息傳達用法：'Word' 在商務情境中常指『消息』或『指示』，例如 'Wait for word from the headquarters'，意指等待總部的通知，此時通常不加 s。",
+        "易混淆辨析：在聽力測驗中需特別區分 'word' 與 'world' 的發音差異；在閱讀中則需區分 'word'（單字/諾言）與 'work'（工作）的詞義。",
+        "辦公室技能描述：'Word processing'（文字處理）是描述員工行政技能或軟體操作能力時的常見搭配詞。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_aac4096f04f0",
+      "headword": "work",
+      "normalizedHeadword": "work",
+      "entryType": "word",
+      "definitionZh": "工作；勞動；職責；業務",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun",
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "work",
+            "works"
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "work",
+            "works",
+            "working",
+            "worked"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_aac4096f04f0_ex_1",
+          "english": "The project requires a lot of hard work to meet the deadline.",
+          "chinese": "為了趕上截止日期，這個項目需要投入大量的努力。"
+        },
+        {
+          "id": "tw_w_aac4096f04f0_ex_2",
+          "english": "Employees are expected to work efficiently and collaboratively.",
+          "chinese": "員工預期能高效且協作地工作。"
+        }
+      ],
+      "examTips": [
+        "詞性與可數性辨析：在多益中，work 作為「工作/勞動」時為不可數名詞，不可加 s 或 a；但若指「作品/著作」則是可數的。",
+        "常見搭配詞：work overtime (加班)、work remotely (遠端辦公)、work on a project (致力於某計畫)。",
+        "常考片語：work out (解決問題、健身)、work around (避開困難)。",
+        "與 job 的區別：Job 是可數名詞，指特定的職位或任務；Work 是較廣義的不可數概念。",
+        "聽力考點：Part 1 照片題常出現 working at a desk (在書桌前工作) 或 working on a laptop (使用筆電) 的描述。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_6ddae6576fa2",
+      "headword": "work environment",
+      "normalizedHeadword": "work environment",
+      "entryType": "phrase",
+      "definitionZh": "工作環境：指員工在辦公室或工作場所中實際工作的情境，包含物理空間、工作氛圍、同事關係等。",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "work environment",
+            "work environments"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_6ddae6576fa2_ex_1",
+          "english": "The company is committed to providing a positive and supportive work environment for all employees.",
+          "chinese": "公司致力於為所有員工提供積極且支持性的工作環境。"
+        },
+        {
+          "id": "tw_p_6ddae6576fa2_ex_2",
+          "english": "A flexible work environment, including remote options, can improve employee morale and productivity.",
+          "chinese": "彈性的工作環境，例如遠端工作選項，可以提高員工士氣和生產力。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：常用於形容公司氛圍，如 positive（正面的）、fast-paced（節奏快的）、collaborative（協作的）或 supportive（給予支持的）。",
+        "商業情境應用：在 TOEIC 徵才廣告（Job Postings）中，企業常以此作為吸引人才的優點；在員工福利（Benefits）部分，則常提及改善工作環境以提高 productivity（生產力）。",
+        "相似詞辨析：與 workplace（工作場所）相比，work environment 更強調整體的『氣氛』與『條件』（包含心理與物理因素），而 workspace 則多指個人具體的『辦公空間』或座位。",
+        "閱讀測驗重點：在 Part 7 的公司內部公告中，若提到改善 work environment，答案選項常會對應到提升 morale（員工士氣）或增加滿意度。",
+        "聽力與答題注意：在 Part 3 對話中，若討論到環境不佳，通常伴隨著設備（equipment）故障或噪音（noise）問題，考生應留意對話中具體的抱怨點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_55d7f512e6d1",
+      "headword": "work history",
+      "normalizedHeadword": "work history",
+      "entryType": "phrase",
+      "definitionZh": "工作經歷，職務履歷",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "work history",
+            "work histories"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_55d7f512e6d1_ex_1",
+          "english": "The HR department needs to review each candidate's work history to assess their qualifications.",
+          "chinese": "人力資源部門需要審查每位候選人的工作經歷，以評估其資歷。"
+        },
+        {
+          "id": "tw_p_55d7f512e6d1_ex_2",
+          "english": "During the interview, be prepared to discuss your work history and highlight your key accomplishments.",
+          "chinese": "在面試中，請準備好討論您的工作經歷並強調您的主要成就。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞包含 'extensive work history' (豐富的資歷)、'relevant work history' (相關工作經驗) 與 'proven work history' (經證實的資歷)。",
+        "在 TOEIC 閱讀測驗第七部分的求職信或履歷中，'work history' 常與 'employment record' 互換使用，考生需具備同義詞代換能力。",
+        "易混淆辨析：'work history' 指的是過去所有工作的紀錄清單，而 'career' 則多指長期的職涯專業領域發展。",
+        "在聽力或閱讀中，若出現 'background check' (背景調查)，其核心內容通常就是核對該名員工的 'work history' 是否真實。",
+        "考點提醒：當題目詢問應徵者的資格時，應快速掃描履歷中的公司名稱與任職時間，這些資訊統稱為 work history。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_199fa20dc018",
+      "headword": "work in groups",
+      "normalizedHeadword": "work in groups",
+      "entryType": "phrase",
+      "definitionZh": "以小組方式工作；團隊合作",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb phrase"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb phrase",
+          "forms": [
+            "work in groups"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_199fa20dc018_ex_1",
+          "english": "To maximize efficiency, we encourage employees to work in groups for brainstorming sessions.",
+          "chinese": "為了提高效率，我們鼓勵員工在腦力激盪會議中以小組方式工作。"
+        },
+        {
+          "id": "tw_p_199fa20dc018_ex_2",
+          "english": "The project requires team members to work in groups and share their expertise.",
+          "chinese": "這個專案需要團隊成員以小組方式工作並分享他們的專業知識。"
+        }
+      ],
+      "examTips": [
+        "常見搭配：常用於 'work in groups of [數字]'，例如 'work in groups of four'（四人一組工作）。在 TOEIC 聽力中，這常與 teamwork 或 collaborative effort 相關聯。",
+        "商業情境：此片語常用於描述研討會 (seminar)、工作坊 (workshop) 或教育訓練中的分組討論。若在閱讀測驗看到此詞，通常暗示著需要溝通協調而非獨立作業。",
+        "易混淆辨析：注意與 'work individually'（獨立工作）的對比。此外，'group work' 是名詞形式，而 'work in groups' 是動詞短語。",
+        "考試考點：在 Part 1 照片描述題中，若看到複數人選聚集在會議桌旁討論，選項中可能出現 work in groups 或 collaborate。在 Part 3 聽力中，若對話提到 'split into smaller teams'，答案選項常會改寫為 'work in groups'。",
+        "答題注意：留意介系詞 in 的使用，且 groups 通常使用複數形式。聽力中要注意發音連讀，work 和 in 可能會連讀在一起。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_d4b6224aa8e7",
+      "headword": "work on",
+      "normalizedHeadword": "work on",
+      "entryType": "phrase",
+      "definitionZh": "致力於；從事於；處理（某項工作或任務）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "work on",
+            "works",
+            "working",
+            "worked"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_d4b6224aa8e7_ex_1",
+          "english": "I'm working on a new marketing campaign for the upcoming product launch.",
+          "chinese": "我正在為即將推出的產品開發一個新的行銷活動。"
+        },
+        {
+          "id": "tw_p_d4b6224aa8e7_ex_2",
+          "english": "The team is working on resolving the technical issues before the deadline.",
+          "chinese": "團隊正在努力在截止日期前解決技術問題。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與情境：在多益中常指「致力於」或「處理」某項具體任務，常見搭配如 work on a project (執行專案)、work on a proposal (撰寫提案) 或 work on a presentation (準備簡報)。",
+        "聽力測驗考點：在第一部分照片描述中，若看到人物正在處理文件或操作機器，常用 'is working on' 描述動作；第三部分對話中則常用來確認任務進度，例如 'I'm still working on the report'。",
+        "易混淆詞辨析：需區分 work on (著手處理/改進)、work for (受僱於某對象) 與 work at (在某場所工作)。work on 的重點在於「投入心力於某個目標物」。",
+        "閱讀測驗重點：在 Part 5 短句填空，常考介系詞 on 的搭配。若空格前為 work 且後方接具體工作項目（如 design, budget, solution），應選 on。",
+        "商業應用含意：此詞組常隱含「正在改進」或「正在解決問題」的動態過程，例如 'working on a client's account' 代表正在處理該客戶的業務。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_40372a2a1ceb",
+      "headword": "work overtime",
+      "normalizedHeadword": "work overtime",
+      "entryType": "phrase",
+      "definitionZh": "加班，額外工作（通常指超出正常工作時間）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "work overtime",
+            "works overtime",
+            "working overtime",
+            "worked overtime"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_40372a2a1ceb_ex_1",
+          "english": "Due to the approaching deadline, employees are required to work overtime this week.",
+          "chinese": "由於截止日期逼近，本週員工需要加班。"
+        },
+        {
+          "id": "tw_p_40372a2a1ceb_ex_2",
+          "english": "The company offers overtime pay for any hours worked beyond the standard 40-hour workweek.",
+          "chinese": "公司為超過標準 40 小時工作週的額外工作時數提供加班費。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'put in overtime' (加班)、'overtime pay' (加班費)、'overtime rate' (加班費率)。",
+        "詞性與結構辨析：'overtime' 在此片語中作為副詞使用，修飾動詞 work，不可寫成 'work overtimes'。",
+        "商業情境應用：常用於討論專案截止日期 (deadlines)、人力短缺 (understaffed) 或公司政策 (company policy) 等對話與文件。",
+        "換句話說 (Paraphrasing)：TOEIC 聽力與閱讀常以 'put in extra hours'、'stay late at the office' 或 'extend office hours' 來替代 'work overtime' 作為正確選項。",
+        "答題注意事項：注意 'overtime' 作為名詞時指加班的時間或加班費，若考卷出現 'get paid for overtime'，此時 overtime 是名詞，與動詞片語 work overtime 的結構不同。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_a1558cc0ed14",
+      "headword": "work properly",
+      "normalizedHeadword": "work properly",
+      "entryType": "phrase",
+      "definitionZh": "正常運作；有效執行（指設備、系統或流程）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "科技與技術支援",
+      "partsOfSpeech": [
+        "adverb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "work properly"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_a1558cc0ed14_ex_1",
+          "english": "The IT department needs to ensure the new software works properly before the launch.",
+          "chinese": "在產品發布前，IT部門需要確保新的軟體能正常運作。"
+        },
+        {
+          "id": "tw_p_a1558cc0ed14_ex_2",
+          "english": "After the maintenance, the machine should work properly again.",
+          "chinese": "維護後，機器應該能再次有效執行。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與情境：此片語極常出現在辦公室設備故障或維護的情境中，例如 'The photocopier is not working properly' (影印機運作不正常)，常與 machine, system, software 搭配。",
+        "詞性辨析考點：TOEIC Part 5 常考副詞修飾動詞，考生需識別 work 為動詞，因此後方應填入副詞 properly 而非形容詞 proper。",
+        "聽力測驗關鍵信號：在 Part 3 或 Part 4 中，當說話者提到 'not working properly' 時，通常就是「問題點」(problem) 的所在，是回答『發生什麼問題』類題型的關鍵關鍵字。",
+        "同義表達轉換：在閱讀測驗的選項中，'work properly' 常被替換為 'function correctly' 或 'be in good working order'，考生需具備同義互換的敏感度。",
+        "常見干擾項：注意 properly 與 appropriately (適當地) 的區別，雖然意思接近，但在描述機器運作時，習慣上多使用 properly 或 correctly。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_d2c21675c0d3",
+      "headword": "work shift",
+      "normalizedHeadword": "work shift",
+      "entryType": "phrase",
+      "definitionZh": "工作排班；工作班次",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "work shift",
+            "work shifts"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_d2c21675c0d3_ex_1",
+          "english": "The company is implementing a new work shift system to improve productivity.",
+          "chinese": "公司正在實施新的工作排班制度以提高生產力。"
+        },
+        {
+          "id": "tw_p_d2c21675c0d3_ex_2",
+          "english": "Employees can choose their preferred work shift during the application process.",
+          "chinese": "員工可以在申請過程中選擇他們偏好的工作班次。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與固定用法：TOEIC 考試中常出現 day shift (日間班)、night shift (夜班)、split shift (分段班，指中間有長假的工作時段) 以及 shift work (輪班工作)。",
+        "常見動詞搭配：應注意 to work a shift (值班)、to cover a shift (代班) 以及 to swap/exchange shifts (調班)；在聽力或閱讀情境中，常有員工因為個人因素請求同事代班 (cover a shift) 的對話。",
+        "商業情境運用：此詞彙常出現在製造業、服務業或醫療保健業的公告、員工守則或排班表 (roster/schedule) 中，考生需具備判讀排班表的能力。",
+        "易混淆詞辨析：shift 指的是一段特定的工作時段，而 schedule 是整體的時程表；flexitime (彈性工時) 指的是可自由選擇上下班時間，與固定的輪班制度不同。",
+        "考試考點提醒：在閱讀測驗第七部分（多篇閱讀）中，常會透過分析排班表來考「誰在什麼時間工作」或「哪位員工需要請假」等細節題，需注意班次之間的交接時間點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_338eb77a7e1d",
+      "headword": "workbook",
+      "normalizedHeadword": "workbook",
+      "entryType": "word",
+      "definitionZh": "活頁簿；練習簿；工作簿",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workbooks"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_338eb77a7e1d_ex_1",
+          "english": "Please ensure all the data is correctly entered into the project workbook.",
+          "chinese": "請確保所有資料都正確輸入到專案工作簿中。"
+        },
+        {
+          "id": "tw_w_338eb77a7e1d_ex_2",
+          "english": "The teacher handed out a new vocabulary workbook to each student.",
+          "chinese": "老師給每位學生發了一本新的詞彙練習簿。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'training workbook' (培訓手冊)、'accompanying workbook' (隨附練習冊)。",
+        "商業情境：常用於員工入職培訓、研習會或技能工作坊，作為讓參與者進行練習、測驗或記錄重點的紙本教材。",
+        "軟體用語辨析：在試算表軟體（如 Excel）中，'workbook' 指的是包含多個分頁的整個檔案，而 'worksheet' 僅指其中的單一工作表。",
+        "考試考點：Part 1 圖片題可能描述辦公桌上放著 'workbooks'；Part 3/4 聽力中常出現在討論培訓物資準備或分發講義的場景。",
+        "答題建議：若題目提及 'educational materials' 或 'training handouts'，'workbook' 常是具體的選項之一，考生應能識別其與學習或訓練相關的屬性。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_41d3d30489c2",
+      "headword": "workday",
+      "normalizedHeadword": "workday",
+      "entryType": "word",
+      "definitionZh": "工作日，通常指星期一至星期五的工作天。",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workday",
+            "workdays"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_41d3d30489c2_ex_1",
+          "english": "Our office will be closed for the national holiday, so there will be no workdays next week.",
+          "chinese": "由於全國性節日，我們辦公室下週將關閉，沒有工作日。"
+        },
+        {
+          "id": "tw_w_41d3d30489c2_ex_2",
+          "english": "The project deadline is approaching, and we need to maximize productivity during these remaining workdays.",
+          "chinese": "專案截止日期即將到來，我們需要在剩餘的工作日中盡可能提高生產力。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'typical workday' (典型的工作日)、'an eight-hour workday' (八小時工作日) 及 'workday routine' (工作日例行公事)。",
+        "商業情境：常用於描述辦公室運作、員工班表或專案進度，例如 'during the workday' 意指在上班期間內發生的事項。",
+        "易混淆詞辨析：需區分 'workday' (工作日) 與 'weekday' (平日/週一至週五)。在排班或考量加班的情境下，workday 專指有工作的那一天，不論是否為週末。",
+        "聽力與閱讀考點：常出現在 Part 3 對話或 Part 4 簡短談話中，用來詢問特定人員的工作時數或日程安排；在 Part 7 閱讀中，則常出現於關於辦公室開放時間或休假政策的電子郵件或公告。",
+        "答題注意事項：當題目提到 'flex-time' (彈性工時) 或 'overtime' (加班) 時，需特別注意對 workday 長度的描述，這通常是推論題的關鍵點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_09aa75d39b37",
+      "headword": "worker",
+      "normalizedHeadword": "worker",
+      "entryType": "word",
+      "definitionZh": "勞工；工作人員；從事特定工作的人",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "worker",
+            "workers"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_09aa75d39b37_ex_1",
+          "english": "The company is looking for skilled workers to fill the vacant positions in the factory.",
+          "chinese": "該公司正在尋找熟練的勞工來填補工廠的空缺職位。"
+        },
+        {
+          "id": "tw_w_09aa75d39b37_ex_2",
+          "english": "The management team needs to ensure the workers' safety and well-being.",
+          "chinese": "管理團隊需要確保勞工的安全和福祉。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：在 TOEIC 中常出現 blue-collar worker (藍領工人)、white-collar worker (白領員工)、co-worker (同事) 以及 temporary worker (臨時工) 等組合。",
+        "商業情境應用：常用於人力資源 (HR) 招募、工廠安全準則或勞資關係討論。例如：'The company is hiring more part-time workers to handle the seasonal demand.'",
+        "易混淆詞辨析：worker 泛指所有勞動者，特別是基層或體力勞動者；employee 則是指受雇於公司的「雇員」，語氣較正式。此外，請注意 staff 為集合名詞，代表全體員工，不可用 a staff 形容個人，應使用 a staff member 或 a worker。",
+        "聽力與閱讀考點：在第一部分 (Photographs) 常用來描述工地或辦公室的人員動作；在第七部分 (Reading) 則常出現在 union (工會) 或 labor safety (勞工安全) 的公告中。",
+        "答題注意事項：當題目出現 colleague (同事) 時，可視為 co-worker 的同義詞替換。注意單複數形式，並留意 worker 與 working (工作中的) 或 workplace (職場) 在詞性上的區別。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_0c4aabd7ed35",
+      "headword": "workers",
+      "normalizedHeadword": "workers",
+      "entryType": "word",
+      "definitionZh": "勞工；工作人員（通常指從事體力勞動或技術性工作的員工）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workers"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_0c4aabd7ed35_ex_1",
+          "english": "The company is committed to providing a safe working environment for all workers.",
+          "chinese": "公司致力於為所有勞工提供安全的工作環境。"
+        },
+        {
+          "id": "tw_w_0c4aabd7ed35_ex_2",
+          "english": "The project manager needs to coordinate the work of the construction workers.",
+          "chinese": "專案經理需要協調建築工人（construction workers）的工作。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'factory workers' (工廠工人)、'temporary workers' (臨時工)、'skilled workers' (技術工人)、'remote workers' (遠端辦公者)。",
+        "商業情境應用：廣泛應用於人力資源、工廠管理、排班調度及勞工保險等討論中，常指代執行具體任務的勞動力。",
+        "易混淆詞辨析：'workers' 指從事各種勞動的人員；'employees' 為更正式且涵蓋範圍最廣的受僱者總稱；'staff' 則通常作為集合名詞指代「全體職員」，在多數情況下不可加 s。",
+        "考試考點：在 Part 7 閱讀理解中，常出現關於徵才廣告 (hiring notices) 或工廠安全規定 (safety regulations) 的內容，考生需快速識別其代表的對象。",
+        "答題注意事項：'worker' 為可數名詞，考試中常以複數形式 'workers' 出現，需注意主詞與動詞的一致性，並留意在聽力測驗中，workers 與 managers (管理者) 之間的對話角色關係。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_567f5fdbabb4",
+      "headword": "working condition",
+      "normalizedHeadword": "working condition",
+      "entryType": "phrase",
+      "definitionZh": "工作條件；工作環境（指影響員工工作效率和福祉的環境、福利、制度等）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "working condition",
+            "working conditions"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_567f5fdbabb4_ex_1",
+          "english": "The company is committed to improving working conditions for all employees, including better safety measures and flexible hours.",
+          "chinese": "公司致力於改善所有員工的工作條件，包括更完善的安全措施和彈性工作時間。"
+        },
+        {
+          "id": "tw_p_567f5fdbabb4_ex_2",
+          "english": "During the negotiation, the union representatives emphasized the importance of fair working conditions and competitive salaries.",
+          "chinese": "在談判過程中，工會代表強調了公平的工作條件和具有競爭力的薪資的重要性。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與慣用語：此詞組常與動詞 'improve' (改善)、'deteriorate' (惡化) 連用，或與形容詞 'harsh' (嚴苛的)、'optimal' (最佳的)、'hazardous' (危險的) 搭配。在考試中，'improve working conditions' 常是公司政策公告的主題。",
+        "商業情境與考點：在 TOEIC 閱讀 Part 7 中，此詞常出現在工廠視察報告或員工滿意度調查中，涉及燈光、通風、噪音水平及安全裝備等硬體環境，也包含工時等軟體制度。",
+        "易混淆詞辨析：需區分 'working conditions' 與 'terms and conditions'。前者專指工作環境與待遇狀況，後者則指一般合約中的 '條款與協議'。若在 Part 5 出現合約選詞，應根據語境判斷是環境還是法規條文。",
+        "聽力測驗陷阱：在 Part 3 或 Part 4 的對話中，說話者可能不會直接說 working conditions，而是透過提到 'renovation' (裝修) 或 'new ergonomic chairs' (新的人體工學椅) 來暗示工作條件的提升。",
+        "語法注意要點：雖然單數形式可行，但在多數商業文書中習慣使用複數 'working conditions' 來表示整體的工作環境。考生在進行 Part 5 詞彙填空或代名詞對應時，需特別留意其複數屬性。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_7be0305b641e",
+      "headword": "workout",
+      "normalizedHeadword": "workout",
+      "entryType": "word",
+      "definitionZh": "鍛鍊；訓練（通常指身體或技能）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "營運管理",
+      "partsOfSpeech": [
+        "noun",
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workout",
+            "workouts"
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "workout",
+            "works out",
+            "working out",
+            "worked out"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_7be0305b641e_ex_1",
+          "english": "The company encourages employees to take short workout breaks during the workday to improve productivity.",
+          "chinese": "公司鼓勵員工在工作日期間進行短時間的鍛鍊休息，以提高生產力。"
+        },
+        {
+          "id": "tw_w_7be0305b641e_ex_2",
+          "english": "Before the important presentation, she decided to do a quick workout to reduce stress.",
+          "chinese": "在重要的簡報前，她決定做一個快速的鍛鍊來減輕壓力。"
+        }
+      ],
+      "examTips": [
+        "詞性與拼寫辨析：'workout' (名詞) 指體能訓練或健身，而 'work out' (動詞短語) 則指進行運動、解決問題或計算金額。在 Part 5 填空題中，需根據空格位置判斷是名詞還是動詞。",
+        "常見搭配詞：常與形容詞連用，如 'intensive workout' (高強度訓練)、'daily workout' (每日健身)，或構成複合名詞如 'workout routine' (健身流程)。",
+        "商業情境應用：在多益閱讀 Part 7 中，此單字常出現在『員工福利』(Employee Benefits) 或『公司設施』相關的文章中，例如公司提供健身房設施以維持員工健康。",
+        "多義性掌握：動詞形式 'work out' 在商務對話中常指『協商解決方案』(work out a solution) 或『計算細節』(work out the details)，聽力中若聽到此詞組，通常與問題解決方案有關，而非僅限於健身。",
+        "聽力場景：常出現在 Part 1 的照片描述題中，描述人物在健身房或室外運動的場景，需注意動作與地點的對應。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_4a308d332c15",
+      "headword": "workouts",
+      "normalizedHeadword": "workouts",
+      "entryType": "word",
+      "definitionZh": "鍛鍊；訓練（通常指定期進行的身體活動）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "營運管理",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workouts"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_4a308d332c15_ex_1",
+          "english": "The company offers employees subsidized gym memberships to encourage regular workouts.",
+          "chinese": "公司提供員工健身房會員補助，以鼓勵定期鍛鍊。"
+        },
+        {
+          "id": "tw_w_4a308d332c15_ex_2",
+          "english": "To improve productivity, the manager suggested incorporating short workout breaks throughout the workday.",
+          "chinese": "為了提高生產力，經理建議在工作日穿插短暫的鍛鍊休息。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與同義詞代換：在 TOEIC 閱讀測驗中，'workout' 常與 'exercise session'、'physical training' 或 'fitness routine' 互換。常見搭配如 'strenuous workout' (高強度鍛鍊) 或 'daily workout' (每日運動)。",
+        "詞性與用法辨析：'workout' 為名詞，指一次運動的過程；而 'work out' 為動詞短語，除了表示『健身』外，在商務情境中更常用來表示『解決問題』(e.g., work out a solution) 或『計算出』(e.g., work out the budget)。考生需根據語法結構判斷是單一單字的名詞還是動詞短語。",
+        "商業與辦公室情境：此字常出現在 TOEIC 的員工福利 (Employee Benefits) 主題中，例如公司提供健身房會員 (gym memberships) 作為補貼，或是在討論『工作與生活平衡』(work-life balance) 的文章中提及運動時間的安排。",
+        "聽力與閱讀考點：在 Part 3 或 Part 4 的對話與簡短談話中，若聽到關於健身房設施 (fitness center facilities) 或課程表 (class schedule) 的調整，'workouts' 常是關鍵詞。答題時要注意對話者是否在討論更改運動時間或預約私人教練。",
+        "易混淆概念：注意 'workout' 與 'work' 的區別。'workout' 專指身體鍛鍊，不可用於指代辦公室的『工作任務』。在 Part 5 詞彙題中，若空格前有形容詞如 'intense' 或 'rewarding' 且語境涉及健康，應優先考慮 'workout'。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_56ad09f6ca53",
+      "headword": "workplace",
+      "normalizedHeadword": "workplace",
+      "entryType": "word",
+      "definitionZh": "工作場所；辦公環境",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workplace",
+            "workplaces"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_56ad09f6ca53_ex_1",
+          "english": "The company is investing in a modern workplace to improve employee productivity.",
+          "chinese": "公司正在投資現代化的工作場所，以提高員工生產力。"
+        },
+        {
+          "id": "tw_w_56ad09f6ca53_ex_2",
+          "english": "Employees are responsible for maintaining a clean and organized workplace.",
+          "chinese": "員工有責任維護整潔有序的工作場所。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：常與 safety (安全)、diversity (多樣性)、environment (環境) 或 harassment (騷擾) 連用，例如 workplace safety regulations 是閱讀測驗中極常見的主題。",
+        "商業情境使用：此單字通常出現在公司政策、員工手冊、或內部備忘錄中，涉及改善辦公室文化或宣布新規定。",
+        "相似詞辨析：注意 workplace (指整體工作場所/環境) 與 workspace (指具體的個人辦公空間或桌面) 的差別，以及 workforce (指全體員工/勞動力) 的區分。",
+        "考試常見考點：在 TOEIC Part 7 閱讀中，常出現關於 workplace etiquette (職場禮儀) 或 workplace renovation (辦公室裝修) 的公告訊息。",
+        "答題注意事項：在聽力測驗中，若提到 workplace，應立即聯想與 HR (人力資源部) 或 General Affairs (總務部) 相關的職能範圍。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_ea0c5836c467",
+      "headword": "worksheet",
+      "normalizedHeadword": "worksheet",
+      "entryType": "word",
+      "definitionZh": "工作表；練習題（通常用於課堂或培訓，包含練習題或活動，供學習者完成）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "worksheet",
+            "worksheets"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_ea0c5836c467_ex_1",
+          "english": "The training department distributed worksheets to all participants to reinforce the concepts.",
+          "chinese": "培訓部門將工作表發送給所有參與者，以強化概念。"
+        },
+        {
+          "id": "tw_w_ea0c5836c467_ex_2",
+          "english": "Please complete the worksheet by Friday to assess your understanding of the new software.",
+          "chinese": "請在星期五前完成工作表，以評估您對新軟體的理解。"
+        }
+      ],
+      "examTips": [
+        "常見搭配：常用 fill out, complete, 或 distribute worksheet，此單字頻繁出現在辦公室行政、員工培訓或研討會場景中。",
+        "情境辨析：在商業環境中，worksheet 可指「工作底稿」或「練習單」。在會計情境中，常指記錄帳目的草表；在公司培訓中，則是指供學員練習或填寫的講義。",
+        "易混淆詞辨析：需與 spreadsheet (電子表格) 區分。Spreadsheet 通常指 Excel 等軟體程式或大型試算表，而 worksheet 範疇較廣，可指紙本單頁或軟體中的單一工作表頁面。",
+        "考試重點：在多益聽力 Part 3 或閱讀 Part 7 中，worksheet 常與 handout (講義)、document (文件) 或 material (材料) 進行同義詞替換考查。",
+        "答題技巧：留意動詞關鍵字，若聽到 distribute、pass out 或 hand out，正確選項常與 worksheet 或 paper 相關；若聽到 enter data 或 save，則較常指向電腦內的電子工作表。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_cfe61afd53fa",
+      "headword": "workshop",
+      "normalizedHeadword": "workshop",
+      "entryType": "word",
+      "definitionZh": "工作坊；研討會（通常為實踐型課程，強調參與者實際操作或參與活動）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workshop",
+            "workshops"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_cfe61afd53fa_ex_1",
+          "english": "The company will hold a workshop on effective communication skills for all employees.",
+          "chinese": "公司將為所有員工舉辦一場關於有效溝通技巧的工作坊。"
+        },
+        {
+          "id": "tw_w_cfe61afd53fa_ex_2",
+          "english": "To improve team performance, we're planning a two-day workshop focused on project management.",
+          "chinese": "為了提升團隊績效，我們正在規劃一個為期兩天，專注於專案管理的研討會。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：常與動詞連用如 'conduct a workshop' (舉辦工作坊)、'attend a workshop' (參加工作坊)，介系詞通常接 on 以帶出主題，例如 'a workshop on time management'。",
+        "商業情境：在多益中多指『技能培訓』或『研習會』，常出現在員工福利或職涯發展課程的通知中。",
+        "相似詞辨析：與 seminar 相比，workshop 更強調實作與互動；與 conference 相比規模較小且主題較聚焦。",
+        "常見考點：在聽力與閱讀中常伴隨『行程變動』出題，例如原定講師無法出席或地點更改，或是考查工作坊的報名費用與截止日期。",
+        "答題注意：workshop 在少數情況下可指實體的『車間或手工廠』，但在商務英文情境中，絕大多數是指教育訓練類的研討活動，考生應優先從此方向解題。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_230dea735159",
+      "headword": "workspace",
+      "normalizedHeadword": "workspace",
+      "entryType": "word",
+      "definitionZh": "工作空間；辦公區域",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workspace",
+            "workspaces"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_230dea735159_ex_1",
+          "english": "The company is redesigning its workspaces to promote collaboration and innovation.",
+          "chinese": "該公司正在重新設計其工作空間，以促進協作和創新。"
+        },
+        {
+          "id": "tw_w_230dea735159_ex_2",
+          "english": "Employees are responsible for keeping their workspaces clean and organized.",
+          "chinese": "員工有責任保持其工作空間的清潔和整潔。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞組：'shared workspace' (共享工作空間)、'organized workspace' (整齊的工作區)、'flexible workspace' (彈性辦公空間) 以及 'digital workspace' (數位工作平台)。",
+        "商業使用情境：在 TOEIC 考試中，此字常用於辦公室規劃、共享辦公室預訂或提升員工生產力的討論中，涵蓋實體辦公位與線上協作軟體介面。",
+        "易混淆詞辨析：'Workplace' 泛指整體職場或建築物（如：Safety in the workplace），而 'Workspace' 則強調具體的、可供作業的空間或桌面。",
+        "考試常見考點：聽力測驗中，對話常圍繞如何重新佈置 'workspace' 以解決空間不足的問題；閱讀測驗則常出現關於 'co-working workspace' 的租賃廣告。",
+        "答題注意事項：注意 workspace 具備實體與數位雙重含意，若在科技或軟體情境中出現，通常指軟體內部的操作視窗或項目區塊。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_25ba5504afdb",
+      "headword": "workstation",
+      "normalizedHeadword": "workstation",
+      "entryType": "word",
+      "definitionZh": "工作站；辦公桌，通常配備電腦及相關設備。",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "workstation",
+            "workstations"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_25ba5504afdb_ex_1",
+          "english": "Each employee is provided with a modern workstation equipped with a high-performance computer.",
+          "chinese": "每位員工都配備一台配備高性能電腦的現代化工作站。"
+        },
+        {
+          "id": "tw_w_25ba5504afdb_ex_2",
+          "english": "The IT department is responsible for maintaining all workstations and ensuring they are functioning properly.",
+          "chinese": "資訊科技部門負責維護所有工作站，並確保其正常運作。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞組：常用於 'ergonomic workstation'（符合人體工學的工作站）、'assigned workstation'（指派的座位）或 'shared workstation'（共享辦公位置）。在辦公家具採購或辦公室空間規劃的閱讀題中極為常見。",
+        "商業情境應用：主要出現在 IT 設備升級通知、辦公室搬遷計畫或新進員工入職流程中，通常指包含電腦、顯示器及辦公桌的完整工作區域。",
+        "易混淆詞辨析：'workstation' 與 'desk' 的區別在於前者更強調具備技術設備的專業工作點；而 'cubicle' 指的是辦公室中由隔板組成的隔間，重點在於空間結構而非設備。",
+        "考試常見考點：聽力第一部分（照片描述題）中，若看到人物在辦公桌前作業，選項常出現 'The person is at their workstation'；閱讀部分則常考與技術支援或設備申領相關的短文。",
+        "答題注意事項：在聽力測驗中，'workstation' 有時會被用來指稱工廠或生產線上的特定作業崗位，考生需根據對話背景（辦公室 vs. 工廠）來判斷具體意涵。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_e7d0884af618",
+      "headword": "world",
+      "normalizedHeadword": "world",
+      "entryType": "word",
+      "definitionZh": "全球；世界各地；國際",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "營運管理",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "world",
+            "worlds"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_e7d0884af618_ex_1",
+          "english": "Our company aims to expand its operations into the global market.",
+          "chinese": "我們公司旨在將業務拓展到全球市場。"
+        },
+        {
+          "id": "tw_w_e7d0884af618_ex_2",
+          "english": "The conference brought together industry leaders from around the world.",
+          "chinese": "這次會議匯集了來自世界各地的業界領袖。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與商業用法：在多益考試中，'world' 常見於 'around the world' (全世界) 或 'world-class' (世界級的/頂尖的)，後者常用來形容公司產品或服務的品質。",
+        "聽力辨析考點：在聽力測驗中，考生需特別注意 'world' 與 'word' (單字/話語) 的發音差異。'world' 結尾有顯著的 /ld/ 音，常出現在 Part 1 描述地點或 Part 3/4 的背景介紹中。",
+        "閱讀情境應用：多益閱讀常出現 'real-world' (現實世界的/實際的) 作為形容詞，例如 'real-world experience' (實務經驗)，在徵才廣告或個人履歷中是關鍵詞。",
+        "擴展商業詞彙：注意其衍生詞 'worldwide'，在 Part 7 的公司新聞稿中，常與 'expansion' (擴張) 連用，描述企業在全球市場的佈局。",
+        "答題注意事項：當題目出現 'global' 時，選項中常會用 'world' 或 'international' 進行同義換照 (Paraphrasing)，務必具備這種詞彙轉換的敏感度。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_4063f5478494",
+      "headword": "worldwide",
+      "normalizedHeadword": "worldwide",
+      "entryType": "word",
+      "definitionZh": "全球性的；遍及全球的",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "營運管理",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "worldwide",
+            "more worldwide",
+            "most worldwide"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_4063f5478494_ex_1",
+          "english": "Our company has a worldwide network of distributors.",
+          "chinese": "我們公司在全球擁有龐大的經銷商網絡。"
+        },
+        {
+          "id": "tw_w_4063f5478494_ex_2",
+          "english": "The pandemic has impacted businesses worldwide.",
+          "chinese": "疫情對全球各家企業造成了影響。"
+        }
+      ],
+      "examTips": [
+        "詞性雙重身份：'worldwide' 可同時作為形容詞與副詞使用。在 Part 5 詞彙題中，注意其位置：放在名詞前為形容詞（如 worldwide reputation），放在動詞或句尾則為副詞（如 expand worldwide），且其前方不需加介係詞 'in'。",
+        "常見商業搭配詞：考試中常與企業擴張、物流或知名度相關詞彙連用，例如 'worldwide distribution' (全球分銷)、'worldwide offices' (全球辦事處) 以及 'worldwide shipping' (全球運送)。",
+        "易混淆詞辨析：與 'global' 相比，'worldwide' 更強調「遍及全球」的範圍感；與 'international' (國際的) 相比，'worldwide' 指的是整個世界而非僅是國與國之間。在閱讀測驗中，若文中提到公司有 'worldwide presence'，通常對應選項中的 'global reach' 或 'international scale'。",
+        "聽力與閱讀考點：在 Part 7 的公司介紹或新聞稿中，出現 'worldwide' 往往是為了強調公司的規模與影響力，這常成為推論題的線索（例如推論該公司具備處理跨國事務的能力）。",
+        "答題注意事項：考生常誤用介係詞，請記住 'distributed worldwide' 是正確的，而 'distributed in worldwide' 是錯誤用法，'worldwide' 本身已隱含了地點範圍。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_5d2f96d462a2",
+      "headword": "worried",
+      "normalizedHeadword": "worried",
+      "entryType": "word",
+      "definitionZh": "擔憂；焦慮，對某事感到不安",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "adjective",
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "worried",
+            "more worried",
+            "most worried"
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "worried",
+            "worries",
+            "worrying"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_5d2f96d462a2_ex_1",
+          "english": "The project manager is worried about the delay in delivering the final report.",
+          "chinese": "專案經理擔心最終報告的延遲交付。"
+        },
+        {
+          "id": "tw_w_5d2f96d462a2_ex_2",
+          "english": "Don't worry about the presentation; you're well-prepared.",
+          "chinese": "別擔心簡報，你準備得很充分。"
+        }
+      ],
+      "examTips": [
+        "介系詞搭配：最常見的用法是 'worried about'，在多益 Part 5 的填空題中，常會考形容詞與介系詞的固定搭配。",
+        "分詞形容詞辨析：必須區分 'worried' (形容人的感覺：感到擔憂的) 與 'worrying' (形容事物的性質：令人擔憂的)，這在語法題中是高頻考點。",
+        "商業情境轉換：在正式的商務書信（Part 7）中，'concerned' 常用來作為 'worried' 的高級替代詞，表示對項目進度、品質或預算的關注與擔憂。",
+        "聽力測驗線索：在 Part 3 或 Part 4 聽力中，當說話者提到 'I'm a bit worried' 時，通常是提出問題（problem）或障礙（obstacle）的開端，這對於回答『說話者面臨什麼困難』的題目至關重要。",
+        "語氣辨識：'worried' 常出現在表示負面情緒或面臨挑戰的對話中，考生應注意其後的內容，通常會伴隨著尋求建議（suggestion）或解決方案（solution）的對話流程。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_40fb94fbd5af",
+      "headword": "worries",
+      "normalizedHeadword": "worries",
+      "entryType": "word",
+      "definitionZh": "擔憂、顧慮；令人擔憂的事物",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "worries"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_40fb94fbd5af_ex_1",
+          "english": "The manager needs to address the team's worries about the upcoming deadline.",
+          "chinese": "經理需要解決團隊對即將到來的截止日期的擔憂。"
+        },
+        {
+          "id": "tw_w_40fb94fbd5af_ex_2",
+          "english": "Don't let these minor worries distract you from your main objectives.",
+          "chinese": "不要讓這些小擔憂分散你對主要目標的注意力。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：常用於 'express worries about' (表達對...的擔憂) 或 'cause worries' (引起憂慮)，在商務報告中亦常見 'financial worries' (財務擔憂)。",
+        "商業情境：典型用法包含針對市場波動、預算限制或專案進度落後所表達的擔憂，常出現在會議或備忘錄中。",
+        "易混淆詞辨析：'worries' 與 'concerns' 意思相近，但在 TOEIC 正式商務溝通中，'concerns' 的出現頻率更高且語氣較為專業中性；'worries' 則帶有較強的情感色彩。",
+        "閱讀與聽力考點：TOEIC 閱讀測驗 Part 7 常出現替換詞考題，原文若使用 'worries'，選項中可能會出現 'issues'、'concerns' 或 'anxieties' 作為正確答案。",
+        "語法結構注意：考生需區分 'worries' 作為「複數名詞」與「動詞第三人稱單數」的用法。例如：'Management's worries (名詞) are justified' 與 'The manager worries (動詞) about the budget'，這在 Part 5 詞彙與語法題中是常見考點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_34bf704656a3",
+      "headword": "worry",
+      "normalizedHeadword": "worry",
+      "entryType": "word",
+      "definitionZh": "擔憂；擔心；焦慮",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "worry",
+            "worries",
+            "worrying",
+            "worried"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "worry",
+            "worries"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_34bf704656a3_ex_1",
+          "english": "Don't worry about the presentation; you're well-prepared.",
+          "chinese": "別擔心簡報，你準備得很充分。"
+        },
+        {
+          "id": "tw_w_34bf704656a3_ex_2",
+          "english": "The company is worried about the declining sales figures.",
+          "chinese": "公司擔心銷售數字持續下降。"
+        }
+      ],
+      "examTips": [
+        "常見搭配與語法結構：在多益考試中，worry 最常見的用法是搭配介系詞 about，構成 'worry about something/someone'。此外，形容詞形式 'worried' 常出現在被動結構中，如 'be worried about'，表示對某事感到憂慮。",
+        "商業情境中的應用：在多益聽力 Part 3 或 Part 4 中，worry 常出現在辦公室對話，用來表達對專案進度 (project progress)、預算 (budget) 或缺貨 (out of stock) 的擔憂。例如：'I'm worried that we won't meet the deadline.'",
+        "近義詞辨析與替換：在閱讀測驗中，worry 常與 concern 互為替換詞。雖然 worry 較口語，但在商務書信中，'concerns' 常用於表達相同的負面考量。當題目問到 'What is the speaker's concern?' 時，聽力文本中可能出現的是 'I worry about...'。",
+        "詞性變化考點：注意 worry 作為動詞與名詞的差別，以及形容詞 worried (形容人的感受) 與 worrying (形容令人生憂的事物) 的用法區分。在 Part 5 文法題中，若空格前有 be 動詞且主詞為人，應選 worried。",
+        "聽力應試技巧：在聽力對話中，一旦聽到 'Don't worry'，通常代表說話者正在提供解決方案或保證，這往往是 Part 3 '建議採取的行動 (What does the man suggest?)' 題型的關鍵提示點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_d38dd5b3f700",
+      "headword": "worrying",
+      "normalizedHeadword": "worrying",
+      "entryType": "word",
+      "definitionZh": "令人擔憂的；引起焦慮的",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "worrying",
+            "more worrying",
+            "most worrying"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_d38dd5b3f700_ex_1",
+          "english": "The company's declining sales figures are a worrying trend.",
+          "chinese": "公司銷售額下降的趨勢令人擔憂。"
+        },
+        {
+          "id": "tw_w_d38dd5b3f700_ex_2",
+          "english": "The project's budget overruns are a worrying sign that we need to reassess our strategy.",
+          "chinese": "專案預算超支是一個令人擔憂的信號，我們需要重新評估我們的策略。"
+        }
+      ],
+      "examTips": [
+        "分辨 -ing 與 -ed 形容詞：'worrying' 用於描述事物本身具有『令人擔憂』的特質（如 worrying trend），而 'worried' 用於描述人的心理狀態（如 worried employees），在 Part 5 文法題中是常見考點。",
+        "常見搭配詞：在商業閱讀中常出現 'a worrying development' (令人擔憂的進展) 或 'worrying signs of inflation' (通貨膨脹的憂慮跡象)。",
+        "同義詞辨析：'worrying' 與 'concerning'、'alarming' 意思接近，但在正式商業報告中，'concerning' 最為常用，而 'alarming' 語氣最強烈。",
+        "聽力測驗情境：在 Part 3 或 Part 4 的對話與短文中，若提到業績下滑或預算不足，說話者常會使用此詞來表達對公司未來的憂慮。",
+        "答題注意事項：作答時需注意修飾對象，若修飾語為主詞（通常是非生物），應選 -ing 結尾的 'worrying'；若修飾人受影響後的感受，則選 'worried'。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_63bd9edef43a",
+      "headword": "would",
+      "normalizedHeadword": "would",
+      "entryType": "word",
+      "definitionZh": "（will 的過去式）將會；願意；想要；慣於；表示委婉的請求、建議、假定或條件",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "modal verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "modal verb",
+          "forms": [
+            "would"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_63bd9edef43a_ex_1",
+          "english": "I would like to book a table for two this evening.",
+          "chinese": "我今晚想預訂一個兩人桌。"
+        },
+        {
+          "id": "tw_w_63bd9edef43a_ex_2",
+          "english": "When I was a student, I would often study late into the night.",
+          "chinese": "當我是學生的時候，我經常會熬夜讀書。"
+        }
+      ],
+      "examTips": [
+        "商業禮貌與請求：在多益聽力 Part 2 與閱讀商務書信中，would 常取代 will 以增加禮貌性。常見句型如「Would you please...?」或「I would like to...」，比起 want 更加專業，是考生識別正式語氣的關鍵。",
+        "掌握條件句型 (Conditionals)：多益閱讀常考假設語氣。請記住「If + 主詞 + 過去式動詞, 主詞 + would + 原形動詞」表示與現狀相反的假設，以及「would have + 過去分詞」表示對過去事實的假設或後悔。",
+        "常見搭配詞組：熟記「would rather + 原形動詞」(寧願) 與「would prefer to + 原形動詞」(較偏好)，這類用法常出現在辦公室對話、議程更換或選擇餐廳的情境中。",
+        "過去的未來 (Future in the Past)：在轉述語句或過去發生的商務報告中，若敘述當時對未來的預期，will 必須轉為 would。例如：「The manager announced that the company would expand.」。",
+        "辨析與 will 的差異：will 用於肯定的承諾或即時的決定，而 would 則側重於假設、禮貌請求或過去的習慣。在填空題中，若子句動詞為過去式，應優先考慮 would。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_fb430599cfa2",
+      "headword": "wrap",
+      "normalizedHeadword": "wrap",
+      "entryType": "word",
+      "definitionZh": "包覆；包裹；包裝；（文件等）整理歸檔",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "採購與物流",
+      "partsOfSpeech": [
+        "verb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "wrap",
+            "wraps",
+            "wrapping",
+            "wrapped"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wrap",
+            "wraps"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_fb430599cfa2_ex_1",
+          "english": "The shipping department needs to wrap each fragile item securely to prevent damage during transit.",
+          "chinese": "運輸部門需要將每個易碎物品安全地包覆，以防止運輸過程中損壞。"
+        },
+        {
+          "id": "tw_w_fb430599cfa2_ex_2",
+          "english": "Please wrap up the project report and submit it to the manager by the end of the day.",
+          "chinese": "請整理好專案報告，並在今天結束前提交給經理。"
+        }
+      ],
+      "examTips": [
+        "最常見的商業用法是動詞短語「wrap up」，意指「結束」或「圓滿完成」，常在會議或專案結尾出現，如「wrap up a meeting」。",
+        "在多益聽力 Part 3 & 4 中，當講者說出「Let's wrap this up」時，通常暗示對話即將結束，後面往往跟隨總結性資訊或接下來的行動計畫。",
+        "注意易混淆詞辨析：需區分「wrap」（包裝、結束）與發音相近的「rap」（敲擊、饒舌）及拼寫相近的「warp」（扭曲、變形）。",
+        "常見搭配詞組包含「gift wrapping service」（禮品包裝服務），常出現在零售、購物或服務類的閱讀測驗短文中。",
+        "「wrap」也可作為名詞，片語「That's a wrap」在多益模擬情境中可用於表達工作任務已完成，這屬於非正式但常用的商務口語。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_839640454dba",
+      "headword": "wrapping",
+      "normalizedHeadword": "wrapping",
+      "entryType": "word",
+      "definitionZh": "包裝；包裹；包覆",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "採購與物流",
+      "partsOfSpeech": [
+        "verb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "wrapping",
+            "wraps",
+            "wrapped"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wrapping",
+            "wrappings"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_839640454dba_ex_1",
+          "english": "The shipping department is responsible for the wrapping and labeling of all outgoing packages.",
+          "chinese": "運輸部門負責所有發貨包裹的包裝和標籤。"
+        },
+        {
+          "id": "tw_w_839640454dba_ex_2",
+          "english": "Please ensure the fragile items are securely wrapped to prevent damage during transit.",
+          "chinese": "請確保易碎物品被妥善包裝，以防止運輸途中損壞。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與商業情境：在多益測驗中，wrapping 常與禮品或物流相關字詞結合，如 'gift wrapping' (禮品包裝) 或 'plastic wrapping' (塑膠包裝)。在商業訂單或收據中，常出現 'wrapping service' (包裝服務) 作為額外加價項目。",
+        "聽力測驗 Part 1 考點：常出現在照片描述題中，描述人物正在進行的動作，例如 'The man is wrapping a package' (男子正在包裝包裹)，考生需區分正在包裝與已經包裝好的狀態。",
+        "慣用語辨析：注意動詞片語 'wrap up' 在多益辦公室情境中非常常見，意指 '圓滿結束' 或 '完成'，例如 'wrap up the meeting' (結束會議) 或 'wrap up the deal' (完成交易)。",
+        "易混淆詞辨析：需區別 'wrapping' (正在包裝的動作或包裝材料) 與 'wrapper' (指糖果、零食的包裝紙)。此外，也要注意拼寫相近的 'warping' (變形、扭曲)，兩者意義完全不同。",
+        "閱讀測驗注意事項：在閱讀 Part 7 的電子郵件或通知中，若提到包裝，通常與產品損壞 (damaged packaging) 或退貨政策中有關包裝完整的規定相關。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_ad502279b904",
+      "headword": "wrist",
+      "normalizedHeadword": "wrist",
+      "entryType": "word",
+      "definitionZh": "手腕；腕部",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wrists"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_ad502279b904_ex_1",
+          "english": "She wears a beautiful watch on her left wrist.",
+          "chinese": "她左手腕戴著一塊漂亮的手錶。"
+        },
+        {
+          "id": "tw_w_ad502279b904_ex_2",
+          "english": "The doctor examined the patient's injured wrist.",
+          "chinese": "醫生檢查了病患受傷的手腕。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：在多益中常出現與辦公環境相關的詞彙，如 'wrist rest' (靠腕墊) 常用於描述人體工學辦公設備，或是 'wristwatch' (手錶) 常用於 Part 1 照片描述題。",
+        "照片描述題 (Part 1) 考點：經常出現描述人物動作或穿戴的句子，例如 'A woman is wearing a watch on her wrist' (一名女子在手腕上戴著手錶) 或 'A man is resting his wrist on a cushion' (一名男子將手腕靠在墊子上)。",
+        "易混淆詞辨析：特別注意 'wrist' (手腕) 與 'waist' (腰部) 的發音及拼寫差異。聽力測驗中，考生常因發音相近而誤判身體部位或穿戴配件的位置。",
+        "職場健康情境：在閱讀測驗的通告或健康建議中，可能提及重複性勞損 (RSI)，建議員工調整姿勢以減輕 'wrist pain' (手腕疼痛) 或提供人體工學滑鼠以保護手腕。",
+        "答題注意事項：若在聽力題中聽到有關穿戴珠寶或配件的描述，需仔細觀察照片中的手腕位置是否確實有手環或手錶等物品，避免掉入視覺陷阱。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_cd9db3d1546d",
+      "headword": "wristwatch",
+      "normalizedHeadword": "wristwatch",
+      "entryType": "word",
+      "definitionZh": "腕錶；手錶",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "wristwatches"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_cd9db3d1546d_ex_1",
+          "english": "He glanced at his wristwatch to check the time before the meeting started.",
+          "chinese": "會議開始前，他瞥了一眼腕錶以確認時間。"
+        },
+        {
+          "id": "tw_w_cd9db3d1546d_ex_2",
+          "english": "She wears a vintage leather wristwatch that complements her style.",
+          "chinese": "她戴著一隻復古皮革腕錶，與她的風格相得益彰。"
+        }
+      ],
+      "examTips": [
+        "照片描述題 (Part 1) 常見情境：在多益聽力第一部分，'wristwatch' 常出現在描述人物動作的選項中。例如：'A man is checking his wristwatch' (一名男子正在看手錶) 或 'She is putting on her wristwatch' (她正在戴上手錶)。",
+        "同義替換 (Paraphrasing)：在聽力或閱讀測驗中，'wristwatch' 經常被簡化為 'watch'，或者與 'checking the time' (確認時間) 進行概念替換，考生應對這類轉換保持敏感。",
+        "易混淆詞辨析：需區分 'wristwatch' (手錶) 與 'clock' (時鐘)。'Clock' 通常指牆上的掛鐘或桌鐘；另外要區分 'watch' 做為動詞 (觀看) 與名詞 (手錶) 的用法，避免在 Part 2 聽力中被誤導。",
+        "常見搭配詞 (Collocations)：熟悉 'wear a wristwatch' (戴著手錶)、'set a wristwatch' (調手錶時間) 以及 'digital/analog wristwatch' (電子/指針式手錶) 等用法，有助於快速理解題目背景。",
+        "商業語境關聯：此單字常出現在關於準時 (punctuality) 或商務會議的情境。例如在對話中提到 'glance at one's wristwatch' (瞥一眼手錶)，通常暗示該角色正在趕時間或在意進度落後。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_2d0b6710b4e6",
+      "headword": "write",
+      "normalizedHeadword": "write",
+      "entryType": "word",
+      "definitionZh": "書寫；記錄；撰寫",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "write",
+            "writes",
+            "writing",
+            "wrote",
+            "written"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_2d0b6710b4e6_ex_1",
+          "english": "Please write a formal email to the vendor regarding the delayed shipment.",
+          "chinese": "請撰寫一封正式電子郵件給供應商，說明貨物延遲的情況。"
+        },
+        {
+          "id": "tw_w_2d0b6710b4e6_ex_2",
+          "english": "The secretary is responsible for writing meeting minutes and distributing them to the attendees.",
+          "chinese": "秘書負責記錄會議紀要並發送給與會者。"
+        }
+      ],
+      "examTips": [
+        "常見搭配：常用於商業文書情境，如 write a proposal (撰寫提案)、write a report (寫報告)、write a recommendation (寫推薦信)。",
+        "商業用法：在多益職場情境中，常指正式的溝通行為，例如 write to the manager 或 write to the human resources department，且 write down 常出現在聽力對話中，表示『記錄下重要資訊』。",
+        "易混淆辨析：注意其同音異義字 right (權利/正確) 與 rite (儀式)，應根據上下文邏輯判斷；此外，會計情境中 write off (銷帳/註銷資產) 屬於進階商用片語。",
+        "考試考點：Part 5 常考動詞時態變化 (write/wrote/written)，或被動語態如 'The report was written by...'；在 Part 7 閱讀測驗中，文章開頭常出現 'I am writing to...' 來交代寫信的目的。",
+        "答題建議：聽力測驗中若聽到 'I will write it down'，通常暗示後續會進行記錄或確認動作，這是一個重要的解題線索。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_f9836df5a22d",
+      "headword": "write down",
+      "normalizedHeadword": "write down",
+      "entryType": "phrase",
+      "definitionZh": "記錄下來；寫下（重要資訊或指示）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "write down",
+            "writes down",
+            "writing down",
+            "wrote down",
+            "written down"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_f9836df5a22d_ex_1",
+          "english": "Please write down the meeting minutes and distribute them to all attendees.",
+          "chinese": "請記錄會議紀要並發送給所有與會者。"
+        },
+        {
+          "id": "tw_p_f9836df5a22d_ex_2",
+          "english": "Write down your ideas for the new marketing campaign; we'll review them later.",
+          "chinese": "請記錄你對新行銷活動的想法，稍後我們會審閱。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：常用於 write down instructions (記下指示)、write down details (記下細節) 或 write down a phone number。",
+        "商業情境：在會議、電話溝通或教育訓練中頻繁出現，指「筆錄」或「記下資訊」，例如：Could you write down the delivery address?",
+        "相似詞辨析：與 take notes (做筆記)、jot down (草草記下) 意義相近，但需注意不要與 write off (報廢、勾銷) 混淆，後者多用於會計或放棄某事。",
+        "聽力與閱讀考點：在 Part 1 圖片描述中，若看到人物正拿筆在紙上書寫，write down 與 record 是常見描述詞；在 Part 3 簡短對話中，常做為「接下來要做什麼」的正確選項。",
+        "答題技巧：在聽力測驗中，若一方要求另一方「remember」或「keep a record」，正確答案常會以 write down 做為同義詞替換。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_6582d21ac5ca",
+      "headword": "writer",
+      "normalizedHeadword": "writer",
+      "entryType": "word",
+      "definitionZh": "撰稿人；作家，通常指專業的寫作者或記者。",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "writer",
+            "writers"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_6582d21ac5ca_ex_1",
+          "english": "Our company is seeking a skilled writer to create engaging marketing content.",
+          "chinese": "我們公司正在尋找一位技巧嫻熟的撰稿人，以創建引人入勝的行銷內容。"
+        },
+        {
+          "id": "tw_w_6582d21ac5ca_ex_2",
+          "english": "The writer spent weeks researching the topic before drafting the report.",
+          "chinese": "撰稿人在撰寫報告之前花了幾週的時間研究這個主題。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：在TOEIC中常出現 'freelance writer' (特約作家/自由撰稿人)、'technical writer' (技術文件撰寫員) 或 'staff writer' (正職編輯)，考生需熟悉這些職位描述。",
+        "商業情境應用：通常出現在招聘廣告、合約簽署或出版業相關的文章中。例如在應徵內容創作職位時，常提及寫作經驗與截止日期 (deadlines) 的控管。",
+        "易混淆詞辨析：需區分 'writer' (通稱寫作者)、'author' (通常指已出版書籍的作者/創始者) 以及 'editor' (負責校對與修改內容的編輯)，在閱讀測驗中需從上下文判斷該角色的職責。",
+        "聽力與閱讀考點：常出現在多重選擇題中，詢問某篇信件或文章的作者職務為何。注意關鍵字如 'manuscript' (手稿)、'publish' (出版) 或 'article' (文章) 來判定身份。",
+        "答題注意事項：雖然 'writer' 是基礎單字，但在TOEIC中可能與其工作成果（如 'proposals', 'reports', 'manuals'）連結，答題時應注意動詞的搭配，如 'drafting a report' (草擬報告) 而非僅限於文學創作。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_b5ff7ff070e9",
+      "headword": "writers",
+      "normalizedHeadword": "writers",
+      "entryType": "word",
+      "definitionZh": "作家；撰寫者（通常指專業或頻繁寫作的人）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "writers"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_b5ff7ff070e9_ex_1",
+          "english": "The company is seeking experienced writers to create marketing materials.",
+          "chinese": "該公司正在尋找有經驗的作家來製作行銷材料。"
+        },
+        {
+          "id": "tw_w_b5ff7ff070e9_ex_2",
+          "english": "Several writers contributed articles to the company newsletter.",
+          "chinese": "幾位作家為公司電子報投稿了文章。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'freelance writers' (特約作家)、'technical writers' (技術文件編寫員) 及 'staff writers' (正職編採人員)，常用於徵才啟事或公司內部介紹。",
+        "商業情境：在 TOEIC 閱讀 Part 7 的新聞報導或特稿中，'writers' 常出現在文章首尾的作者標註中。",
+        "相似詞辨析：注意區分 'writer' (寫作者)、'author' (書籍作者/原創者) 與 'editor' (編輯)，TOEIC 閱讀中常透過職稱來測試對組織分工的理解。",
+        "聽力常見考點：在 Part 2 的 WH- 問句中，若問到 'Who drafted the proposal?'，正確答案可能指向 'The technical writers'。",
+        "語法注意：'writers' 為可數名詞複數型，在 Part 5 填充題中需注意主動詞一致性，確保搭配複數動詞或對應的代名詞 (they/their)。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_d4e2c191793e",
+      "headword": "writes",
+      "normalizedHeadword": "writes",
+      "entryType": "word",
+      "definitionZh": "書寫；撰寫（文件、信件等）",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "writes",
+            "writing",
+            "wrote",
+            "written"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_d4e2c191793e_ex_1",
+          "english": "The marketing team needs to write a compelling proposal to secure the contract.",
+          "chinese": "行銷團隊需要撰寫一份引人注目的提案，以確保簽訂合約。"
+        },
+        {
+          "id": "tw_w_d4e2c191793e_ex_2",
+          "english": "Please write a brief email summarizing the key points of the meeting.",
+          "chinese": "請撰寫一封簡短的電子郵件，總結會議的重點。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：writes a proposal (撰寫提案)、writes a memorandum (撰寫備忘錄)、writes an evaluation (撰寫評估報告)，這些多出現在行政流程描述中。",
+        "商業情境應用：常用於描述職位描述 (Job Description) 中的例行公事，例如描述某位職員負責撰寫週報或合約草案。",
+        "易混淆詞辨析：聽力中須區分同音詞 right (權利/正確) 及 rite (典禮)；閱讀中需辨識 writes (現在式單數) 與 wrote (過去式) 的時態差異。",
+        "閱讀測驗考點：Part 5 常考主詞動詞一致性，若主詞是單數專有名詞 (如公司名) 或職稱 (如 The CEO)，動詞必須使用加了 s 的 writes。",
+        "答題注意事項：注意語態變化，雖然 writes 是主動態，但在 Part 6 或是閱讀分析中，常會轉化為被動語態 is written by，需靈活判斷動作發出者。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_772ec96ae99f",
+      "headword": "writing pad",
+      "normalizedHeadword": "writing pad",
+      "entryType": "phrase",
+      "definitionZh": "書寫墊；便條墊，通常用於辦公室或會議中快速記錄。",
+      "starRating": 3,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "writing pad",
+            "writing pads"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_772ec96ae99f_ex_1",
+          "english": "Could you pass me a writing pad and a pen, please? I need to jot down some notes.",
+          "chinese": "能請你傳給我一張書寫墊和一支筆嗎？我需要快速記錄一些筆記。"
+        },
+        {
+          "id": "tw_p_772ec96ae99f_ex_2",
+          "english": "The secretary prepared writing pads for each attendee at the workshop.",
+          "chinese": "秘書為研討會的每位參與者都準備了書寫墊。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與同義詞：常與 legal (法律規定的尺寸)、yellow (黃色便條紙) 連用，同義詞包含 notepad 或 memo pad。在 TOEIC 中，這類物品常被歸類在 stationery (文具) 或 office supplies (辦公用品) 的範疇下。",
+        "商業情境應用：主要出現於辦公室日常、會議記錄或文具採購清單。例如：'Could you grab a writing pad from the supply closet?'。",
+        "易混淆詞辨析：需區分 writing pad (紙質便條本) 與 clipboard (帶夾子的硬板) 及 tablet (平板電腦)。雖然 tablet 早期也指寫字板，但在現代 TOEIC 考題中多指電子設備。",
+        "考試出題重點：在 Part 1 照片描述中，常描述人物正在 'writing on a pad' 或 'taking notes'。在 Part 3 或 Part 4 的對話與短文裡，常出現在辦公物資短缺 (running out of supplies) 或補貨通知的情境中。",
+        "答題注意事項：TOEIC 聽力中常使用『上位詞』進行替換，若題目聽到 writing pad，選項中出現 office supplies 時，應直覺聯想其關聯性。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_f8292e620408",
+      "headword": "wrong",
+      "normalizedHeadword": "wrong",
+      "entryType": "word",
+      "definitionZh": "錯誤的；不正確的；錯誤答案",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adjective",
+        "adverb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "wrong",
+            "wroinger",
+            "wrongest"
+          ]
+        },
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "wrong"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_f8292e620408_ex_1",
+          "english": "I'm afraid there's been a wrong entry in the invoice.",
+          "chinese": "恐怕發票上有錯誤的資料。"
+        },
+        {
+          "id": "tw_w_f8292e620408_ex_2",
+          "english": "You're wrong to assume that the project is already completed.",
+          "chinese": "你認為專案已經完成是錯誤的。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與情境：在 TOEIC 聽力中常出現 'Something is wrong with...' 表示設備故障或流程出錯，或是使用 'go wrong' 表示計畫不順遂。",
+        "辦公室情境應用：常用於電話對話場景，例如 'dial the wrong number' (撥錯電話) 或 'wrong extension' (分機號碼錯誤)，這常是聽力測驗 Part 3 對話的開端。",
+        "物流與客戶服務：在閱讀測驗 Part 7 的投訴電郵中，'received the wrong item' (收到錯誤商品) 是極高頻的考點，通常伴隨著要求退貨或更換的後續題目。",
+        "易混淆詞辨析：'wrong' 與 'incorrect' 意義相近，但 'incorrect' 較常用於描述數據、公式或答案的錯誤，而 'wrong' 在口語中應用範圍更廣，包括行為、道德或功能上的不正常。",
+        "聽力與閱讀考點：當在題目中聽到或讀到 'wrong' 時，應立即識別出這是一個 'Problem' (問題點)，在 TOEIC 邏輯中，題目隨後往往會考到解決方案 (Solution) 或接下來的動作 (Next step)。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_4e873f411c14",
+      "headword": "yard",
+      "normalizedHeadword": "yard",
+      "entryType": "word",
+      "definitionZh": "庭院；碼數（英制單位）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "物業與不動產",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yard",
+            "yards"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_4e873f411c14_ex_1",
+          "english": "The company is planning to expand its operations by purchasing a property with a large yard.",
+          "chinese": "公司計畫透過購買擁有大庭院的物業來擴展其業務。"
+        },
+        {
+          "id": "tw_w_4e873f411c14_ex_2",
+          "english": "The landscaping team will measure the yard to determine the amount of grass seed needed.",
+          "chinese": "景觀團隊將測量庭院，以確定所需的人工草坪數量。"
+        }
+      ],
+      "examTips": [
+        "常見於多益聽力第一部分的圖片描述題，常指戶外儲放空間，例如：lumber yard (木材廠)、shipyard (造船廠) 或 train yard (調車場)。",
+        "在商業物流情境中，yard 常指貨物裝卸或存放的露天場地，需與 warehouse (倉庫) 區分，前者多指室外，後者多指室內。",
+        "易混淆詞辨析：yard vs. garden，garden 多指種植花草的庭園，而 yard 在美式英語中泛指建築物周圍的空地，在多益中常出現 'mowing the yard' (修剪草坪) 的描述。",
+        "常見搭配詞組包含 front yard (前院)、back yard (後院) 及 yard sale (庭院拍賣)，後者偶爾出現在閱讀測驗的公告或廣告中。",
+        "答題注意事項：注意聽力中可能出現與 yard 韻母相似的詞彙如 board 或 hard，需根據上下文情境判斷是否指涉具體空間。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_10f888c9c8d3",
+      "headword": "yeah",
+      "normalizedHeadword": "yeah",
+      "entryType": "word",
+      "definitionZh": "表示肯定、同意或肯定的口語表達。",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "interjection",
+        "adverb"
+      ],
+      "wordForms": [],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_10f888c9c8d3_ex_1",
+          "english": "Client: Do you confirm the delivery date?  Representative: Yeah, it's scheduled for next Tuesday.",
+          "chinese": "客戶：您確認交貨日期嗎？ 代表：是的，已排定下週二交貨。"
+        },
+        {
+          "id": "tw_w_10f888c9c8d3_ex_2",
+          "english": "Manager: Are you ready to start the presentation? Employee: Yeah, I'm all set.",
+          "chinese": "經理：您準備好開始簡報了嗎？ 員工：是的，我已準備就緒。"
+        }
+      ],
+      "examTips": [
+        "語氣辨析：'yeah' 是 'yes' 的口語非正式形式，主要出現在多益聽力測驗（Part 3 與 Part 4）的日常對話中，表示認同或確認。在閱讀測驗（Part 7）的正式書信中幾乎不出現，了解其非正式性有助於判斷對話者之間的親近程度。",
+        "轉折訊號：在多益聽力中，說話者常使用 'Yeah, but...' 作為委婉反駁的開端。當考生聽到這個組合時，應特別留意 but 之後的內容，這通常是題目真正的考點所在（例如解釋為什麼某計畫無法執行）。",
+        "搭配功能：常與簡單的確認句連用，如 'Yeah, I think so' 或 'Yeah, sure'。在多益聽力中，這類回應通常用來確認行程或接受對方的提議，是解答『後續行動』題型的關鍵訊號。",
+        "情境判斷：'yeah' 常出現在同事間的休閒對話或電話中，與 'absolutely' 或 'certainly' 等正式確認詞相比，'yeah' 的語氣較為隨意。掌握此點有助於考生在 Part 3 快速建立對話的情境脈絡。",
+        "易混淆辨析：考生需區分 'yeah' 與語感相近的 'ya'（更隨意）或 'yep'。在多益考試中，這些詞彙功能相同，皆為肯定的口語應答，答題時只需專注於其後續補充的資訊即可。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_cb570566ad9c",
+      "headword": "year",
+      "normalizedHeadword": "year",
+      "entryType": "word",
+      "definitionZh": "年；年份；學年；年度",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "years"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_cb570566ad9c_ex_1",
+          "english": "The company reported record profits this year.",
+          "chinese": "公司今年實現了創紀錄的利潤。"
+        },
+        {
+          "id": "tw_w_cb570566ad9c_ex_2",
+          "english": "He has been working here for five years.",
+          "chinese": "他已經在這裡工作五年了。"
+        }
+      ],
+      "examTips": [
+        "常見商務搭配詞：'fiscal year' (會計年度) 與 'financial year' 常出現在財務報表、預算編列的情境中；'year-end' (年終) 常與 'bonus' (獎金) 或 'evaluation' (考核) 搭配。",
+        "商業情境用法：在 TOEIC 閱讀的圖表題或商務報導中，經常出現 'year-on-year' (YoY, 與去年同期相比) 用來分析業績增長或衰退。",
+        "相似詞辨析：'annual' 為形容詞，指『每年的』，常修飾 'report' 或 'meeting'；'anniversary' 則是名詞，指『週年紀念日』。",
+        "聽力考點：注意區分 'fiscal year' 與 'calendar year' (日曆年)，前者不一定從一月開始，這在聽力測驗關於截止日期的安排中是常見陷阱。",
+        "介系詞固定用法：'by the end of the year' 指在年底前，'throughout the year' 指整年度期間，'per year' 則常在薪資或合約條件中出現，需正確判讀時間限制。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_p_1f1d4e0b423b",
+      "headword": "year-end",
+      "normalizedHeadword": "year-end",
+      "entryType": "phrase",
+      "definitionZh": "年度末；年末",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "year-end",
+            "year-ends"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_p_1f1d4e0b423b_ex_1",
+          "english": "The year-end financial report is due by December 15th.",
+          "chinese": "年度財務報告的截止日期是 12 月 15 日。"
+        },
+        {
+          "id": "tw_p_1f1d4e0b423b_ex_2",
+          "english": "We're planning a year-end party to celebrate our team's achievements.",
+          "chinese": "我們正在規劃一個年末派對來慶祝團隊的成就。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：year-end bonus（年終獎金）、year-end review（年終績效考核）、year-end party（尾牙或年終聚會）、year-end report（年度結算報告）。",
+        "商業情境應用：此單字常用於財務與行政管理情境，如會計年度結算（fiscal year-end）或年度清倉大拍賣（year-end sale），在多益閱讀測驗的廣告與備忘錄中極為常見。",
+        "相似詞辨析：需區分 year-end（年度結束時）與 annual（每年的）。year-end 通常指一個特定的時間點或時段（如十二月底），而 annual 則強調該事件每一年都會發生一次。",
+        "考試重點：在 Part 7 的商務信函中，常與 budget（預算）或 assessment（評估）連用，考生應留意文章中提到的具體截止日期或結帳日。",
+        "答題注意事項：注意 year-end 當形容詞使用時通常帶有連字號，若在聽力測驗中聽到，應聯想到與『總結』、『發放獎金』或『盤點庫存』相關的動作。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_1c6a0f845113",
+      "headword": "yearly",
+      "normalizedHeadword": "yearly",
+      "entryType": "word",
+      "definitionZh": "每年的；一年一次的",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adverb",
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "yearly"
+          ]
+        },
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "yearly",
+            "yearlier",
+            "yeeliest"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_1c6a0f845113_ex_1",
+          "english": "The company's annual report is released yearly.",
+          "chinese": "公司年度報告每年發布一次。"
+        },
+        {
+          "id": "tw_w_1c6a0f845113_ex_2",
+          "english": "We conduct a yearly performance review for all employees.",
+          "chinese": "我們每年為所有員工進行績效考核。"
+        }
+      ],
+      "examTips": [
+        "同義詞替換：在閱讀測驗中，'yearly' 與 'annual' 為高度互換的同義詞，題目中出現 'once a year' 時，選項常以 'yearly' 或 'annually' 呈現。",
+        "詞性雙重身分：'yearly' 具備形容詞與副詞兩種身分。形容詞用法如 'yearly performance review'（年度績效評估），副詞用法如 'The fee is adjusted yearly'（費用每年調整一次）。",
+        "常見商務搭配：包含 yearly subscription（年度訂閱）、yearly budget（年度預算）及 yearly revenue（年收入），這些組合在 Part 7 的公司公告或財務報告中極為常見。",
+        "陷阱辨析：需區分 'yearly' 與 'annually' 的細微差別，雖然兩者意思相同，但 'annual' 僅作為形容詞，而 'yearly' 則可兼作副詞，在填空題（Part 5）中需注意語法結構。",
+        "聽力應對：在聽力測驗中，若聽到關於週期性的對話，應立即聯想 'yearly'、'every twelve months' 與 'each year' 的對等關係，以利快速選出正確答案。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_730262027e22",
+      "headword": "yell",
+      "normalizedHeadword": "yell",
+      "entryType": "word",
+      "definitionZh": "大聲喊叫；斥責",
+      "starRating": 3,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "verb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "yell",
+            "yells",
+            "yelling",
+            "yelled"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yell",
+            "yells"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_730262027e22_ex_1",
+          "english": "The manager yelled at the employee for missing the deadline.",
+          "chinese": "經理因為錯過期限而斥責了這位員工。"
+        },
+        {
+          "id": "tw_w_730262027e22_ex_2",
+          "english": "Please refrain from yelling in the office; it disrupts the work environment.",
+          "chinese": "請勿在辦公室大聲喊叫，這會干擾工作環境。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞組：'yell at someone' 代表因憤怒而對某人吼叫，'yell for help' 則用於緊急呼救情境。",
+        "商業情境應用：在 TOEIC 的專業辦公室對話中 yell 較少見，因為其隱含情緒化或不專業，若在聽力測驗中出現，通常暗示衝突、投訴或極度壓力的負面情境。",
+        "相似詞辨析：'shout' 通常指單純提高音量（如在嘈雜環境中說話），而 'yell' 往往帶有更強的感情色彩（如憤怒或驚訝）；相對地，'whisper' (低聲細語) 或 'murmur' (喃喃自語) 常作為反義干擾項。",
+        "聽力考點：在 Part 3 或 Part 4 中，若聽到 yell 一詞，應立即留意說話者的情緒狀態或對話發生的異常狀況，這對於回答關於語氣 (tone) 或意圖 (purpose) 的題目至關重要。",
+        "答題注意事項：在 Part 1 照片描述題中，若圖片顯示人物張大嘴巴且神情激動，yell 可能為正確選項，但需注意動作是否指向特定對象。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_bf24ac65de1c",
+      "headword": "yelling",
+      "normalizedHeadword": "yelling",
+      "entryType": "word",
+      "definitionZh": "大聲喊叫，咆哮（通常帶有憤怒或不滿的情緒）",
+      "starRating": 3,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "verb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "yelling",
+            "yells",
+            "yelled"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yelling",
+            "yells"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_bf24ac65de1c_ex_1",
+          "english": "The manager was yelling at the employee for missing the deadline.",
+          "chinese": "經理因為錯過期限而大聲斥責這位員工。"
+        },
+        {
+          "id": "tw_w_bf24ac65de1c_ex_2",
+          "english": "The client stopped yelling when he realized he had misunderstood the contract.",
+          "chinese": "當這位客戶意識到他誤解了合約後，就停止了咆哮。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞與語法：最常搭配介系詞 'at'，例如 'yelling at the staff'（對員工大吼大叫），在 TOEIC 考題中通常隱含負面、憤怒或失去專業控制的語境。",
+        "商業情境中的應用：在職場對話或閱讀測驗的投訴信、HR 調解報告中，'yelling' 常被用來描述不專業的職場行為（unprofessional conduct）或客戶的極度不滿，是判斷人物情緒或衝突點的關鍵詞。",
+        "易混淆詞辨析：與 'shout' 相比，'yell' 往往帶有更多情緒（如憤怒）；而 'scream' 則通常指因恐懼或驚嚇發出的尖叫。在聽力測驗中若聽到 'calling out'，通常是指呼喚某人的名字或大聲宣告，與帶有負面情緒的 'yelling' 語意不同。",
+        "聽力與閱讀考點：在 Part 1 照片描述中，若照片人物嘴巴張大且表情激動，'yelling' 可能是正確選項；在 Part 3/4 的情境中，它常作為問題發生的成因，如：'Why is the manager upset? Because someone was yelling in the hallway.'",
+        "答題注意事項：考生應注意 'yelling' 的語氣層次。在正式的商業文書中，此字眼較少出現，多以 'heated argument' 或 'strong disagreement' 代替，因此若在書信中出現 'yelling'，通常代表情況已非常嚴重或正式投訴。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_63feb75224e9",
+      "headword": "yellow",
+      "normalizedHeadword": "yellow",
+      "entryType": "word",
+      "definitionZh": "黃色的；黃色",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "adjective",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "yellower",
+            "yellowest"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yellows"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_63feb75224e9_ex_1",
+          "english": "The company logo uses a bright yellow color to stand out.",
+          "chinese": "公司的標誌使用鮮黃色來突顯。"
+        },
+        {
+          "id": "tw_w_63feb75224e9_ex_2",
+          "english": "She preferred the yellow folders for urgent documents.",
+          "chinese": "她偏愛用黃色文件夾來放緊急文件。"
+        }
+      ],
+      "examTips": [
+        "照片描述題(Part 1)考點：在聽力第一部分，yellow 常作為描述衣著或物品顏色的關鍵詞，考生需迅速核對圖片中是否有對應顏色的物體，例如 'The person is wearing a yellow safety vest' (該人穿著黃色反光背心)。",
+        "工地與安全情境：在商務環境或工地安全相關題目中，黃色常代表警告或注意，常見搭配如 'yellow caution tape' (黃色警戒線) 或 'yellow warning sign' (黃色警告標誌)，這在閱讀測驗的安全規範公告中十分常見。",
+        "商業慣用語：'Yellow Pages' (商業黃頁/電話簿) 雖然在數位時代較少見，但在模擬舊式辦公室情境或商業書信中仍可能作為背景資訊出現。",
+        "聽力發音辨析：在聽力測驗中，需注意 yellow 與發音相似的 'mellow' (柔和的) 或 'shallow' (淺的) 進行區別，避免在 Part 2 問答題中受到干擾。",
+        "答題注意事項：在描述物品細節時，雖然顏色是簡單的單字，但應注意顏色是否與圖片實情完全吻合，不要因為聽到熟悉的顏色單字就反射性選答案，需確認主詞與動詞是否正確。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_1a01f13108aa",
+      "headword": "yep",
+      "normalizedHeadword": "yep",
+      "entryType": "word",
+      "definitionZh": "是的；對；沒錯（非正式）",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "interjection",
+        "adverb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "interjection",
+          "forms": [
+            "yep"
+          ]
+        },
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "yep"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_1a01f13108aa_ex_1",
+          "english": "Are you ready to go?",
+          "chinese": "你準備好出發了嗎？"
+        },
+        {
+          "id": "tw_w_1a01f13108aa_ex_2",
+          "english": "Yep, I'm all set.",
+          "chinese": "是的，我準備好了。"
+        },
+        {
+          "id": "tw_w_1a01f13108aa_ex_3",
+          "english": "Did you finish the report?",
+          "chinese": "你完成報告了嗎？"
+        },
+        {
+          "id": "tw_w_1a01f13108aa_ex_4",
+          "english": "Yep, just sent it.",
+          "chinese": "是的，剛發送了。"
+        }
+      ],
+      "examTips": [
+        "語氣與場合辨析：yep 是 yes 的極非正式口語變體，在 TOEIC 考試中主要出現在聽力測驗第三部分（簡短對話）或第七部分（閱讀）的簡訊訊息截圖中。它反映了同事間或熟識朋友間的隨意互動。",
+        "聽力關鍵信號：在聽力中聽到 yep 時，通常代表說話者「完全同意」或「確認」了前一個人的提問。這是一個強烈的肯定信號，考生應隨即關注隨後提到的具體細節或約定事項。",
+        "商務情境應用：在正式的商務郵件（Formal Emails）或正式會議中，應避免使用 yep。相對應的正式替代詞包括 Certainly, Absolutely 或 Definitely。若在閱讀測驗看到 yep，通常暗示該段對話的情境是非常放鬆或非正式的內部通訊。",
+        "避免混淆：yep 的功能與 yes 相同，但語氣更為輕快。在作答關於「說話者意圖」的題目時，yep 往往對應到選項中的 Agree 或 Confirm。",
+        "出題重點：此單字本身不難，但常被用於混淆考生對說話者關係的判斷。若對話中頻繁出現 yep, nope 或 thanks，則說話者關係通常為 co-workers（同事）而非 client and provider（客戶與供應商）。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_d8affd929467",
+      "headword": "yes",
+      "normalizedHeadword": "yes",
+      "entryType": "word",
+      "definitionZh": "是；好的；可以；對；用於表示肯定、同意、允許或回應",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "interjection",
+        "adverb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "interjection",
+          "forms": [
+            "yes"
+          ]
+        },
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "yes"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yes",
+            "yeses"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_d8affd929467_ex_1",
+          "english": "Do you agree with the proposal?",
+          "chinese": "你同意這項提案嗎？"
+        },
+        {
+          "id": "tw_w_d8affd929467_ex_2",
+          "english": "Yes, I think it's a good plan.",
+          "chinese": "是的，我認為這是個好計畫。"
+        }
+      ],
+      "examTips": [
+        "在 TOEIC 聽力第二部分 (Question-Response) 中，yes 常作為直接回答，但須注意現代考題常出現省略 yes 的間接回答方式。",
+        "處理否定疑問句（如：Don't you...?）時，不論問題形式，yes 一律表示肯定的事實，即「是的，我有/我是」。",
+        "商業情境中常用於確認訂單、接受邀請或同意提議，常搭配 'certainly' 或 'absolutely' 加強語氣。",
+        "易混淆辨析：在正式商業書信中，較少單獨使用 yes，通常會以 'I would be happy to' 或 'That is correct' 代替以展現專業度。",
+        "聽力陷阱：有時選項中出現 yes 但後續資訊與問題矛盾，考生必須聽完整句內容而非聽到 yes 就直接作答。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_53bc02bb4ba9",
+      "headword": "yesterday",
+      "normalizedHeadword": "yesterday",
+      "entryType": "word",
+      "definitionZh": "昨天",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adverb",
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "yesterday"
+          ]
+        },
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yesterday",
+            "yesterdays"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_53bc02bb4ba9_ex_1",
+          "english": "I completed the report yesterday afternoon.",
+          "chinese": "我昨天下午完成了報告。"
+        },
+        {
+          "id": "tw_w_53bc02bb4ba9_ex_2",
+          "english": "Yesterday was a public holiday, so the office was closed.",
+          "chinese": "昨天是國定假日，所以辦公室休息。"
+        }
+      ],
+      "examTips": [
+        "時態判定關鍵：yesterday 是過去簡單式的指標性時間副詞。在 Part 5 文法題中，看到 yesterday 應優先選擇動詞過去式，這是基礎得分點。",
+        "聽力 Part 2 對應：當題目以 When 開頭詢問過去發生的事件時（如 When did the shipment arrive?），yesterday 是極為常見且正確的簡短回答選項。",
+        "商業情境應用：常出現在電子郵件或備忘錄中，用於追蹤進度，例如：The meeting held yesterday (昨天舉行的會議) 或 I tried to contact you yesterday (我昨天試著聯絡您)，需注意其在句子中的修飾位置。",
+        "聽力干擾辨析：在 Part 1 或 Part 2 快速對話中，考生需區分 yesterday 與 tomorrow 的發音。若對話情境是討論未來計畫，出現 yesterday 的選項通常是時態矛盾的干擾項。",
+        "常見搭配詞組：注意 as of yesterday (截至昨天為止) 這種介係詞搭配，在閱讀理解中用於標示數據或狀態的最後更新時間點。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_d96db4f6b0a5",
+      "headword": "yet",
+      "normalizedHeadword": "yet",
+      "entryType": "word",
+      "definitionZh": "至今；還；尚未；仍然；但是；然而",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "adverb",
+        "conjunction"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "yet"
+          ]
+        },
+        {
+          "partOfSpeech": "conjunction",
+          "forms": [
+            "yet"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_d96db4f6b0a5_ex_1",
+          "english": "Has the new software update been released yet?",
+          "chinese": "新的軟體更新發布了嗎？"
+        },
+        {
+          "id": "tw_w_d96db4f6b0a5_ex_2",
+          "english": "She was tired, yet she continued to work on the presentation.",
+          "chinese": "她很累，但她仍然繼續製作簡報。"
+        }
+      ],
+      "examTips": [
+        "否定與疑問句中的基本用法：在 TOEIC 聽力與閱讀中，yet 常出現在句尾，於否定句中表示「尚未」，於疑問句中表示「已經...了嗎」。例如：The shipment has not arrived yet.",
+        "高頻考點 have yet to 結構：這是 TOEIC 最愛考的文法點之一，have yet to + 原形動詞 等同於 have not yet + 過去分詞，表示「尚未做某事」。例如：We have yet to confirm the schedule.",
+        "作為轉折連接詞：yet 可作為等立連接詞使用，意思等同於 but 或 nevertheless，表示「然而」。在閱讀測驗長難句中若看到 yet 連接兩個句子，需注意語氣的轉折。",
+        "與最高級連用表示「迄今為止」：常用於 the + 最高級 + yet 結構，如 our most ambitious project yet，表示到目前為止最野心勃勃的計畫。",
+        "易混淆詞辨析：在 Part 5 詞彙題中，需區分 yet（通常用於否定）、already（通常用於肯定）與 still（強調動作持續）。若空格位於否定句句尾，yet 通常是首選答案。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_6517896653f9",
+      "headword": "yoga",
+      "normalizedHeadword": "yoga",
+      "entryType": "word",
+      "definitionZh": "瑜伽，一種結合體位法、呼吸控制和冥想的健身和精神練習。",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "營運管理",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yoga",
+            "yogas"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_6517896653f9_ex_1",
+          "english": "The company offers yoga classes to employees as part of its wellness program.",
+          "chinese": "公司將瑜伽課程作為其健康計劃的一部分提供給員工。"
+        },
+        {
+          "id": "tw_w_6517896653f9_ex_2",
+          "english": "To improve productivity, we encourage employees to incorporate short yoga breaks into their workday.",
+          "chinese": "為了提高生產力，我們鼓勵員工在工作日中加入短暫的瑜伽休息。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：多與動詞 do 或 practice 連用（例如 do yoga），在多益中常結合地點與人物，如 yoga studio（瑜珈工作室）、yoga instructor（瑜珈教練）及 yoga session（瑜珈課程）。",
+        "商業情境應用：常出現在員工福利（employee benefits）或企業健康計畫（corporate wellness programs）中，作為公司提供壓力管理或身心健康活動的實例。",
+        "聽力辨析重點：在聽力測驗中，需特別注意其發音與 yogurt（優格）的細微差別，且常出現在討論休閒設施或辦公室課後活動的對話場景。",
+        "閱讀考點：常出現在 Part 7 的健身中心廣告、課程報名表或公司內部通知，考生需注意課程時間表（schedule）、報名費用（registration fee）及取消政策（cancellation policy）。",
+        "答題注意事項：瑜珈被視為一種練習或活動而非球類運動，因此不可與 play 連用；此外，在多益閱讀中若出現瑜珈相關考題，答案通常與健康改善（health improvement）或平衡生活（work-life balance）有關。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_b74b4575fcbe",
+      "headword": "yogurt",
+      "normalizedHeadword": "yogurt",
+      "entryType": "word",
+      "definitionZh": "優格，一種發酵乳製品，常作為健康早餐或點心。",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "住宿與餐飲",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yogurt",
+            "yogurts"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_b74b4575fcbe_ex_1",
+          "english": "The hotel offers a complimentary yogurt and fruit breakfast for all guests.",
+          "chinese": "飯店為所有住客提供免費的優格和水果早餐。"
+        },
+        {
+          "id": "tw_w_b74b4575fcbe_ex_2",
+          "english": "Our company is considering adding a yogurt parfait option to the employee cafeteria menu.",
+          "chinese": "我們公司正在考慮將優格杯添加到員工餐廳的菜單中。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：常見搭配包括 low-fat yogurt (低脂優格)、Greek yogurt (希臘優格)、plain yogurt (原味優格) 以及 frozen yogurt (優格冰淇淋)，這些詞彙常出現在餐飲菜單或超市促銷的情境中。",
+        "商業情境應用：在 TOEIC 考試中，此單字常出現在公司員工福利或茶水間 (pantry/staff lounge) 的情境，例如提供免費點心或是討論會議外送餐點 (catering service) 的選項。",
+        "詞類辨析：需注意 yogurt 屬於 dairy products (乳製品) 的一種，在聽力或閱讀測驗中，若題目提到 dairy，答案選項中可能包含 yogurt。",
+        "聽力考點：在 Part 1 圖片描述題中，若場景位於超市貨架或咖啡廳，可能會聽到關於存放或購買優格的句子；在聽力 Part 3 中，則可能出現於討論飲食習慣或過敏源的對話。",
+        "答題注意事項：注意美式拼法 (yogurt) 與英式拼法 (yoghurt) 的差異，雖然在 TOEIC 中兩者皆通用，但要習慣不同口音對該字第二個音節的發音細微差別。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_387bb435aac0",
+      "headword": "york",
+      "normalizedHeadword": "york",
+      "entryType": "word",
+      "definitionZh": "約克郡（英國的郡名）；約克郡的，屬於約克郡的",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "旅遊與交通",
+      "partsOfSpeech": [
+        "noun",
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "york",
+            "Yorks"
+          ]
+        },
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "york",
+            "Yorker",
+            "Yorkest"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_387bb435aac0_ex_1",
+          "english": "The company is considering opening a new branch in York, a popular tourist destination.",
+          "chinese": "公司正在考慮在約克開設一家新分店，約克是一個受歡迎的旅遊勝地。"
+        },
+        {
+          "id": "tw_w_387bb435aac0_ex_2",
+          "english": "Many visitors enjoy exploring the historic city of York and its surrounding Yorkshire countryside.",
+          "chinese": "許多遊客喜歡探索歷史悠久的約克市以及周圍的約克郡鄉村。"
+        }
+      ],
+      "examTips": [
+        "此單字多以專有名詞形式出現，最常見於「New York」(紐約)，出現在商業信件的地址欄、旅遊行程表或分公司地點說明中。",
+        "在多益聽力部分，需注意「York」與「work」的發音辨析，前者音標為 /jɔːrk/，後者為 /wɜːrk/，避免在描述工作地點或內容時產生混淆。",
+        "常用搭配詞包含「New York-based」(總部設於紐約的) 或「the York office」(約克辦公室)，這有助於快速定位閱讀測驗中的地點資訊。",
+        "考試中若出現「York」，通常作為背景資訊，協助考生判斷時差、運費計算或商務旅行的起點與終點，答題時應注意其後接的職稱或部門。",
+        "在閱讀測驗 Part 7 的公司簡介中，York 常見於「New York Stock Exchange」(紐約證券交易所, NYSE)，與金融、投資等商業情境高度相關。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_b74a4228b713",
+      "headword": "young",
+      "normalizedHeadword": "young",
+      "entryType": "word",
+      "definitionZh": "年輕的；年幼的；初期的；經驗不足的",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "younger",
+            "youngest"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_b74a4228b713_ex_1",
+          "english": "She is a young professional with a lot of potential.",
+          "chinese": "她是一位充滿潛力、年輕的專業人士。"
+        },
+        {
+          "id": "tw_w_b74a4228b713_ex_2",
+          "english": "The company is looking for young talent to join its innovative team.",
+          "chinese": "公司正在尋找年輕人才加入其創新團隊。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：'young professional' (年輕專業人士) 常出現在徵才廣告或職業發展講座中；'young talent' (年輕人才) 則是人力資源開發 (HRD) 相關內容的常見詞組。",
+        "商業情境應用：多用於市場調查 (Market Research) 描述受眾人口特徵 (Demographics)，例如瞄準年輕消費群體；或用於初創企業報導中描述創業者的背景。",
+        "易混淆詞辨析：'young' 僅指生理年齡小，而 'junior' 則指職位或資歷較淺，TOEIC 常考職位描述，需注意兩者差異；'youthful' 多帶褒義，指心態或外貌顯得年輕。",
+        "考試出題重點：在聽力 Part 4 的短文中，常以 'younger generation' 對比消費習慣的變遷；閱讀 Part 7 則常見於描寫新興領導者或技術新秀的簡介中。",
+        "答題注意事項：留意其名詞形式 'youth' (青年/青少年時期) 在語意上的區別，並注意比較級 'younger' 常伴隨 'than' 出現於薪資或工時的對比分析文章中。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_9f86decae217",
+      "headword": "yourself",
+      "normalizedHeadword": "yourself",
+      "entryType": "word",
+      "definitionZh": "指代自己；親自",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "pronoun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "pronoun",
+          "forms": [
+            "yourself"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_9f86decae217_ex_1",
+          "english": "Please review the document yourself before submitting it to your supervisor.",
+          "chinese": "請在提交給您的主管之前，親自審閱文件。"
+        },
+        {
+          "id": "tw_w_9f86decae217_ex_2",
+          "english": "Make sure you familiarize yourself with the company's policies and procedures.",
+          "chinese": "請務必熟悉公司的政策和流程。"
+        }
+      ],
+      "examTips": [
+        "反身代名詞核心用法：在 TOEIC Part 5 文法題中，當句子的主詞是 You 且受詞也是同一人時，必須使用 yourself。特別注意在「祈使句」中（如：Please introduce yourself），主詞 You 被省略，考生需能判斷出此時受詞應選反身代名詞。",
+        "固定搭配與同義轉換：常見片語「by yourself」等於「on your own」，意指「獨自」或「靠你自己」。這在 Part 7 的商業書信中常用來描述員工獨立完成專案的能力。",
+        "強調用法辨析：yourself 可緊跟在代名詞 You 之後或放在句尾，用來強調「你本人」。例如：「You yourself are responsible for the report.」（你本人需對報告負責），這類結構常用於釐清責任歸屬。",
+        "常見商業情境表達：在多益聽力 Part 3 中，常出現如「Help yourself to some coffee.」（請隨意享用咖啡）或「Make yourself at home.」（別拘束）等辦公室招待情境，熟悉這些口語表達有助於快速掌握對話重點。",
+        "答題注意事項：考生容易混淆 You（受格）與 Yourself。解題關鍵在於尋找動作的發起者（主詞），若主詞與受詞皆指涉同一對象，應優先考慮反身代名詞。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_591cf687eea5",
+      "headword": "youth",
+      "normalizedHeadword": "youth",
+      "entryType": "word",
+      "definitionZh": "年輕時期；青春歲月；年輕一代",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "人力資源",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "youth",
+            "youths"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_591cf687eea5_ex_1",
+          "english": "The company is actively seeking young talent to drive innovation and growth.",
+          "chinese": "該公司正積極尋找年輕人才以推動創新和增長。"
+        },
+        {
+          "id": "tw_w_591cf687eea5_ex_2",
+          "english": "Our mentorship program aims to support the professional development of youth entering the workforce.",
+          "chinese": "我們的導師計畫旨在支持進入職場的年輕人專業發展。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞：在 TOEIC 中常出現 youth hostel (青年旅館)、youth employment (青年就業)、youth organization (青年組織) 等組合。",
+        "商業情境應用：常用於討論市場行銷中的『年輕族群』(youth market) 或人力資源相關的『青年實習計畫』。",
+        "易混淆詞辨析：youth 指『青春時期』(抽象) 或『青年們』(集合名詞)；young 為形容詞；youngster 指『小孩或年輕人』。注意 youthful 帶有褒義，意指『有朝氣的』。",
+        "考試重點：閱讀部分常出現在社會發展或勞動力趨勢的報導中，需理解其作為『年輕一代』的集合概念。",
+        "答題注意事項：當 youth 當作集合名詞指代『青年們』時，其後動詞有時會根據語境接複數動詞，須留意主動詞一致性問題。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_1166fbe9498e",
+      "headword": "yukiko",
+      "normalizedHeadword": "yukiko",
+      "entryType": "word",
+      "definitionZh": "裕子 (日文女性名); 尤姬子 (罕見)",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "溝通互動",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "yukiko",
+            "Yukikos"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_1166fbe9498e_ex_1",
+          "english": "Ms. Yukiko from the Tokyo branch will be attending the conference.",
+          "chinese": "來自東京分公司的裕子小姐將會出席會議。"
+        },
+        {
+          "id": "tw_w_1166fbe9498e_ex_2",
+          "english": "Please direct all inquiries regarding the project to Yukiko’s email address.",
+          "chinese": "請將所有關於專案的詢問寄至裕子的電子郵件地址。"
+        }
+      ],
+      "examTips": [
+        "識別專有名詞：在多益考試中，Yukiko 是一個典型的日本女性名字，考生應學會快速識別首字母大寫的單字為人名、地名或公司名，避免將其誤認為一般生字而浪費思考時間。",
+        "掌握人物角色：此類人名常出現在 Part 7 的商業書信或 Email 中，通常擔任發信者、收信者或文中提到的聯繫人（Point of Contact），確認姓名有助於釐清人物間的職務關係。",
+        "聽力關鍵字辨識：在聽力測驗 Part 1 或 Part 2 中，人名常作為句子的主詞，聽辨出是人名後應專注於其後的動作動詞或狀態描述，而非糾結於名字的具體發音。",
+        "多元文化情境：多益考試強調全球化商業環境，常出現日本、韓國或歐洲人名。熟悉不同國籍的常見名字（如 Yukiko, Sato, Tanaka 等）有助於考生在閱讀長篇內容時，更快速地建立資訊連結，提高作答效率。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_d440b5e9557c",
+      "headword": "yummy",
+      "normalizedHeadword": "yummy",
+      "entryType": "word",
+      "definitionZh": "美味的; 好吃的",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "住宿與餐飲",
+      "partsOfSpeech": [
+        "adjective"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adjective",
+          "forms": [
+            "yummier",
+            "yummiest"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_d440b5e9557c_ex_1",
+          "english": "This cake is really yummy!",
+          "chinese": "這蛋糕真好吃！"
+        },
+        {
+          "id": "tw_w_d440b5e9557c_ex_2",
+          "english": "The children said the cookies were very yummy.",
+          "chinese": "孩子們說餅乾非常好吃。"
+        }
+      ],
+      "examTips": [
+        "語氣正式度辨析：'yummy' 屬於高度口語且非正式的單字，在 TOEIC 的正式商務書信或報告中極少出現。若在考題中看到，通常出現在 Part 3 聽力的非正式對話，或 Part 7 中針對家庭、休閒類的宣傳廣告。",
+        "專業替換詞：在商務午宴或正式餐廳評論的情境下，應熟悉更具專業感的同義詞，如 'delicious'、'flavorful'、'savory' 或 'delectable'，這些詞彙在閱讀測驗中出現的機率較高。",
+        "常見搭配詞：在非正式商務場合（如公司野餐、員工慶生會）中，可能看到 'yummy treats'、'yummy snacks' 或 'yummy appetizers' 等用法。",
+        "聽力陷阱提示：若在聽力測驗中聽到此詞，通常暗示對話者之間的關係較為親近，或該對話場景並非正式會議，這有助於判斷人物關係題。",
+        "選項判斷技巧：在 TOEIC 閱讀的字彙選擇題中，若題幹要求選出適當的形容詞來描述商務餐敘的菜餚，且選項同時有 'yummy' 與 'exquisite'（精緻的），後者通常是更符合商務語境的正確答案。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_7c25e19177bd",
+      "headword": "zack",
+      "normalizedHeadword": "zack",
+      "entryType": "word",
+      "definitionZh": "（俚語）非常；極其；驚人地",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "辦公日常",
+      "partsOfSpeech": [
+        "adverb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "adverb",
+          "forms": [
+            "zack"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_7c25e19177bd_ex_1",
+          "english": "The project was completed zack quickly, thanks to the team's dedication.",
+          "chinese": "由於團隊的奉獻，這個項目以驚人的速度完成。"
+        },
+        {
+          "id": "tw_w_7c25e19177bd_ex_2",
+          "english": "The sales figures for this quarter are zack impressive!",
+          "chinese": "本季的銷售數字非常令人印象深刻！"
+        }
+      ],
+      "examTips": [
+        "識別為專有名詞：在 TOEIC 考試中，'Zack' 為常見的男性英文名字（Zachary 的簡稱），主要出現在商務信函、會議記錄或對話中，代表特定的業務人員或聯絡對象。",
+        "聽力辨析重點：在聽力測驗（Part 1-4）中，需區分 Zack 與發音相近的單字，例如 'sack' (解雇)、'back' (後方) 或 'stack' (堆疊)，通常可藉由首字母的大寫感（於閱讀）或語句中的主詞位置（於聽力）來判定其為人名。",
+        "角色定位與追蹤：在閱讀測驗（Part 7）的長篇電子郵件中，Zack 可能作為寄件人、收件人或提及的第三方人員出現。建議考生在閱讀時快速標記人名，以便在回答『誰負責某項工作』或『某人應與誰聯絡』的題目時能迅速定位。",
+        "搭配職稱與部門：雖然 Zack 本身無固定搭配詞，但在考試情境中常與職稱連用，如 'Zack from the Accounting Department' 或 'Zack, the lead consultant'，這些補充資訊通常是解題關鍵。",
+        "避開姓名陷阱：聽力測驗有時會出現多個人名（如 Zack 與 Jack），考生應專注於動作發出者的身分，避免因名稱發音相似而產生混淆。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_bb7fabadb073",
+      "headword": "zero",
+      "normalizedHeadword": "zero",
+      "entryType": "word",
+      "definitionZh": "零；無；毫無；最低點",
+      "starRating": 5,
+      "toeicScoreRange": "400-600",
+      "category": "一般專業",
+      "partsOfSpeech": [
+        "noun",
+        "adjective",
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "zeros"
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "zeros",
+            "zeroing",
+            "zeroed"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_bb7fabadb073_ex_1",
+          "english": "The temperature dropped to zero degrees Celsius last night.",
+          "chinese": "昨晚氣溫降到攝氏零度。"
+        },
+        {
+          "id": "tw_w_bb7fabadb073_ex_2",
+          "english": "We have zero tolerance for discrimination in the workplace.",
+          "chinese": "我們對職場歧視零容忍。"
+        }
+      ],
+      "examTips": [
+        "重要片語辨析：動詞片語 'zero in on' 是多益高階考點，意指『集中注意力於』或『精確鎖定目標』，常出現在 Part 7 閱讀中描述市場定位或問題解決方案。",
+        "聽力常見讀音：在聽力測驗的電話號碼、門牌號或代碼中，'zero' 常會被唸作字母 'O' 的發音，考生需具備快速轉換數值的能力。",
+        "商業政策應用：'zero tolerance policy' (零容忍政策) 是多益辦公室管理情境中的常見詞組，通常涉及企業對於職場歧視、安全規範或違規行為的嚴格處理。",
+        "環境永續趨勢：隨著 ESG 考題增加，'net zero emissions' (淨零排放) 頻繁出現於企業年報或環保主題的閱讀測驗中。",
+        "近義詞辨析：在法律或合約情境中，注意 'null and void' (無效) 的用法，雖然其概念與零相關，但在正式文書中會使用 'null' 而非 'zero' 來表達法律效力的缺失。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_bbd21f4ea143",
+      "headword": "zip",
+      "normalizedHeadword": "zip",
+      "entryType": "word",
+      "definitionZh": "將…壓縮成 ZIP 檔案；(電腦檔案) ZIP 壓縮檔案",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "科技與技術支援",
+      "partsOfSpeech": [
+        "verb"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "verb",
+          "forms": [
+            "zip",
+            "zips",
+            "zipping",
+            "zipped"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_bbd21f4ea143_ex_1",
+          "english": "Please zip the presentation files before sending them via email to save space.",
+          "chinese": "請在透過電子郵件發送簡報檔案之前將其壓縮成 ZIP 檔案以節省空間。"
+        },
+        {
+          "id": "tw_w_bbd21f4ea143_ex_2",
+          "english": "The IT department is zipping the large database backup to upload it to the cloud server.",
+          "chinese": "IT 部門正在將大型資料庫備份壓縮成 ZIP 檔案，以便上傳到雲端伺服器。"
+        }
+      ],
+      "examTips": [
+        "郵政與地址資訊（Zip Code）：在TOEIC的物流情境、表單填寫或地址確認中，'zip code' 代表『郵遞區號』。考生在聽力Part 3或閱讀Part 7看到地址欄位時，需快速連結此概念。",
+        "電子商務與IT情境（Zip File）：在辦公室電子郵件溝通中，zip常作為動詞使用，意指『壓縮檔案』。常見考點包括將大型附件『zipped up』以便傳送，與之相對的動作是 'unzip' 或 'extract'（解壓縮）。",
+        "常見搭配詞組：常用搭配包含 'zip code' (郵遞區號)、'zip folder' (壓縮資料夾) 與 'zip up' (拉上拉鍊/壓縮)。",
+        "易混淆詞辨析：在聽力測驗中，需區分 zip /zɪp/ 與 sip /sɪp/ (啜飲)，前者為有聲子音。此外，在描述動作時，zip 除了拉鍊外，在商業情境中更多是指『壓縮電子資料』而非『快速移動』。",
+        "答題重點：若題目出現 'compressed format'，選項中若有 'zip file' 則為正確對應；反之，若在閱讀測驗看到表單要求填寫五位數字，通常就是在指 zip code。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_bbcf510f4000",
+      "headword": "zone",
+      "normalizedHeadword": "zone",
+      "entryType": "word",
+      "definitionZh": "區域；特定範圍（通常指劃定的區域，例如商業區、禁區等）",
+      "starRating": 4,
+      "toeicScoreRange": "400-600",
+      "category": "營運管理",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "zone",
+            "zones"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_bbcf510f4000_ex_1",
+          "english": "The warehouse is divided into several zones for different product categories.",
+          "chinese": "倉庫被劃分為幾個區域，以存放不同的產品類別。"
+        },
+        {
+          "id": "tw_w_bbcf510f4000_ex_2",
+          "english": "Please refrain from using your cell phone in the restricted zone.",
+          "chinese": "請勿在限制區域使用您的手機。"
+        }
+      ],
+      "examTips": [
+        "常見搭配詞組：'time zone' (時區) 在國際會議與行程安排中極為常見，'loading zone' (裝卸貨區) 則常出現在 Part 1 的圖片描述或 Part 7 的停車管理告示中。",
+        "商業情境應用：'comfort zone' (舒適圈) 常出現在自我成長或管理類文章；'Free Trade Zone' (自由貿易區) 與 'Industrial Zone' (工業區) 則常見於物流、貿易或工廠設點的報導。",
+        "易混淆詞辨析：'zone' 通常指具備特定功能、目的或受法律限制的區域 (如 'no-smoking zone')；'area' 泛指任何大小的空間；'region' 則多指較大的地理範圍或行政區劃。",
+        "聽力與閱讀考點：聽力測驗常考跨國通訊因時差 (time zone difference) 造成的安排困難；閱讀測驗中則需注意 'zoning laws' (土地分區法) 相關的法規條文，這常是商用房地產或擴建計畫的關鍵限制。",
+        "答題注意事項：注意 'zone' 前方的修飾語以準確判斷該地的特定用途，避免將特定功能的區域 (如 'pedestrian zone' 行人專用區) 與一般公共空間混淆。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    },
+    {
+      "id": "tw_w_828ee440e3bc",
+      "headword": "zoo",
+      "normalizedHeadword": "zoo",
+      "entryType": "word",
+      "definitionZh": "動物園",
+      "starRating": 1,
+      "toeicScoreRange": "400-600",
+      "category": "旅遊與交通",
+      "partsOfSpeech": [
+        "noun"
+      ],
+      "wordForms": [
+        {
+          "partOfSpeech": "noun",
+          "forms": [
+            "zoos"
+          ]
+        }
+      ],
+      "phoneticUS": null,
+      "phoneticUK": null,
+      "examples": [
+        {
+          "id": "tw_w_828ee440e3bc_ex_1",
+          "english": "We plan to visit the local zoo next weekend with the kids.",
+          "chinese": "我們計劃下週末帶孩子們去參觀當地動物園。"
+        },
+        {
+          "id": "tw_w_828ee440e3bc_ex_2",
+          "english": "The city's zoo is famous for its conservation efforts for endangered species.",
+          "chinese": "這座城市的動物園以其對瀕危物種的保育工作而聞名。"
+        }
+      ],
+      "examTips": [
+        "在多益聽力第一部分的圖片題中，zoo 常與 exhibit (展覽) 或 enclosure (圍欄) 一起出現，描述人物正在觀察動物或導覽的情境。",
+        "雖然 zoo 字面上指動物園，但在商務非正式口語中，它可用來形容極度混亂、失控的環境，例如 'The office was a zoo this morning'，意指辦公室像動物園一樣吵雜混亂。",
+        "常見搭配詞包括 zoo keeper (動物園管理員) 與 petting zoo (可愛動物區)，這類詞彙偶爾出現在旅遊景點介紹或休閒產業的廣告短文。",
+        "聽力辨析：應注意 zoo 與音近字 zone (區域) 的發音區別，zone 常用於 business zone (商業區) 或 industrial zone (工業區) 等專業術語中。",
+        "在閱讀測驗中，zoo 可能出現在公司福利公告中，例如提到為員工提供的家庭日 (Family Day) 活動門票優惠，考生需注意活動的時間與地點細節。"
+      ],
+      "audioUSUrl": null,
+      "audioUKUrl": null
+    }
+  ],
+  "wordCount": 84
+}

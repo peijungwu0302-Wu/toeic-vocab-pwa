@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-31T17:42:00.321Z",
+  "datasetSource": "https://huggingface.co/datasets/kknono668/toeic-vocab-tw",
+  "license": "CC BY-SA 4.0",
+  "totalEntries": 11154,
+  "courses": [
+    {
+      "id": "course-foundation-550-part1",
+      "path": "/data/v1/courses/course-foundation-550-part1.json",
+      "checksum": "347cece8f4143b94437f130d59d6c49dbd9c52298364944a6a3832a81b34005d",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part2",
+      "path": "/data/v1/courses/course-foundation-550-part2.json",
+      "checksum": "5f870a00ed4e383587c5750a08545f7189c9d227eeaaedb254c9421057f16b26",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part3",
+      "path": "/data/v1/courses/course-foundation-550-part3.json",
+      "checksum": "1424536676b0dc256b9d516212c4dd5623dbeb152c1098587a2e4cca831f92ff",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part4",
+      "path": "/data/v1/courses/course-foundation-550-part4.json",
+      "checksum": "3469ecdcc3436e595d19ffa5606e6cbb8e57413efa09def41498a3f4a3543af7",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part5",
+      "path": "/data/v1/courses/course-foundation-550-part5.json",
+      "checksum": "f70e15e13c31025bf0c9f073ea3cd37e33487c764a7546912819ce01f9d64584",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part6",
+      "path": "/data/v1/courses/course-foundation-550-part6.json",
+      "checksum": "13903a31473aa722dd7f179b096919ec241f0251b7d0de3320fd0d5f2b4bc338",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part7",
+      "path": "/data/v1/courses/course-foundation-550-part7.json",
+      "checksum": "25467959eab45e86b3f437a3d5c6557d23ce9df1b66aa40c29cc8d5c9de526c5",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part8",
+      "path": "/data/v1/courses/course-foundation-550-part8.json",
+      "checksum": "43fbe5be0a193c59e2ad3977dd08795fa6178e0d50b79216688cd04d7713231d",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part9",
+      "path": "/data/v1/courses/course-foundation-550-part9.json",
+      "checksum": "9240330ebf6bff25c0976faae963b24e90b8693967d87eb4bcd9e6322b1598c6",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part10",
+      "path": "/data/v1/courses/course-foundation-550-part10.json",
+      "checksum": "cdc1ab50d29124acca1e9909c3c6b45ef6b57684362d9887226f4d9c4b4da296",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part11",
+      "path": "/data/v1/courses/course-foundation-550-part11.json",
+      "checksum": "07cf6af2e898f125f1338325660d063a96dacdafbc269a69b273cb94ae076e1a",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part12",
+      "path": "/data/v1/courses/course-foundation-550-part12.json",
+      "checksum": "cf4fbd75c679101bbbd40a21f39c3f8124f2a1668e631aea08063ad0e919feaa",
+      "count": 400
+    },
+    {
+      "id": "course-foundation-550-part13",
+      "path": "/data/v1/courses/course-foundation-550-part13.json",
+      "checksum": "8f837c4ba32f1bc23e1906ca5662d88b3f4becbce8a1fd9af6b97fcdc87ea920",
+      "count": 84
+    },
+    {
+      "id": "course-intermediate-750-part1",
+      "path": "/data/v1/courses/course-intermediate-750-part1.json",
+      "checksum": "6ae0a48daab2416f540d5c7e8e496c9d9d864889e2d42cb0b00c8f80ad6dcc0a",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part2",
+      "path": "/data/v1/courses/course-intermediate-750-part2.json",
+      "checksum": "e9e3311d0824fea722a77f66dfd837f8aef8d4e542525156838e10ebd033199a",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part3",
+      "path": "/data/v1/courses/course-intermediate-750-part3.json",
+      "checksum": "7a806180fc68ca4e96ba048d54ad4773864b829b94b17baed7b380ce89be2405",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part4",
+      "path": "/data/v1/courses/course-intermediate-750-part4.json",
+      "checksum": "4d41563f77d2b87efd55362292526d94174bdbf4eaa2262445378d21d2cd5965",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part5",
+      "path": "/data/v1/courses/course-intermediate-750-part5.json",
+      "checksum": "551da41c0a6904373fc2efd6b5e6bdfc14aaeed5df3b4af8bb9584e61e1f2daa",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part6",
+      "path": "/data/v1/courses/course-intermediate-750-part6.json",
+      "checksum": "727d190c3b9cf127614459a53eeee18623c274bd8d134c870e071340b76d6350",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part7",
+      "path": "/data/v1/courses/course-intermediate-750-part7.json",
+      "checksum": "06de1aca61b6c77d54262cdce754a04e3324e6732cd8466906a7c92aa82a8945",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part8",
+      "path": "/data/v1/courses/course-intermediate-750-part8.json",
+      "checksum": "5827d1f9d6b7d672a309803729f8d1bbdb86daa6ed35095e3e042c04ae2aabdc",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part9",
+      "path": "/data/v1/courses/course-intermediate-750-part9.json",
+      "checksum": "b38c5fd83d31d255744d9e2d2b408c03b557aeb5883ebfeaa9d90c087e927450",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part10",
+      "path": "/data/v1/courses/course-intermediate-750-part10.json",
+      "checksum": "75692010f3da93ae5bb965731e7db373e3ff82ffcda638dfb8ca6a84c0fd64ad",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part11",
+      "path": "/data/v1/courses/course-intermediate-750-part11.json",
+      "checksum": "bae33a5f202d94850875683c28764847b4817700b186f663e4f1e45c85967473",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part12",
+      "path": "/data/v1/courses/course-intermediate-750-part12.json",
+      "checksum": "6d1b0e42a18c3409c6439c9ef9811e9a6acccf9e3f3346e1089e0704f884247a",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part13",
+      "path": "/data/v1/courses/course-intermediate-750-part13.json",
+      "checksum": "c1994c0358baf82048a4a07b248c4a1066c6f3cb69e7ada7e95243e195ff3fdf",
+      "count": 400
+    },
+    {
+      "id": "course-intermediate-750-part14",
+      "path": "/data/v1/courses/course-intermediate-750-part14.json",
+      "checksum": "1f4ee2b1b39c2e66d15298492cda0e2f0a8c01a5b0c8f8b844d5c7311cd20b00",
+      "count": 392
+    },
+    {
+      "id": "course-advanced-860-part1",
+      "path": "/data/v1/courses/course-advanced-860-part1.json",
+      "checksum": "65b817dcb6a639ba009d861a39309e71581aa8a11827036f07fe21a406facad8",
+      "count": 400
+    },
+    {
+      "id": "course-advanced-860-part2",
+      "path": "/data/v1/courses/course-advanced-860-part2.json",
+      "checksum": "45714007f7d0ffd80e9e85feb71cc051fb803d18fa808ad52e0066672621a99a",
+      "count": 278
+    },
+    {
+      "id": "course-phrases-patterns-p1",
+      "path": "/data/v1/courses/course-phrases-patterns-p1.json",
+      "checksum": "95cfc0dff8b4d6243f4901e0834c130057123e59fa314f10171b1183ff059296",
+      "count": 400
+    },
+    {
+      "id": "course-phrases-patterns-p2",
+      "path": "/data/v1/courses/course-phrases-patterns-p2.json",
+      "checksum": "8293bdffd88f9f0acfb01c058b4d1c2583c7e8d1ed34c39d866b1268c0de2168",
+      "count": 400
+    },
+    {
+      "id": "course-phrases-patterns-p3",
+      "path": "/data/v1/courses/course-phrases-patterns-p3.json",
+      "checksum": "fb71ee164b30064ac97104af90ba7cc1701611d3d9027a699c4d2ea8cd95981d",
+      "count": 400
+    },
+    {
+      "id": "course-phrases-patterns-p4",
+      "path": "/data/v1/courses/course-phrases-patterns-p4.json",
+      "checksum": "714c7a719e9e7e355ec6a15e9f97682e756361a4fd32eba87ce1218b291d1dab",
+      "count": 317
+    }
+  ]
+}
