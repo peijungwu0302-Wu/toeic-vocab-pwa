@@ -94,16 +94,18 @@ export const courseRepository = {
           this._masterCache = localWords;
         } else {
           // Fetch master datasets in parallel
-          const [coreRes, advRes, expRes] = await Promise.allSettled([
+          const [coreRes, advRes, exp1Res, exp2Res, exp3Res] = await Promise.allSettled([
             fetch('/data/v1/core-1200.json').then(r => r.json()),
             fetch('/data/v1/advanced-2500.json').then(r => r.json()),
-            fetch('/data/v1/expert-high.json').then(r => r.json())
+            fetch('/data/v1/expert-high-part1.json').then(r => r.json()),
+            fetch('/data/v1/expert-high-part2.json').then(r => r.json()),
+            fetch('/data/v1/expert-high-part3.json').then(r => r.json())
           ]);
 
           const combined: Word[] = [...localWords];
           const seen = new Set(localWords.map(w => w.headword.toLowerCase()));
 
-          [coreRes, advRes, expRes].forEach(res => {
+          [coreRes, advRes, exp1Res, exp2Res, exp3Res].forEach(res => {
             if (res.status === 'fulfilled' && Array.isArray(res.value?.words)) {
               res.value.words.forEach((w: Word) => {
                 if (!seen.has(w.headword.toLowerCase())) {

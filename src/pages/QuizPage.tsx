@@ -636,6 +636,42 @@ export const QuizPage: React.FC = () => {
               {currentQ.explanation}
             </p>
 
+            {/* 🌟 離線預編名師破題詳解 (5秒秒殺破題 + 考場避坑指南 + 高頻商務搭配) */}
+            {isDrawerExpanded && (
+              <div className="space-y-2 pt-2 border-t border-slate-800 text-[11px] text-left animate-in fade-in duration-200">
+                {currentQ.strategy && (
+                  <div>
+                    <strong className="text-amber-300 block mb-0.5 font-bold">🎯 5 秒秒殺破題法：</strong>
+                    <p className="text-slate-300 leading-relaxed pl-2 border-l-2 border-amber-500/60">
+                      {currentQ.strategy}
+                    </p>
+                  </div>
+                )}
+
+                {currentQ.examTrapTip && (
+                  <div>
+                    <strong className="text-rose-300 block mb-0.5 font-bold">⚠️ 多益考場避坑提醒：</strong>
+                    <p className="text-slate-300 leading-relaxed pl-2 border-l-2 border-rose-500/60">
+                      {currentQ.examTrapTip}
+                    </p>
+                  </div>
+                )}
+
+                {currentQ.collocations && currentQ.collocations.length > 0 && (
+                  <div>
+                    <strong className="text-emerald-300 block mb-0.5 font-bold">📚 高頻職場搭配片語：</strong>
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {currentQ.collocations.map((c, cIdx) => (
+                        <span key={cIdx} className="px-2 py-0.5 rounded-md bg-emerald-950/80 border border-emerald-800/60 text-[10px] text-emerald-300 font-mono">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Expanded Detailed Option Dissections (顯示完整條列式去冗餘剖析) */}
             {isDrawerExpanded && currentQ.optionAnalyses && currentQ.optionAnalyses.length > 0 && (
               <div className="space-y-1.5 pt-2 border-t border-slate-800 animate-in fade-in duration-200">

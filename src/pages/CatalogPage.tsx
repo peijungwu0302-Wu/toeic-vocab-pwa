@@ -207,11 +207,11 @@ export const CatalogPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-black text-slate-100">TOEIC 題庫與高頻專屬單元</h2>
           <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-            🟢 v3.0 最新全真題庫
+            🟢 v3.2.0 Gemini AI 全真題庫 (66,924 題通過質檢)
           </span>
         </div>
         <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-          收錄全庫 <strong className="text-emerald-400">11,154 字</strong> 與 <strong className="text-amber-400">66,924 題測驗</strong>，全面升級 13 大職場實景題幹與 1:1 中譯解析。
+          收錄全庫 <strong className="text-emerald-400">11,154 字</strong> 與 <strong className="text-amber-400">66,924 題大模型全真測驗</strong>，全面通過 7 重語法門禁質檢與 1:1 繁中中譯。
         </p>
       </div>
 

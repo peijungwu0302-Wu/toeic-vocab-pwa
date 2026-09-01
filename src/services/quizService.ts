@@ -32,6 +32,9 @@ export interface NextGenQuestion {
   correctIndex: number;
   clozeHint?: string;
   explanation: string;
+  strategy?: string;
+  examTrapTip?: string;
+  collocations?: string[];
   isAiLive?: boolean;
   optionAnalyses?: Array<{
     option: string;
@@ -341,6 +344,9 @@ export const quizService = {
               correctIndex: correctIdx >= 0 ? correctIdx : 0,
               clozeHint: matchingQuiz.clozeHint || `核心釋義：${shortDef}`,
               explanation: matchingQuiz.explanation || `【多益核心考點】本題考查「${shortDef}」之職場商務用法。`,
+              strategy: matchingQuiz.strategy || `分析空格前後文法與商務語意要求，選入「${shortDef}」最符合多益標準職場表達。`,
+              examTrapTip: matchingQuiz.examTrapTip || `注意辨析空格前後的動詞或介系詞搭配，避免直翻中文造成的直覺陷阱。`,
+              collocations: matchingQuiz.collocations || [`${hw} in business practice`],
               optionAnalyses
             };
           }

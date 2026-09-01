@@ -1,11 +1,11 @@
-﻿import { db } from '../db';
+import { db } from '../db';
 import { courseRepository } from '../repositories/courseRepository';
 
-export const CURRENT_DATASET_VERSION = 3;
+export const CURRENT_DATASET_VERSION = 4;
 
 export const datasetMigrationService = {
   /**
-   * Automatically migrates local IndexedDB words and courses to v3.0.
+   * Automatically migrates local IndexedDB words and courses to v4 (v3.2.0-llm-bespoke).
    * Runs silently in the background on App startup without interrupting the user.
    */
   async autoMigrateIfOutdated(): Promise<boolean> {

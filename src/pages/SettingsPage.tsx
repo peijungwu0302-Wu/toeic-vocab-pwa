@@ -685,12 +685,12 @@ export const SettingsPage: React.FC = () => {
             <span>題庫版本與離線快取更新</span>
           </h3>
           <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
-            v3.0 最新全真題庫
+            v3.2.0 Gemini AI 全真版
           </span>
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          收錄全量 <strong className="text-emerald-400">11,154 詞</strong> 與 <strong className="text-amber-400">66,924 題全真職場測驗</strong>。若您曾下載過舊版題庫，可點擊下方按鈕將手機/電腦本機 IndexedDB 快取直接熱升級至最新版（您的個人學習進度與 FSRS 記錄將 100% 完整保留）。
+          收錄全量 <strong className="text-emerald-400">11,154 詞</strong> 與 <strong className="text-amber-400">66,924 題大模型全真測驗</strong>，每題皆具備「5秒秒殺思路 + 考場避坑 + 1:1繁中中譯 + ABCD選項獨立剖析」。點擊下方按鈕可將手機本機快取一鍵熱升級（個人學習進度 100% 完整保留）。
         </p>
 
         <Button
@@ -707,7 +707,7 @@ export const SettingsPage: React.FC = () => {
             </>
           ) : (
             <>
-              <span>🔄 立即刷新本機題庫至最新 v3.0 (保留學習進度)</span>
+              <span>🔄 立即刷新本機題庫至最新 v3.2.0 (保留學習進度)</span>
             </>
           )}
         </Button>
