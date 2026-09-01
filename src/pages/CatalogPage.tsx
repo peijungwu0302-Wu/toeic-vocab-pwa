@@ -335,14 +335,14 @@ export const CatalogPage: React.FC = () => {
                       <Badge variant="blue">{c.toeicScoreRange}</Badge>
                       <Badge variant="emerald">{c.level}</Badge>
                       <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/60">
-                        {c.version ? `${c.version} 精編` : 'v3 精編'}
+                        {c.version ? `v${c.version}.0 全真` : 'v5.0 全真'}
                       </span>
                       <span className="text-[11px] text-slate-400">{c.category}</span>
                     </div>
 
                     {isDownloaded ? (
                       <span className="inline-flex items-center text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded-full shrink-0">
-                        <CheckCircle size={12} className="mr-1" /> 已就緒 (v3.0)
+                        <CheckCircle size={12} className="mr-1" /> 已就緒 (v{c.version || 5}.0)
                       </span>
                     ) : (
                       <span className="text-[11px] text-slate-400 shrink-0">

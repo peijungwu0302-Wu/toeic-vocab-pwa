@@ -27,19 +27,34 @@ export const datasetMigrationService = {
       const localCourses = await db.courses.toArray();
       const downloadedCourses = localCourses.filter(c => c.isDownloaded);
 
-      // 3. Refresh each downloaded course with the latest v3.0 JSON
-      for (const downloaded of downloadedCourses) {
-        const catalogEntry = allCatalogCourses.find(c => c.id === downloaded.id);
-        if (catalogEntry) {
+      // 3. Clear legacy words cache to eliminate any stale +ing artifacts
+      await db.words.clear();
+
+      // 4. Refresh each downloaded course with the latest v5.0 JSON
+      if (downloadedCourses.length > 0) {
+        for (const downloaded of downloadedCourses) {
+          const catalogEntry = allCatalogCourses.find(c => c.id === downloaded.id);
+          if (catalogEntry) {
+            try {
+              await courseRepository.downloadAndSaveCourse(catalogEntry.id, catalogEntry.fileName);
+            } catch (courseErr) {
+              console.warn(`[DatasetMigration] Failed to update course ${downloaded.id}:`, courseErr);
+            }
+          }
+        }
+      } else if (allCatalogCourses.length > 0) {
+        // Automatically download core-1200 course if no courses were cached yet
+        const defaultCourse = allCatalogCourses.find(c => c.id === 'course-core-1200') || allCatalogCourses[0];
+        if (defaultCourse) {
           try {
-            await courseRepository.downloadAndSaveCourse(catalogEntry.id, catalogEntry.fileName);
-          } catch (courseErr) {
-            console.warn(`[DatasetMigration] Failed to update course ${downloaded.id}:`, courseErr);
+            await courseRepository.downloadAndSaveCourse(defaultCourse.id, defaultCourse.fileName);
+          } catch (defaultErr) {
+            console.warn('[DatasetMigration] Failed to download default core course:', defaultErr);
           }
         }
       }
 
-      // 4. Mark dataset as upgraded to v3
+      // 5. Mark dataset as upgraded to v5
       await db.appSettings.put({
         key: 'dataset_version',
         value: String(CURRENT_DATASET_VERSION)
@@ -54,7 +69,7 @@ export const datasetMigrationService = {
   },
 
   /**
-   * Force refresh all local courses to the latest v3.0 dataset
+   * Force refresh all local courses to the latest v5.0 dataset
    */
   async forceRefreshAllCourses(): Promise<void> {
     const catalog = await courseRepository.fetchCatalog();
@@ -62,10 +77,20 @@ export const datasetMigrationService = {
     const localCourses = await db.courses.toArray();
     const downloadedCourses = localCourses.filter(c => c.isDownloaded);
 
-    for (const downloaded of downloadedCourses) {
-      const catalogEntry = allCatalogCourses.find(c => c.id === downloaded.id);
-      if (catalogEntry) {
-        await courseRepository.downloadAndSaveCourse(catalogEntry.id, catalogEntry.fileName);
+    // Completely purge old word cache in Dexie
+    await db.words.clear();
+
+    if (downloadedCourses.length > 0) {
+      for (const downloaded of downloadedCourses) {
+        const catalogEntry = allCatalogCourses.find(c => c.id === downloaded.id);
+        if (catalogEntry) {
+          await courseRepository.downloadAndSaveCourse(catalogEntry.id, catalogEntry.fileName);
+        }
+      }
+    } else if (allCatalogCourses.length > 0) {
+      const defaultCourse = allCatalogCourses.find(c => c.id === 'course-core-1200') || allCatalogCourses[0];
+      if (defaultCourse) {
+        await courseRepository.downloadAndSaveCourse(defaultCourse.id, defaultCourse.fileName);
       }
     }
 

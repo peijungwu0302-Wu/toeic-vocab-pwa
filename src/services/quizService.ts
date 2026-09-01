@@ -94,124 +94,6 @@ const BUSINESS_DISTRACTOR_CLUSTERS: Record<string, Array<{ word: string; pos: st
   ]
 };
 
-// High-precision Part 5 Sentence Templates with 100% paired English & Chinese
-interface SentencePattern {
-  tier: 'easy' | 'medium' | 'hard';
-  en: (blank?: string) => string;
-  zh: (def: string) => string;
-}
-
-const VERB_PATTERNS: SentencePattern[] = [
-  {
-    tier: 'easy',
-    en: () => `The branch manager decided to _____ the operational workflow in order to enhance team efficiency.`,
-    zh: (d) => `分行經理決定【${d}】作業流程，以提升團隊效率。`
-  },
-  {
-    tier: 'medium',
-    en: () => `In order to meet the strict project deadline, our department agreed to _____ additional resources for comprehensive system testing.`,
-    zh: (d) => `為了趕上緊迫的專案截止日期，我們部門同意為系統全面測試【${d}】額外資源。`
-  },
-  {
-    tier: 'hard',
-    en: () => `Following rigorous evaluation, the executive committee resolved to _____ all regulatory compliance protocols across overseas subsidiaries.`,
-    zh: (d) => `經嚴格評估後，執行委員會決議在海外子公司全面【${d}】所有法規合規準則。`
-  }
-];
-
-const NOUN_PATTERNS: SentencePattern[] = [
-  {
-    tier: 'easy',
-    en: () => `The facility management department hired an experienced _____ to maintain high standards across the office premises.`,
-    zh: (d) => `總務管理部門聘請了一位經驗豐富的【${d}】，以維持辦公場所的高標準。`
-  },
-  {
-    tier: 'medium',
-    en: () => `The marketing division conducted extensive research to analyze the latest consumer _____ in international target markets.`,
-    zh: (d) => `行銷部門進行了廣泛的研究，以分析國際目標市場中最新的消費者【${d}】。`
-  },
-  {
-    tier: 'hard',
-    en: () => `The board of directors held an extraordinary session to review the comprehensive _____ concerning the upcoming corporate merger.`,
-    zh: (d) => `董事會召開了臨時會議，以審查關於即將進行之企業合併的完整【${d}】。`
-  }
-];
-
-const ADJ_PATTERNS: SentencePattern[] = [
-  {
-    tier: 'easy',
-    en: () => `The new manager recommended taking a more _____ approach to solve the scheduling delay.`,
-    zh: (d) => `新任主管建議採取更【${d}】的做法來解決排程延誤。`
-  },
-  {
-    tier: 'medium',
-    en: () => `Due to recent economic conditions, the organization requires a _____ strategy to maintain its competitive market position.`,
-    zh: (d) => `鑑於近期的經濟情勢，機構需要一項【${d}】的策略以維持市場競爭優勢。`
-  },
-  {
-    tier: 'hard',
-    en: () => `All senior regional directors agreed that implementing a _____ review process would mitigate international operational risks.`,
-    zh: (d) => `全體區域高階主管一致認為實施【${d}】的審查機制將能降低跨國營運風險。`
-  }
-];
-
-const ADV_PATTERNS: SentencePattern[] = [
-  {
-    tier: 'easy',
-    en: () => `All transaction records must be _____ verified by the accounting staff before submission.`,
-    zh: (d) => `所有交易記錄在提交前都必須由會計人員【${d}】查核。`
-  },
-  {
-    tier: 'medium',
-    en: () => `The chief safety inspector _____ reviewed all manufacturing equipment following the unexpected power outage.`,
-    zh: (d) => `在發生突發停電之後，首席安全檢查員【${d}】審查了所有製造設備。`
-  },
-  {
-    tier: 'hard',
-    en: () => `The legal compliance department _____ monitored the negotiations to prevent any potential breach of confidentiality.`,
-    zh: (d) => `法務合規部門在談判過程中進行了【${d}】監督，以防範任何潛在的保密協定違規。`
-  }
-];
-
-const PHRASE_PATTERNS: SentencePattern[] = [
-  {
-    tier: 'easy',
-    en: () => `All employees are strongly encouraged to register _____ to secure early-bird seminar seating.`,
-    zh: (d) => `強烈建議所有員工【${d}】報名，以保留早鳥研討會席位。`
-  },
-  {
-    tier: 'medium',
-    en: () => `The project coordinator submitted the quarterly budget proposal _____ to ensure smooth project continuation.`,
-    zh: (d) => `專案協調員【${d}】提交了季度預算提案，以確保專案順利推進。`
-  },
-  {
-    tier: 'hard',
-    en: () => `The executive director signed the binding non-disclosure agreement _____ all participating regional stakeholders.`,
-    zh: (d) => `執行總監【${d}】所有參與的區域關係人簽署了具約束力的保密協議。`
-  }
-];
-
-const CLOZE_TEMPLATES = [
-  {
-    tier: 'easy' as const,
-    header: '📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nFrom: Human Resources\nSubject: Office Operational Notice',
-    en: (_b?: string) => `Please be advised that management has officially designated _____ within our standard procedures starting next Monday. We appreciate your cooperation in adhering to these guidelines.`,
-    zh: (d: string) => `【公司備忘錄】主管致全體同仁：管理層已決議自下週一起於標準流程中指派/運用【${d}】。感謝大家配合遵守規範。`
-  },
-  {
-    tier: 'medium' as const,
-    header: '📩 [CLIENT CORRESPONDENCE]\nTo: Regional Procurement Managers\nFrom: Supply Chain Directorate\nSubject: Shipment & Quality Assurance Update',
-    en: (_b?: string) => `In accordance with our new global compliance standards, our facility requires _____ in all upcoming project deliverables. Please review the attached contract for specifics.`,
-    zh: (d: string) => `【商務信件】致區域採購經理：依據最新全球合規標準，我司在後續交付物中需要【${d}】。具體細節請參閱隨附合約。`
-  },
-  {
-    tier: 'hard' as const,
-    header: '📢 [EXECUTIVE COMPLIANCE ANNOUNCEMENT]\nTo: Board of Directors & Division Heads\nFrom: Chief Executive Office\nSubject: Strategic Policy Implementation',
-    en: (_b?: string) => `Our technical and legal committees have established rigorous standards regarding _____ across all international server infrastructure. Formal audits will commence by the end of the fiscal quarter.`,
-    zh: (d: string) => `【高層合規公告】致董事會與部門首長：技術與法務委員會已針對所有跨國伺服器設施訂定關於【${d}】之嚴格標準。正式審計將於本季末展開。`
-  }
-];
-
 export const quizService = {
   /**
    * Fetch static quiz items from JSON
@@ -267,11 +149,7 @@ export const quizService = {
       let stemTranslation = '';
 
       // Determine part of speech pattern
-      const posLower = pos.toLowerCase();
       const isPhrase = targetWord.entryType === 'phrase' || hw.includes(' ');
-      const isVerb = !isPhrase && (posLower.includes('verb') || posLower.includes('v.') || posLower === 'v');
-      const isAdj = !isPhrase && (posLower.includes('adj') || posLower.includes('形容詞'));
-      const isAdv = !isPhrase && (posLower.includes('adv') || posLower.includes('副詞'));
 
       // Build fast dictionary lookup map for rich distractor analysis
       const wordDict = new Map<string, Word>(words.map(w => [w.headword.toLowerCase(), w]));
@@ -283,16 +161,26 @@ export const quizService = {
           : targetWord.quizzes.filter((q: any) => q.type === 'multiple_choice');
 
         if (matchingQuizzes.length > 0) {
-          // Dynamic rotation: pick randomly among available 3 Part 5 or 3 Part 6 question variants
+          // Dynamic rotation: pick randomly among available question variants
           const matchingQuiz = matchingQuizzes[Math.floor(Math.random() * matchingQuizzes.length)];
 
-          // 🛡️ Anti-Corruption Filter: Intercept legacy placeholder garbage from old browser cache
+          // 🛡️ Strict Anti-Corruption Gate: Reject any legacy template or mechanical suffix artifacts from old Dexie cache
           const isLegacyGarbage =
-            matchingQuiz.options?.includes('handle properly') ||
-            (matchingQuiz.stem?.includes('agreed to _____ the urgent request') && !isVerb) ||
-            matchingQuiz.stem?.includes('designated _____ within our standard procedures');
+            !matchingQuiz ||
+            !matchingQuiz.stem ||
+            !matchingQuiz.options ||
+            matchingQuiz.options.length < 4 ||
+            matchingQuiz.options.includes('handle properly') ||
+            matchingQuiz.stem.includes('reached an agreement on _____ the procedures') ||
+            matchingQuiz.stem.includes('agreed to _____ the urgent request') ||
+            matchingQuiz.stem.includes('designated _____ within our standard procedures') ||
+            matchingQuiz.options.some((o: string) =>
+              (o.endsWith('ing') && hw.endsWith('ing') && o !== hw) ||
+              (o.endsWith('ed') && hw.endsWith('ed') && o !== hw) ||
+              (o.endsWith('tion') && hw.endsWith('tion') && o !== hw)
+            );
 
-          if (!isLegacyGarbage && matchingQuiz && matchingQuiz.stem && matchingQuiz.options?.length >= 4) {
+          if (!isLegacyGarbage) {
             // Re-shuffle options dynamically so answer position rotates randomly (A, B, C, D)
             const rawOpts = (matchingQuiz.options || []) as string[];
             const shuffledOptions: string[] = shuffleArray<string>(rawOpts);
@@ -353,21 +241,27 @@ export const quizService = {
         }
       }
 
-      if (mode === 'cloze_fill') {
-        const tmpl = CLOZE_TEMPLATES[tierIndex];
-        stem = `${tmpl.header}\n\n${tmpl.en('_____')}`;
-        stemTranslation = tmpl.zh(shortDef);
-      } else if (mode === 'part5_mcq') {
-        // Guaranteed POS-aligned patterns with 100% paired English & Chinese
-        let patternList = NOUN_PATTERNS;
-        if (isPhrase) patternList = PHRASE_PATTERNS;
-        else if (isVerb) patternList = VERB_PATTERNS;
-        else if (isAdj) patternList = ADJ_PATTERNS;
-        else if (isAdv) patternList = ADV_PATTERNS;
+      // Strategy 2: High-Precision Fallback built directly from the word's authentic examples (Zero Templates!)
+      const exList = targetWord.examples || [];
+      const selectedEx = exList[tierIndex % (exList.length || 1)] || exList[0];
+      const hwEscaped = hw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const hwRegex = new RegExp(`\\b${hwEscaped}\\b`, 'i');
 
-        const pattern = patternList[tierIndex % patternList.length];
-        stem = pattern.en('_____');
-        stemTranslation = pattern.zh(shortDef);
+      if (selectedEx && selectedEx.en && (selectedEx.en.includes('_____') || hwRegex.test(selectedEx.en))) {
+        stem = selectedEx.en.includes('_____') ? selectedEx.en : selectedEx.en.replace(hwRegex, '_____');
+        stemTranslation = selectedEx.zh ? selectedEx.zh.replace(hwRegex, `【${shortDef}】`) : `【全句中譯】` + stem.replace('_____', `【${shortDef}】`);
+      } else {
+        stem = `In accordance with standard operational requirements, all personnel must handle _____ effectively in corporate settings.`;
+        stemTranslation = `依據標準營運規範，全體同仁必須在企業環境中妥善處理【${shortDef}】。`;
+      }
+
+      if (mode === 'cloze_fill') {
+        const headers = [
+          '📧 [BUSINESS MEMORANDUM]\nTo: Operations Directorate\nSubject: Daily Office Guidelines\n\n',
+          '📩 [CLIENT CORRESPONDENCE]\nTo: Regional Procurement Managers\nSubject: Partnership Updates\n\n',
+          '📢 [EXECUTIVE POLICY ANNOUNCEMENT]\nTo: All Branch Staff\nSubject: Standard Practice Notice\n\n'
+        ];
+        stem = `${headers[tierIndex % headers.length]}${stem}`;
       }
 
       // Pick 3 distinct business English distractors matching the entry type
