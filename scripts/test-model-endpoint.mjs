@@ -1,20 +1,30 @@
-﻿const apiKey = 'AQ.Ab8RN6JX1T5iP38myZXbS2EdcHqYBTiUMtmZa5Xhju5UmX6P9w';
+﻿import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-async function test(model) {
-  const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + apiKey;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ contents: [{ parts: [{ text: 'Explain accommodate in TOEIC in 30 words.' }] }] })
-  });
-  console.log(model, 'Status:', res.status);
-  const text = await res.text();
-  console.log(model, 'Output:', text.slice(0, 250));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const ROOT_DIR = path.resolve(__dirname, '..');
+
+let apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || '';
+if (!apiKey) {
+  try {
+    const envContent = fs.readFileSync(path.join(ROOT_DIR, '.env.local'), 'utf8');
+    const match = envContent.match(/GEMINI_API_KEY=([^\r\n]+)/);
+    if (match) apiKey = match[1].trim();
+  } catch {}
 }
 
-async function run() {
-  await test('gemini-2.5-flash');
-  await test('gemini-3.6-flash');
-  await test('gemini-2.5-pro');
+async function listModels() {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data.models) {
+    console.log('Available models:');
+    data.models.forEach(m => console.log(' - ' + m.name + ' (' + m.displayName + ')'));
+  } else {
+    console.log('Res:', data);
+  }
 }
-run();
+
+listModels();

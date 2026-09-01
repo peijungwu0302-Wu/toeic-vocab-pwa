@@ -19,10 +19,12 @@ import {
   Sparkles,
   Mail,
   Send,
-  LogOut
+  LogOut,
+  Type
 } from 'lucide-react';
 import { useProfile } from '../contexts/ProfileContext';
 import { useSync } from '../contexts/SyncContext';
+import { useTypography } from '../contexts/TypographyContext';
 import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
 import { getSupabaseClient } from '../services/supabaseClient';
@@ -36,6 +38,7 @@ import { Modal } from '../components/ui/Modal';
 export const SettingsPage: React.FC = () => {
   const { activeProfile, profiles, switchProfile, createProfile, updateProfile, deleteProfile } = useProfile();
   const { syncState, triggerSync } = useSync();
+  const { settings, updateSettings, resetSettings, applyPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
 
   const [isNewProfileModalOpen, setIsNewProfileModalOpen] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
@@ -49,7 +52,6 @@ export const SettingsPage: React.FC = () => {
   const [showApiKey, setShowApiKey] = useState(false);
   const [isSavingKey, setIsSavingKey] = useState(false);
   const [keySavedMessage, setKeySavedMessage] = useState(false);
-  const [appFontSize, setAppFontSize] = useState<string>('normal');
 
   // Backup & Import
   const [importModalOpen, setImportModalOpen] = useState(false);
@@ -148,19 +150,7 @@ export const SettingsPage: React.FC = () => {
         setCustomApiKey(setting.value);
       }
     });
-
-    db.appSettings.get('app_font_size').then(setting => {
-      if (setting && setting.value) {
-        setAppFontSize(setting.value);
-      }
-    });
   }, []);
-
-  const handleFontSizeChange = async (size: string) => {
-    setAppFontSize(size);
-    await db.appSettings.put({ key: 'app_font_size', value: size });
-    document.documentElement.setAttribute('data-font-size', size);
-  };
 
   const handleSaveApiKey = async () => {
     setIsSavingKey(true);
@@ -466,20 +456,237 @@ export const SettingsPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Fast Skim Default Duration */}
-          <div className="flex items-center justify-between border-t border-slate-700/50 pt-3">
+        </div>
+      )}
+
+      {/* 3. 🎨 閱讀字體與視覺排版自訂 (Typography & Layout Customization) */}
+      <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
+            <Type size={16} className="text-emerald-400" />
+            <span>閱讀字體與排版自訂 (Typography & Layout)</span>
+          </h3>
+          <span className="text-[10px] text-slate-400">即時生效 · 所見即所得</span>
+        </div>
+
+        {/* 👁️ Live Preview Card (所見即所得預覽卡片) */}
+        <div className="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-700/80 rounded-2xl p-3.5 shadow-inner space-y-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-1.5">
+              <span className="px-2 py-0.5 rounded-md bg-emerald-950/80 text-[10px] text-emerald-300 border border-emerald-800/50 font-bold">
+                單字
+              </span>
+              <span className="text-[11px] text-slate-400">🏢 辦公行政</span>
+            </div>
+            <span className="text-[10px] text-amber-400 font-semibold flex items-center">
+              <Sparkles size={11} className="mr-1" /> 效果即時預覽
+            </span>
+          </div>
+
+          <div>
+            <h4 className={`${headwordClass} text-slate-100 tracking-tight leading-tight`}>
+              contract
+            </h4>
+            <p className="text-xs font-mono text-emerald-400/90 mt-0.5">
+              /ˈkɑːntrækt/
+            </p>
+          </div>
+
+          <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800">
+            <div className="text-[10px] text-slate-400 font-semibold mb-0.5">中文釋義</div>
+            <div className={`${definitionClass} text-emerald-300`}>
+              合約、契約；簽訂合約
+            </div>
+          </div>
+
+          <div className="p-2.5 rounded-xl bg-slate-900/60 border border-emerald-500/30 space-y-1">
+            <div className="text-[10px] text-emerald-400 font-bold flex items-center space-x-1">
+              <Sparkles size={10} className="text-amber-400" />
+              <span>🌟 專屬具象商務例句 (1:1 錨定配圖)</span>
+            </div>
+            <p className={`text-slate-100 ${exampleEnClass}`}>
+              Both executive teams finalized and signed the commercial contract in the boardroom.
+            </p>
+            <p className={`text-emerald-400/90 ${exampleZhClass} mt-1`}>
+              兩位主管團隊在董事會議室正式敲定並簽署了該商業合約。
+            </p>
+          </div>
+        </div>
+
+        {/* Global Quick Presets (全局快速檔位) */}
+        <div className="space-y-1.5 pt-1">
+          <div className="text-xs font-bold text-slate-300 flex items-center justify-between">
+            <span>全局一鍵預設檔位</span>
+            <button
+              type="button"
+              onClick={resetSettings}
+              className="text-[11px] text-slate-400 hover:text-slate-200 underline"
+            >
+              重設為預設值
+            </button>
+          </div>
+          <div className="grid grid-cols-4 gap-1.5">
+            {[
+              { id: 'compact', label: '📱 緊湊' },
+              { id: 'standard', label: '🖥️ 標準 (推薦)' },
+              { id: 'large', label: '👓 清晰大字' },
+              { id: 'huge', label: '👴 特大字體' }
+            ].map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => applyPreset(p.id as any)}
+                className="py-1.5 px-1 rounded-xl bg-slate-900 border border-slate-700 text-[11px] font-bold text-slate-300 hover:bg-slate-700 hover:text-white transition-all text-center"
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Granular Individual Controls (分項獨立微調) */}
+        <div className="space-y-3 pt-2 border-t border-slate-700/60">
+          <div className="text-xs font-bold text-slate-300">分項獨立自訂大小</div>
+
+          {/* 1. Headword Size */}
+          <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs font-semibold text-slate-200">速讀預設每字秒數</div>
-              <div className="text-[11px] text-slate-400">快閃速讀模式的每字停留速度</div>
+              <div className="text-xs font-semibold text-slate-200">單字英文標題大小</div>
+              <div className="text-[10px] text-slate-400">卡片正反面核心單字標題</div>
             </div>
             <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
-              {[1, 2, 3, 4, 6].map((sec) => (
+              {[
+                { id: 'sm', label: '小 (20px)' },
+                { id: 'md', label: '標準 (24px)' },
+                { id: 'lg', label: '大字 (30px)' },
+                { id: 'xl', label: '特大 (36px)' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => updateSettings({ headwordSize: item.id as any })}
+                  className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
+                    settings.headwordSize === item.id
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 2. Example EN Size */}
+          <div className="flex items-center justify-between border-t border-slate-700/40 pt-2.5">
+            <div>
+              <div className="text-xs font-semibold text-slate-200">例句英文本文字體</div>
+              <div className="text-[10px] text-slate-400">具象長句英文本文字體大小</div>
+            </div>
+            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+              {[
+                { id: 'xs', label: '12px' },
+                { id: 'sm', label: '14px' },
+                { id: 'md', label: '16px (標準)' },
+                { id: 'lg', label: '18px' },
+                { id: 'xl', label: '20px' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => updateSettings({ exampleEnSize: item.id as any })}
+                  className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
+                    settings.exampleEnSize === item.id
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 3. Example ZH Size */}
+          <div className="flex items-center justify-between border-t border-slate-700/40 pt-2.5">
+            <div>
+              <div className="text-xs font-semibold text-slate-200">例句中文翻譯字體</div>
+              <div className="text-[10px] text-slate-400">綠色繁中對譯文字大小</div>
+            </div>
+            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+              {[
+                { id: 'xs', label: '11px' },
+                { id: 'sm', label: '13px (標準)' },
+                { id: 'md', label: '15px' },
+                { id: 'lg', label: '17px' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => updateSettings({ exampleZhSize: item.id as any })}
+                  className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
+                    settings.exampleZhSize === item.id
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 4. Definition Size */}
+          <div className="flex items-center justify-between border-t border-slate-700/40 pt-2.5">
+            <div>
+              <div className="text-xs font-semibold text-slate-200">單字中文釋義大小</div>
+              <div className="text-[10px] text-slate-400">卡片背面核心中文釋義</div>
+            </div>
+            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+              {[
+                { id: 'sm', label: '14px' },
+                { id: 'md', label: '16px (標準)' },
+                { id: 'lg', label: '18px' },
+                { id: 'xl', label: '20px' }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => updateSettings({ definitionSize: item.id as any })}
+                  className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
+                    settings.definitionSize === item.id
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 5. Fast Skim Speed & Image Preferences (速讀偏好) */}
+        <div className="space-y-3 pt-2 border-t border-slate-700/60">
+          <div className="text-xs font-bold text-slate-300">速讀模式偏好設定</div>
+
+          {/* Fast Skim Default Duration */}
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-xs font-semibold text-slate-200">速讀預設停留秒數</div>
+              <div className="text-[10px] text-slate-400">支援 1.5 秒等小數點精確快閃</div>
+            </div>
+            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+              {[1.0, 1.5, 2.0, 3.0, 4.0].map((sec) => (
                 <button
                   key={sec}
                   type="button"
-                  onClick={() => updateProfile({ fastSkimDurationSec: sec })}
-                  className={`px-2.5 py-1 text-xs font-bold rounded-md transition-all ${
-                    (activeProfile.fastSkimDurationSec || 4) === sec
+                  onClick={() => {
+                    updateSettings({ fastSkimDurationSec: sec });
+                    updateProfile({ fastSkimDurationSec: sec });
+                  }}
+                  className={`px-2 py-1 text-xs font-bold rounded-md transition-all ${
+                    settings.fastSkimDurationSec === sec
                       ? 'bg-emerald-600 text-white'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
@@ -490,35 +697,28 @@ export const SettingsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* App Font Size Preference */}
-          <div className="flex items-center justify-between border-t border-slate-700/50 pt-3">
+          {/* Fast Skim Image Toggle */}
+          <div className="flex items-center justify-between border-t border-slate-700/40 pt-2.5">
             <div>
-              <div className="text-xs font-semibold text-slate-200">全站顯示字體大小</div>
-              <div className="text-[11px] text-slate-400">通勤手持閱讀與長輩模式等比縮放</div>
+              <div className="text-xs font-semibold text-slate-200">速讀專屬配圖開關</div>
+              <div className="text-[10px] text-slate-400">圖文雙軌直覺速讀 vs 純文字極速模式</div>
             </div>
-            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
-              {[
-                { id: 'normal', label: '標準' },
-                { id: 'large', label: '放大' },
-                { id: 'xlarge', label: '特大' }
-              ].map((f) => (
-                <button
-                  key={f.id}
-                  type="button"
-                  onClick={() => handleFontSizeChange(f.id)}
-                  className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
-                    appFontSize === f.id
-                      ? 'bg-emerald-600 text-white'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
+            <button
+              type="button"
+              onClick={() => updateSettings({ fastSkimShowImage: !settings.fastSkimShowImage })}
+              className={`w-12 h-6 rounded-full transition-colors relative ${
+                settings.fastSkimShowImage !== false ? 'bg-emerald-600' : 'bg-slate-700'
+              }`}
+            >
+              <div
+                className={`w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
+                  settings.fastSkimShowImage !== false ? 'left-7' : 'left-1'
+                }`}
+              />
+            </button>
           </div>
         </div>
-      )}
+      </div>
 
       {/* 4. Backup & Restore (Local-first) */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">

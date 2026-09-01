@@ -1,0 +1,26 @@
+{
+  "summary": {
+    "avgGeminiMs": 20730,
+    "avgImageMs": 2964,
+    "avgTotalMs": 23694,
+    "avgSizeKb": 31
+  },
+  "results": [
+    {
+      "word": "consensus",
+      "type": "抽象商務詞",
+      "category": "會議與簡報",
+      "geminiMs": 20730,
+      "imageMs": 2964,
+      "totalMs": 23694,
+      "sizeKb": "30.6",
+      "filename": "benchmark_consensus.jpg",
+      "firstExample": {
+        "en": "After extensive deliberations, the executive committee reached a consensus regarding the revised budget allocation for the upcoming fiscal year.",
+        "zh": "經過深入的討論後，執行委員會就即將到來的財政年度之修訂預算分配達成了共識。",
+        "scenario": "董事會預算會議"
+      },
+      "prompt": "A high-end, modern corporate boardroom flooded with soft, natural daylight from floor-to-ceiling windows overlooking a city skyline. A diverse group of professional executives in tailored business attire are seated around a sleek oval conference table. They are nodding and smiling, showing visible agreement, with a senior manager warmly shaking hands with a colleague across the table. On the table are modern laptops, minimalist glass water carafes, and neat financial charts. High-end commercial photography style, 8k resolution, sharp focus, elegant glass and wood textures, authentic corporate atmosphere, professional lighting."
+    }
+  ]
+}

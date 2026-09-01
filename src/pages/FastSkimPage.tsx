@@ -12,10 +12,13 @@ import {
   Star,
   Repeat,
   Volume2,
-  Sparkles
+  Sparkles,
+  Image as ImageIcon,
+  ImageOff
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProfile } from '../contexts/ProfileContext';
+import { useTypography } from '../contexts/TypographyContext';
 import { courseRepository } from '../repositories/courseRepository';
 import { progressRepository } from '../repositories/progressRepository';
 import { Word } from '../types/db';
@@ -24,11 +27,13 @@ import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { audioService } from '../services/audioService';
+import { imageService } from '../services/imageService';
 
 export const FastSkimPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { activeProfile, updateProfile } = useProfile();
+  const { settings, updateSettings, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
 
   const courseId = searchParams.get('courseId');
 
@@ -36,8 +41,9 @@ export const FastSkimPage: React.FC = () => {
   const [activeWords, setActiveWords] = useState<Word[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [durationSec, setDurationSec] = useState(activeProfile?.fastSkimDurationSec || 4);
+  const [durationSec, setDurationSec] = useState(settings.fastSkimDurationSec || 1.5);
   const [remainingTime, setRemainingTime] = useState(durationSec);
+  const [showImage, setShowImage] = useState(settings.fastSkimShowImage !== false);
   const [isLoading, setIsLoading] = useState(true);
 
   // Micro-session & Filters
@@ -306,13 +312,36 @@ export const FastSkimPage: React.FC = () => {
             </select>
           </div>
 
-          {/* Speed Pills: 1s, 2s, 3s, 4s, 6s */}
-          <div className="flex items-center space-x-1">
-            {[1, 2, 3, 4, 6].map((sec) => (
+          {/* Speed Pills: 1.0s, 1.5s, 2.0s, 3.0s, 4.0s + Image Toggle */}
+          <div className="flex items-center space-x-1.5">
+            {/* Image Toggle */}
+            <button
+              type="button"
+              onClick={() => {
+                const next = !showImage;
+                setShowImage(next);
+                updateSettings({ fastSkimShowImage: next });
+              }}
+              className={`px-1.5 py-0.5 rounded-md text-[10px] font-semibold transition-colors flex items-center space-x-1 ${
+                showImage
+                  ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40'
+                  : 'bg-slate-800 text-slate-400 hover:text-slate-200'
+              }`}
+              title={showImage ? '配圖模式已開啟' : '純文字極速模式'}
+            >
+              {showImage ? <ImageIcon size={12} className="mr-0.5" /> : <ImageOff size={12} className="mr-0.5" />}
+              <span>{showImage ? '圖文' : '純字'}</span>
+            </button>
+
+            {/* Speed Pills */}
+            {[1.0, 1.5, 2.0, 3.0, 4.0].map((sec) => (
               <button
                 key={sec}
                 type="button"
-                onClick={() => handleDurationChange(sec)}
+                onClick={() => {
+                  handleDurationChange(sec);
+                  updateSettings({ fastSkimDurationSec: sec });
+                }}
                 className={`px-1.5 py-0.5 text-[10px] font-bold rounded-md transition-all ${
                   durationSec === sec
                     ? 'bg-emerald-600 text-white shadow-sm'
@@ -346,6 +375,21 @@ export const FastSkimPage: React.FC = () => {
               />
             </div>
 
+            {/* Associative Scenario Image Banner */}
+            {showImage && (
+              <div className="relative -mx-6 -mt-6 mb-3 h-28 overflow-hidden rounded-t-3xl border-b border-slate-700/60">
+                <img
+                  src={imageService.getImageForWord(currentWord.headword, currentWord.category).url}
+                  alt={currentWord.headword}
+                  className="w-full h-full object-cover brightness-85"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
+                <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
+                  <Badge variant="emerald">{currentWord.category}</Badge>
+                </div>
+              </div>
+            )}
+
             {/* Headword & Tags */}
             <div>
               <div className="flex items-center justify-between pt-1">
@@ -353,18 +397,18 @@ export const FastSkimPage: React.FC = () => {
                   <Badge variant={currentWord.entryType === 'word' ? 'emerald' : 'purple'}>
                     {currentWord.entryType === 'word' ? '單字' : currentWord.entryType === 'phrase' ? '片語' : '句型'}
                   </Badge>
-                  <span className="text-xs text-slate-400">{currentWord.category}</span>
+                  {!showImage && <span className="text-xs text-slate-400">{currentWord.category}</span>}
                 </div>
 
                 <AudioButton headword={currentWord.headword} audioUrl={currentWord.audioUSUrl} />
               </div>
 
-              <div className="mt-4">
-                <h2 className="text-3xl font-black text-slate-100 tracking-tight leading-tight">
+              <div className={showImage ? "mt-1.5" : "mt-4"}>
+                <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight`}>
                   {currentWord.headword}
                 </h2>
                 {currentWord.phoneticUS && (
-                  <p className="text-sm font-mono text-emerald-400/90 mt-1">
+                  <p className="text-sm font-mono text-emerald-400/90 mt-0.5">
                     /{currentWord.phoneticUS}/
                   </p>
                 )}
@@ -372,29 +416,32 @@ export const FastSkimPage: React.FC = () => {
             </div>
 
             {/* Definition & Examples */}
-            <div className="my-3 space-y-3">
-              <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800">
-                <div className="text-[11px] text-slate-400 font-semibold mb-0.5">中文釋義</div>
-                <div className="text-lg font-bold text-emerald-300">
+            <div className="my-2.5 space-y-2.5">
+              <div className="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+                <div className="text-[10px] text-slate-400 font-semibold mb-0.5">中文釋義</div>
+                <div className={`${definitionClass} text-emerald-300`}>
                   {currentWord.definitionZh}
                 </div>
               </div>
 
               {currentWord.examples.length > 0 && (
-                <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/80">
-                  <div className="text-[11px] text-slate-400 font-semibold mb-0.5">商務情境例句</div>
-                  <p className="text-xs text-slate-200 leading-relaxed">
-                    {currentWord.examples[0].english}
+                <div className="p-3 rounded-2xl bg-slate-900/60 border border-slate-800/80">
+                  <div className="text-[10px] text-emerald-400 font-bold mb-0.5 flex items-center space-x-1">
+                    <Sparkles size={11} className="text-amber-400" />
+                    <span>商務情境例句</span>
+                  </div>
+                  <p className={`text-slate-200 ${exampleEnClass}`}>
+                    {currentWord.examples[0].en || currentWord.examples[0].english}
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-1">
-                    {currentWord.examples[0].chinese}
+                  <p className={`text-emerald-400/90 ${exampleZhClass} mt-1`}>
+                    {currentWord.examples[0].zh || currentWord.examples[0].chinese}
                   </p>
                 </div>
               )}
             </div>
 
             {/* Bottom info bar */}
-            <div className="text-[11px] text-slate-400 flex items-center justify-between border-t border-slate-800 pt-3">
+            <div className="text-[11px] text-slate-400 flex items-center justify-between border-t border-slate-800 pt-2.5">
               <span>詞性：{currentWord.partsOfSpeech.join(', ')}</span>
               <span className="text-slate-400 font-mono">剩餘 {remainingTime.toFixed(1)} 秒</span>
             </div>

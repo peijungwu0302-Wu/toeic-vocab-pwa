@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ProfileProvider, useProfile } from './contexts/ProfileContext';
 import { SyncProvider } from './contexts/SyncContext';
+import { TypographyProvider } from './contexts/TypographyContext';
 import { AppLayout } from './components/layout/AppLayout';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -74,7 +75,9 @@ export const App: React.FC = () => {
     <BrowserRouter>
       <ProfileProvider>
         <SyncProvider>
-          <AppRoutes />
+          <TypographyProvider>
+            <AppRoutes />
+          </TypographyProvider>
         </SyncProvider>
       </ProfileProvider>
     </BrowserRouter>
@@ -82,3 +85,4 @@ export const App: React.FC = () => {
 };
 
 export default App;
+

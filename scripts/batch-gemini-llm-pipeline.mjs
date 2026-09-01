@@ -1,4 +1,4 @@
-﻿import fs from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -51,7 +51,8 @@ console.log(`🚀 Gemini 大模型出題流水線啟動 [${config.label}]`);
 console.log('='.repeat(70));
 
 const rawData = JSON.parse(fs.readFileSync(targetFilePath, 'utf8'));
-const wordsList = (rawData.words || []).slice(0, limitArg);
+const fullWordsList = rawData.words || [];
+const wordsList = fullWordsList.slice(0, limitArg);
 
 let cacheMap = new Map();
 if (fs.existsSync(cacheFilePath)) {
@@ -291,16 +292,46 @@ async function runPipeline() {
   console.log('='.repeat(70));
 
   // Sync back to master file
-  const finalWords = wordsList.map(w => cacheMap.get(w.headword.toLowerCase().trim()) || w);
+  const finalWords = fullWordsList.map(w => cacheMap.get(w.headword.toLowerCase().trim()) || w);
   fs.writeFileSync(targetFilePath, JSON.stringify({
     ...rawData,
     version: 5,
     datasetVersion: 'v5.0.0-llm-bespoke-visual',
+    count: finalWords.length,
     words: finalWords
   }), 'utf8');
 
   fs.writeFileSync(targetQuizPath, JSON.stringify(finalWords), 'utf8');
   console.log(`✅ 已更新 ${config.file} 與 ${config.quizFile}`);
+
+  // Build Master Map for course sync
+  const wordLookup = new Map(finalWords.map(w => [w.headword.toLowerCase().trim(), w]));
+
+  // Sync to all affected course files
+  const courseFiles = fs.readdirSync(COURSES_DIR).filter(f => f.startsWith('course-') && f.endsWith('.json'));
+  for (const cf of courseFiles) {
+    const cp = path.join(COURSES_DIR, cf);
+    const cData = JSON.parse(fs.readFileSync(cp, 'utf8'));
+    let modified = false;
+    const updatedWords = (cData.words || []).map(w => {
+      const match = wordLookup.get(w.headword.toLowerCase().trim());
+      if (match) {
+        modified = true;
+        return match;
+      }
+      return w;
+    });
+    if (modified) {
+      fs.writeFileSync(cp, JSON.stringify({
+        ...cData,
+        version: 5,
+        datasetVersion: 'v5.0.0-llm-bespoke-visual',
+        buildTimestamp: new Date().toISOString(),
+        words: updatedWords
+      }), 'utf8');
+    }
+  }
+  console.log('📚 已同步更新至對應課程檔案！');
 }
 
 runPipeline().catch(console.error);
