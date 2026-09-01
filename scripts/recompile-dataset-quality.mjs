@@ -767,8 +767,74 @@ function getSemanticStemAndDistractors(headword, pos, shortDef) {
   }
 
   // ==========================================
-  // 6. NOUNS (Dynamic Multi-Scenario Weaver)
+  // 6. SPECIALIZED NOUN TAXONOMIES
   // ==========================================
+  const TIME_NOUNS = new Set(['decade', 'century', 'millennium', 'quarter', 'semester', 'duration', 'period', 'interval', 'era', 'session', 'term', 'schedule', 'timeline', 'anniversary', 'deadline', 'agenda', 'forecast', 'frequency', 'delay', 'year', 'month', 'week', 'day', 'hour', 'minute', 'moment', 'season', 'phase', 'stage', 'overtime', 'tenure']);
+  const isTimeNoun = TIME_NOUNS.has(hwLower) || def.includes('十年') || def.includes('世紀') || def.includes('時期') || def.includes('期間') || def.includes('時段') || def.includes('時程') || def.includes('期限') || def.includes('階段') || def.includes('季') || def.includes('年度');
+
+  if (isTimeNoun) {
+    return {
+      stem1: `Over the past _____ , our corporation has expanded from a local startup into a leading multinational provider.`,
+      zh1: `在過去的【${cleanD}】間，我司已從一家在地新創公司拓展為頂尖的跨國供應商。`,
+      stem2: `Financial analysts forecast strong revenue growth throughout the upcoming _____ as new regional facilities open.`,
+      zh2: `財務分析師預測，隨著新區域設施啟用，在即將到來的【${cleanD}】內營收將強勁增長。`,
+      distractors: ['century', 'quarter', 'period', 'duration']
+    };
+  }
+
+  const ROLE_NOUNS = new Set(['accountant', 'cleaner', 'manager', 'supervisor', 'director', 'inspector', 'consultant', 'technician', 'applicant', 'assistant', 'analyst', 'engineer', 'coordinator', 'representative', 'specialist', 'candidate', 'executive', 'auditor', 'officer', 'contractor', 'vendor', 'colleague', 'employee', 'attendee', 'instructor', 'client', 'customer', 'worker', 'mechanic', 'plumber', 'driver', 'pilot', 'architect', 'lawyer', 'attorney', 'receptionist', 'clerk', 'cashier', 'agent']);
+  const isRoleNoun = ROLE_NOUNS.has(hwLower) || def.includes('人員') || def.includes('專員') || def.includes('經理') || def.includes('主管') || def.includes('顧問') || def.includes('會計師') || def.includes('工程師') || def.includes('協調員') || def.includes('代表') || def.includes('應徵者') || def.includes('員工') || def.includes('同事') || def.includes('技術員') || def.includes('監督者') || def.includes('總監') || def.includes('助理') || def.includes('審計師') || def.includes('承包商') || def.includes('廠商') || def.includes('講師') || def.includes('客戶');
+
+  if (isRoleNoun) {
+    return {
+      stem1: `The human resources department hired an experienced _____ to oversee upcoming operational compliance audits.`,
+      zh1: `人資部門聘請了一位經驗豐富的【${cleanD}】，以督導即將進行的營運合規審計。`,
+      stem2: `Our company is currently searching for a qualified _____ with strong analytical and cross-cultural communication skills.`,
+      zh2: `我司目前正尋找具備出色分析與跨文化溝通能力的合格【${cleanD}】。`,
+      distractors: ['supervisor', 'coordinator', 'consultant', 'technician']
+    };
+  }
+
+  const FACILITY_NOUNS = new Set(['airport', 'terminal', 'auditorium', 'cafeteria', 'warehouse', 'laboratory', 'headquarters', 'branch', 'pavilion', 'facility', 'office', 'lobby', 'station', 'harbor', 'center', 'venue', 'store', 'factory', 'plant', 'depot', 'hall', 'room', 'booth', 'kiosk']);
+  const isFacilityNoun = FACILITY_NOUNS.has(hwLower) || def.includes('機場') || def.includes('航廈') || def.includes('禮堂') || def.includes('餐廳') || def.includes('倉庫') || def.includes('實驗室') || def.includes('總部') || def.includes('分行') || def.includes('設施') || def.includes('展館') || def.includes('辦公室') || def.includes('大廳') || def.includes('車站') || def.includes('場地') || def.includes('工廠') || def.includes('會場');
+
+  if (isFacilityNoun) {
+    return {
+      stem1: `All conference attendees are requested to assemble in the main _____ fifteen minutes before the keynote presentation.`,
+      zh1: `請所有與會人員在主題演講開始前十五分鐘，於主要【${cleanD}】集合。`,
+      stem2: `Senior management announced a major investment to expand the regional _____ and increase logistics throughput.`,
+      zh2: `高層管理團隊宣布了一項重大投資，以擴建區域【${cleanD}】並提升物流輸送量。`,
+      distractors: ['auditorium', 'cafeteria', 'warehouse', 'terminal']
+    };
+  }
+
+  const DEVICE_NOUNS = new Set(['equipment', 'printer', 'machinery', 'scanner', 'projector', 'vehicle', 'device', 'hardware', 'appliance', 'instrument', 'computer', 'monitor', 'copier', 'tool', 'gadget', 'component', 'machine']);
+  const isDeviceNoun = DEVICE_NOUNS.has(hwLower) || def.includes('設備') || def.includes('機器') || def.includes('器材') || def.includes('儀器') || def.includes('印表機') || def.includes('影印機') || def.includes('掃描器') || def.includes('硬體') || def.includes('車輛') || def.includes('裝置') || def.includes('器具') || def.includes('工具');
+
+  if (isDeviceNoun) {
+    return {
+      stem1: `Technicians performed thorough diagnostic maintenance on all laboratory _____ to prevent unexpected operational downtime.`,
+      zh1: `技術人員對所有實驗室【${cleanD}】進行了徹底的檢測維護，以防止意外營運停機。`,
+      stem2: `The procurement division placed an order for energy-efficient _____ to reduce factory operating costs.`,
+      zh2: `採購部門訂購了節能【${cleanD}】，以降低工廠營運成本。`,
+      distractors: ['equipment', 'machinery', 'hardware', 'appliance']
+    };
+  }
+
+  const FINANCIAL_NOUNS = new Set(['budget', 'revenue', 'profit', 'expense', 'invoice', 'discount', 'currency', 'dividend', 'deficit', 'rebate', 'receipt', 'fare', 'fee', 'salary', 'wage', 'cost', 'price', 'tax', 'loan', 'deposit', 'fund', 'capital', 'finance', 'debt', 'expenditure']);
+  const isFinancialNoun = FINANCIAL_NOUNS.has(hwLower) || def.includes('預算') || def.includes('營收') || def.includes('獲利') || def.includes('利潤') || def.includes('費用') || def.includes('發票') || def.includes('折扣') || def.includes('幣值') || def.includes('股利') || def.includes('赤字') || def.includes('回饋金') || def.includes('收據') || def.includes('薪資') || def.includes('成本') || def.includes('價格') || def.includes('稅額') || def.includes('貸款') || def.includes('定金') || def.includes('資金');
+
+  if (isFinancialNoun) {
+    return {
+      stem1: `The chief financial officer presented the revised annual _____ during the board of directors meeting.`,
+      zh1: `財務長在董事會會議上提交了修訂後的年度【${cleanD}】報告。`,
+      stem2: `Department managers must carefully review all operational _____ to ensure expenditures remain within budget projections.`,
+      zh2: `各部門經理必須仔細審查所有營運【${cleanD}】，以確保各項支出維持在預算預測之內。`,
+      distractors: ['budget', 'revenue', 'expenditure', 'deficit']
+    };
+  }
+
+  // General Abstract Nouns (Dynamic Multi-Scenario Weaver)
   const nounTemplate = NOUN_SCENARIO_POOLS[h % NOUN_SCENARIO_POOLS.length];
   return {
     stem1: nounTemplate.stem1,
@@ -839,11 +905,27 @@ function generate6BespokeQuizzes(headword, pos, shortDef) {
   const hw = headword.trim();
   const hwLower = hw.toLowerCase();
   const d = shortDef.trim();
+  const def = d.toLowerCase();
   const posLower = (pos || '').toLowerCase();
   const isPhrase = hwLower.includes(' ') || posLower.includes('phrase') || posLower.includes('片語');
   const isVerb = !isPhrase && (posLower.includes('verb') || posLower.includes('v.') || posLower === 'v');
   const isAdj = !isPhrase && (posLower.includes('adj') || posLower.includes('形容詞'));
   const isAdv = !isPhrase && (posLower.includes('adv') || posLower.includes('副詞') || hwLower.endsWith('ly'));
+
+  const TIME_NOUNS = new Set(['decade', 'century', 'millennium', 'quarter', 'semester', 'duration', 'period', 'interval', 'era', 'session', 'term', 'schedule', 'timeline', 'anniversary', 'deadline', 'agenda', 'forecast', 'frequency', 'delay', 'year', 'month', 'week', 'day', 'hour', 'minute', 'moment', 'season', 'phase', 'stage', 'overtime', 'tenure']);
+  const isTimeNoun = !isPhrase && !isVerb && !isAdj && !isAdv && (TIME_NOUNS.has(hwLower) || def.includes('十年') || def.includes('世紀') || def.includes('時期') || def.includes('期間') || def.includes('時段') || def.includes('時程') || def.includes('期限') || def.includes('階段') || def.includes('季') || def.includes('年度'));
+
+  const ROLE_NOUNS = new Set(['accountant', 'cleaner', 'manager', 'supervisor', 'director', 'inspector', 'consultant', 'technician', 'applicant', 'assistant', 'analyst', 'engineer', 'coordinator', 'representative', 'specialist', 'candidate', 'executive', 'auditor', 'officer', 'contractor', 'vendor', 'colleague', 'employee', 'attendee', 'instructor', 'client', 'customer', 'worker', 'mechanic', 'plumber', 'driver', 'pilot', 'architect', 'lawyer', 'attorney', 'receptionist', 'clerk', 'cashier', 'agent']);
+  const isRoleNoun = !isPhrase && !isVerb && !isAdj && !isAdv && (ROLE_NOUNS.has(hwLower) || def.includes('人員') || def.includes('專員') || def.includes('經理') || def.includes('主管') || def.includes('顧問') || def.includes('會計師') || def.includes('工程師') || def.includes('協調員') || def.includes('代表') || def.includes('應徵者') || def.includes('員工') || def.includes('同事') || def.includes('技術員') || def.includes('監督者') || def.includes('總監') || def.includes('助理') || def.includes('審計師') || def.includes('承包商') || def.includes('廠商') || def.includes('講師') || def.includes('客戶'));
+
+  const FACILITY_NOUNS = new Set(['airport', 'terminal', 'auditorium', 'cafeteria', 'warehouse', 'laboratory', 'headquarters', 'branch', 'pavilion', 'facility', 'office', 'lobby', 'station', 'harbor', 'center', 'venue', 'store', 'factory', 'plant', 'depot', 'hall', 'room', 'booth', 'kiosk']);
+  const isFacilityNoun = !isPhrase && !isVerb && !isAdj && !isAdv && (FACILITY_NOUNS.has(hwLower) || def.includes('機場') || def.includes('航廈') || def.includes('禮堂') || def.includes('餐廳') || def.includes('倉庫') || def.includes('實驗室') || def.includes('總部') || def.includes('分行') || def.includes('設施') || def.includes('展館') || def.includes('辦公室') || def.includes('大廳') || def.includes('車站') || def.includes('場地') || def.includes('工廠') || def.includes('會場'));
+
+  const DEVICE_NOUNS = new Set(['equipment', 'printer', 'machinery', 'scanner', 'projector', 'vehicle', 'device', 'hardware', 'appliance', 'instrument', 'computer', 'monitor', 'copier', 'tool', 'gadget', 'component', 'machine']);
+  const isDeviceNoun = !isPhrase && !isVerb && !isAdj && !isAdv && (DEVICE_NOUNS.has(hwLower) || def.includes('設備') || def.includes('機器') || def.includes('器材') || def.includes('儀器') || def.includes('印表機') || def.includes('影印機') || def.includes('掃描器') || def.includes('硬體') || def.includes('車輛') || def.includes('裝置') || def.includes('器具') || def.includes('工具'));
+
+  const FINANCIAL_NOUNS = new Set(['budget', 'revenue', 'profit', 'expense', 'invoice', 'discount', 'currency', 'dividend', 'deficit', 'rebate', 'receipt', 'fare', 'fee', 'salary', 'wage', 'cost', 'price', 'tax', 'loan', 'deposit', 'fund', 'capital', 'finance', 'debt', 'expenditure']);
+  const isFinancialNoun = !isPhrase && !isVerb && !isAdj && !isAdv && (FINANCIAL_NOUNS.has(hwLower) || def.includes('預算') || def.includes('營收') || def.includes('獲利') || def.includes('利潤') || def.includes('費用') || def.includes('發票') || def.includes('折扣') || def.includes('幣值') || def.includes('股利') || def.includes('赤字') || def.includes('回饋金') || def.includes('收據') || def.includes('薪資') || def.includes('成本') || def.includes('價格') || def.includes('稅額') || def.includes('貸款') || def.includes('定金') || def.includes('資金'));
 
   const semantic = getSemanticStemAndDistractors(hw, pos, d);
 
@@ -857,7 +939,12 @@ function generate6BespokeQuizzes(headword, pos, shortDef) {
   const fallbackPhrases = ['in detail', 'in writing', 'by hand', 'at once', 'for good', 'as a whole'];
 
   let pool = fallbackNouns;
-  if (isPhrase) pool = fallbackPhrases;
+  if (isTimeNoun) pool = ['century', 'quarter', 'period', 'duration', 'interval', 'phase'];
+  else if (isRoleNoun) pool = ['supervisor', 'coordinator', 'consultant', 'technician', 'inspector', 'specialist'];
+  else if (isFacilityNoun) pool = ['auditorium', 'cafeteria', 'warehouse', 'terminal', 'pavilion'];
+  else if (isDeviceNoun) pool = ['equipment', 'machinery', 'hardware', 'appliance', 'scanner'];
+  else if (isFinancialNoun) pool = ['budget', 'revenue', 'expenditure', 'deficit', 'dividend'];
+  else if (isPhrase) pool = fallbackPhrases;
   else if (isAdv) pool = fallbackAdvs;
   else if (isAdj) pool = fallbackAdjs;
   else if (isVerb) {
@@ -881,7 +968,23 @@ function generate6BespokeQuizzes(headword, pos, shortDef) {
   const MODAL_VERBS_SET = new Set(['cannot', 'can', 'could', 'may', 'might', 'must', 'should', 'shall', 'would', 'will']);
   let tier3Stem = `The board of directors held an extraordinary session to review the comprehensive policy regarding _____ for the fiscal year.`;
   let tier3Zh = `董事會召開了臨時會議，以審查本財政年度關於【${d}】的完整政策方針。`;
-  if (MODAL_VERBS_SET.has(hwLower) || posLower.includes('auxiliary') || posLower.includes('modal')) {
+
+  if (isTimeNoun) {
+    tier3Stem = `The executive committee reviewed the corporate growth milestones achieved over the preceding _____ .`;
+    tier3Zh = `執行委員會回顧了在過去【${d}】內達成的企業成長里程碑。`;
+  } else if (isRoleNoun) {
+    tier3Stem = `The executive management team praised the lead _____ for delivering outstanding project results ahead of schedule.`;
+    tier3Zh = `執行管理團隊讚揚了首席【${d}】提前交付了出色的專案成果。`;
+  } else if (isFacilityNoun) {
+    tier3Stem = `The international event committee confirmed the official reservation for the central _____ during the summit.`;
+    tier3Zh = `國際活動委員會確認了高峰會期間中央【${d}】的正式預訂。`;
+  } else if (isDeviceNoun) {
+    tier3Stem = `The quality assurance department mandated that all high-precision _____ undergo biannual calibration.`;
+    tier3Zh = `品質保證部門規定所有高精度【${d}】必須每半年校準一次。`
+  } else if (isFinancialNoun) {
+    tier3Stem = `During the annual shareholders meeting, the financial controller analyzed the overall _____ performance.`;
+    tier3Zh = `在年度股東大會期間，財務總監分析了整體【${d}】績效表現。`;
+  } else if (MODAL_VERBS_SET.has(hwLower) || posLower.includes('auxiliary') || posLower.includes('modal')) {
     tier3Stem = `The management board emphasized that regional representatives _____ adhere strictly to the revised safety protocol.`;
     tier3Zh = `管理委員會強調，區域代表【${d}】嚴格遵守修訂後的安全規範。`;
   } else if (isAdv) {
@@ -906,9 +1009,44 @@ function generate6BespokeQuizzes(headword, pos, shortDef) {
     tier3Zh = `與國際合作夥伴維持【${d}】的關係，對於維護長期供應鏈安全至關重要。`;
   }
 
+  // Cloze Memos
   let cloze1Stem = `📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nSubject: Operational Update\n\nPlease be advised that management has officially designated _____ within our standard procedures starting next Monday.`;
   let cloze1Zh = `📧【商務備忘錄】\n收件人：全體部門同仁\n主旨：營運更新通知\n\n請注意，管理層已正式自下週一起在標準程序中指定【${d}】。`;
-  if (MODAL_VERBS_SET.has(hwLower)) {
+
+  let cloze2Stem = `📩 [CLIENT CORRESPONDENCE]\nTo: Regional Procurement Managers\nSubject: Quality Assurance\n\nIn accordance with global compliance standards, our facility requires _____ in all upcoming project deliverables.`;
+  let cloze2Zh = `📩【客戶商務信件】\n收件人：區域採購經理\n主旨：品質保證\n\n依據全球合規標準，我司設施在未來所有專案交付物中切實要求【${d}】。`;
+
+  let cloze3Stem = `📢 [EXECUTIVE COMPLIANCE ANNOUNCEMENT]\nTo: Division Heads\nSubject: Policy Implementation\n\nOur technical and legal committees have established rigorous standards regarding _____ across all international facilities.`;
+  let cloze3Zh = `📢【高層合規公告】\n收件人：各部門主管\n主旨：政策落實\n\n我司技術與法務委員會已針對所有跨國設施之【${d}】建立了嚴格標準。`;
+
+  if (isTimeNoun) {
+    cloze1Stem = `📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nSubject: Company Milestone\n\nOver the past _____ , our organization has consistently maintained an outstanding safety record across all regional plants.`;
+    cloze1Zh = `📧【商務備忘錄】\n收件人：全體部門同仁\n主旨：公司里程碑通知\n\n在過去的【${d}】間，我司在所有區域廠區均維持了優異的安全紀錄。`;
+
+    cloze2Stem = `📩 [CLIENT CORRESPONDENCE]\nTo: Long-term Partners\nSubject: Annual Review\n\nThank you for your trusted partnership throughout the previous _____ as we continue to deliver premium services.`;
+    cloze2Zh = `📩【客戶商務信件】\n收件人：長期合作夥伴\n主旨：年度回顧\n\n感謝您在過去【${d}】間的信任合作，我們將持續提供頂級服務。`;
+
+    cloze3Stem = `📢 [EXECUTIVE COMPLIANCE ANNOUNCEMENT]\nTo: Division Heads\nSubject: Strategic Roadmap\n\nOur five-year development plan will guide operations throughout the next _____ of international growth.`;
+    cloze3Zh = `📢【高層合規公告】\n收件人：各部門主管\n主旨：策略發展藍圖\n\n我們的五年發展計畫將指引下一個【${d}】的跨國成長營運。`;
+  } else if (isRoleNoun) {
+    cloze1Stem = `📧 [BUSINESS MEMORANDUM]\nTo: All Staff\nSubject: Organizational Update\n\nPlease welcome our newly appointed _____ who will join the regional management team next Monday.`;
+    cloze1Zh = `📧【商務備忘錄】\n收件人：全體同仁\n主旨：人事異動通知\n\n請大家熱烈歡迎新任命的【${d}】，他將於下週一加入區域管理團隊。`;
+
+    cloze2Stem = `📩 [CLIENT CORRESPONDENCE]\nTo: Project Stakeholders\nSubject: Project Team Lead\n\nOur senior _____ will personally oversee the implementation of all customized software features.`;
+    cloze2Zh = `📩【客戶商務信件】\n收件人：專案關係人\n主旨：專案負責人指派\n\n我們的資深【${d}】將親自督導所有客製化軟體功能的實施。`;
+
+    cloze3Stem = `📢 [EXECUTIVE ANNOUNCEMENT]\nTo: Department Heads\nSubject: Recruitment Campaign\n\nHuman resources is actively searching for a qualified _____ with proven expertise in global supply chains.`;
+    cloze3Zh = `📢【高層公告】\n收件人：各部門主管\n主旨：人才招募計畫\n\n人資部門正積極尋找在跨國供應鏈領域具備深厚專業的合格【${d}】。`;
+  } else if (isFacilityNoun) {
+    cloze1Stem = `📧 [BUSINESS MEMORANDUM]\nTo: All Attendees\nSubject: Event Logistics\n\nPlease gather in the central _____ fifteen minutes prior to the keynote presentation.`;
+    cloze1Zh = `📧【商務備忘錄】\n收件人：全體與會者\n主旨：活動場地須知\n\n請在主題演講開始前十五分鐘，於中央【${d}】集合。`;
+  } else if (isDeviceNoun) {
+    cloze1Stem = `📧 [BUSINESS MEMORANDUM]\nTo: Facility Staff\nSubject: Maintenance Schedule\n\nTechnicians will service all diagnostic _____ on the third floor this Saturday morning.`;
+    cloze1Zh = `📧【商務備忘錄】\n收件人：總務人員\n主旨：維護時程通知\n\n技術人員將於本週六上午為三樓的所有檢測【${d}】進行保養。`;
+  } else if (isFinancialNoun) {
+    cloze1Stem = `📧 [BUSINESS MEMORANDUM]\nTo: Department Managers\nSubject: Fiscal Planning\n\nPlease submit your finalized annual _____ for senior management review by Friday.`;
+    cloze1Zh = `📧【商務備忘錄】\n收件人：部門主管\n主旨：財政規劃通知\n\n請在週五前提交定案的年度【${d}】，以供高層審閱。`;
+  } else if (MODAL_VERBS_SET.has(hwLower)) {
     cloze1Stem = `📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nSubject: Operational Update\n\nPlease be advised that all employees _____ complete the mandatory security training before next Monday.`;
     cloze1Zh = `📧【商務備忘錄】\n收件人：全體部門同仁\n主旨：營運更新通知\n\n請注意，全體同仁【${d}】在下週一前完成強制性安全培訓。`;
   }
@@ -954,22 +1092,22 @@ function generate6BespokeQuizzes(headword, pos, shortDef) {
     {
       type: 'cloze_fill',
       subType: 'active_recall',
-      stem: `📩 [CLIENT CORRESPONDENCE]\nTo: Regional Procurement Managers\nSubject: Quality Assurance\n\nIn accordance with global compliance standards, our facility requires _____ in all upcoming project deliverables.`,
-      stemTranslation: `📩【客戶商務信件】\n收件人：區域採購經理\n主旨：品質保證\n\n依據全球合規標準，我司設施在未來所有專案交付物中切實要求【${d}】。`,
+      stem: cloze2Stem,
+      stemTranslation: cloze2Zh,
       options: options,
       answer: hw,
       clozeHint: `核心釋義：${d}`,
-      explanation: `【商務信函填空】信件主旨與品質相關，選入「${d}」切實符合合約承諾。`
+      explanation: `【商務信函填空】信件主旨與商務溝通相關，選入「${d}」切實符合語境要求。`
     },
     {
       type: 'cloze_fill',
       subType: 'sentence_complete',
-      stem: `📢 [EXECUTIVE COMPLIANCE ANNOUNCEMENT]\nTo: Division Heads\nSubject: Policy Implementation\n\nOur technical and legal committees have established rigorous standards regarding _____ across all international facilities.`,
-      stemTranslation: `📢【高層合規公告】\n收件人：各部門主管\n主旨：政策落實\n\n我司技術與法務委員會已針對所有跨國設施之【${d}】建立了嚴格標準。`,
+      stem: cloze3Stem,
+      stemTranslation: cloze3Zh,
       options: options,
       answer: hw,
       clozeHint: `核心釋義：${d}`,
-      explanation: `【高層合規公告】此公告涉及法規標準，填入「${d}」最符合跨國營運規範。`
+      explanation: `【高層公告克漏字】此公告涉及商務發展，填入「${d}」最符合跨國營運規範。`
     }
   ];
 }

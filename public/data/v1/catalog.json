@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "generatedAt": "2026-09-01T10:06:29.715Z",
+  "generatedAt": "2026-09-01T11:03:42.428Z",
   "totalWords": 11154,
   "totalCourses": 33,
   "courses": [
@@ -13,8 +13,8 @@
       "level": "核心必考",
       "wordCount": 1200,
       "fileName": "course-core-1200.json",
-      "checksum": "a4e36d4c265d7cca73c79695cb474e0680fd308b4e836868beb20aaf218fe373",
-      "sizeBytes": 9208616,
+      "checksum": "0787de72fb3cf5b23b39f590f25cf1d4a22522f4a713c5982914959330b1c896",
+      "sizeBytes": 9216816,
       "version": 3
     },
     {
@@ -26,8 +26,8 @@
       "level": "金證衝刺",
       "wordCount": 2500,
       "fileName": "course-advanced-2500.json",
-      "checksum": "9a696752d413909725754a3ce6359a1552a9348086b0e2013fb9745a583d1f03",
-      "sizeBytes": 19257787,
+      "checksum": "a72f80b97f4d31b61914d0ac64913fa5ec75b5514bdc42f72d50795a336864ee",
+      "sizeBytes": 19276306,
       "version": 3
     },
     {
@@ -39,8 +39,8 @@
       "level": "滿分巔峰",
       "wordCount": 7454,
       "fileName": "course-expert-high.json",
-      "checksum": "4961694c676ea32f0ba9e3fccedc7a0cb67c19dee010fdf4170c533724481251",
-      "sizeBytes": 57932201,
+      "checksum": "a868ea2dc3b37beb9b4de39ae8497b1bfbeaf8e2d50706f2910f9a622e2dc67d",
+      "sizeBytes": 57993595,
       "version": 3
     },
     {
@@ -52,8 +52,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part1.json",
-      "checksum": "26db25b51bc2e525b7c20b1f00689b92ff80da2a394c9e5611cc686a6263bb93",
-      "sizeBytes": 3074648,
+      "checksum": "fc4e0e059821ef3fbf3a39b9ff4e7087a32f65ec31ceabf538c19eed7d74cd3e",
+      "sizeBytes": 3076996,
       "version": 3
     },
     {
@@ -65,8 +65,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part2.json",
-      "checksum": "027236ffc68825603808486ddecd02b0e388845fb9b971c055e93f9636f5c0f7",
-      "sizeBytes": 3083473,
+      "checksum": "b1266aa35c3e0abcf55246da77a1321a109135f1c6465ff9f98fc294787a4145",
+      "sizeBytes": 3086082,
       "version": 3
     },
     {
@@ -78,8 +78,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part3.json",
-      "checksum": "01b6ecce776d78355590219425a78747e6d149d9ee4df8b2f03a527d3d49728a",
-      "sizeBytes": 3076710,
+      "checksum": "2d60b10094eb39b82042a69a46bc682aa5af1cbcb9325ba9631ae228a4e42670",
+      "sizeBytes": 3079288,
       "version": 3
     },
     {
@@ -91,8 +91,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part4.json",
-      "checksum": "1e2f4c6cae1bdda4dd50f552b282da1af75820287c8a643b77bac22e0c9f3986",
-      "sizeBytes": 3083338,
+      "checksum": "e49e326f2efef47ab000550689f51a2aec822a50f85146a79bda1964b6174bdb",
+      "sizeBytes": 3086037,
       "version": 3
     },
     {
@@ -104,8 +104,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part5.json",
-      "checksum": "cd4341fc309e59f82dbfc729b722e01d01b1666b297dc278c4d64c692cefda4c",
-      "sizeBytes": 3080707,
+      "checksum": "2f3b55382372e94cca3d1a915c0f705d4077330c1bf13fc0976058d0c3c66ca7",
+      "sizeBytes": 3083605,
       "version": 3
     },
     {
@@ -117,8 +117,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part6.json",
-      "checksum": "58ee0d3e00af82e58b83df2088cd2c13d9fba4a0fca6043f5f53924ca7b2b146",
-      "sizeBytes": 3086351,
+      "checksum": "c3f6ba91ef1f2e35bd7292978c13e37260ca43d6ba0ffcafbdd5ca2453b97b59",
+      "sizeBytes": 3089703,
       "version": 3
     },
     {
@@ -130,8 +130,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part7.json",
-      "checksum": "5141e62d07744224fa8359c8d28359377b2ed8f1d28d917118fff85008730518",
-      "sizeBytes": 3082396,
+      "checksum": "98b22727c70a6293c099efc0a1afabccdf5447c181bbfc457ebbf3ebfe048f49",
+      "sizeBytes": 3085667,
       "version": 3
     },
     {
@@ -143,8 +143,8 @@
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part8.json",
-      "checksum": "7664885083e43b0b11a4f03c7da9894fa32de6c29bce0f3c4e31e17383c7a0b8",
-      "sizeBytes": 3087092,
+      "checksum": "c5cc9e1daa5b28eca10178586be9acb06a892869190ea85fad1d27c68af153dd",
+      "sizeBytes": 3090275,
       "version": 3
     },
     {
@@ -156,8 +156,8 @@
       "level": "基礎",
       "wordCount": 349,
       "fileName": "course-foundation-550-part9.json",
-      "checksum": "b8f6a2d18ac4902360223d993d5b1793291b7cf3c64ff91eef0fc07742d72d2f",
-      "sizeBytes": 2675381,
+      "checksum": "a4b0b5aabecfa7bd60cd3502c918328a5e41c9eec968d5f35c1f6107bbf6d923",
+      "sizeBytes": 2678527,
       "version": 3
     },
     {
@@ -169,8 +169,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part1.json",
-      "checksum": "97819c1c10bf3e7479464d70a1e77a7159f6da9afd3874a9b90fa573fc24f3b3",
-      "sizeBytes": 3109802,
+      "checksum": "d11061b2e0d0bd0a4646d3fc25905092aa593715ee7d31978529474a1d37b60d",
+      "sizeBytes": 3112977,
       "version": 3
     },
     {
@@ -182,8 +182,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part2.json",
-      "checksum": "bd505d01f4a5676e649a0cb3f721d616b112c10f60317f269e327112e704f7f1",
-      "sizeBytes": 3102228,
+      "checksum": "338a934a4160a3ac1e86950c80cc7e7a1c96cd55a641791b1d6268d4969b236e",
+      "sizeBytes": 3105243,
       "version": 3
     },
     {
@@ -195,8 +195,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part3.json",
-      "checksum": "b67bcff0f0f711bce47dbbd0074e26da947567284373834287771bc1b848585a",
-      "sizeBytes": 3102280,
+      "checksum": "bd7818a857c0a9caac43bfafa98903b71f58cf888b77c6c04cc2c382a61e3b61",
+      "sizeBytes": 3105631,
       "version": 3
     },
     {
@@ -208,8 +208,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part4.json",
-      "checksum": "fe241597efc46c91167eec03316198237117f68aa5a0793be2d51c5448cdf467",
-      "sizeBytes": 3093676,
+      "checksum": "15f51868177df6d0ff1bcf62925d8d1f4fe9f7f4f273366ada2190e36d10d24c",
+      "sizeBytes": 3096509,
       "version": 3
     },
     {
@@ -221,8 +221,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part5.json",
-      "checksum": "f1443a7038228929df330b21e3b098ed4b38b850be98704462f33ecd41fea132",
-      "sizeBytes": 3109982,
+      "checksum": "71377983754e7aee0c77e3d8fc8a4263dc60dae59d6238b875a604f50b2708d3",
+      "sizeBytes": 3113180,
       "version": 3
     },
     {
@@ -234,8 +234,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part6.json",
-      "checksum": "d46ab7bbffe053561cac31b655384f8609d36fc47fb2d8145ff4098347a0b6e9",
-      "sizeBytes": 3116883,
+      "checksum": "b50a16171f24ff21e44190f13d765022b6d33e29c777d742e93cd6532ef064d2",
+      "sizeBytes": 3120019,
       "version": 3
     },
     {
@@ -247,8 +247,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part7.json",
-      "checksum": "160e5db0049541e51444fbaa5371b1ef27b410337947e9b48fcfb23414e69a85",
-      "sizeBytes": 3116646,
+      "checksum": "eb7a7f21436d64b8fc8e13f8e1c3372333bc9bdbad31c064f34b13de6eaef66f",
+      "sizeBytes": 3120166,
       "version": 3
     },
     {
@@ -260,8 +260,8 @@
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part8.json",
-      "checksum": "1cd87886db78a1999265ad5e87bb86674c849d944a433361a4d8aafb16a3cf82",
-      "sizeBytes": 3120273,
+      "checksum": "82482e97c31e311b02f2a7d6bf27ab3af217a518bf7d306d333934992ab7af8d",
+      "sizeBytes": 3123533,
       "version": 3
     },
     {
@@ -273,8 +273,8 @@
       "level": "中階",
       "wordCount": 295,
       "fileName": "course-intermediate-750-part9.json",
-      "checksum": "294f467d2ada741c9a8de972c00702acc632776d7a6fa171c35b716c463e31cd",
-      "sizeBytes": 2281071,
+      "checksum": "47468507e5771f5b633fe7083a1ef7f65e5d8474445ddd85be5d755e25ef5c7c",
+      "sizeBytes": 2283670,
       "version": 3
     },
     {
@@ -286,8 +286,8 @@
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part1.json",
-      "checksum": "4b8fdcd304431db7be5fb902fbb5a7fbb1216ea808c6a4e063a79467347783e3",
-      "sizeBytes": 3118547,
+      "checksum": "0c8be217042c571166728b41343d97a79f817e1c9a2867abfe9fccac9499bcfd",
+      "sizeBytes": 3121979,
       "version": 3
     },
     {
@@ -299,8 +299,8 @@
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part2.json",
-      "checksum": "22f88930929ad0581244c82a9e79f48feb82ae8c75eb26487959009b61ce44d3",
-      "sizeBytes": 3125015,
+      "checksum": "fbccc472b9e020801ea9d31641301ba07510f6cf11f6c0f7d120f75915a05c25",
+      "sizeBytes": 3128271,
       "version": 3
     },
     {
@@ -312,8 +312,8 @@
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part3.json",
-      "checksum": "e71e81124c21077f8cf1f2aa350bea51c58fb1ae2067a30dde0dd2843af84a24",
-      "sizeBytes": 3115233,
+      "checksum": "543932faf2709bf136857063058a274ba24cb8c64792de716d461a65853913c7",
+      "sizeBytes": 3118518,
       "version": 3
     },
     {
@@ -325,8 +325,8 @@
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part4.json",
-      "checksum": "d2fdeaf5464930b7624211a3c2127c586e72dbef64f26819a4a1a8b7d3626fdc",
-      "sizeBytes": 3127537,
+      "checksum": "58bf0b00b0ef408beee1d8d9896581d61386efe64165cceed6e9cf3df7e5a2e6",
+      "sizeBytes": 3130895,
       "version": 3
     },
     {
@@ -338,8 +338,8 @@
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part5.json",
-      "checksum": "b185e4adbf6ec0905eb062ba54411032f31ab59ebda41ac2e0effe40af9aa36f",
-      "sizeBytes": 3120721,
+      "checksum": "c346339d206742469236f0cd8e7179a2d0f6c6ccdbe785264c9abea6a5aa349c",
+      "sizeBytes": 3124272,
       "version": 3
     },
     {
@@ -351,8 +351,8 @@
       "level": "中高階",
       "wordCount": 97,
       "fileName": "course-advanced-860-part6.json",
-      "checksum": "18a00750412e6b94394cca64870372fa7ce0e901cd160c368d54f0a8ba2e786a",
-      "sizeBytes": 757068,
+      "checksum": "db924df89c313a8e72906717a95309cc6cc75df4a6a1633dd0c27f65732dbba2",
+      "sizeBytes": 757826,
       "version": 3
     },
     {
@@ -364,8 +364,8 @@
       "level": "高階",
       "wordCount": 400,
       "fileName": "course-master-990-part1.json",
-      "checksum": "dd459d9e8229a71c1bb0d2ed0b2af64e55ad7ba040d9e743d2e62cd8b02e1ba9",
-      "sizeBytes": 3157647,
+      "checksum": "143c2c4be253aa1e259be6a8388094a5729b5ad5fc7d7a5f552cd031e54201ff",
+      "sizeBytes": 3160892,
       "version": 3
     },
     {
@@ -377,8 +377,8 @@
       "level": "高階",
       "wordCount": 278,
       "fileName": "course-master-990-part2.json",
-      "checksum": "7522561f98c7de4746872969f1506fe92f02399935d7a526467fb1cbb981a3e2",
-      "sizeBytes": 2193356,
+      "checksum": "9e1c905b059df7f4e13d0f9d90bbcd885c0174ce04429a144d12d532088e521a",
+      "sizeBytes": 2195459,
       "version": 3
     },
     {
@@ -390,8 +390,8 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p1.json",
-      "checksum": "513145d4ed56b47ddbeed40f8cda71ca6294c1d8e2b5059235281600419a666f",
-      "sizeBytes": 3114099,
+      "checksum": "a08fdc0d9d216cd1767ca7639731f1807933a8c6cf997fb1401054a6f9156d3a",
+      "sizeBytes": 3117646,
       "version": 3
     },
     {
@@ -403,8 +403,8 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p2.json",
-      "checksum": "8593c1d5b4441451b71c037d754f61709fc7e5eeaabdbe5da2310906bc1faf05",
-      "sizeBytes": 3124734,
+      "checksum": "57086c0bd6cdb3e66fcf352b798b477cd2ae28b95823b6c39e6362cf38cd1b19",
+      "sizeBytes": 3128334,
       "version": 3
     },
     {
@@ -416,8 +416,8 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p3.json",
-      "checksum": "63434d515e3a2f1cf32eaa6aa460ceb8d679d4a3ccc25a3f9a2572da52fc683c",
-      "sizeBytes": 3138782,
+      "checksum": "74a83e414d67744f62710920658a9b7b5667c0303a913043b8382be9d7b59787",
+      "sizeBytes": 3142382,
       "version": 3
     },
     {
@@ -429,8 +429,8 @@
       "level": "實戰",
       "wordCount": 317,
       "fileName": "course-phrases-patterns-p4.json",
-      "checksum": "a3e544df496eb3e7bd789f99eccb59b1e4bb930dff785e7051aa73918bafc8d2",
-      "sizeBytes": 2497878,
+      "checksum": "9485f1d75fa2c5734f98dc57db89e2972cd81300619e2cb507aa061bca825b21",
+      "sizeBytes": 2500731,
       "version": 3
     }
   ],

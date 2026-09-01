@@ -132,7 +132,7 @@
           ],
           "answer": "trilogy",
           "clozeHint": "核心釋義：一系列由三個相關作品",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「一系列由三個相關作品」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「一系列由三個相關作品」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -147,7 +147,7 @@
           ],
           "answer": "trilogy",
           "clozeHint": "核心釋義：一系列由三個相關作品",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「一系列由三個相關作品」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「一系列由三個相關作品」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -287,7 +287,7 @@
           ],
           "answer": "troop",
           "clozeHint": "核心釋義：部隊",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「部隊」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「部隊」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -302,7 +302,7 @@
           ],
           "answer": "troop",
           "clozeHint": "核心釋義：部隊",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「部隊」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「部隊」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -431,7 +431,7 @@
           ],
           "answer": "troupe",
           "clozeHint": "核心釋義：表演團體",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「表演團體」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「表演團體」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -446,7 +446,7 @@
           ],
           "answer": "troupe",
           "clozeHint": "核心釋義：表演團體",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「表演團體」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「表演團體」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -576,7 +576,7 @@
           ],
           "answer": "trust company",
           "clozeHint": "核心釋義：信託公司：一種專業管理資產、提供信託服務",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「信託公司：一種專業管理資產、提供信託服務」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「信託公司：一種專業管理資產、提供信託服務」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -591,7 +591,7 @@
           ],
           "answer": "trust company",
           "clozeHint": "核心釋義：信託公司：一種專業管理資產、提供信託服務",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「信託公司：一種專業管理資產、提供信託服務」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「信託公司：一種專業管理資產、提供信託服務」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80"
@@ -731,7 +731,7 @@
           ],
           "answer": "tuck",
           "clozeHint": "核心釋義：塞入",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「塞入」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「塞入」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -746,7 +746,7 @@
           ],
           "answer": "tuck",
           "clozeHint": "核心釋義：塞入",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「塞入」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「塞入」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80"
@@ -777,14 +777,14 @@
       "examples": [
         {
           "id": "ex_1_twilight",
-          "en": "During the annual shareholders meeting, executive leaders discussed the strategic twilight regarding market expansion.",
-          "zh": "在年度股東大會期間，執行領導團隊討論了關於市場擴張的策略【黃昏時段】。",
+          "en": "Over the past twilight , our corporation has expanded from a local startup into a leading multinational provider.",
+          "zh": "在過去的【黃昏時段】間，我司已從一家在地新創公司拓展為頂尖的跨國供應商。",
           "scenario": "日常商務"
         },
         {
           "id": "ex_2_twilight",
-          "en": "The executive committee approved a revised proposal to optimize corporate twilight across regional branches.",
-          "zh": "執行委員會核准了一項修訂提案，以優化各區域分部的企業【黃昏時段】。",
+          "en": "Financial analysts forecast strong revenue growth throughout the upcoming twilight as new regional facilities open.",
+          "zh": "財務分析師預測，隨著新區域設施啟用，在即將到來的【黃昏時段】內營收將強勁增長。",
           "scenario": "營運管理"
         },
         {
@@ -809,13 +809,13 @@
         {
           "type": "multiple_choice",
           "subType": "vocab_choice",
-          "stem": "During the annual shareholders meeting, executive leaders discussed the strategic _____ regarding market expansion.",
-          "stemTranslation": "在年度股東大會期間，執行領導團隊討論了關於市場擴張的策略【黃昏時段】。",
+          "stem": "Over the past _____ , our corporation has expanded from a local startup into a leading multinational provider.",
+          "stemTranslation": "在過去的【黃昏時段】間，我司已從一家在地新創公司拓展為頂尖的跨國供應商。",
           "options": [
             "twilight",
-            "priority",
-            "advantage",
-            "incentive"
+            "century",
+            "quarter",
+            "period"
           ],
           "answer": "twilight",
           "explanation": "【多益核心考點 · noun】本題空格需填入「黃昏時段」，符合商務職場標準表達。"
@@ -823,13 +823,13 @@
         {
           "type": "multiple_choice",
           "subType": "grammar_form",
-          "stem": "The executive committee approved a revised proposal to optimize corporate _____ across regional branches.",
-          "stemTranslation": "執行委員會核准了一項修訂提案，以優化各區域分部的企業【黃昏時段】。",
+          "stem": "Financial analysts forecast strong revenue growth throughout the upcoming _____ as new regional facilities open.",
+          "stemTranslation": "財務分析師預測，隨著新區域設施啟用，在即將到來的【黃昏時段】內營收將強勁增長。",
           "options": [
             "twilight",
-            "priority",
-            "advantage",
-            "incentive"
+            "century",
+            "quarter",
+            "period"
           ],
           "answer": "twilight",
           "explanation": "【商務語境解析】根據前後文語意，選擇「黃昏時段」最切合專案執行標準。"
@@ -837,13 +837,13 @@
         {
           "type": "multiple_choice",
           "subType": "synonym_context",
-          "stem": "The board of directors held an extraordinary session to review the comprehensive policy regarding _____ for the fiscal year.",
-          "stemTranslation": "董事會召開了臨時會議，以審查本財政年度關於【黃昏時段】的完整政策方針。",
+          "stem": "The executive committee reviewed the corporate growth milestones achieved over the preceding _____ .",
+          "stemTranslation": "執行委員會回顧了在過去【黃昏時段】內達成的企業成長里程碑。",
           "options": [
             "twilight",
-            "priority",
-            "advantage",
-            "incentive"
+            "century",
+            "quarter",
+            "period"
           ],
           "answer": "twilight",
           "explanation": "【高階商務考點】本題考查高階商務決策語境，「黃昏時段」能精確體現專業職場意涵。"
@@ -851,13 +851,13 @@
         {
           "type": "cloze_fill",
           "subType": "collocation_cloze",
-          "stem": "📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nSubject: Operational Update\n\nPlease be advised that management has officially designated _____ within our standard procedures starting next Monday.",
-          "stemTranslation": "📧【商務備忘錄】\n收件人：全體部門同仁\n主旨：營運更新通知\n\n請注意，管理層已正式自下週一起在標準程序中指定【黃昏時段】。",
+          "stem": "📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nSubject: Company Milestone\n\nOver the past _____ , our organization has consistently maintained an outstanding safety record across all regional plants.",
+          "stemTranslation": "📧【商務備忘錄】\n收件人：全體部門同仁\n主旨：公司里程碑通知\n\n在過去的【黃昏時段】間，我司在所有區域廠區均維持了優異的安全紀錄。",
           "options": [
             "twilight",
-            "priority",
-            "advantage",
-            "incentive"
+            "century",
+            "quarter",
+            "period"
           ],
           "answer": "twilight",
           "clozeHint": "核心釋義：黃昏時段",
@@ -866,32 +866,32 @@
         {
           "type": "cloze_fill",
           "subType": "active_recall",
-          "stem": "📩 [CLIENT CORRESPONDENCE]\nTo: Regional Procurement Managers\nSubject: Quality Assurance\n\nIn accordance with global compliance standards, our facility requires _____ in all upcoming project deliverables.",
-          "stemTranslation": "📩【客戶商務信件】\n收件人：區域採購經理\n主旨：品質保證\n\n依據全球合規標準，我司設施在未來所有專案交付物中切實要求【黃昏時段】。",
+          "stem": "📩 [CLIENT CORRESPONDENCE]\nTo: Long-term Partners\nSubject: Annual Review\n\nThank you for your trusted partnership throughout the previous _____ as we continue to deliver premium services.",
+          "stemTranslation": "📩【客戶商務信件】\n收件人：長期合作夥伴\n主旨：年度回顧\n\n感謝您在過去【黃昏時段】間的信任合作，我們將持續提供頂級服務。",
           "options": [
             "twilight",
-            "priority",
-            "advantage",
-            "incentive"
+            "century",
+            "quarter",
+            "period"
           ],
           "answer": "twilight",
           "clozeHint": "核心釋義：黃昏時段",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「黃昏時段」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「黃昏時段」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
           "subType": "sentence_complete",
-          "stem": "📢 [EXECUTIVE COMPLIANCE ANNOUNCEMENT]\nTo: Division Heads\nSubject: Policy Implementation\n\nOur technical and legal committees have established rigorous standards regarding _____ across all international facilities.",
-          "stemTranslation": "📢【高層合規公告】\n收件人：各部門主管\n主旨：政策落實\n\n我司技術與法務委員會已針對所有跨國設施之【黃昏時段】建立了嚴格標準。",
+          "stem": "📢 [EXECUTIVE COMPLIANCE ANNOUNCEMENT]\nTo: Division Heads\nSubject: Strategic Roadmap\n\nOur five-year development plan will guide operations throughout the next _____ of international growth.",
+          "stemTranslation": "📢【高層合規公告】\n收件人：各部門主管\n主旨：策略發展藍圖\n\n我們的五年發展計畫將指引下一個【黃昏時段】的跨國成長營運。",
           "options": [
             "twilight",
-            "priority",
-            "advantage",
-            "incentive"
+            "century",
+            "quarter",
+            "period"
           ],
           "answer": "twilight",
           "clozeHint": "核心釋義：黃昏時段",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「黃昏時段」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「黃昏時段」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -1022,7 +1022,7 @@
           ],
           "answer": "twofold",
           "clozeHint": "核心釋義：雙重的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「雙重的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「雙重的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -1037,7 +1037,7 @@
           ],
           "answer": "twofold",
           "clozeHint": "核心釋義：雙重的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「雙重的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「雙重的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80"
@@ -1168,7 +1168,7 @@
           ],
           "answer": "ugly",
           "clozeHint": "核心釋義：不美觀的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「不美觀的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「不美觀的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -1183,7 +1183,7 @@
           ],
           "answer": "ugly",
           "clozeHint": "核心釋義：不美觀的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「不美觀的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「不美觀的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -1313,7 +1313,7 @@
           ],
           "answer": "underpin",
           "clozeHint": "核心釋義：支撐",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「支撐」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「支撐」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -1328,7 +1328,7 @@
           ],
           "answer": "underpin",
           "clozeHint": "核心釋義：支撐",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「支撐」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「支撐」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -1468,7 +1468,7 @@
           ],
           "answer": "understatement",
           "clozeHint": "核心釋義：低估",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「低估」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「低估」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -1483,7 +1483,7 @@
           ],
           "answer": "understatement",
           "clozeHint": "核心釋義：低估",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「低估」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「低估」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -1615,7 +1615,7 @@
           ],
           "answer": "underwater",
           "clozeHint": "核心釋義：水下的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「水下的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「水下的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -1630,7 +1630,7 @@
           ],
           "answer": "underwater",
           "clozeHint": "核心釋義：水下的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「水下的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「水下的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80"
@@ -1763,7 +1763,7 @@
           ],
           "answer": "underwrite",
           "clozeHint": "核心釋義：承保",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「承保」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「承保」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -1778,7 +1778,7 @@
           ],
           "answer": "underwrite",
           "clozeHint": "核心釋義：承保",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「承保」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「承保」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80"
@@ -1907,7 +1907,7 @@
           ],
           "answer": "underwriter",
           "clozeHint": "核心釋義：承銷商",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「承銷商」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「承銷商」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -1922,7 +1922,7 @@
           ],
           "answer": "underwriter",
           "clozeHint": "核心釋義：承銷商",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「承銷商」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「承銷商」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80"
@@ -2053,7 +2053,7 @@
           ],
           "answer": "undeterred",
           "clozeHint": "核心釋義：毫不退縮的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「毫不退縮的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「毫不退縮的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -2068,7 +2068,7 @@
           ],
           "answer": "undeterred",
           "clozeHint": "核心釋義：毫不退縮的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「毫不退縮的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「毫不退縮的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -2199,7 +2199,7 @@
           ],
           "answer": "uninhabited",
           "clozeHint": "核心釋義：未被居住的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「未被居住的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「未被居住的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -2214,7 +2214,7 @@
           ],
           "answer": "uninhabited",
           "clozeHint": "核心釋義：未被居住的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「未被居住的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「未被居住的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -2357,7 +2357,7 @@
           ],
           "answer": "unintelligible",
           "clozeHint": "核心釋義：難以理解的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「難以理解的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「難以理解的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -2372,7 +2372,7 @@
           ],
           "answer": "unintelligible",
           "clozeHint": "核心釋義：難以理解的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「難以理解的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「難以理解的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -2502,7 +2502,7 @@
           ],
           "answer": "universe",
           "clozeHint": "核心釋義：宇宙",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「宇宙」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「宇宙」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -2517,7 +2517,7 @@
           ],
           "answer": "universe",
           "clozeHint": "核心釋義：宇宙",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「宇宙」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「宇宙」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -2648,7 +2648,7 @@
           ],
           "answer": "unlisted",
           "clozeHint": "核心釋義：未列出於公開名錄的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「未列出於公開名錄的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「未列出於公開名錄的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -2663,7 +2663,7 @@
           ],
           "answer": "unlisted",
           "clozeHint": "核心釋義：未列出於公開名錄的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「未列出於公開名錄的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「未列出於公開名錄的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80"
@@ -2794,7 +2794,7 @@
           ],
           "answer": "unravel",
           "clozeHint": "核心釋義：解開",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「解開」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「解開」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -2809,7 +2809,7 @@
           ],
           "answer": "unravel",
           "clozeHint": "核心釋義：解開",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「解開」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「解開」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -2940,7 +2940,7 @@
           ],
           "answer": "unreal",
           "clozeHint": "核心釋義：不真實的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「不真實的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「不真實的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -2955,7 +2955,7 @@
           ],
           "answer": "unreal",
           "clozeHint": "核心釋義：不真實的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「不真實的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「不真實的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -3086,7 +3086,7 @@
           ],
           "answer": "unwavering",
           "clozeHint": "核心釋義：堅定不移的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「堅定不移的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「堅定不移的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -3101,7 +3101,7 @@
           ],
           "answer": "unwavering",
           "clozeHint": "核心釋義：堅定不移的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「堅定不移的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「堅定不移的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80"
@@ -3231,7 +3231,7 @@
           ],
           "answer": "urn",
           "clozeHint": "核心釋義：骨灰罈",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「骨灰罈」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「骨灰罈」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -3246,7 +3246,7 @@
           ],
           "answer": "urn",
           "clozeHint": "核心釋義：骨灰罈",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「骨灰罈」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「骨灰罈」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -3386,7 +3386,7 @@
           ],
           "answer": "valve",
           "clozeHint": "核心釋義：閥門",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「閥門」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「閥門」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -3401,7 +3401,7 @@
           ],
           "answer": "valve",
           "clozeHint": "核心釋義：閥門",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「閥門」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「閥門」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80"
@@ -3540,7 +3540,7 @@
           ],
           "answer": "vanilla",
           "clozeHint": "核心釋義：香草",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「香草」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「香草」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -3555,7 +3555,7 @@
           ],
           "answer": "vanilla",
           "clozeHint": "核心釋義：香草",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「香草」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「香草」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80"
@@ -3684,7 +3684,7 @@
           ],
           "answer": "variably",
           "clozeHint": "核心釋義：不穩定地",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「不穩定地」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「不穩定地」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -3699,7 +3699,7 @@
           ],
           "answer": "variably",
           "clozeHint": "核心釋義：不穩定地",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「不穩定地」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「不穩定地」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -3827,7 +3827,7 @@
           ],
           "answer": "vegetation",
           "clozeHint": "核心釋義：植物",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「植物」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「植物」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -3842,7 +3842,7 @@
           ],
           "answer": "vegetation",
           "clozeHint": "核心釋義：植物",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「植物」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「植物」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -3980,7 +3980,7 @@
           ],
           "answer": "vein",
           "clozeHint": "核心釋義：靜脈",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「靜脈」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「靜脈」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -3995,7 +3995,7 @@
           ],
           "answer": "vein",
           "clozeHint": "核心釋義：靜脈",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「靜脈」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「靜脈」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -4124,7 +4124,7 @@
           ],
           "answer": "velocity",
           "clozeHint": "核心釋義：速度",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「速度」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「速度」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -4139,7 +4139,7 @@
           ],
           "answer": "velocity",
           "clozeHint": "核心釋義：速度",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「速度」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「速度」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
@@ -4270,7 +4270,7 @@
           ],
           "answer": "veterinary",
           "clozeHint": "核心釋義：獸醫的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「獸醫的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「獸醫的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -4285,7 +4285,7 @@
           ],
           "answer": "veterinary",
           "clozeHint": "核心釋義：獸醫的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「獸醫的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「獸醫的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -4423,7 +4423,7 @@
           ],
           "answer": "veto",
           "clozeHint": "核心釋義：否決",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「否決」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「否決」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -4438,7 +4438,7 @@
           ],
           "answer": "veto",
           "clozeHint": "核心釋義：否決",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「否決」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「否決」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -4568,7 +4568,7 @@
           ],
           "answer": "vineyard",
           "clozeHint": "核心釋義：葡萄園",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「葡萄園」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「葡萄園」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -4583,7 +4583,7 @@
           ],
           "answer": "vineyard",
           "clozeHint": "核心釋義：葡萄園",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「葡萄園」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「葡萄園」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80"
@@ -4713,7 +4713,7 @@
           ],
           "answer": "voltage",
           "clozeHint": "核心釋義：電壓",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「電壓」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「電壓」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -4728,7 +4728,7 @@
           ],
           "answer": "voltage",
           "clozeHint": "核心釋義：電壓",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「電壓」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「電壓」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
@@ -4858,7 +4858,7 @@
           ],
           "answer": "voyage",
           "clozeHint": "核心釋義：一趟長途旅行",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「一趟長途旅行」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「一趟長途旅行」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -4873,7 +4873,7 @@
           ],
           "answer": "voyage",
           "clozeHint": "核心釋義：一趟長途旅行",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「一趟長途旅行」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「一趟長途旅行」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80"
@@ -5003,7 +5003,7 @@
           ],
           "answer": "wagon",
           "clozeHint": "核心釋義：一輛拉貨或運輸物品的馬車或手推車",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「一輛拉貨或運輸物品的馬車或手推車」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「一輛拉貨或運輸物品的馬車或手推車」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -5018,7 +5018,7 @@
           ],
           "answer": "wagon",
           "clozeHint": "核心釋義：一輛拉貨或運輸物品的馬車或手推車",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「一輛拉貨或運輸物品的馬車或手推車」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「一輛拉貨或運輸物品的馬車或手推車」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80"
@@ -5150,7 +5150,7 @@
           ],
           "answer": "wane",
           "clozeHint": "核心釋義：（月亮、星星等）逐漸減弱、衰退；（影響、熱情等）逐漸消退",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「（月亮、星星等）逐漸減弱、衰退；（影響、熱情等）逐漸消退」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「（月亮、星星等）逐漸減弱、衰退；（影響、熱情等）逐漸消退」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -5165,7 +5165,7 @@
           ],
           "answer": "wane",
           "clozeHint": "核心釋義：（月亮、星星等）逐漸減弱、衰退；（影響、熱情等）逐漸消退",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「（月亮、星星等）逐漸減弱、衰退；（影響、熱情等）逐漸消退」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「（月亮、星星等）逐漸減弱、衰退；（影響、熱情等）逐漸消退」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -5303,7 +5303,7 @@
           ],
           "answer": "ward",
           "clozeHint": "核心釋義：病房",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「病房」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「病房」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -5318,7 +5318,7 @@
           ],
           "answer": "ward",
           "clozeHint": "核心釋義：病房",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「病房」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「病房」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -5459,7 +5459,7 @@
           ],
           "answer": "washout",
           "clozeHint": "核心釋義：（計畫、活動等）失敗、泡湯；（人）被淘汰、被除名",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「（計畫、活動等）失敗、泡湯；（人）被淘汰、被除名」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「（計畫、活動等）失敗、泡湯；（人）被淘汰、被除名」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -5474,7 +5474,7 @@
           ],
           "answer": "washout",
           "clozeHint": "核心釋義：（計畫、活動等）失敗、泡湯；（人）被淘汰、被除名",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「（計畫、活動等）失敗、泡湯；（人）被淘汰、被除名」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「（計畫、活動等）失敗、泡湯；（人）被淘汰、被除名」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -5604,7 +5604,7 @@
           ],
           "answer": "weapon",
           "clozeHint": "核心釋義：武器",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「武器」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「武器」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -5619,7 +5619,7 @@
           ],
           "answer": "weapon",
           "clozeHint": "核心釋義：武器",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「武器」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「武器」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80"
@@ -5749,7 +5749,7 @@
           ],
           "answer": "weaponry",
           "clozeHint": "核心釋義：軍備",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「軍備」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「軍備」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -5764,7 +5764,7 @@
           ],
           "answer": "weaponry",
           "clozeHint": "核心釋義：軍備",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「軍備」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「軍備」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80"
@@ -5903,7 +5903,7 @@
           ],
           "answer": "weave",
           "clozeHint": "核心釋義：編織",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「編織」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「編織」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -5918,7 +5918,7 @@
           ],
           "answer": "weave",
           "clozeHint": "核心釋義：編織",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「編織」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「編織」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -6049,7 +6049,7 @@
           ],
           "answer": "wed",
           "clozeHint": "核心釋義：將...牢固地固定在一起",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「將...牢固地固定在一起」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「將...牢固地固定在一起」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -6064,7 +6064,7 @@
           ],
           "answer": "wed",
           "clozeHint": "核心釋義：將...牢固地固定在一起",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「將...牢固地固定在一起」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「將...牢固地固定在一起」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -6203,7 +6203,7 @@
           ],
           "answer": "welding",
           "clozeHint": "核心釋義：焊接",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「焊接」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「焊接」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -6218,7 +6218,7 @@
           ],
           "answer": "welding",
           "clozeHint": "核心釋義：焊接",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「焊接」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「焊接」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -6347,7 +6347,7 @@
           ],
           "answer": "wheelers",
           "clozeHint": "核心釋義：輪胎供應商",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「輪胎供應商」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「輪胎供應商」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -6362,7 +6362,7 @@
           ],
           "answer": "wheelers",
           "clozeHint": "核心釋義：輪胎供應商",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「輪胎供應商」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「輪胎供應商」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80"
@@ -6491,7 +6491,7 @@
           ],
           "answer": "whilst",
           "clozeHint": "核心釋義：當...的時候",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「當...的時候」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「當...的時候」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -6506,7 +6506,7 @@
           ],
           "answer": "whilst",
           "clozeHint": "核心釋義：當...的時候",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「當...的時候」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「當...的時候」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -6646,7 +6646,7 @@
           ],
           "answer": "whisk",
           "clozeHint": "核心釋義：（廚房用具）打蛋器；快速混合（成分）",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「（廚房用具）打蛋器；快速混合（成分）」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「（廚房用具）打蛋器；快速混合（成分）」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -6661,7 +6661,7 @@
           ],
           "answer": "whisk",
           "clozeHint": "核心釋義：（廚房用具）打蛋器；快速混合（成分）",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「（廚房用具）打蛋器；快速混合（成分）」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「（廚房用具）打蛋器；快速混合（成分）」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -6799,7 +6799,7 @@
           ],
           "answer": "wiggle",
           "clozeHint": "核心釋義：扭動",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「扭動」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「扭動」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -6814,7 +6814,7 @@
           ],
           "answer": "wiggle",
           "clozeHint": "核心釋義：扭動",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「扭動」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「扭動」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -6944,7 +6944,7 @@
           ],
           "answer": "wildest",
           "clozeHint": "核心釋義：最瘋狂的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「最瘋狂的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「最瘋狂的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -6959,7 +6959,7 @@
           ],
           "answer": "wildest",
           "clozeHint": "核心釋義：最瘋狂的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「最瘋狂的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「最瘋狂的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -7089,7 +7089,7 @@
           ],
           "answer": "wit",
           "clozeHint": "核心釋義：機智",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「機智」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「機智」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -7104,7 +7104,7 @@
           ],
           "answer": "wit",
           "clozeHint": "核心釋義：機智",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「機智」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「機智」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -7227,7 +7227,7 @@
           ],
           "answer": "without respect to",
           "clozeHint": "核心釋義：不考慮、不顧及",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「不考慮、不顧及」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「不考慮、不顧及」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -7242,7 +7242,7 @@
           ],
           "answer": "without respect to",
           "clozeHint": "核心釋義：不考慮、不顧及",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「不考慮、不顧及」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「不考慮、不顧及」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
@@ -7371,7 +7371,7 @@
           ],
           "answer": "woe",
           "clozeHint": "核心釋義：悲傷",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「悲傷」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「悲傷」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -7386,7 +7386,7 @@
           ],
           "answer": "woe",
           "clozeHint": "核心釋義：悲傷",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「悲傷」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「悲傷」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -7516,7 +7516,7 @@
           ],
           "answer": "woodwork",
           "clozeHint": "核心釋義：木工",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「木工」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「木工」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -7531,7 +7531,7 @@
           ],
           "answer": "woodwork",
           "clozeHint": "核心釋義：木工",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「木工」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「木工」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -7669,7 +7669,7 @@
           ],
           "answer": "wrinkle",
           "clozeHint": "核心釋義：（名詞）皺紋，皺褶；（口語，非正式）小問題，困難；好主意，妙計。（動詞）起皺紋，使起皺紋。",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「（名詞）皺紋，皺褶；（口語，非正式）小問題，困難；好主意，妙計。（動詞）起皺紋，使起皺紋。」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「（名詞）皺紋，皺褶；（口語，非正式）小問題，困難；好主意，妙計。（動詞）起皺紋，使起皺紋。」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -7684,7 +7684,7 @@
           ],
           "answer": "wrinkle",
           "clozeHint": "核心釋義：（名詞）皺紋，皺褶；（口語，非正式）小問題，困難；好主意，妙計。（動詞）起皺紋，使起皺紋。",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「（名詞）皺紋，皺褶；（口語，非正式）小問題，困難；好主意，妙計。（動詞）起皺紋，使起皺紋。」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「（名詞）皺紋，皺褶；（口語，非正式）小問題，困難；好主意，妙計。（動詞）起皺紋，使起皺紋。」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -7815,7 +7815,7 @@
           ],
           "answer": "yearn",
           "clozeHint": "核心釋義：渴望",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「渴望」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「渴望」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -7830,7 +7830,7 @@
           ],
           "answer": "yearn",
           "clozeHint": "核心釋義：渴望",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「渴望」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「渴望」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -7961,7 +7961,7 @@
           ],
           "answer": "zealous",
           "clozeHint": "核心釋義：熱忱的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「熱忱的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「熱忱的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -7976,7 +7976,7 @@
           ],
           "answer": "zealous",
           "clozeHint": "核心釋義：熱忱的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「熱忱的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「熱忱的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -8106,7 +8106,7 @@
           ],
           "answer": "ancient history",
           "clozeHint": "核心釋義：古代歷史",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「古代歷史」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「古代歷史」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -8121,7 +8121,7 @@
           ],
           "answer": "ancient history",
           "clozeHint": "核心釋義：古代歷史",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「古代歷史」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「古代歷史」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -8251,7 +8251,7 @@
           ],
           "answer": "archery",
           "clozeHint": "核心釋義：箭術",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「箭術」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「箭術」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -8266,7 +8266,7 @@
           ],
           "answer": "archery",
           "clozeHint": "核心釋義：箭術",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「箭術」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「箭術」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80"
@@ -8395,7 +8395,7 @@
           ],
           "answer": "bodyweight",
           "clozeHint": "核心釋義：體重",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「體重」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「體重」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -8410,7 +8410,7 @@
           ],
           "answer": "bodyweight",
           "clozeHint": "核心釋義：體重",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「體重」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「體重」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -8539,7 +8539,7 @@
           ],
           "answer": "bomber",
           "clozeHint": "核心釋義：轟炸機",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「轟炸機」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「轟炸機」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -8554,7 +8554,7 @@
           ],
           "answer": "bomber",
           "clozeHint": "核心釋義：轟炸機",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「轟炸機」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「轟炸機」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -8684,7 +8684,7 @@
           ],
           "answer": "cam",
           "clozeHint": "核心釋義：攝影機",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「攝影機」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「攝影機」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -8699,7 +8699,7 @@
           ],
           "answer": "cam",
           "clozeHint": "核心釋義：攝影機",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「攝影機」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「攝影機」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80"
@@ -8829,7 +8829,7 @@
           ],
           "answer": "caramel",
           "clozeHint": "核心釋義：焦糖色",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「焦糖色」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「焦糖色」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -8844,7 +8844,7 @@
           ],
           "answer": "caramel",
           "clozeHint": "核心釋義：焦糖色",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「焦糖色」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「焦糖色」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -8974,7 +8974,7 @@
           ],
           "answer": "carver",
           "clozeHint": "核心釋義：雕刻師",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「雕刻師」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「雕刻師」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -8989,7 +8989,7 @@
           ],
           "answer": "carver",
           "clozeHint": "核心釋義：雕刻師",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「雕刻師」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「雕刻師」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -9119,7 +9119,7 @@
           ],
           "answer": "cellist",
           "clozeHint": "核心釋義：大提琴演奏家",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「大提琴演奏家」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「大提琴演奏家」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -9134,7 +9134,7 @@
           ],
           "answer": "cellist",
           "clozeHint": "核心釋義：大提琴演奏家",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「大提琴演奏家」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「大提琴演奏家」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -9264,7 +9264,7 @@
           ],
           "answer": "choir",
           "clozeHint": "核心釋義：合唱團",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「合唱團」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「合唱團」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -9279,7 +9279,7 @@
           ],
           "answer": "choir",
           "clozeHint": "核心釋義：合唱團",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「合唱團」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「合唱團」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -9409,7 +9409,7 @@
           ],
           "answer": "clay",
           "clozeHint": "核心釋義：黏土",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「黏土」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「黏土」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -9424,7 +9424,7 @@
           ],
           "answer": "clay",
           "clozeHint": "核心釋義：黏土",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「黏土」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「黏土」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -9564,7 +9564,7 @@
           ],
           "answer": "curse",
           "clozeHint": "核心釋義：詛咒",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「詛咒」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「詛咒」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -9579,7 +9579,7 @@
           ],
           "answer": "curse",
           "clozeHint": "核心釋義：詛咒",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「詛咒」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「詛咒」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -9709,7 +9709,7 @@
           ],
           "answer": "Department of Commerce",
           "clozeHint": "核心釋義：美國商務部",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「美國商務部」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「美國商務部」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -9724,7 +9724,7 @@
           ],
           "answer": "Department of Commerce",
           "clozeHint": "核心釋義：美國商務部",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「美國商務部」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「美國商務部」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -9863,7 +9863,7 @@
           ],
           "answer": "dutch",
           "clozeHint": "核心釋義：荷蘭的",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「荷蘭的」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「荷蘭的」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -9878,7 +9878,7 @@
           ],
           "answer": "dutch",
           "clozeHint": "核心釋義：荷蘭的",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「荷蘭的」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「荷蘭的」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -10008,7 +10008,7 @@
           ],
           "answer": "elephant",
           "clozeHint": "核心釋義：大型的陸地哺乳動物",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「大型的陸地哺乳動物」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「大型的陸地哺乳動物」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -10023,7 +10023,7 @@
           ],
           "answer": "elephant",
           "clozeHint": "核心釋義：大型的陸地哺乳動物",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「大型的陸地哺乳動物」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「大型的陸地哺乳動物」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80"
@@ -10161,7 +10161,7 @@
           ],
           "answer": "exile",
           "clozeHint": "核心釋義：放逐",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「放逐」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「放逐」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -10176,7 +10176,7 @@
           ],
           "answer": "exile",
           "clozeHint": "核心釋義：放逐",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「放逐」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「放逐」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80"
@@ -10306,7 +10306,7 @@
           ],
           "answer": "franc",
           "clozeHint": "核心釋義：法郎",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「法郎」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「法郎」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -10321,7 +10321,7 @@
           ],
           "answer": "franc",
           "clozeHint": "核心釋義：法郎",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「法郎」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「法郎」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80"
@@ -10451,7 +10451,7 @@
           ],
           "answer": "ginger",
           "clozeHint": "核心釋義：薑",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「薑」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「薑」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -10466,7 +10466,7 @@
           ],
           "answer": "ginger",
           "clozeHint": "核心釋義：薑",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「薑」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「薑」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -10596,7 +10596,7 @@
           ],
           "answer": "handstand",
           "clozeHint": "核心釋義：倒立",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「倒立」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「倒立」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -10611,7 +10611,7 @@
           ],
           "answer": "handstand",
           "clozeHint": "核心釋義：倒立",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「倒立」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「倒立」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -10642,14 +10642,14 @@
       "examples": [
         {
           "id": "ex_1_kettlebell",
-          "en": "Our logistics tracking system confirmed that the international freight kettlebell arrived safely at the central harbor.",
-          "zh": "我們的物流追蹤系統確認該批國際貨運【一種由鑄鐵球體和短柄組成的健身器材】已安全抵達中央港口。",
+          "en": "Technicians performed thorough diagnostic maintenance on all laboratory kettlebell to prevent unexpected operational downtime.",
+          "zh": "技術人員對所有實驗室【一種由鑄鐵球體和短柄組成的健身器材】進行了徹底的檢測維護，以防止意外營運停機。",
           "scenario": "日常商務"
         },
         {
           "id": "ex_2_kettlebell",
-          "en": "The warehouse supervisor organized the incoming inventory kettlebell to prevent shipping bottlenecks.",
-          "zh": "倉庫主管整理了進貨庫存【一種由鑄鐵球體和短柄組成的健身器材】，以防止出貨瓶頸。",
+          "en": "The procurement division placed an order for energy-efficient kettlebell to reduce factory operating costs.",
+          "zh": "採購部門訂購了節能【一種由鑄鐵球體和短柄組成的健身器材】，以降低工廠營運成本。",
           "scenario": "營運管理"
         },
         {
@@ -10674,13 +10674,13 @@
         {
           "type": "multiple_choice",
           "subType": "vocab_choice",
-          "stem": "Our logistics tracking system confirmed that the international freight _____ arrived safely at the central harbor.",
-          "stemTranslation": "我們的物流追蹤系統確認該批國際貨運【一種由鑄鐵球體和短柄組成的健身器材】已安全抵達中央港口。",
+          "stem": "Technicians performed thorough diagnostic maintenance on all laboratory _____ to prevent unexpected operational downtime.",
+          "stemTranslation": "技術人員對所有實驗室【一種由鑄鐵球體和短柄組成的健身器材】進行了徹底的檢測維護，以防止意外營運停機。",
           "options": [
             "kettlebell",
-            "shipment",
-            "consignment",
-            "delivery"
+            "equipment",
+            "machinery",
+            "hardware"
           ],
           "answer": "kettlebell",
           "explanation": "【多益核心考點 · noun】本題空格需填入「一種由鑄鐵球體和短柄組成的健身器材」，符合商務職場標準表達。"
@@ -10688,13 +10688,13 @@
         {
           "type": "multiple_choice",
           "subType": "grammar_form",
-          "stem": "The warehouse supervisor organized the incoming inventory _____ to prevent shipping bottlenecks.",
-          "stemTranslation": "倉庫主管整理了進貨庫存【一種由鑄鐵球體和短柄組成的健身器材】，以防止出貨瓶頸。",
+          "stem": "The procurement division placed an order for energy-efficient _____ to reduce factory operating costs.",
+          "stemTranslation": "採購部門訂購了節能【一種由鑄鐵球體和短柄組成的健身器材】，以降低工廠營運成本。",
           "options": [
             "kettlebell",
-            "shipment",
-            "consignment",
-            "delivery"
+            "equipment",
+            "machinery",
+            "hardware"
           ],
           "answer": "kettlebell",
           "explanation": "【商務語境解析】根據前後文語意，選擇「一種由鑄鐵球體和短柄組成的健身器材」最切合專案執行標準。"
@@ -10702,13 +10702,13 @@
         {
           "type": "multiple_choice",
           "subType": "synonym_context",
-          "stem": "The board of directors held an extraordinary session to review the comprehensive policy regarding _____ for the fiscal year.",
-          "stemTranslation": "董事會召開了臨時會議，以審查本財政年度關於【一種由鑄鐵球體和短柄組成的健身器材】的完整政策方針。",
+          "stem": "The quality assurance department mandated that all high-precision _____ undergo biannual calibration.",
+          "stemTranslation": "品質保證部門規定所有高精度【一種由鑄鐵球體和短柄組成的健身器材】必須每半年校準一次。",
           "options": [
             "kettlebell",
-            "shipment",
-            "consignment",
-            "delivery"
+            "equipment",
+            "machinery",
+            "hardware"
           ],
           "answer": "kettlebell",
           "explanation": "【高階商務考點】本題考查高階商務決策語境，「一種由鑄鐵球體和短柄組成的健身器材」能精確體現專業職場意涵。"
@@ -10716,13 +10716,13 @@
         {
           "type": "cloze_fill",
           "subType": "collocation_cloze",
-          "stem": "📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nSubject: Operational Update\n\nPlease be advised that management has officially designated _____ within our standard procedures starting next Monday.",
-          "stemTranslation": "📧【商務備忘錄】\n收件人：全體部門同仁\n主旨：營運更新通知\n\n請注意，管理層已正式自下週一起在標準程序中指定【一種由鑄鐵球體和短柄組成的健身器材】。",
+          "stem": "📧 [BUSINESS MEMORANDUM]\nTo: Facility Staff\nSubject: Maintenance Schedule\n\nTechnicians will service all diagnostic _____ on the third floor this Saturday morning.",
+          "stemTranslation": "📧【商務備忘錄】\n收件人：總務人員\n主旨：維護時程通知\n\n技術人員將於本週六上午為三樓的所有檢測【一種由鑄鐵球體和短柄組成的健身器材】進行保養。",
           "options": [
             "kettlebell",
-            "shipment",
-            "consignment",
-            "delivery"
+            "equipment",
+            "machinery",
+            "hardware"
           ],
           "answer": "kettlebell",
           "clozeHint": "核心釋義：一種由鑄鐵球體和短柄組成的健身器材",
@@ -10735,13 +10735,13 @@
           "stemTranslation": "📩【客戶商務信件】\n收件人：區域採購經理\n主旨：品質保證\n\n依據全球合規標準，我司設施在未來所有專案交付物中切實要求【一種由鑄鐵球體和短柄組成的健身器材】。",
           "options": [
             "kettlebell",
-            "shipment",
-            "consignment",
-            "delivery"
+            "equipment",
+            "machinery",
+            "hardware"
           ],
           "answer": "kettlebell",
           "clozeHint": "核心釋義：一種由鑄鐵球體和短柄組成的健身器材",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「一種由鑄鐵球體和短柄組成的健身器材」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「一種由鑄鐵球體和短柄組成的健身器材」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -10750,13 +10750,13 @@
           "stemTranslation": "📢【高層合規公告】\n收件人：各部門主管\n主旨：政策落實\n\n我司技術與法務委員會已針對所有跨國設施之【一種由鑄鐵球體和短柄組成的健身器材】建立了嚴格標準。",
           "options": [
             "kettlebell",
-            "shipment",
-            "consignment",
-            "delivery"
+            "equipment",
+            "machinery",
+            "hardware"
           ],
           "answer": "kettlebell",
           "clozeHint": "核心釋義：一種由鑄鐵球體和短柄組成的健身器材",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「一種由鑄鐵球體和短柄組成的健身器材」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「一種由鑄鐵球體和短柄組成的健身器材」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -10886,7 +10886,7 @@
           ],
           "answer": "latin",
           "clozeHint": "核心釋義：拉丁語",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「拉丁語」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「拉丁語」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -10901,7 +10901,7 @@
           ],
           "answer": "latin",
           "clozeHint": "核心釋義：拉丁語",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「拉丁語」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「拉丁語」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80"
@@ -11031,7 +11031,7 @@
           ],
           "answer": "mast",
           "clozeHint": "核心釋義：桅杆",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「桅杆」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「桅杆」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -11046,7 +11046,7 @@
           ],
           "answer": "mast",
           "clozeHint": "核心釋義：桅杆",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「桅杆」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「桅杆」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80"
@@ -11178,7 +11178,7 @@
           ],
           "answer": "meditate",
           "clozeHint": "核心釋義：冥想",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「冥想」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「冥想」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -11193,7 +11193,7 @@
           ],
           "answer": "meditate",
           "clozeHint": "核心釋義：冥想",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「冥想」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「冥想」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -11323,7 +11323,7 @@
           ],
           "answer": "midtown",
           "clozeHint": "核心釋義：市中心區域",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「市中心區域」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「市中心區域」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -11338,7 +11338,7 @@
           ],
           "answer": "midtown",
           "clozeHint": "核心釋義：市中心區域",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「市中心區域」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「市中心區域」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80"
@@ -11468,7 +11468,7 @@
           ],
           "answer": "mousse",
           "clozeHint": "核心釋義：慕斯",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「慕斯」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「慕斯」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -11483,7 +11483,7 @@
           ],
           "answer": "mousse",
           "clozeHint": "核心釋義：慕斯",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「慕斯」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「慕斯」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -11613,7 +11613,7 @@
           ],
           "answer": "pearl",
           "clozeHint": "核心釋義：珍珠",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「珍珠」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「珍珠」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -11628,7 +11628,7 @@
           ],
           "answer": "pearl",
           "clozeHint": "核心釋義：珍珠",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「珍珠」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「珍珠」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=600&q=80"
@@ -11757,7 +11757,7 @@
           ],
           "answer": "pinky",
           "clozeHint": "核心釋義：小指",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「小指」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「小指」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -11772,7 +11772,7 @@
           ],
           "answer": "pinky",
           "clozeHint": "核心釋義：小指",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「小指」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「小指」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -11902,7 +11902,7 @@
           ],
           "answer": "potholder",
           "clozeHint": "核心釋義：隔熱墊",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「隔熱墊」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「隔熱墊」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -11917,7 +11917,7 @@
           ],
           "answer": "potholder",
           "clozeHint": "核心釋義：隔熱墊",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「隔熱墊」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「隔熱墊」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=600&q=80"
@@ -12047,7 +12047,7 @@
           ],
           "answer": "prayer",
           "clozeHint": "核心釋義：禱告",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「禱告」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「禱告」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -12062,7 +12062,7 @@
           ],
           "answer": "prayer",
           "clozeHint": "核心釋義：禱告",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「禱告」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「禱告」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -12200,7 +12200,7 @@
           ],
           "answer": "rat",
           "clozeHint": "核心釋義：老鼠",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「老鼠」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「老鼠」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -12215,7 +12215,7 @@
           ],
           "answer": "rat",
           "clozeHint": "核心釋義：老鼠",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「老鼠」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「老鼠」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -12345,7 +12345,7 @@
           ],
           "answer": "self-defense",
           "clozeHint": "核心釋義：自我防衛術",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「自我防衛術」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「自我防衛術」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -12360,7 +12360,7 @@
           ],
           "answer": "self-defense",
           "clozeHint": "核心釋義：自我防衛術",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「自我防衛術」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「自我防衛術」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?auto=format&fit=crop&w=600&q=80"
@@ -12492,7 +12492,7 @@
           ],
           "answer": "slurp",
           "clozeHint": "核心釋義：（通常指喝湯或飲料時）發出吸吮的聲音；狼吞虎嚥",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「（通常指喝湯或飲料時）發出吸吮的聲音；狼吞虎嚥」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「（通常指喝湯或飲料時）發出吸吮的聲音；狼吞虎嚥」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -12507,7 +12507,7 @@
           ],
           "answer": "slurp",
           "clozeHint": "核心釋義：（通常指喝湯或飲料時）發出吸吮的聲音；狼吞虎嚥",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「（通常指喝湯或飲料時）發出吸吮的聲音；狼吞虎嚥」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「（通常指喝湯或飲料時）發出吸吮的聲音；狼吞虎嚥」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -12636,7 +12636,7 @@
           ],
           "answer": "sonicbrushes",
           "clozeHint": "核心釋義：聲波清潔刷",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「聲波清潔刷」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「聲波清潔刷」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -12651,7 +12651,7 @@
           ],
           "answer": "sonicbrushes",
           "clozeHint": "核心釋義：聲波清潔刷",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「聲波清潔刷」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「聲波清潔刷」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80"
@@ -12781,7 +12781,7 @@
           ],
           "answer": "speck",
           "clozeHint": "核心釋義：微小斑點",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「微小斑點」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「微小斑點」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -12796,7 +12796,7 @@
           ],
           "answer": "speck",
           "clozeHint": "核心釋義：微小斑點",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「微小斑點」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「微小斑點」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80"
@@ -12936,7 +12936,7 @@
           ],
           "answer": "suck",
           "clozeHint": "核心釋義：吸取",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「吸取」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「吸取」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -12951,7 +12951,7 @@
           ],
           "answer": "suck",
           "clozeHint": "核心釋義：吸取",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「吸取」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「吸取」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -13080,7 +13080,7 @@
           ],
           "answer": "sword",
           "clozeHint": "核心釋義：劍",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「劍」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「劍」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -13095,7 +13095,7 @@
           ],
           "answer": "sword",
           "clozeHint": "核心釋義：劍",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「劍」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「劍」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -13238,7 +13238,7 @@
           ],
           "answer": "terrorism",
           "clozeHint": "核心釋義：恐怖主義",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「恐怖主義」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「恐怖主義」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -13253,7 +13253,7 @@
           ],
           "answer": "terrorism",
           "clozeHint": "核心釋義：恐怖主義",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「恐怖主義」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「恐怖主義」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80"
@@ -13382,7 +13382,7 @@
           ],
           "answer": "tribes",
           "clozeHint": "核心釋義：部落",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「部落」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「部落」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -13397,7 +13397,7 @@
           ],
           "answer": "tribes",
           "clozeHint": "核心釋義：部落",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「部落」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「部落」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -13526,7 +13526,7 @@
           ],
           "answer": "urine",
           "clozeHint": "核心釋義：尿液",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「尿液」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「尿液」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -13541,7 +13541,7 @@
           ],
           "answer": "urine",
           "clozeHint": "核心釋義：尿液",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「尿液」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「尿液」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -13671,7 +13671,7 @@
           ],
           "answer": "vinegar",
           "clozeHint": "核心釋義：醋",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「醋」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「醋」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -13686,7 +13686,7 @@
           ],
           "answer": "vinegar",
           "clozeHint": "核心釋義：醋",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「醋」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「醋」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -13816,7 +13816,7 @@
           ],
           "answer": "volcano",
           "clozeHint": "核心釋義：火山",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「火山」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「火山」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -13831,7 +13831,7 @@
           ],
           "answer": "volcano",
           "clozeHint": "核心釋義：火山",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「火山」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「火山」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80"
@@ -13960,7 +13960,7 @@
           ],
           "answer": "waffles",
           "clozeHint": "核心釋義：一種由格子狀麵糊烤製成的早餐或甜點",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「一種由格子狀麵糊烤製成的早餐或甜點」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「一種由格子狀麵糊烤製成的早餐或甜點」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -13975,7 +13975,7 @@
           ],
           "answer": "waffles",
           "clozeHint": "核心釋義：一種由格子狀麵糊烤製成的早餐或甜點",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「一種由格子狀麵糊烤製成的早餐或甜點」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「一種由格子狀麵糊烤製成的早餐或甜點」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"
@@ -14104,7 +14104,7 @@
           ],
           "answer": "warrior",
           "clozeHint": "核心釋義：戰士",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「戰士」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「戰士」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -14119,7 +14119,7 @@
           ],
           "answer": "warrior",
           "clozeHint": "核心釋義：戰士",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「戰士」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「戰士」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
@@ -14264,7 +14264,7 @@
           ],
           "answer": "wow",
           "clozeHint": "核心釋義：感嘆詞：表示驚訝、高興、讚嘆。動詞：使人驚嘆、留下深刻印象。名詞：令人驚嘆的事物或感覺。",
-          "explanation": "【商務信函填空】信件主旨與品質相關，選入「感嘆詞：表示驚訝、高興、讚嘆。動詞：使人驚嘆、留下深刻印象。名詞：令人驚嘆的事物或感覺。」切實符合合約承諾。"
+          "explanation": "【商務信函填空】信件主旨與商務溝通相關，選入「感嘆詞：表示驚訝、高興、讚嘆。動詞：使人驚嘆、留下深刻印象。名詞：令人驚嘆的事物或感覺。」切實符合語境要求。"
         },
         {
           "type": "cloze_fill",
@@ -14279,7 +14279,7 @@
           ],
           "answer": "wow",
           "clozeHint": "核心釋義：感嘆詞：表示驚訝、高興、讚嘆。動詞：使人驚嘆、留下深刻印象。名詞：令人驚嘆的事物或感覺。",
-          "explanation": "【高層合規公告】此公告涉及法規標準，填入「感嘆詞：表示驚訝、高興、讚嘆。動詞：使人驚嘆、留下深刻印象。名詞：令人驚嘆的事物或感覺。」最符合跨國營運規範。"
+          "explanation": "【高層公告克漏字】此公告涉及商務發展，填入「感嘆詞：表示驚訝、高興、讚嘆。動詞：使人驚嘆、留下深刻印象。名詞：令人驚嘆的事物或感覺。」最符合跨國營運規範。"
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80"
