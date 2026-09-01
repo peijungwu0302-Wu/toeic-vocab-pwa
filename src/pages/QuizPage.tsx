@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Play,
   RotateCcw,
@@ -22,13 +22,19 @@ import { courseRepository } from '../repositories/courseRepository';
 import { quizService, NextGenQuestion, NextGenQuizMode } from '../services/quizService';
 import { audioService } from '../services/audioService';
 import { QuizSessionSummary } from '../types/quiz';
+import { Word } from '../types/db';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { AudioButton } from '../components/ui/AudioButton';
 
 export const QuizPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const courseIdParam = searchParams.get('courseId');
   const { activeProfile } = useProfile();
+
+  // Active course title if specified in URL
+  const [activeCourseTitle, setActiveCourseTitle] = useState<string | null>(null);
 
   // Quiz state
   const [selectedMode, setSelectedMode] = useState<NextGenQuizMode>('part5_mcq');
@@ -59,22 +65,44 @@ export const QuizPage: React.FC = () => {
   const [isEnqueuing, setIsEnqueuing] = useState<boolean>(false);
   const [enqueuedSuccess, setEnqueuedSuccess] = useState<boolean>(false);
 
-  // Load available categories
+  // Load available categories and active course title
   useEffect(() => {
     courseRepository.getDownloadedCategories().then(cats => {
       setAvailableCategories(cats);
     });
-  }, []);
+
+    if (courseIdParam) {
+      courseRepository.getById(courseIdParam).then(c => {
+        if (c) setActiveCourseTitle(c.title);
+      });
+    }
+  }, [courseIdParam]);
 
   const handleStartQuiz = async (customMode?: NextGenQuizMode) => {
     await audioService.unlockAudio();
 
     const mode = customMode || selectedMode;
 
-    const downloadedWords = await courseRepository.getAllDownloadedWords({
-      category: selectedCategory,
-      shuffle: true
-    });
+    let downloadedWords: Word[] = [];
+
+    if (courseIdParam) {
+      downloadedWords = await courseRepository.getWordsForCourse(courseIdParam, {
+        category: selectedCategory,
+        shuffle: true
+      });
+      if (downloadedWords.length === 0) {
+        // Fallback to all downloaded words if course not yet cached
+        downloadedWords = await courseRepository.getAllDownloadedWords({
+          category: selectedCategory,
+          shuffle: true
+        });
+      }
+    } else {
+      downloadedWords = await courseRepository.getAllDownloadedWords({
+        category: selectedCategory,
+        shuffle: true
+      });
+    }
 
     if (downloadedWords.length === 0) {
       alert('目前尚無已下載課程，請先至「課程」頁面下載單字題庫。');
@@ -207,6 +235,28 @@ export const QuizPage: React.FC = () => {
             4 種全真題型 ＋ 支援 Gemini 3.6-Flash AI 名師即時原創出題！
           </p>
         </div>
+
+        {/* Active Course Banner if specified */}
+        {activeCourseTitle && (
+          <div className="p-3 rounded-2xl bg-emerald-950/70 border border-emerald-500/60 shadow-lg flex items-center justify-between">
+            <div className="flex items-center space-x-2 min-w-0 mr-2">
+              <span className="p-1.5 rounded-lg bg-emerald-900 text-emerald-300">
+                <Sparkles size={14} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] text-emerald-400 font-semibold">目前指定測驗單元：</p>
+                <p className="text-xs font-bold text-slate-100 truncate">{activeCourseTitle}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/quiz')}
+              className="text-[11px] text-slate-300 hover:text-white px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 font-semibold shrink-0"
+            >
+              切換全庫
+            </button>
+          </div>
+        )}
 
         {/* 🤖 1-Click AI Master Quiz Banner */}
         <div className="p-4 rounded-3xl bg-gradient-to-r from-indigo-900/60 via-purple-900/60 to-slate-900 border border-indigo-500/50 shadow-xl space-y-3">
