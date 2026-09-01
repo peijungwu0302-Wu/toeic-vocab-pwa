@@ -38,6 +38,10 @@ export interface WordEntry {
   audioUKUrl: string | null;
   imageUrl?: string | null;
   imageKeyword?: string | null;
+  visualAnchor?: {
+    imagePrompt?: string;
+    scene?: string;
+  };
   frequencyTier?: FrequencyTier;
   quizzes?: any[];
 }
@@ -90,6 +94,10 @@ export const WordEntrySchema = z.object({
   audioUKUrl: z.string().nullable().optional(),
   imageUrl: z.string().nullable().optional(),
   imageKeyword: z.string().nullable().optional(),
+  visualAnchor: z.object({
+    imagePrompt: z.string().optional(),
+    scene: z.string().optional()
+  }).optional(),
   frequencyTier: z.enum(['core_1200', 'advanced_2500', 'expert_high']).optional(),
   quizzes: z.array(z.any()).optional().default([])
 }).transform((val) => {
@@ -113,6 +121,7 @@ export const WordEntrySchema = z.object({
     audioUKUrl: val.audioUKUrl || null,
     imageUrl: val.imageUrl || null,
     imageKeyword: val.imageKeyword || null,
+    visualAnchor: val.visualAnchor,
     frequencyTier: val.frequencyTier,
     quizzes: val.quizzes || []
   };
