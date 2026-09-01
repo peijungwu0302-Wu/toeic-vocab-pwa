@@ -16,15 +16,21 @@ import { StatsPage } from './pages/StatsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AttributionPage } from './pages/AttributionPage';
 import { db } from './db';
+import { datasetMigrationService } from './services/datasetMigrationService';
 
 const AppRoutes: React.FC = () => {
   const { activeProfile, isLoading } = useProfile();
 
   useEffect(() => {
-    // Initialize font size from settings
+    // 1. Initialize font size from settings
     db.appSettings.get('app_font_size').then(s => {
       const size = s?.value || 'normal';
       document.documentElement.setAttribute('data-font-size', size);
+    });
+
+    // 2. Silent background dataset migration to v3.0
+    datasetMigrationService.autoMigrateIfOutdated().catch(err => {
+      console.warn('[App] Dataset migration check failed:', err);
     });
   }, []);
 

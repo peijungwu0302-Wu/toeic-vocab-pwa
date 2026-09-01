@@ -26,6 +26,7 @@ import { useSync } from '../contexts/SyncContext';
 import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
 import { getSupabaseClient } from '../services/supabaseClient';
+import { datasetMigrationService } from '../services/datasetMigrationService';
 import { db } from '../db';
 import { BackupDataV1, ImportPreviewSummary, ImportStrategy } from '../types/backup';
 import { Button } from '../components/ui/Button';
@@ -68,6 +69,24 @@ export const SettingsPage: React.FC = () => {
   const [isSendingMagicLink, setIsSendingMagicLink] = useState(false);
   const [magicLinkSentMsg, setMagicLinkSentMsg] = useState<string | null>(null);
   const [magicLinkError, setMagicLinkError] = useState<string | null>(null);
+
+  // Dataset v3.0 Force Refresh State
+  const [isRefreshingDataset, setIsRefreshingDataset] = useState(false);
+  const [datasetRefreshMsg, setDatasetRefreshMsg] = useState<string | null>(null);
+
+  const handleForceRefreshDataset = async () => {
+    try {
+      setIsRefreshingDataset(true);
+      setDatasetRefreshMsg(null);
+      await datasetMigrationService.forceRefreshAllCourses();
+      setDatasetRefreshMsg('✅ 題庫已成功刷新至最新 v3.0！所有單字與測驗題幹已更新完畢。');
+      setTimeout(() => setDatasetRefreshMsg(null), 5000);
+    } catch (err) {
+      alert(`刷新題庫失敗：${(err as Error).message}`);
+    } finally {
+      setIsRefreshingDataset(false);
+    }
+  };
 
   const handleSendMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -658,7 +677,49 @@ export const SettingsPage: React.FC = () => {
         )}
       </div>
 
-      {/* 8. License & Notices */}
+      {/* 8. Dataset Version & Offline Cache Force Refresh */}
+      <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
+            <Sparkles size={16} className="text-teal-400" />
+            <span>題庫版本與離線快取更新</span>
+          </h3>
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
+            v3.0 最新全真題庫
+          </span>
+        </div>
+
+        <p className="text-[11px] text-slate-400 leading-relaxed">
+          收錄全量 <strong className="text-emerald-400">11,154 詞</strong> 與 <strong className="text-amber-400">66,924 題全真職場測驗</strong>。若您曾下載過舊版題庫，可點擊下方按鈕將手機/電腦本機 IndexedDB 快取直接熱升級至最新版（您的個人學習進度與 FSRS 記錄將 100% 完整保留）。
+        </p>
+
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={handleForceRefreshDataset}
+          disabled={isRefreshingDataset}
+          className="w-full justify-center border-teal-600/50 text-teal-300 hover:bg-teal-950/40"
+        >
+          {isRefreshingDataset ? (
+            <>
+              <span className="w-3 h-3 border-2 border-teal-400 border-t-transparent rounded-full animate-spin mr-1.5" />
+              <span>正在熱升級題庫快取中...</span>
+            </>
+          ) : (
+            <>
+              <span>🔄 立即刷新本機題庫至最新 v3.0 (保留學習進度)</span>
+            </>
+          )}
+        </Button>
+
+        {datasetRefreshMsg && (
+          <div className="text-emerald-300 bg-emerald-950/60 p-2 rounded-lg border border-emerald-700 text-xs font-medium text-center">
+            {datasetRefreshMsg}
+          </div>
+        )}
+      </div>
+
+      {/* 9. License & Notices */}
       <div className="text-center pt-2">
         <Link
           to="/attribution"

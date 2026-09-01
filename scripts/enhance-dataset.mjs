@@ -313,12 +313,39 @@ ${JSON.stringify(
   }
 }
 
-// Generate Mock Data for Dry-run / Offline Testing
+// Generate Mock Data for Dry-run / Offline Testing (Dynamic POS Aware)
 function generateMockEnhanced(word) {
   const wordId = word.id;
   const hw = word.headword;
-  const def = word.definitionZh;
+  const def = word.definitionZh || '';
   const cat = word.category || '辦公日常';
+  const pos = (word.partsOfSpeech?.[0] || 'noun').toLowerCase();
+
+  const isVerb = pos.includes('verb') || pos === 'v.' || pos === 'v';
+  const isAdj = pos.includes('adj') || pos.includes('形容詞');
+  const isAdv = pos.includes('adv') || pos.includes('副詞') || hw.endsWith('ly');
+
+  let stem1 = `During the annual strategic review, the board of directors discussed key initiatives regarding ${hw}.`;
+  let stem2 = `Our company strictly prioritizes ${hw} in accordance with certified international quality standards.`;
+  let mcqStem = `Senior management evaluated the long-term impact of _____ on quarterly performance.`;
+  let distractors = ['strategy', 'preference', 'protocol', 'guideline'];
+
+  if (isVerb) {
+    stem1 = `Our department decided to ${hw} the newly approved operational procedures.`;
+    stem2 = `The executive committee agreed to ${hw} all relevant stakeholder requests promptly.`;
+    mcqStem = `The project supervisor requested the team to _____ the updated compliance report before Friday.`;
+    distractors = ['implement', 'supervise', 'coordinate', 'evaluate'];
+  } else if (isAdj) {
+    stem1 = `Maintaining a ${hw} relationship with international partners is vital for sustainable growth.`;
+    stem2 = `The analyst delivered a ${hw} presentation on upcoming economic market trends.`;
+    mcqStem = `The committee praised the engineering team for their _____ and reliable execution throughout the project.`;
+    distractors = ['flexible', 'efficient', 'optimal', 'consistent'];
+  } else if (isAdv) {
+    stem1 = `The regional distribution branch operated ${hw} despite severe supply chain disruptions.`;
+    stem2 = `Customer service inquiries are answered ${hw} through our dedicated support portal.`;
+    mcqStem = `The logistics coordinator ensured that all cargo was _____ inspected prior to customs clearance.`;
+    distractors = ['promptly', 'accurately', 'strictly', 'consistently'];
+  }
 
   return {
     id: wordId,
@@ -326,18 +353,18 @@ function generateMockEnhanced(word) {
     imageKeyword: `${cat} business interaction`,
     examples: [
       {
-        en: `Our department will ${hw} the new quarterly guidelines immediately.`,
-        zh: `我們部門將立即落實新的季度指導方針。`,
+        en: stem1,
+        zh: `在年度策略審查中，董事會討論了關於【${def}】的關鍵方針。`,
         scenario: '營運管理'
       },
       {
-        en: `Please ensure that you ${hw} all relevant client feedback before the review.`,
-        zh: `請務必在審查前彙整並參酌所有相關客戶意見。`,
-        scenario: '客戶服務'
+        en: stem2,
+        zh: `我司依據合格國際品質標準，切實貫徹【${def}】之要求。`,
+        scenario: '品質合規'
       },
       {
-        en: `The executive team agreed to ${hw} additional resources for the project.`,
-        zh: `高階主管團隊同意為該專案分配額外資源。`,
+        en: `Our cross-functional project team successfully integrated ${hw} to accelerate delivery.`,
+        zh: `我們的跨部門專案團隊成功整合了【${def}】，以加速專案交付。`,
         scenario: '商務會議'
       }
     ],
@@ -345,53 +372,53 @@ function generateMockEnhanced(word) {
       {
         type: 'multiple_choice',
         subType: 'vocab_choice',
-        stem: `The project manager decided to _____ the client's proposal after evaluating the budget.`,
-        options: [hw, 'postpone', 'negotiate', 'terminate'],
+        stem: mcqStem,
+        options: [hw, ...distractors.filter(d => d.toLowerCase() !== hw.toLowerCase()).slice(0, 3)],
         answer: hw,
         explanation: `【多益核心考點】本題考查商務情境單字搭配，「${hw}」在此符合語意「${def}」。`
       },
       {
         type: 'multiple_choice',
         subType: 'grammar_form',
-        stem: `After thorough discussions, the committee reached an agreement on _____ the procedures.`,
-        options: [`${hw}ing`, hw, `${hw}ed`, `${hw}tion`],
-        answer: `${hw}ing`,
-        explanation: `【詞性文法解析】介系詞 on 之後應接動名詞 (V-ing) 作為受詞。`
+        stem: `The executive committee reviewed the comprehensive proposal to optimize corporate _____ .`,
+        options: [hw, ...distractors.filter(d => d.toLowerCase() !== hw.toLowerCase()).slice(0, 3)],
+        answer: hw,
+        explanation: `【商務語境解析】根據前後文語意，選擇「${def}」最切合專案執行標準。`
       },
       {
         type: 'multiple_choice',
         subType: 'synonym_context',
-        stem: `In the memo, the word "${hw}" is closest in meaning to which of the following?`,
-        options: [`handle properly`, `cancel`, `ignore`, `delay`],
-        answer: `handle properly`,
-        explanation: `【換句話說辨析】商務溝通中常使用同義詞替換，「${hw}」表示「${def}」。`
+        stem: `The board of directors held an extraordinary session to review the comprehensive policy regarding _____ .`,
+        options: [hw, ...distractors.filter(d => d.toLowerCase() !== hw.toLowerCase()).slice(0, 3)],
+        answer: hw,
+        explanation: `【高階商務考點】本題考查高階商務決策語境，「${def}」能精確體現專業職場意涵。`
       },
       {
         type: 'cloze_fill',
         subType: 'collocation_cloze',
-        stem: `We need to _____ all safety regulations before launching the product.`,
-        options: [hw, 'exceed', 'bypass', 'violate'],
+        stem: `📧 [BUSINESS MEMORANDUM]\nTo: All Department Staff\nSubject: Operational Update\n\nPlease be advised that management has officially designated _____ within our standard procedures starting next Monday.`,
+        options: [hw, ...distractors.filter(d => d.toLowerCase() !== hw.toLowerCase()).slice(0, 3)],
         answer: hw,
-        clozeHint: `動詞搭配：遵守/配合`,
-        explanation: `【高頻搭配詞】常與商務規範、合約條款連用，表示符合標準。`
+        clozeHint: `核心釋義：${def}`,
+        explanation: `【備忘錄克漏字】此處填入「${def}」，符合公司內部公告的正式政策要求。`
       },
       {
         type: 'cloze_fill',
         subType: 'active_recall',
-        stem: `The senior director agreed to _____ the urgent request from headquarters.`,
-        options: [hw, 'reject', 'overlook', 'dismiss'],
+        stem: `📩 [CLIENT CORRESPONDENCE]\nTo: Regional Procurement Managers\nSubject: Quality Assurance\n\nIn accordance with global compliance standards, our facility requires _____ in all upcoming project deliverables.`,
+        options: [hw, ...distractors.filter(d => d.toLowerCase() !== hw.toLowerCase()).slice(0, 3)],
         answer: hw,
-        clozeHint: `首字母：${hw[0]}... (${word.partsOfSpeech?.[0] || 'v.'}) ${def}`,
+        clozeHint: `首字母：${hw[0]}... (${pos}) ${def}`,
         explanation: `【主動回憶】由首字母與商務情境提示提取核心單字「${hw}」。`
       },
       {
         type: 'cloze_fill',
         subType: 'sentence_complete',
-        stem: `Our team will make every effort to _____ with the international standards.`,
-        options: [hw, 'conflict', 'interfere', 'dispute'],
+        stem: `📢 [EXECUTIVE COMPLIANCE ANNOUNCEMENT]\nTo: Division Heads\nSubject: Policy Implementation\n\nOur technical and legal committees have established rigorous standards regarding _____ across all international facilities.`,
+        options: [hw, ...distractors.filter(d => d.toLowerCase() !== hw.toLowerCase()).slice(0, 3)],
         answer: hw,
         clozeHint: `商務情境填空：${def}`,
-        explanation: `【克漏字解題】根據前後文商務目標判斷正確動詞「${hw}」。`
+        explanation: `【克漏字解題】根據前後文商務目標判斷正確單字「${hw}」。`
       }
     ]
   };
