@@ -36,6 +36,7 @@ export const QuizPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [isAiGenerating, setIsAiGenerating] = useState<boolean>(false);
+  const [recentTestedWordIds, setRecentTestedWordIds] = useState<string[]>([]);
 
   const [isStarted, setIsStarted] = useState<boolean>(false);
   const [questions, setQuestions] = useState<NextGenQuestion[]>([]);
@@ -91,8 +92,17 @@ export const QuizPage: React.FC = () => {
         setIsAiGenerating(false);
       }
     } else {
-      generated = quizService.generateNextGenQuestions(downloadedWords, mode, questionCount);
+      generated = quizService.generateNextGenQuestions(
+        downloadedWords,
+        mode,
+        questionCount,
+        recentTestedWordIds
+      );
     }
+
+    // Save tested word IDs into recency filter cache
+    const newlyTestedIds = generated.map(q => q.word.id);
+    setRecentTestedWordIds(prev => [...newlyTestedIds, ...prev].slice(0, 80));
 
     setQuestions(generated);
     setCurrentIdx(0);
@@ -474,13 +484,15 @@ export const QuizPage: React.FC = () => {
 
             if (isAnswered) {
               if (optIdx === currentQ.correctIndex) {
-                btnStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-md shadow-emerald-950/40';
+                btnStyle = 'bg-emerald-950/90 border-emerald-500 text-emerald-200 shadow-md shadow-emerald-950/40';
               } else if (selectedOption === optIdx) {
-                btnStyle = 'bg-rose-950/80 border-rose-500 text-rose-300 shadow-md shadow-rose-950/40';
+                btnStyle = 'bg-rose-950/90 border-rose-500 text-rose-200 shadow-md shadow-rose-950/40';
               } else {
-                btnStyle = 'bg-slate-900/60 border-slate-800 text-slate-500 opacity-50';
+                btnStyle = 'bg-slate-900/70 border-slate-800 text-slate-400 opacity-70';
               }
             }
+
+            const analysis = currentQ.optionAnalyses?.find(a => a.option === opt);
 
             return (
               <button
@@ -488,21 +500,35 @@ export const QuizPage: React.FC = () => {
                 type="button"
                 disabled={isAnswered}
                 onClick={() => handleAnswerSelect(optIdx)}
-                className={`w-full p-3 rounded-2xl border text-left font-semibold text-xs transition-all flex items-center justify-between active:scale-[0.98] min-h-[46px] ${btnStyle}`}
+                className={`w-full p-3 rounded-2xl border text-left font-semibold text-xs transition-all flex items-start justify-between active:scale-[0.98] ${btnStyle}`}
               >
-                <div className="flex items-center space-x-2.5">
-                  <div className="w-5 h-5 rounded-md bg-slate-900/80 flex items-center justify-center text-[10px] font-bold text-slate-400">
-                    {String.fromCharCode(65 + optIdx)}
+                <div className="flex flex-col space-y-1 text-left w-full pr-2">
+                  <div className="flex items-center space-x-2.5">
+                    <div className="w-5 h-5 rounded-md bg-slate-900/80 flex items-center justify-center text-[10px] font-bold text-slate-400 shrink-0">
+                      {String.fromCharCode(65 + optIdx)}
+                    </div>
+                    <span className="font-bold text-sm text-slate-100">{opt}</span>
+                    {isAnswered && optIdx === currentQ.correctIndex && (
+                      <Badge variant="emerald">正解</Badge>
+                    )}
                   </div>
-                  <span>{opt}</span>
+
+                  {/* 🌟 答題後直接在選項框內寫出中文釋義、詞性與破題點 */}
+                  {isAnswered && analysis && (
+                    <div className="text-[11px] font-normal leading-relaxed pl-7 text-slate-300 animate-in fade-in duration-150">
+                      {analysis.explanation}
+                    </div>
+                  )}
                 </div>
 
-                {isAnswered && optIdx === currentQ.correctIndex && (
-                  <CheckCircle size={16} className="text-emerald-400 shrink-0 ml-2" />
-                )}
-                {isAnswered && optIdx !== currentQ.correctIndex && selectedOption === optIdx && (
-                  <XCircle size={16} className="text-rose-400 shrink-0 ml-2" />
-                )}
+                <div className="shrink-0 pt-0.5">
+                  {isAnswered && optIdx === currentQ.correctIndex && (
+                    <CheckCircle size={18} className="text-emerald-400" />
+                  )}
+                  {isAnswered && optIdx !== currentQ.correctIndex && selectedOption === optIdx && (
+                    <XCircle size={18} className="text-rose-400" />
+                  )}
+                </div>
               </button>
             );
           })}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Search,
   X,
@@ -28,7 +28,8 @@ interface SearchModalProps {
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const { activeProfile } = useProfile();
-  const [allWords, setAllWords] = useState<Word[]>([]);
+  const [searchResults, setSearchResults] = useState<Word[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [selectedWord, setSelectedWord] = useState<Word | null>(null);
   const [isStarred, setIsStarred] = useState(false);
@@ -38,25 +39,21 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
   useEffect(() => {
     if (isOpen) {
-      courseRepository.getAllDownloadedWords({ shuffle: false }).then(words => {
-        setAllWords(words);
+      let isMounted = true;
+      setIsLoading(true);
+      courseRepository.searchGlobalMasterWords(query).then(words => {
+        if (isMounted) {
+          setSearchResults(words);
+          setIsLoading(false);
+        }
       });
       setTimeout(() => inputRef.current?.focus(), 100);
+      return () => { isMounted = false; };
     } else {
       setQuery('');
       setSelectedWord(null);
     }
-  }, [isOpen]);
-
-  const filteredWords = useMemo(() => {
-    if (!query.trim()) return allWords.slice(0, 30);
-    const q = query.trim().toLowerCase();
-    return allWords.filter(w =>
-      w.headword.toLowerCase().includes(q) ||
-      w.definitionZh.includes(q) ||
-      (w.category && w.category.includes(q))
-    ).slice(0, 50);
-  }, [allWords, query]);
+  }, [isOpen, query]);
 
   useEffect(() => {
     if (selectedWord && activeProfile) {
@@ -70,12 +67,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
   const handleToggleStar = async () => {
     if (!selectedWord || !activeProfile) return;
+    await db.words.put(selectedWord);
     const newStarred = await progressRepository.toggleStarred(activeProfile.id, selectedWord.id);
     setIsStarred(newStarred);
   };
 
   const handleAddToTodayReview = async () => {
     if (!selectedWord || !activeProfile) return;
+    await db.words.put(selectedWord);
     const existing = await progressRepository.getByWordId(activeProfile.id, selectedWord.id);
     if (!existing) {
       const init = fsrsService.createInitialProgress(activeProfile.id, selectedWord.id);
@@ -261,8 +260,13 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
         ) : (
           /* Search Results List with Thumbnail Images */
           <div className="flex-1 overflow-y-auto p-2 divide-y divide-slate-800">
-            {filteredWords.length > 0 ? (
-              filteredWords.map((w) => {
+            {isLoading ? (
+              <div className="text-center py-12 text-slate-400 text-xs flex items-center justify-center space-x-2">
+                <span className="inline-block w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+                <span>正在全庫 11,154 詞庫中檢索...</span>
+              </div>
+            ) : searchResults.length > 0 ? (
+              searchResults.map((w) => {
                 const img = imageService.getImageForWord(w.headword, w.category);
                 return (
                   <div
@@ -288,7 +292,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                         {w.phoneticUS && (
                           <span className="text-[10px] font-mono text-emerald-400/80">/{w.phoneticUS}/</span>
                         )}
-                        <span className="text-[9px] px-1 rounded bg-slate-800 text-slate-400">{w.partsOfSpeech[0]}</span>
+                        <span className="text-[9px] px-1 rounded bg-slate-800 text-slate-400">{w.partsOfSpeech?.[0]}</span>
                       </div>
                       <p className="text-[11px] text-slate-400 truncate mt-0.5">{w.definitionZh}</p>
                     </div>
@@ -303,6 +307,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                           audioService.speakSentence(w.headword);
                         }}
                         className="p-1.5 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-slate-800"
+                        title="朗讀發音"
                       >
                         <Volume2 size={14} />
                       </button>
@@ -320,7 +325,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
         {/* Footer info */}
         <div className="p-3 border-t border-slate-800 bg-slate-900/90 text-center text-[10px] text-slate-500 shrink-0">
-          全庫共 {allWords.length > 0 ? allWords.length.toLocaleString() : '11,154'} 個多益單字 · 離線本機秒級檢索
+          全庫共 11,154 個多益單字 · 離線本機秒級檢索
         </div>
       </div>
     </div>

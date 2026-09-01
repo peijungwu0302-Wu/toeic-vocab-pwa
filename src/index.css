@@ -22,6 +22,17 @@
     overscroll-behavior: none;
     overscroll-behavior-y: none;
   }
+
+  /* Font scaling rules for accessibility & commute reading */
+  html[data-font-size="normal"] {
+    font-size: 16px;
+  }
+  html[data-font-size="large"] {
+    font-size: 18px;
+  }
+  html[data-font-size="xlarge"] {
+    font-size: 20px;
+  }
 }
 
 /* 3D Flashcard Flip Utilities */

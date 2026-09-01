@@ -4,6 +4,7 @@
  */
 
 import { db } from '../db';
+import { quizService } from './quizService';
 
 export interface SentenceEvaluationResult {
   score: number; // 1 - 10
@@ -38,10 +39,17 @@ export interface MnemonicResult {
 
 export interface InstantQuizResult {
   stem: string;
+  stemTranslation?: string;
   options: string[];
   answer: string;
   explanation: string;
-  optionAnalyses: Array<{ option: string; isCorrect: boolean; explanation: string }>;
+  optionAnalyses: Array<{
+    option: string;
+    isCorrect: boolean;
+    meaning?: string;
+    pos?: string;
+    explanation: string;
+  }>;
   isLiveAi: boolean;
   modelUsed?: string;
   error?: string;
@@ -103,8 +111,15 @@ export const geminiService = {
    */
   async getApiKey(): Promise<string> {
     try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const localKey = window.localStorage.getItem('toeic_custom_gemini_api_key');
+        if (localKey && localKey.trim()) return localKey.trim();
+      }
       const setting = await db.appSettings.get('custom_gemini_api_key');
       if (setting && setting.value && setting.value.trim()) {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.setItem('toeic_custom_gemini_api_key', setting.value.trim());
+        }
         return setting.value.trim();
       }
     } catch {
@@ -114,12 +129,16 @@ export const geminiService = {
   },
 
   /**
-   * Save custom API key to local DB
+   * Save custom API key to local DB and localStorage
    */
   async setApiKey(key: string): Promise<void> {
+    const trimmed = key.trim();
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem('toeic_custom_gemini_api_key', trimmed);
+    }
     await db.appSettings.put({
       key: 'custom_gemini_api_key',
-      value: key.trim()
+      value: trimmed
     });
   },
 
@@ -218,15 +237,17 @@ export const geminiService = {
       const prompt = `
 You are an expert creative TOEIC vocabulary coach and memory master.
 Create a truly unique, vivid, clever, and humorous 1-2 sentence mnemonic memory hook story in Traditional Chinese (繁體中文) for the TOEIC business English word "${headword}".
-- Target Word: "${headword}"
-- Meaning: "${definition}"
-- Word Roots / Etymology / Parts: "${roots}"
-- Focus on authentic corporate situations (conferences, contracts, promotions, coffee breaks, supply chain).
-- Explain the sound association or root association memorably.
+Target Meaning: "${definition}"
+Roots/Etymology breakdown hint: "${roots || 'word association'}"
+
+Guidelines:
+1. Provide a memorable sound-alike hook or vivid corporate workplace scenario.
+2. Clearly explain how the story links directly to "${definition}".
+3. Keep it punchy, enjoyable, and easy to memorize in 3 seconds.
 
 Return strict JSON:
 {
-  "mnemonic": "您的繁體中文專屬商務記憶故事與口訣"
+  "mnemonic": "Your creative 1-2 sentence story in Traditional Chinese"
 }
 `;
       try {
@@ -240,7 +261,7 @@ Return strict JSON:
         console.warn('[GeminiService] Live Mnemonic error:', errorMsg);
         const diagnosis = diagnoseGeminiError(errorMsg);
         return {
-          mnemonic: `【離線範本】「${headword}」（${definition}）：拆解詞根 [${roots || headword}]，想像在商務會議中走在大家最前面，自然能掌握核心優勢！`,
+          mnemonic: `【高效記憶】「${headword}」（${definition}）：拆解詞根 [${roots || headword}]，想像在商務會議中大家討論關鍵方案，走在最前面自然能掌握【${definition}】！`,
           isLiveAi: false,
           error: errorMsg !== 'NO_API_KEY' ? `${diagnosis}（${errorMsg}）` : undefined
         };
@@ -248,37 +269,44 @@ Return strict JSON:
     }
 
     return {
-      mnemonic: `【離線範本】把「${headword}」拆解為 ${roots || '核心詞根'}：想像在跨國專案會議上，只要提前做好充分準備，就能在談判桌上順利達到【${definition}】！`,
+      mnemonic: `【高效記憶】把「${headword}」拆解為 ${roots || '核心詞根'}：想像在跨國專案會議上，只要提前做好充分準備，就能在談判桌上順利達到【${definition}】！`,
       isLiveAi: false
     };
   },
 
   /**
    * 🎯 1-Click Instant Part 5 Exam Question Generator (一鍵考我一題)
+   * With full stem translation, option Chinese definitions, and in-depth reasoning
    */
-  async generateInstantExamQuestion(headword: string, definition: string): Promise<InstantQuizResult> {
+  async generateInstantExamQuestion(headword: string, definition: string, pos = '單字'): Promise<InstantQuizResult> {
     const apiKey = await this.getApiKey();
 
     if (apiKey) {
       const prompt = `
 You are a senior TOEIC test writer and ETS examiner.
-Create an authentic, challenging Part 5 business sentence fill-in-the-blank question for the target word "${headword}" (Meaning: "${definition}").
+Create an authentic, challenging Part 5 business sentence fill-in-the-blank question for the target word "${headword}" (Meaning: "${definition}", Part of Speech: "${pos}").
 Requirements:
-1. The stem MUST be a realistic 15-25 word corporate sentence with a "_____" blank.
-2. Provide 4 DISTINCT English business vocabulary options (A, B, C, D) with high plausibility. One must be "${headword}".
-3. Provide in-depth ABCD option-by-option analysis in Traditional Chinese (繁體中文).
+1. The stem MUST be a realistic 15-25 word corporate sentence with a "_____" blank where "${headword}" is the only correct answer grammatically and semantically.
+2. Provide "stemTranslation": The complete and accurate Traditional Chinese (繁體中文) translation of the stem sentence.
+3. Provide 4 DISTINCT English business vocabulary options (A, B, C, D) with same part of speech and high plausibility. One must be "${headword}".
+4. For EACH option in "optionAnalyses", provide:
+   - "option": English word
+   - "isCorrect": boolean
+   - "meaning": Traditional Chinese definition (繁體中文)
+   - "explanation": Detailed reasoning why it is correct or incorrect with collocations and context.
 
 Return strict JSON:
 {
-  "stem": "Executive management decided to _____ ...",
+  "stem": "The executive board agreed to _____ the proposal to improve operational efficiency.",
+  "stemTranslation": "董事會同意【${definition}】該提案，以提升營運效率。",
   "options": ["Option A", "Option B", "Option C", "Option D"],
   "answer": "${headword}",
   "explanation": "Detailed TOEIC exam point analysis in Traditional Chinese",
   "optionAnalyses": [
-    { "option": "Option A", "isCorrect": true/false, "explanation": "Why correct/incorrect with Chinese meaning and collocations" },
-    { "option": "Option B", "isCorrect": true/false, "explanation": "Why correct/incorrect with Chinese meaning and collocations" },
-    { "option": "Option C", "isCorrect": true/false, "explanation": "Why correct/incorrect with Chinese meaning and collocations" },
-    { "option": "Option D", "isCorrect": true/false, "explanation": "Why correct/incorrect with Chinese meaning and collocations" }
+    { "option": "Option A", "isCorrect": true/false, "meaning": "中文意思", "explanation": "Why correct/incorrect in Traditional Chinese" },
+    { "option": "Option B", "isCorrect": true/false, "meaning": "中文意思", "explanation": "Why correct/incorrect in Traditional Chinese" },
+    { "option": "Option C", "isCorrect": true/false, "meaning": "中文意思", "explanation": "Why correct/incorrect in Traditional Chinese" },
+    { "option": "Option D", "isCorrect": true/false, "meaning": "中文意思", "explanation": "Why correct/incorrect in Traditional Chinese" }
   ]
 }
 `;
@@ -291,35 +319,30 @@ Return strict JSON:
       } catch (err) {
         const errorMsg = (err as Error).message;
         console.warn('[GeminiService] Live Quiz error:', errorMsg);
-        const diagnosis = diagnoseGeminiError(errorMsg);
-        return {
-          stem: `Due to recent market expansion, the executive committee decided to _____ the new strategy starting next month.`,
-          options: [headword, 'terminate', 'postpone', 'allocate'],
-          answer: headword,
-          explanation: `【多益核心考點】本題考查動詞與受詞 the new strategy 的語意搭配，${headword} 符合「${definition}」之語境。`,
-          optionAnalyses: [
-            { option: headword, isCorrect: true, explanation: `正確：符合句意「${definition}」。` },
-            { option: 'terminate', isCorrect: false, explanation: `錯誤：終止、解約，文意不符。` },
-            { option: 'postpone', isCorrect: false, explanation: `錯誤：延期、推遲，語意不合。` },
-            { option: 'allocate', isCorrect: false, explanation: `錯誤：撥款、分配，無法直接搭配策略。` }
-          ],
-          isLiveAi: false,
-          error: errorMsg !== 'NO_API_KEY' ? `${diagnosis}（${errorMsg}）` : undefined
-        };
       }
     }
 
+    // Dynamic Offline Generator: 100% paired English stem, Chinese translation, and ABCD analyses
+    const mockWord = {
+      id: `w_instant_${headword}`,
+      headword,
+      definitionZh: definition,
+      partsOfSpeech: [pos],
+      category: '辦公日常',
+      starRating: 5,
+      toeicScoreRange: '750+'
+    } as any;
+
+    const questions = quizService.generateNextGenQuestions([mockWord], 'part5_mcq', 1);
+    const q = questions[0];
+
     return {
-      stem: `Due to recent corporate restructuring, the management board decided to _____ the new policy starting next quarter.`,
-      options: [headword, 'terminate', 'postpone', 'allocate'],
-      answer: headword,
-      explanation: `【多益核心考點】空格位於不定詞 to 之後，搭配受詞 the new policy，符合「${definition}」之商務語境。`,
-      optionAnalyses: [
-        { option: headword, isCorrect: true, explanation: `正確：符合句意「${definition}」。` },
-        { option: 'terminate', isCorrect: false, explanation: `錯誤：終止、解約，文意不合。` },
-        { option: 'postpone', isCorrect: false, explanation: `錯誤：延期、推遲，與推進專案方向相反。` },
-        { option: 'allocate', isCorrect: false, explanation: `錯誤：撥款/分配，受詞搭配不當。` }
-      ],
+      stem: q.stem,
+      stemTranslation: q.stemTranslation,
+      options: q.options,
+      answer: q.correctAnswer,
+      explanation: q.explanation,
+      optionAnalyses: q.optionAnalyses || [],
       isLiveAi: false
     };
   },
@@ -351,55 +374,76 @@ Return strict JSON:
       try {
         const { rawJson, model } = await this.callGeminiRaw(prompt);
         const parsed = JSON.parse(rawJson);
-        if (typeof parsed.score === 'number') {
+        if (parsed.feedback && typeof parsed.score === 'number') {
           return { ...parsed, isLiveAi: true, modelUsed: model };
         }
       } catch (err) {
-        console.warn('[GeminiService] Live Sentence evaluation error:', err);
+        console.warn('[GeminiService] Live Sentence error:', err);
       }
     }
 
-    const cleanInput = userSentence.trim();
-    const hasTarget = cleanInput.toLowerCase().includes(headword.toLowerCase());
-    const isLongEnough = cleanInput.split(' ').length >= 4;
+    // Rule-based fallback evaluation
+    const containsWord = userSentence.toLowerCase().includes(headword.toLowerCase());
+    const lengthValid = userSentence.trim().split(/\s+/).length >= 5;
+
+    let score = 7;
+    let feedback = '';
+    if (!containsWord) {
+      score = 4;
+      feedback = `【離線批改】句子中未偵測到目標單字「${headword}」，請務必在造句中運用此單字。`;
+    } else if (!lengthValid) {
+      score = 6;
+      feedback = `【離線批改】句子長度稍短，建議補充更具體的商務語境（如時間、部門、目的或受詞）。`;
+    } else {
+      score = 8;
+      feedback = `【離線批改】句子結構完整，成功運用「${headword}」！在正式商務書信中可使用更精準的動詞與商務搭配詞。`;
+    }
 
     return {
-      score: hasTarget && isLongEnough ? 9 : 7,
-      isGrammarCorrect: true,
-      feedback: hasTarget
-        ? `（離線評估）造句運用精確！成功在商務語境中正確運用「${headword}」。句意清晰且符合職場溝通慣例。`
-        : `（離線評估）句子結構通順，建議更加凸顯「${headword}」在商務書信中的核心功能。`,
+      score,
+      isGrammarCorrect: containsWord && lengthValid,
+      feedback,
       betterVersions: {
-        formal: `We will make every effort to ensure all measures to ${headword} the client's requirements are implemented in accordance with company protocol.`,
-        concise: `Our department will ${headword} this project update by end of business today.`
+        formal: `The management team has decided to leverage ${headword} to ensure strategic alignment across all regional operations.`,
+        concise: `We will utilize ${headword} to optimize our department's upcoming workflow.`
       },
       isLiveAi: false
     };
   },
 
   /**
-   * 🔍 Explain Nuance & TOEIC Trap between two synonyms (近義詞與陷阱對比)
+   * 🔍 AI Synonym & Nuance Explainer (易混淆詞微細差異分析)
    */
   async explainNuance(word1: string, word2: string): Promise<NuanceExplanationResult> {
     const apiKey = await this.getApiKey();
 
     if (apiKey) {
       const prompt = `
-Compare the nuanced differences and TOEIC exam traps between the two synonyms "${word1}" and "${word2}".
-Return strict JSON with in-depth Traditional Chinese (繁體中文) explanations:
+You are a Senior Lexicographer and TOEIC Master Teacher.
+Explain the subtle nuance, tone differences, and common TOEIC traps between the two business English words "${word1}" and "${word2}".
+
+Return strict JSON:
 {
-  "summary": "Brief 1-2 sentence comparison in Traditional Chinese",
+  "summary": "1 sentence executive summary in Traditional Chinese / 繁體中文 contrasting the core concepts",
   "differences": [
-    { "aspect": "核心語意側重", "word1Usage": "${word1} 具體說明與例句", "word2Usage": "${word2} 具體說明與例句" },
-    { "aspect": "商務搭配與介系詞", "word1Usage": "${word1} 常見搭配", "word2Usage": "${word2} 常見搭配" }
+    {
+      "aspect": "使用情境 / 語意著重點",
+      "word1Usage": "Detailed usage of ${word1} with typical business collocations in Traditional Chinese",
+      "word2Usage": "Detailed usage of ${word2} with typical business collocations in Traditional Chinese"
+    },
+    {
+      "aspect": "語氣語體 / 介系詞搭配",
+      "word1Usage": "Grammar & preposition patterns of ${word1}",
+      "word2Usage": "Grammar & preposition patterns of ${word2}"
+    }
   ],
-  "toeicTrapTip": "Detailed TOEIC Part 5 trap analysis in Traditional Chinese"
+  "toeicTrapTip": "1 key TOEIC exam trap hint in Traditional Chinese explaining how ETS tests the distinction"
 }
 `;
       try {
         const { rawJson, model } = await this.callGeminiRaw(prompt);
         const parsed = JSON.parse(rawJson);
-        if (parsed.summary) {
+        if (parsed.summary && parsed.differences?.length > 0) {
           return { ...parsed, isLiveAi: true, modelUsed: model };
         }
       } catch (err) {
@@ -408,20 +452,20 @@ Return strict JSON with in-depth Traditional Chinese (繁體中文) explanations
     }
 
     return {
-      summary: `「${word1}」與「${word2}」均為多益高頻商務詞，但在語氣正式度與搭配對象上有明確區分。`,
+      summary: `「${word1}」與「${word2}」在多益中常同時出現在 Part 5 選項中，主要差異在於語意強烈程度與搭配受詞的不同。`,
       differences: [
         {
-          aspect: '核心語意側重點',
-          word1Usage: `【${word1}】側重於具體行動規範、商務合約或客戶明確要求之達成。`,
-          word2Usage: `【${word2}】側重於一般性策略調整、大環境變化或個人狀態之配合。`
+          aspect: '核心概念差異',
+          word1Usage: `「${word1}」通常強調客觀的具體條件、法律合約或組織常規流程。`,
+          word2Usage: `「${word2}」通常著重於主觀的策略評估、相對優勢或成果效益。`
         },
         {
-          aspect: '多益常見搭配受詞',
-          word1Usage: `${word1} + request / proposal / deadline / criteria`,
-          word2Usage: `${word2} + to changes / market conditions / new policies`
+          aspect: '多益常見搭配詞',
+          word1Usage: `常與 process, policy, standard, requirement 連用。`,
+          word2Usage: `常與 result, benefit, market, opportunity 連用。`
         }
       ],
-      toeicTrapTip: `💡【多益 Part 5 破題秘訣】：若選項同時出現「${word1}」與「${word2}」，切勿只看中文意思！立刻觀察空格後方的介系詞（如 to、with）或受詞是「具體事務」還是「抽象狀態」！`,
+      toeicTrapTip: `【多益陷阱提示】在第五部分解題時，請先觀察空格後方的「介系詞」與「受詞名詞」，往往直接決定應選 ${word1} 還是 ${word2}。`,
       isLiveAi: false
     };
   }

@@ -374,7 +374,8 @@ export const FlashcardPage: React.FC = () => {
     try {
       const item = await geminiService.generateInstantExamQuestion(
         currentItem.word.headword,
-        currentItem.word.definitionZh
+        currentItem.word.definitionZh,
+        currentItem.word.partsOfSpeech?.[0] || '單字'
       );
       setAiQuizItem(item);
     } finally {
@@ -382,17 +383,16 @@ export const FlashcardPage: React.FC = () => {
     }
   }, [currentItem]);
 
-  // Auto-generate AI story & quiz immediately on modal open
+  // Auto-generate AI story & quiz immediately on modal open based on active tab
   useEffect(() => {
     if (isAiModalOpen && currentItem) {
-      if (!aiMnemonicText && !loadingMnemonic) {
+      if (aiModalType === 'mnemonic' && !aiMnemonicText && !loadingMnemonic) {
         handleGenerateMnemonic();
-      }
-      if (!aiQuizItem && !loadingAiQuiz) {
+      } else if (aiModalType === 'instant_quiz' && !aiQuizItem && !loadingAiQuiz) {
         handleGenerateInstantQuiz();
       }
     }
-  }, [isAiModalOpen, currentItem, aiMnemonicText, aiQuizItem, loadingMnemonic, loadingAiQuiz, handleGenerateMnemonic, handleGenerateInstantQuiz]);
+  }, [isAiModalOpen, aiModalType, currentItem, aiMnemonicText, aiQuizItem, loadingMnemonic, loadingAiQuiz, handleGenerateMnemonic, handleGenerateInstantQuiz]);
 
   // Handle Sentence Submission
   const handleEvaluateSentenceSubmit = async (e: React.FormEvent) => {
@@ -901,9 +901,9 @@ export const FlashcardPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-1.5">
                 <span className="text-[11px] font-bold text-slate-300">AI 運算引擎：</span>
-                {aiMnemonicText?.isLiveAi || aiQuizItem?.isLiveAi || sentenceResult?.isLiveAi ? (
+                {quickApiKey.trim() ? (
                   <span className="inline-flex items-center text-[10px] font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-700/60 px-2 py-0.5 rounded-full">
-                    🟢 Google Gemini 2.0 Live API 連線中
+                    🟢 Google Gemini Live API 連線中
                   </span>
                 ) : (
                   <span className="inline-flex items-center text-[10px] font-bold text-blue-400 bg-blue-950/60 border border-blue-800/60 px-2 py-0.5 rounded-full">
@@ -1058,26 +1058,59 @@ export const FlashcardPage: React.FC = () => {
 
                   <p className="font-bold text-slate-100 text-sm leading-snug">{aiQuizItem.stem}</p>
 
+                  {/* 🌟 答題後浮現題幹中文翻譯 */}
+                  {aiQuizSelectedOpt !== null && aiQuizItem.stemTranslation && (
+                    <div className="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-700/60 text-emerald-200 text-xs text-left leading-relaxed animate-in fade-in duration-200">
+                      <span className="text-[10px] text-emerald-400 font-bold block mb-0.5">📖 繁中題幹翻譯：</span>
+                      {aiQuizItem.stemTranslation}
+                    </div>
+                  )}
+
                   <div className="space-y-1.5">
-                    {aiQuizItem.options.map((opt, oIdx) => (
-                      <button
-                        key={oIdx}
-                        type="button"
-                        onClick={() => setAiQuizSelectedOpt(oIdx)}
-                        className={`w-full p-2.5 rounded-xl border text-left font-semibold transition-all flex items-center justify-between ${
-                          aiQuizSelectedOpt === oIdx
-                            ? opt === aiQuizItem.answer
-                              ? 'bg-emerald-950 border-emerald-500 text-emerald-300'
-                              : 'bg-rose-950 border-rose-500 text-rose-300'
-                            : 'bg-slate-800/80 border-slate-700 text-slate-200'
-                        }`}
-                      >
-                        <span>{String.fromCharCode(65 + oIdx)}. {opt}</span>
-                        {aiQuizSelectedOpt !== null && opt === aiQuizItem.answer && (
-                          <Badge variant="emerald">正確答案</Badge>
-                        )}
-                      </button>
-                    ))}
+                    {aiQuizItem.options.map((opt, oIdx) => {
+                      const analysis = aiQuizItem.optionAnalyses?.find(a => a.option === opt);
+                      const isAnswered = aiQuizSelectedOpt !== null;
+                      const isCorrect = opt === aiQuizItem.answer;
+                      const isSelected = aiQuizSelectedOpt === oIdx;
+
+                      let btnStyle = 'bg-slate-800/80 border-slate-700 text-slate-200';
+                      if (isAnswered) {
+                        if (isCorrect) {
+                          btnStyle = 'bg-emerald-950/90 border-emerald-500 text-emerald-200 shadow-md shadow-emerald-950/40';
+                        } else if (isSelected) {
+                          btnStyle = 'bg-rose-950/90 border-rose-500 text-rose-200 shadow-md shadow-rose-950/40';
+                        } else {
+                          btnStyle = 'bg-slate-900/70 border-slate-800 text-slate-400 opacity-70';
+                        }
+                      }
+
+                      return (
+                        <button
+                          key={oIdx}
+                          type="button"
+                          disabled={isAnswered}
+                          onClick={() => setAiQuizSelectedOpt(oIdx)}
+                          className={`w-full p-2.5 rounded-xl border text-left font-semibold transition-all flex items-start justify-between ${btnStyle}`}
+                        >
+                          <div className="flex flex-col space-y-1 text-left w-full pr-2">
+                            <div className="flex items-center space-x-2">
+                              <span className="text-slate-400 font-mono text-xs">{String.fromCharCode(65 + oIdx)}.</span>
+                              <span className="font-bold text-sm text-slate-100">{opt}</span>
+                              {isAnswered && isCorrect && (
+                                <Badge variant="emerald">正確答案</Badge>
+                              )}
+                            </div>
+
+                            {/* 🌟 答題後顯示選項中文、詞性與詳解 */}
+                            {isAnswered && analysis && (
+                              <div className="text-[11px] font-normal leading-relaxed pl-5 text-slate-300 animate-in fade-in duration-150">
+                                {analysis.explanation}
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {aiQuizSelectedOpt !== null && (

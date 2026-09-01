@@ -14,7 +14,9 @@ import {
   Volume2,
   FileText,
   Layers,
-  BookOpen
+  BookOpen,
+  Sparkles,
+  RefreshCw
 } from 'lucide-react';
 import { courseRepository } from '../repositories/courseRepository';
 import { progressRepository } from '../repositories/progressRepository';
@@ -39,6 +41,8 @@ export const CatalogPage: React.FC = () => {
   const [downloadingCourseId, setDownloadingCourseId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSyncingAll, setIsSyncingAll] = useState(false);
+  const [syncSuccessMsg, setSyncSuccessMsg] = useState(false);
 
   // Expanded Unit Words state
   const [expandedCourseId, setExpandedCourseId] = useState<string | null>(null);
@@ -147,6 +151,31 @@ export const CatalogPage: React.FC = () => {
 
   const allCourses = catalog?.courses || [];
 
+  // Detect if any downloaded course is running an older dataset version
+  const outdatedCourses = allCourses.filter(c => {
+    const downloaded = downloadedMap.get(c.id);
+    return Boolean(downloaded) && (downloaded?.version || 1) < (c.version || 3);
+  });
+  const hasAnyUpdate = outdatedCourses.length > 0;
+
+  const handleSyncAllUpdates = async () => {
+    try {
+      setIsSyncingAll(true);
+      setErrorMessage(null);
+      for (const c of outdatedCourses) {
+        await courseRepository.downloadAndSaveCourse(c.id, c.fileName);
+      }
+      await loadData();
+      setSyncSuccessMsg(true);
+      setTimeout(() => setSyncSuccessMsg(false), 4000);
+    } catch (err) {
+      console.error('[CatalogPage] Sync all error:', err);
+      setErrorMessage(`更新同步失敗：${(err as Error).message}`);
+    } finally {
+      setIsSyncingAll(false);
+    }
+  };
+
   // Filter courses by mode
   const displayedCourses = allCourses.filter(c => {
     const isHighFreq =
@@ -180,6 +209,44 @@ export const CatalogPage: React.FC = () => {
           收錄全庫 <strong className="text-emerald-400">11,154 字</strong> 與 <strong className="text-amber-400">66,924 題測驗</strong>，支援單元展開瀏覽與離線秒級背誦。
         </p>
       </div>
+
+      {/* Global Version Update Notification Banner */}
+      {hasAnyUpdate && (
+        <div className="bg-gradient-to-r from-emerald-950/80 to-teal-950/80 border border-emerald-600/70 rounded-2xl p-3.5 flex items-center justify-between shadow-lg shadow-emerald-950/30">
+          <div className="flex items-center space-x-2.5 min-w-0 mr-2">
+            <span className="p-2 rounded-xl bg-emerald-900/80 text-emerald-300 shrink-0">
+              <Sparkles size={16} />
+            </span>
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-emerald-100 truncate">發現全新精編真題庫（v3 最新版）</p>
+              <p className="text-[11px] text-emerald-300/80 truncate">包含 1:1 專屬題幹翻譯與唯一正解校正，點擊立即同步</p>
+            </div>
+          </div>
+          <Button
+            size="sm"
+            variant="primary"
+            onClick={handleSyncAllUpdates}
+            disabled={isSyncingAll}
+            className="text-xs shrink-0 font-bold px-3 shadow-md"
+          >
+            {isSyncingAll ? (
+              <>
+                <Loader2 size={13} className="animate-spin mr-1" /> 同步中...
+              </>
+            ) : (
+              <>
+                <RefreshCw size={13} className="mr-1" /> 一鍵同步
+              </>
+            )}
+          </Button>
+        </div>
+      )}
+
+      {syncSuccessMsg && (
+        <div className="bg-emerald-950/90 border border-emerald-500 rounded-xl p-2.5 text-xs text-emerald-200 text-center font-bold">
+          ✅ 題庫已全面同步為最新精編版本！
+        </div>
+      )}
 
       {/* Dual-Track Mode Toggle */}
       <div className="flex rounded-2xl bg-slate-800/90 p-1 border border-slate-700">

@@ -39,6 +39,7 @@ export interface WordEntry {
   imageUrl?: string | null;
   imageKeyword?: string | null;
   frequencyTier?: FrequencyTier;
+  quizzes?: any[];
 }
 
 export const ExampleSentenceSchema = z.object({
@@ -89,7 +90,8 @@ export const WordEntrySchema = z.object({
   audioUKUrl: z.string().nullable().optional(),
   imageUrl: z.string().nullable().optional(),
   imageKeyword: z.string().nullable().optional(),
-  frequencyTier: z.enum(['core_1200', 'advanced_2500', 'expert_high']).optional()
+  frequencyTier: z.enum(['core_1200', 'advanced_2500', 'expert_high']).optional(),
+  quizzes: z.array(z.any()).optional().default([])
 }).transform((val) => {
   const ratingNum = Math.max(1, Math.min(5, Math.round(val.starRating || 3))) as 1 | 2 | 3 | 4 | 5;
   return {
@@ -111,7 +113,8 @@ export const WordEntrySchema = z.object({
     audioUKUrl: val.audioUKUrl || null,
     imageUrl: val.imageUrl || null,
     imageKeyword: val.imageKeyword || null,
-    frequencyTier: val.frequencyTier
+    frequencyTier: val.frequencyTier,
+    quizzes: val.quizzes || []
   };
 });
 
@@ -126,6 +129,7 @@ export interface CourseSummary {
   fileName: string;
   checksum: string;
   sizeBytes?: number;
+  version?: number;
 }
 
 export const CourseSummarySchema = z.object({
@@ -138,7 +142,8 @@ export const CourseSummarySchema = z.object({
   wordCount: z.number().optional().default(0),
   fileName: z.string(),
   checksum: z.string().optional().default(''),
-  sizeBytes: z.number().optional()
+  sizeBytes: z.number().optional(),
+  version: z.number().optional().default(3)
 });
 
 export interface CourseDetail {

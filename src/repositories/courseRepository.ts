@@ -84,6 +84,71 @@ export const courseRepository = {
     return Array.from(categories);
   },
 
+  // 🌟 Global Master Dictionary Search (All 11,154 Words)
+  _masterCache: [] as Word[],
+  async searchGlobalMasterWords(query: string, limit = 50): Promise<Word[]> {
+    if (!this._masterCache || this._masterCache.length === 0) {
+      try {
+        const localWords = await db.words.toArray();
+        if (localWords.length >= 10000) {
+          this._masterCache = localWords;
+        } else {
+          // Fetch master datasets in parallel
+          const [coreRes, advRes, expRes] = await Promise.allSettled([
+            fetch('/data/v1/core-1200.json').then(r => r.json()),
+            fetch('/data/v1/advanced-2500.json').then(r => r.json()),
+            fetch('/data/v1/expert-high.json').then(r => r.json())
+          ]);
+
+          const combined: Word[] = [...localWords];
+          const seen = new Set(localWords.map(w => w.headword.toLowerCase()));
+
+          [coreRes, advRes, expRes].forEach(res => {
+            if (res.status === 'fulfilled' && Array.isArray(res.value?.words)) {
+              res.value.words.forEach((w: Word) => {
+                if (!seen.has(w.headword.toLowerCase())) {
+                  seen.add(w.headword.toLowerCase());
+                  combined.push(w);
+                }
+              });
+            }
+          });
+
+          this._masterCache = combined;
+        }
+      } catch (err) {
+        console.warn('Failed to load full master dictionary for search:', err);
+        this._masterCache = await db.words.toArray();
+      }
+    }
+
+    if (!query.trim()) {
+      return this._masterCache.slice(0, limit);
+    }
+
+    const q = query.trim().toLowerCase();
+    const exactMatches: Word[] = [];
+    const prefixMatches: Word[] = [];
+    const containsMatches: Word[] = [];
+
+    for (const w of this._masterCache) {
+      const hw = w.headword.toLowerCase();
+      const zh = w.definitionZh || '';
+      if (hw === q) {
+        exactMatches.push(w);
+      } else if (hw.startsWith(q)) {
+        prefixMatches.push(w);
+      } else if (hw.includes(q) || zh.includes(q)) {
+        containsMatches.push(w);
+      }
+      if (exactMatches.length + prefixMatches.length + containsMatches.length >= limit * 2) {
+        break;
+      }
+    }
+
+    return [...exactMatches, ...prefixMatches, ...containsMatches].slice(0, limit);
+  },
+
   async downloadAndSaveCourse(courseId: string, fileName: string): Promise<void> {
     const res = await fetch(`/data/v1/courses/${fileName}`);
     if (!res.ok) {

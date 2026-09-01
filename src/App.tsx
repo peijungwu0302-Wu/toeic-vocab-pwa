@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ProfileProvider, useProfile } from './contexts/ProfileContext';
 import { SyncProvider } from './contexts/SyncContext';
@@ -15,9 +15,18 @@ import { PrintableCramPage } from './pages/PrintableCramPage';
 import { StatsPage } from './pages/StatsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AttributionPage } from './pages/AttributionPage';
+import { db } from './db';
 
 const AppRoutes: React.FC = () => {
   const { activeProfile, isLoading } = useProfile();
+
+  useEffect(() => {
+    // Initialize font size from settings
+    db.appSettings.get('app_font_size').then(s => {
+      const size = s?.value || 'normal';
+      document.documentElement.setAttribute('data-font-size', size);
+    });
+  }, []);
 
   if (isLoading) {
     return (

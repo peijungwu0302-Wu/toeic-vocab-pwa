@@ -44,6 +44,7 @@ export const SettingsPage: React.FC = () => {
   const [showApiKey, setShowApiKey] = useState(false);
   const [isSavingKey, setIsSavingKey] = useState(false);
   const [keySavedMessage, setKeySavedMessage] = useState(false);
+  const [appFontSize, setAppFontSize] = useState<string>('normal');
 
   // Backup & Import
   const [importModalOpen, setImportModalOpen] = useState(false);
@@ -80,7 +81,19 @@ export const SettingsPage: React.FC = () => {
         setCustomApiKey(setting.value);
       }
     });
+
+    db.appSettings.get('app_font_size').then(setting => {
+      if (setting && setting.value) {
+        setAppFontSize(setting.value);
+      }
+    });
   }, []);
+
+  const handleFontSizeChange = async (size: string) => {
+    setAppFontSize(size);
+    await db.appSettings.put({ key: 'app_font_size', value: size });
+    document.documentElement.setAttribute('data-font-size', size);
+  };
 
   const handleSaveApiKey = async () => {
     setIsSavingKey(true);
@@ -405,6 +418,34 @@ export const SettingsPage: React.FC = () => {
                   }`}
                 >
                   {sec}s
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* App Font Size Preference */}
+          <div className="flex items-center justify-between border-t border-slate-700/50 pt-3">
+            <div>
+              <div className="text-xs font-semibold text-slate-200">全站顯示字體大小</div>
+              <div className="text-[11px] text-slate-400">通勤手持閱讀與長輩模式等比縮放</div>
+            </div>
+            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+              {[
+                { id: 'normal', label: '標準' },
+                { id: 'large', label: '放大' },
+                { id: 'xlarge', label: '特大' }
+              ].map((f) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => handleFontSizeChange(f.id)}
+                  className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${
+                    appFontSize === f.id
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {f.label}
                 </button>
               ))}
             </div>
