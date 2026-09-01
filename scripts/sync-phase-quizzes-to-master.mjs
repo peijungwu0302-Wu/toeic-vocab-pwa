@@ -1,4 +1,4 @@
-﻿import fs from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -52,6 +52,15 @@ const masterFiles = [
   'expert-high-part3.json'
 ];
 
+function getGuaranteedWordId(w, qData) {
+  if (w.id) return w.id;
+  if (qData && qData.id) return qData.id;
+  const rawHw = (w.headword || qData?.headword || '').toLowerCase().trim();
+  const clean = rawHw.replace(/[^a-z0-9]/g, '_');
+  const hash = crypto.createHash('md5').update(rawHw).digest('hex').slice(0, 8);
+  return `tw_${clean.slice(0, 20)}_${hash}`;
+}
+
 for (const mf of masterFiles) {
   const mPath = path.join(DATA_DIR, mf);
   if (!fs.existsSync(mPath)) continue;
@@ -59,15 +68,17 @@ for (const mf of masterFiles) {
   const mData = JSON.parse(fs.readFileSync(mPath, 'utf8'));
   const updatedWords = (mData.words || []).map(w => {
     const qData = quizMap.get(w.headword.toLowerCase().trim());
+    const wordId = getGuaranteedWordId(w, qData);
     if (qData) {
       return {
         ...w,
+        id: wordId,
         visualAnchor: qData.visualAnchor || w.visualAnchor,
         examples: qData.examples && qData.examples.length > 0 ? qData.examples : w.examples,
         quizzes: qData.quizzes && qData.quizzes.length > 0 ? qData.quizzes : w.quizzes
       };
     }
-    return w;
+    return { ...w, id: wordId };
   });
 
   fs.writeFileSync(mPath, JSON.stringify({
@@ -90,15 +101,17 @@ for (const cf of courseFiles) {
   const cData = JSON.parse(fs.readFileSync(cp, 'utf8'));
   const updatedWords = (cData.words || []).map(w => {
     const qData = quizMap.get(w.headword.toLowerCase().trim());
+    const wordId = getGuaranteedWordId(w, qData);
     if (qData) {
       return {
         ...w,
+        id: wordId,
         visualAnchor: qData.visualAnchor || w.visualAnchor,
         examples: qData.examples && qData.examples.length > 0 ? qData.examples : w.examples,
         quizzes: qData.quizzes && qData.quizzes.length > 0 ? qData.quizzes : w.quizzes
       };
     }
-    return w;
+    return { ...w, id: wordId };
   });
 
   fs.writeFileSync(cp, JSON.stringify({

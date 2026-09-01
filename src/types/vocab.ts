@@ -76,7 +76,7 @@ export const WordFormSchema = z.object({
 }));
 
 export const WordEntrySchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   headword: z.string(),
   normalizedHeadword: z.string().optional(),
   entryType: z.enum(['word', 'phrase', 'pattern']).optional().default('word'),
@@ -102,8 +102,9 @@ export const WordEntrySchema = z.object({
   quizzes: z.array(z.any()).optional().default([])
 }).transform((val) => {
   const ratingNum = Math.max(1, Math.min(5, Math.round(val.starRating || 3))) as 1 | 2 | 3 | 4 | 5;
+  const wordId = val.id || `tw_${val.headword.toLowerCase().trim().replace(/[^a-z0-9]/g, '_')}`;
   return {
-    id: val.id,
+    id: wordId,
     headword: val.headword,
     normalizedHeadword: val.normalizedHeadword || val.headword.toLowerCase().trim(),
     entryType: val.entryType || 'word',

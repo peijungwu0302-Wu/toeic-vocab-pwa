@@ -79,7 +79,7 @@ export const SettingsPage: React.FC = () => {
       setIsRefreshingDataset(true);
       setDatasetRefreshMsg(null);
       await datasetMigrationService.forceRefreshAllCourses();
-      setDatasetRefreshMsg('✅ 題庫已成功刷新至最新 v3.0！所有單字與測驗題幹已更新完畢。');
+      setDatasetRefreshMsg('✅ 題庫已成功刷新至最新 v5.0.0！全量 11,154 詞之 3 例句、視覺圖與 3+3 全真試題已更新完畢。');
       setTimeout(() => setDatasetRefreshMsg(null), 5000);
     } catch (err) {
       alert(`刷新題庫失敗：${(err as Error).message}`);
