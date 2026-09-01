@@ -12,12 +12,17 @@ import {
   Check,
   ExternalLink,
   ShieldCheck,
-  Copy
+  Copy,
+  Key,
+  Eye,
+  EyeOff,
+  Sparkles
 } from 'lucide-react';
 import { useProfile } from '../contexts/ProfileContext';
 import { useSync } from '../contexts/SyncContext';
 import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
+import { db } from '../db';
 import { BackupDataV1, ImportPreviewSummary, ImportStrategy } from '../types/backup';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
@@ -34,6 +39,12 @@ export const SettingsPage: React.FC = () => {
   const [storageUsageMB, setStorageUsageMB] = useState<string>('0');
   const [isPersisted, setIsPersisted] = useState<boolean | null>(null);
 
+  // Custom Gemini API Key State
+  const [customApiKey, setCustomApiKey] = useState<string>('');
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [isSavingKey, setIsSavingKey] = useState(false);
+  const [keySavedMessage, setKeySavedMessage] = useState(false);
+
   // Backup & Import
   const [importModalOpen, setImportModalOpen] = useState(false);
   const [importSummary, setImportSummary] = useState<ImportPreviewSummary | null>(null);
@@ -47,7 +58,7 @@ export const SettingsPage: React.FC = () => {
   const [teacherMessage, setTeacherMessage] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // Load storage estimation
+  // Load storage estimation & API Key from DB
   useEffect(() => {
     if (typeof navigator !== 'undefined' && navigator.storage) {
       if (navigator.storage.estimate) {
@@ -63,7 +74,27 @@ export const SettingsPage: React.FC = () => {
         });
       }
     }
+
+    db.appSettings.get('custom_gemini_api_key').then(setting => {
+      if (setting && setting.value) {
+        setCustomApiKey(setting.value);
+      }
+    });
   }, []);
+
+  const handleSaveApiKey = async () => {
+    setIsSavingKey(true);
+    try {
+      await db.appSettings.put({
+        key: 'custom_gemini_api_key',
+        value: customApiKey.trim()
+      });
+      setKeySavedMessage(true);
+      setTimeout(() => setKeySavedMessage(false), 2500);
+    } finally {
+      setIsSavingKey(false);
+    }
+  };
 
   const handleRequestPersist = async () => {
     if (typeof navigator !== 'undefined' && navigator.storage && navigator.storage.persist) {
@@ -155,14 +186,73 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-5 pb-8">
+    <div className="space-y-4 pb-8">
       {/* Header */}
       <div>
         <h2 className="text-xl font-black text-slate-100">設定與系統管理</h2>
-        <p className="text-xs text-slate-400 mt-1">管理學生身分、發音、資料備份與雲端同步</p>
+        <p className="text-xs text-slate-400 mt-1">管理學生身分、免費 AI Key、備份與雲端同步</p>
       </div>
 
-      {/* 1. Profile Management */}
+      {/* 1. Custom Gemini API Key Panel */}
+      <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
+            <Sparkles size={16} className="text-amber-400" />
+            <span>自訂 Gemini API Key（選填 · 100% 免費）</span>
+          </h3>
+          <Badge variant={customApiKey.trim() ? 'emerald' : 'blue'}>
+            {customApiKey.trim() ? '🟢 個人 Key 直連' : '🔵 預設離線模式'}
+          </Badge>
+        </div>
+
+        <p className="text-[11px] text-slate-400 leading-relaxed">
+          Google AI Studio 提供每日 <strong className="text-slate-200">1,500 次免費請求</strong>。填入個人 API Key 可享受零等待 AI 造句批改與對話模擬，資料純存本機絕不外流。
+        </p>
+
+        <div className="space-y-2 pt-1">
+          <div className="relative">
+            <input
+              type={showApiKey ? 'text' : 'password'}
+              placeholder="貼上 AIzaSy..."
+              value={customApiKey}
+              onChange={(e) => setCustomApiKey(e.target.value)}
+              className="w-full pl-9 pr-10 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 text-xs font-mono focus:outline-none focus:border-emerald-500"
+            />
+            <Key size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+            <button
+              type="button"
+              onClick={() => setShowApiKey(prev => !prev)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+            >
+              {showApiKey ? <EyeOff size={14} /> : <Eye size={14} />}
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <a
+              href="https://aistudio.google.com/app/apikey"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[11px] text-emerald-400 hover:underline flex items-center"
+            >
+              <span>免費取得 Google API Key</span>
+              <ExternalLink size={11} className="ml-1" />
+            </a>
+
+            <Button size="sm" variant="primary" onClick={handleSaveApiKey} disabled={isSavingKey}>
+              {keySavedMessage ? (
+                <>
+                  <Check size={14} className="mr-1" /> 已儲存
+                </>
+              ) : (
+                '儲存設定'
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Profile Management */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
@@ -228,7 +318,7 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Study Preferences */}
+      {/* 3. Study Preferences */}
       {activeProfile && (
         <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-4">
           <h3 className="text-sm font-bold text-slate-200">個人學習偏好</h3>
@@ -295,17 +385,41 @@ export const SettingsPage: React.FC = () => {
               />
             </button>
           </div>
+
+          {/* Fast Skim Default Duration */}
+          <div className="flex items-center justify-between border-t border-slate-700/50 pt-3">
+            <div>
+              <div className="text-xs font-semibold text-slate-200">速讀預設每字秒數</div>
+              <div className="text-[11px] text-slate-400">快閃速讀模式的每字停留速度</div>
+            </div>
+            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+              {[1, 2, 3, 4, 6].map((sec) => (
+                <button
+                  key={sec}
+                  type="button"
+                  onClick={() => updateProfile({ fastSkimDurationSec: sec })}
+                  className={`px-2.5 py-1 text-xs font-bold rounded-md transition-all ${
+                    (activeProfile.fastSkimDurationSec || 4) === sec
+                      ? 'bg-emerald-600 text-white'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {sec}s
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
-      {/* 3. Backup & Restore (Local-first) */}
+      {/* 4. Backup & Restore (Local-first) */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
           <Download size={16} className="text-blue-400" />
           <span>資料備份與還原 (JSON)</span>
         </h3>
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          瀏覽器儲存雖快，但仍可能受 iOS 清理。建議定期匯出備份檔案保存進度。
+          純離線匯出個人學習與 FSRS 排程進度，支援多裝置移轉。
         </p>
 
         <div className="grid grid-cols-2 gap-2 pt-1">
@@ -330,7 +444,7 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Teacher Share Progress */}
+      {/* 5. Teacher Share Progress */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
           <Share2 size={16} className="text-purple-400" />
@@ -345,7 +459,7 @@ export const SettingsPage: React.FC = () => {
         </Button>
       </div>
 
-      {/* 5. Storage & Persistence */}
+      {/* 6. Storage & Persistence */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
           <HardDrive size={16} className="text-teal-400" />
@@ -377,7 +491,7 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 6. Optional Cloud Sync Status */}
+      {/* 7. Optional Cloud Sync Status */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
@@ -402,7 +516,7 @@ export const SettingsPage: React.FC = () => {
         )}
       </div>
 
-      {/* 7. License & Notices */}
+      {/* 8. License & Notices */}
       <div className="text-center pt-2">
         <Link
           to="/attribution"

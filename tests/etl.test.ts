@@ -52,4 +52,58 @@ describe('ETL Pipeline Unit Tests', () => {
     const key2 = `${'look forward to'.toLowerCase().replace(/\s+/g, ' ')}:::phrase`;
     expect(key1).toBe(key2);
   });
+
+  it('validates ExampleSentenceSchema backward and forward compatibility', async () => {
+    const { ExampleSentenceSchema, WordEntrySchema } = await import('../src/types/vocab');
+
+    // Test new schema format (en, zh, scenario)
+    const newFormat = {
+      en: 'The committee approved the revised proposal.',
+      zh: '委員會核准了修訂後的提案。',
+      scenario: '會議決策'
+    };
+    const parsedNew = ExampleSentenceSchema.parse(newFormat);
+    expect(parsedNew.en).toBe(newFormat.en);
+    expect(parsedNew.zh).toBe(newFormat.zh);
+    expect(parsedNew.english).toBe(newFormat.en); // backward compatibility alias
+    expect(parsedNew.chinese).toBe(newFormat.zh); // backward compatibility alias
+    expect(parsedNew.scenario).toBe('會議決策');
+
+    // Test legacy schema format (english, chinese)
+    const legacyFormat = {
+      id: 'ex_legacy_1',
+      english: 'We must finalize the contract today.',
+      chinese: '我們今天必須敲定合約。'
+    };
+    const parsedLegacy = ExampleSentenceSchema.parse(legacyFormat);
+    expect(parsedLegacy.en).toBe(legacyFormat.english);
+    expect(parsedLegacy.zh).toBe(legacyFormat.chinese);
+    expect(parsedLegacy.english).toBe(legacyFormat.english);
+    expect(parsedLegacy.chinese).toBe(legacyFormat.chinese);
+    expect(parsedLegacy.scenario).toBe('商務實務'); // default fallback
+
+    // Validate WordEntrySchema with frequencyTier and imageUrl
+    const fullWord = {
+      id: 'tw_w_demo',
+      headword: 'finalize',
+      normalizedHeadword: 'finalize',
+      entryType: 'word' as const,
+      definitionZh: '敲定；完成',
+      starRating: 4 as const,
+      toeicScoreRange: '600-780',
+      category: '商務談判',
+      partsOfSpeech: ['verb'],
+      wordForms: [],
+      phoneticUS: null,
+      phoneticUK: null,
+      examples: [parsedNew],
+      examTips: ['常考於 Part 5'],
+      audioUSUrl: null,
+      audioUKUrl: null,
+      imageUrl: 'https://images.unsplash.com/photo-123',
+      frequencyTier: 'core_1200' as const
+    };
+    expect(WordEntrySchema.safeParse(fullWord).success).toBe(true);
+  });
 });
+

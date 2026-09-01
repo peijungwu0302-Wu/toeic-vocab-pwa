@@ -10,14 +10,16 @@
     --sal: env(safe-area-inset-left);
   }
 
-  html, body {
+  html, body, #root {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     background-color: #0f172a;
     color: #f8fafc;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
+    overscroll-behavior: none;
     overscroll-behavior-y: none;
   }
 }

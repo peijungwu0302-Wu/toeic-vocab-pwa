@@ -1,356 +1,356 @@
 {
-  "version": 1,
-  "generatedAt": "2026-08-31T17:42:00.320Z",
+  "version": 2,
+  "generatedAt": "2026-08-31T21:11:50.627Z",
   "totalWords": 11154,
   "totalCourses": 33,
   "courses": [
     {
+      "id": "course-core-1200",
+      "title": "🔥 多益必考高頻核心 1,200 字全集",
+      "description": "涵蓋 600~750 分多益核心考點，含 7,200 題測驗、商務例句與情境圖片。",
+      "toeicScoreRange": "400-750",
+      "category": "高頻核心",
+      "level": "核心必考",
+      "wordCount": 1200,
+      "fileName": "course-core-1200.json",
+      "checksum": "6ecee629d92493617e1c8c8954b022d6cfcc82c95f3b9f3205dd59a226f5ba3e",
+      "sizeBytes": 8926228
+    },
+    {
+      "id": "course-advanced-2500",
+      "title": "💼 多益商務進階實戰 2,500 字全集",
+      "description": "衝刺 750~860 分金色證書實戰單字庫，含 15,000 題測驗與高階商務例句。",
+      "toeicScoreRange": "750-860",
+      "category": "進階實戰",
+      "level": "金證衝刺",
+      "wordCount": 2500,
+      "fileName": "course-advanced-2500.json",
+      "checksum": "a887a579f1a2f357a48fa50de2d6ccd153ed305f000734c9ac6904c2c4a529a0",
+      "sizeBytes": 14874313
+    },
+    {
+      "id": "course-expert-high",
+      "title": "🚀 多益滿分巔峰挑戰 7,454 字全集",
+      "description": "860~990 分滿分巔峰高難度商業詞彙、法務與管理術語。",
+      "toeicScoreRange": "860-990",
+      "category": "高階挑戰",
+      "level": "滿分巔峰",
+      "wordCount": 7454,
+      "fileName": "course-expert-high.json",
+      "checksum": "78eb66db6ae599d1683fa00553021bf2f914a32a5e1c83f5cf3d38b0a9f981e8",
+      "sizeBytes": 44703699
+    },
+    {
       "id": "course-foundation-550-part1",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 1 單元 (1~400 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 1/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 1/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part1.json",
-      "checksum": "347cece8f4143b94437f130d59d6c49dbd9c52298364944a6a3832a81b34005d",
-      "sizeBytes": 913312
+      "checksum": "c7f7fafdb1bc12582180b89429ee45d72110532261c3e223f22f978e0207d403",
+      "sizeBytes": 2981435
     },
     {
       "id": "course-foundation-550-part2",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 2 單元 (401~800 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 2/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 2/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part2.json",
-      "checksum": "5f870a00ed4e383587c5750a08545f7189c9d227eeaaedb254c9421057f16b26",
-      "sizeBytes": 908226
+      "checksum": "5287d6546b48bcfe827acf1410e7062920db389dad5e9dacfaa3280b0b846241",
+      "sizeBytes": 2891384
     },
     {
       "id": "course-foundation-550-part3",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 3 單元 (801~1200 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 3/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 3/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part3.json",
-      "checksum": "1424536676b0dc256b9d516212c4dd5623dbeb152c1098587a2e4cca831f92ff",
-      "sizeBytes": 916773
+      "checksum": "e9773d9fc78c91c625a375371b6925b8bfa40dfcf204793de518568b9b73df40",
+      "sizeBytes": 2372904
     },
     {
       "id": "course-foundation-550-part4",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 4 單元 (1201~1600 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 4/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 4/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part4.json",
-      "checksum": "3469ecdcc3436e595d19ffa5606e6cbb8e57413efa09def41498a3f4a3543af7",
-      "sizeBytes": 921673
+      "checksum": "80ec168de0cfedcdb2b9a1afd19e0be4780768de158d7a2f581ad33372490138",
+      "sizeBytes": 2382229
     },
     {
       "id": "course-foundation-550-part5",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 5 單元 (1601~2000 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 5/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 5/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part5.json",
-      "checksum": "f70e15e13c31025bf0c9f073ea3cd37e33487c764a7546912819ce01f9d64584",
-      "sizeBytes": 925642
+      "checksum": "f75b5488725b4945f452ee03117d402e1ae07b406562b63c4b1bdddb85d145cb",
+      "sizeBytes": 2386787
     },
     {
       "id": "course-foundation-550-part6",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 6 單元 (2001~2400 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 6/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 6/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part6.json",
-      "checksum": "13903a31473aa722dd7f179b096919ec241f0251b7d0de3320fd0d5f2b4bc338",
-      "sizeBytes": 909924
+      "checksum": "b8639651be84e966ea622aa8d8f371aae8b1efffbba1dd0e42e8f00e819d6d83",
+      "sizeBytes": 2382419
     },
     {
       "id": "course-foundation-550-part7",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 7 單元 (2401~2800 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 7/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 7/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part7.json",
-      "checksum": "25467959eab45e86b3f437a3d5c6557d23ce9df1b66aa40c29cc8d5c9de526c5",
-      "sizeBytes": 918724
+      "checksum": "aca400990cbf09dc80df7b45af8b8732d470266ec8b74e97b064f244de94d353",
+      "sizeBytes": 2382632
     },
     {
       "id": "course-foundation-550-part8",
       "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 8 單元 (2801~3200 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 8/13）",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 8/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
       "wordCount": 400,
       "fileName": "course-foundation-550-part8.json",
-      "checksum": "43fbe5be0a193c59e2ad3977dd08795fa6178e0d50b79216688cd04d7713231d",
-      "sizeBytes": 913736
+      "checksum": "894b17bbc90665e97bd14da98e6a3b14cc2515eb8609a35afe4740729b37e1d7",
+      "sizeBytes": 2381773
     },
     {
       "id": "course-foundation-550-part9",
-      "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 9 單元 (3201~3600 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 9/13）",
+      "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 9 單元 (3201~3549 字)",
+      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 9/9）",
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 349,
       "fileName": "course-foundation-550-part9.json",
-      "checksum": "9240330ebf6bff25c0976faae963b24e90b8693967d87eb4bcd9e6322b1598c6",
-      "sizeBytes": 922570
-    },
-    {
-      "id": "course-foundation-550-part10",
-      "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 10 單元 (3601~4000 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 10/13）",
-      "toeicScoreRange": "400-600",
-      "category": "綜合商務",
-      "level": "基礎",
-      "wordCount": 400,
-      "fileName": "course-foundation-550-part10.json",
-      "checksum": "cdc1ab50d29124acca1e9909c3c6b45ef6b57684362d9887226f4d9c4b4da296",
-      "sizeBytes": 923416
-    },
-    {
-      "id": "course-foundation-550-part11",
-      "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 11 單元 (4001~4400 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 11/13）",
-      "toeicScoreRange": "400-600",
-      "category": "綜合商務",
-      "level": "基礎",
-      "wordCount": 400,
-      "fileName": "course-foundation-550-part11.json",
-      "checksum": "07cf6af2e898f125f1338325660d063a96dacdafbc269a69b273cb94ae076e1a",
-      "sizeBytes": 920501
-    },
-    {
-      "id": "course-foundation-550-part12",
-      "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 12 單元 (4401~4800 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 12/13）",
-      "toeicScoreRange": "400-600",
-      "category": "綜合商務",
-      "level": "基礎",
-      "wordCount": 400,
-      "fileName": "course-foundation-550-part12.json",
-      "checksum": "cf4fbd75c679101bbbd40a21f39c3f8124f2a1668e631aea08063ad0e919feaa",
-      "sizeBytes": 916207
-    },
-    {
-      "id": "course-foundation-550-part13",
-      "title": "基礎奠定核心單字 (TOEIC 400-600) - 第 13 單元 (4801~4884 字)",
-      "description": "多益入門必備單字與基礎情境片語，涵蓋辦公室基本溝通與日常商務。（分單元 13/13）",
-      "toeicScoreRange": "400-600",
-      "category": "綜合商務",
-      "level": "基礎",
-      "wordCount": 84,
-      "fileName": "course-foundation-550-part13.json",
-      "checksum": "8f837c4ba32f1bc23e1906ca5662d88b3f4becbce8a1fd9af6b97fcdc87ea920",
-      "sizeBytes": 191505
+      "checksum": "f7d0520f0341c5708d5fc51134fd987b5b1df4816d2cc1926f5d7267c601b8a9",
+      "sizeBytes": 2062696
     },
     {
       "id": "course-intermediate-750-part1",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 1 單元 (1~400 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 1/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 1/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part1.json",
-      "checksum": "6ae0a48daab2416f540d5c7e8e496c9d9d864889e2d42cb0b00c8f80ad6dcc0a",
-      "sizeBytes": 932406
+      "checksum": "2153ea0833d00333d62bc3577ef57a118bc994b1e30be53fa0d3a5a28526f6bc",
+      "sizeBytes": 2408343
     },
     {
       "id": "course-intermediate-750-part2",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 2 單元 (401~800 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 2/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 2/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part2.json",
-      "checksum": "e9e3311d0824fea722a77f66dfd837f8aef8d4e542525156838e10ebd033199a",
-      "sizeBytes": 937307
+      "checksum": "fbbd33f667368070ddcecd0d206321467eb11226196316d10f1ae3d9345cdeac",
+      "sizeBytes": 2398350
     },
     {
       "id": "course-intermediate-750-part3",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 3 單元 (801~1200 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 3/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 3/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part3.json",
-      "checksum": "7a806180fc68ca4e96ba048d54ad4773864b829b94b17baed7b380ce89be2405",
-      "sizeBytes": 937975
+      "checksum": "3d0282cfdfa7d837a326cac4b86edce377e9319f75151079bad44d5c6facae65",
+      "sizeBytes": 2402311
     },
     {
       "id": "course-intermediate-750-part4",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 4 單元 (1201~1600 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 4/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 4/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part4.json",
-      "checksum": "4d41563f77d2b87efd55362292526d94174bdbf4eaa2262445378d21d2cd5965",
-      "sizeBytes": 941591
+      "checksum": "d27e105b9ee2a585e6e2f2e66000103f5b9147b9b81c0c568beecbb5c5e9fb5c",
+      "sizeBytes": 2394255
     },
     {
       "id": "course-intermediate-750-part5",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 5 單元 (1601~2000 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 5/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 5/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part5.json",
-      "checksum": "551da41c0a6904373fc2efd6b5e6bdfc14aaeed5df3b4af8bb9584e61e1f2daa",
-      "sizeBytes": 934747
+      "checksum": "ffeb1bfa1c4803883dc40d3843c6ee55189782fe7c846a8dc46a1d4cb5651e6d",
+      "sizeBytes": 2397965
     },
     {
       "id": "course-intermediate-750-part6",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 6 單元 (2001~2400 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 6/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 6/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part6.json",
-      "checksum": "727d190c3b9cf127614459a53eeee18623c274bd8d134c870e071340b76d6350",
-      "sizeBytes": 936493
+      "checksum": "c033730f513a177d58314bfe5fc3d632f18d36872416eba7b5854c146812fd28",
+      "sizeBytes": 2406059
     },
     {
       "id": "course-intermediate-750-part7",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 7 單元 (2401~2800 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 7/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 7/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part7.json",
-      "checksum": "06de1aca61b6c77d54262cdce754a04e3324e6732cd8466906a7c92aa82a8945",
-      "sizeBytes": 934251
+      "checksum": "3ba6ebbc036a8c1c7a1aae5f5ad62634e5a61b15c267c3f25c6d7fc336311f7a",
+      "sizeBytes": 2408795
     },
     {
       "id": "course-intermediate-750-part8",
       "title": "商務進階必備字彙 (TOEIC 600-780) - 第 8 單元 (2801~3200 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 8/14）",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 8/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
       "wordCount": 400,
       "fileName": "course-intermediate-750-part8.json",
-      "checksum": "5827d1f9d6b7d672a309803729f8d1bbdb86daa6ed35095e3e042c04ae2aabdc",
-      "sizeBytes": 933878
+      "checksum": "30da9eb5c08ef5ef403342f9a98d2404a89cc6a0218049777f89b5226799ba84",
+      "sizeBytes": 2404758
     },
     {
       "id": "course-intermediate-750-part9",
-      "title": "商務進階必備字彙 (TOEIC 600-780) - 第 9 單元 (3201~3600 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 9/14）",
+      "title": "商務進階必備字彙 (TOEIC 600-780) - 第 9 單元 (3201~3495 字)",
+      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 9/9）",
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 295,
       "fileName": "course-intermediate-750-part9.json",
-      "checksum": "b38c5fd83d31d255744d9e2d2b408c03b557aeb5883ebfeaa9d90c087e927450",
-      "sizeBytes": 931772
-    },
-    {
-      "id": "course-intermediate-750-part10",
-      "title": "商務進階必備字彙 (TOEIC 600-780) - 第 10 單元 (3601~4000 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 10/14）",
-      "toeicScoreRange": "600-780",
-      "category": "綜合商務",
-      "level": "中階",
-      "wordCount": 400,
-      "fileName": "course-intermediate-750-part10.json",
-      "checksum": "75692010f3da93ae5bb965731e7db373e3ff82ffcda638dfb8ca6a84c0fd64ad",
-      "sizeBytes": 933271
-    },
-    {
-      "id": "course-intermediate-750-part11",
-      "title": "商務進階必備字彙 (TOEIC 600-780) - 第 11 單元 (4001~4400 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 11/14）",
-      "toeicScoreRange": "600-780",
-      "category": "綜合商務",
-      "level": "中階",
-      "wordCount": 400,
-      "fileName": "course-intermediate-750-part11.json",
-      "checksum": "bae33a5f202d94850875683c28764847b4817700b186f663e4f1e45c85967473",
-      "sizeBytes": 938347
-    },
-    {
-      "id": "course-intermediate-750-part12",
-      "title": "商務進階必備字彙 (TOEIC 600-780) - 第 12 單元 (4401~4800 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 12/14）",
-      "toeicScoreRange": "600-780",
-      "category": "綜合商務",
-      "level": "中階",
-      "wordCount": 400,
-      "fileName": "course-intermediate-750-part12.json",
-      "checksum": "6d1b0e42a18c3409c6439c9ef9811e9a6acccf9e3f3346e1089e0704f884247a",
-      "sizeBytes": 942080
-    },
-    {
-      "id": "course-intermediate-750-part13",
-      "title": "商務進階必備字彙 (TOEIC 600-780) - 第 13 單元 (4801~5200 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 13/14）",
-      "toeicScoreRange": "600-780",
-      "category": "綜合商務",
-      "level": "中階",
-      "wordCount": 400,
-      "fileName": "course-intermediate-750-part13.json",
-      "checksum": "c1994c0358baf82048a4a07b248c4a1066c6f3cb69e7ada7e95243e195ff3fdf",
-      "sizeBytes": 937224
-    },
-    {
-      "id": "course-intermediate-750-part14",
-      "title": "商務進階必備字彙 (TOEIC 600-780) - 第 14 單元 (5201~5592 字)",
-      "description": "中階多益綠色至藍色證書核心單字，包含採購、會議、財務與差旅實戰。（分單元 14/14）",
-      "toeicScoreRange": "600-780",
-      "category": "綜合商務",
-      "level": "中階",
-      "wordCount": 392,
-      "fileName": "course-intermediate-750-part14.json",
-      "checksum": "1f4ee2b1b39c2e66d15298492cda0e2f0a8c01a5b0c8f8b844d5c7311cd20b00",
-      "sizeBytes": 915697
+      "checksum": "2130e3113c5854f516ac8e9f09fffa85aedb19bea3992449f40cf1b39c14e4f7",
+      "sizeBytes": 1757109
     },
     {
       "id": "course-advanced-860-part1",
       "title": "高分突破精選字彙 (TOEIC 780-900) - 第 1 單元 (1~400 字)",
-      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 1/2）",
+      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 1/6）",
       "toeicScoreRange": "780-900",
       "category": "綜合商務",
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part1.json",
-      "checksum": "65b817dcb6a639ba009d861a39309e71581aa8a11827036f07fe21a406facad8",
-      "sizeBytes": 949450
+      "checksum": "324627df423ac48e230a1f878d65ff0ca57f5d21ec5090901252966076892e94",
+      "sizeBytes": 2410607
     },
     {
       "id": "course-advanced-860-part2",
-      "title": "高分突破精選字彙 (TOEIC 780-900) - 第 2 單元 (401~678 字)",
-      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 2/2）",
+      "title": "高分突破精選字彙 (TOEIC 780-900) - 第 2 單元 (401~800 字)",
+      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 2/6）",
       "toeicScoreRange": "780-900",
       "category": "綜合商務",
       "level": "中高階",
-      "wordCount": 278,
+      "wordCount": 400,
       "fileName": "course-advanced-860-part2.json",
-      "checksum": "45714007f7d0ffd80e9e85feb71cc051fb803d18fa808ad52e0066672621a99a",
-      "sizeBytes": 664436
+      "checksum": "f4bfbc040f69411b892062a81efff28ef6df3be8c6fc838213b6798857204727",
+      "sizeBytes": 2414224
+    },
+    {
+      "id": "course-advanced-860-part3",
+      "title": "高分突破精選字彙 (TOEIC 780-900) - 第 3 單元 (801~1200 字)",
+      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 3/6）",
+      "toeicScoreRange": "780-900",
+      "category": "綜合商務",
+      "level": "中高階",
+      "wordCount": 400,
+      "fileName": "course-advanced-860-part3.json",
+      "checksum": "0344ea6c31af8be407f99eca0418b5fd683d26ef22eb5e703568c56e4f17b1a4",
+      "sizeBytes": 2413101
+    },
+    {
+      "id": "course-advanced-860-part4",
+      "title": "高分突破精選字彙 (TOEIC 780-900) - 第 4 單元 (1201~1600 字)",
+      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 4/6）",
+      "toeicScoreRange": "780-900",
+      "category": "綜合商務",
+      "level": "中高階",
+      "wordCount": 400,
+      "fileName": "course-advanced-860-part4.json",
+      "checksum": "dc7910987b1496bb77310ca033cac4b24a8ee2e9dbf23a8e35aad36ae97df652",
+      "sizeBytes": 2406178
+    },
+    {
+      "id": "course-advanced-860-part5",
+      "title": "高分突破精選字彙 (TOEIC 780-900) - 第 5 單元 (1601~2000 字)",
+      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 5/6）",
+      "toeicScoreRange": "780-900",
+      "category": "綜合商務",
+      "level": "中高階",
+      "wordCount": 400,
+      "fileName": "course-advanced-860-part5.json",
+      "checksum": "f55948d301acf988dbba543e8a3d6d44edc6de0c8daad0cbdc9f6cb5a3d8ebb2",
+      "sizeBytes": 2399444
+    },
+    {
+      "id": "course-advanced-860-part6",
+      "title": "高分突破精選字彙 (TOEIC 780-900) - 第 6 單元 (2001~2097 字)",
+      "description": "金色證書衝刺關鍵字，強化商務談判、合約法律、企業營運深入解析。（分單元 6/6）",
+      "toeicScoreRange": "780-900",
+      "category": "綜合商務",
+      "level": "中高階",
+      "wordCount": 97,
+      "fileName": "course-advanced-860-part6.json",
+      "checksum": "5901cbea66d5ec0c05b1e981e379c36894a2ae61b7bf6035be1f291775bbccc7",
+      "sizeBytes": 579429
+    },
+    {
+      "id": "course-master-990-part1",
+      "title": "滿分巔峰專業字彙 (TOEIC 900+) - 第 1 單元 (1~400 字)",
+      "description": "高難度商業文法句型、進階同義詞辨析與專業管理術語。（分單元 1/2）",
+      "toeicScoreRange": "900+",
+      "category": "綜合商務",
+      "level": "高階",
+      "wordCount": 400,
+      "fileName": "course-master-990-part1.json",
+      "checksum": "ce2327401ca08af4d15386d636434e3b592e1c3fd4c98d34c020f0d7640e5851",
+      "sizeBytes": 2424549
+    },
+    {
+      "id": "course-master-990-part2",
+      "title": "滿分巔峰專業字彙 (TOEIC 900+) - 第 2 單元 (401~678 字)",
+      "description": "高難度商業文法句型、進階同義詞辨析與專業管理術語。（分單元 2/2）",
+      "toeicScoreRange": "900+",
+      "category": "綜合商務",
+      "level": "高階",
+      "wordCount": 278,
+      "fileName": "course-master-990-part2.json",
+      "checksum": "f1204f5826b6ce04afa93014bf5fff255f03d0ada8bae65264febfd01ef39374",
+      "sizeBytes": 1690701
     },
     {
       "id": "course-phrases-patterns-p1",
@@ -361,8 +361,8 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p1.json",
-      "checksum": "95cfc0dff8b4d6243f4901e0834c130057123e59fa314f10171b1183ff059296",
-      "sizeBytes": 936032
+      "checksum": "6f558231c9443fecc3d6c4afd0f46d157ba5b05bc1902496fa85b5d747b854a5",
+      "sizeBytes": 2621584
     },
     {
       "id": "course-phrases-patterns-p2",
@@ -373,8 +373,8 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p2.json",
-      "checksum": "8293bdffd88f9f0acfb01c058b4d1c2583c7e8d1ed34c39d866b1268c0de2168",
-      "sizeBytes": 927836
+      "checksum": "1ac7c295f5ce71951ff28206435f62490ce7c3e632fcf7ef319391d597de3243",
+      "sizeBytes": 2432545
     },
     {
       "id": "course-phrases-patterns-p3",
@@ -385,8 +385,8 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p3.json",
-      "checksum": "fb71ee164b30064ac97104af90ba7cc1701611d3d9027a699c4d2ea8cd95981d",
-      "sizeBytes": 927763
+      "checksum": "66e58429b5fbc1a9ca85fc278af29389f3ff238647f017ee3d4260c5907233f9",
+      "sizeBytes": 2452386
     },
     {
       "id": "course-phrases-patterns-p4",
@@ -397,8 +397,60 @@
       "level": "實戰",
       "wordCount": 317,
       "fileName": "course-phrases-patterns-p4.json",
-      "checksum": "714c7a719e9e7e355ec6a15e9f97682e756361a4fd32eba87ce1218b291d1dab",
-      "sizeBytes": 742702
+      "checksum": "fe40a2c6f82b4aac431464192360124ceba83cc7bc89a8f2c7e27a9372e7bf4d",
+      "sizeBytes": 1957531
     }
-  ]
+  ],
+  "tiers": {
+    "core_1200": {
+      "title": "多益高頻核心 1,200 字",
+      "description": "600~750 分多益金色/藍色證書核心高頻必考單字庫",
+      "wordCount": 1200,
+      "mcqCount": 3600,
+      "clozeCount": 3600,
+      "path": "/data/v1/core-1200.json"
+    },
+    "advanced_2500": {
+      "title": "商務進階實戰 2,500 字",
+      "description": "750~860 分進階商務談判、合約法律與專業實戰字彙",
+      "wordCount": 2500,
+      "mcqCount": 7500,
+      "clozeCount": 7500,
+      "path": "/data/v1/advanced-2500.json"
+    },
+    "expert_high": {
+      "title": "高階挑戰與專業術語",
+      "description": "860~990 分巔峰高難度商業詞彙與管理術語",
+      "wordCount": 7454,
+      "mcqCount": 22362,
+      "clozeCount": 22362,
+      "path": "/data/v1/expert-high.json"
+    }
+  },
+  "quizzes": {
+    "coreMcq": {
+      "path": "/data/v1/quiz/core-mcq.json",
+      "count": 3600
+    },
+    "coreCloze": {
+      "path": "/data/v1/quiz/core-cloze.json",
+      "count": 3600
+    },
+    "advancedMcq": {
+      "path": "/data/v1/quiz/advanced-mcq.json",
+      "count": 7500
+    },
+    "advancedCloze": {
+      "path": "/data/v1/quiz/advanced-cloze.json",
+      "count": 7500
+    },
+    "expertMcq": {
+      "path": "/data/v1/quiz/expert-mcq.json",
+      "count": 22362
+    },
+    "expertCloze": {
+      "path": "/data/v1/quiz/expert-cloze.json",
+      "count": 22362
+    }
+  }
 }

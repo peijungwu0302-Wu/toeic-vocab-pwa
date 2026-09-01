@@ -3,6 +3,7 @@ import {
   Profile,
   Course,
   Word,
+  QuizItem,
   CourseWord,
   Progress,
   ReviewLog,
@@ -16,6 +17,7 @@ export class AppDatabase extends Dexie {
   profiles!: Table<Profile, string>;
   courses!: Table<Course, string>;
   words!: Table<Word, string>;
+  quizzes!: Table<QuizItem, string>;
   courseWords!: Table<CourseWord, number>;
   progress!: Table<Progress, number>;
   reviewLogs!: Table<ReviewLog, string>;
@@ -27,6 +29,7 @@ export class AppDatabase extends Dexie {
   constructor() {
     super('ToeicVocabDB');
 
+    // Version 1 (Initial Release)
     this.version(1).stores({
       profiles: 'id, displayName, createdAt',
       courses: 'id, toeicScoreRange, category, level, isDownloaded',
@@ -38,6 +41,12 @@ export class AppDatabase extends Dexie {
       appSettings: 'key',
       syncQueue: 'id, [profileId+status], status, nextAttemptAt, createdAt',
       datasetMeta: 'version'
+    });
+
+    // Version 2 (Quiz, Scenario Images, Frequency Tier & 6-Question Matrix)
+    this.version(2).stores({
+      words: 'id, normalizedHeadword, entryType, starRating, toeicScoreRange, category, frequencyTier',
+      quizzes: 'id, wordId, type, subType, frequencyTier'
     });
   }
 }

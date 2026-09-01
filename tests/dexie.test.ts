@@ -10,6 +10,7 @@ describe('Dexie Database & Repositories Tests', () => {
     await db.profiles.clear();
     await db.courses.clear();
     await db.words.clear();
+    await db.quizzes.clear();
     await db.courseWords.clear();
     await db.progress.clear();
     await db.reviewLogs.clear();
@@ -105,4 +106,75 @@ describe('Dexie Database & Repositories Tests', () => {
     expect(importedProgress).toHaveLength(1);
     expect(importedProgress[0].wordId).toBe('tw_w_demo03');
   });
+
+  it('supports Dexie Version 2 schema with quizzes and word frequencyTier', async () => {
+    const word: Word = {
+      id: 'tw_w_v2_test',
+      headword: 'negotiate',
+      normalizedHeadword: 'negotiate',
+      entryType: 'word',
+      definitionZh: '協商；談判',
+      starRating: 5,
+      toeicScoreRange: '600-780',
+      category: '商業談判',
+      partsOfSpeech: ['verb'],
+      wordForms: [],
+      phoneticUS: 'nɪˈɡoʊʃieɪt',
+      phoneticUK: null,
+      imageUrl: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0',
+      frequencyTier: 'core_1200',
+      examples: [
+        {
+          id: 'ex_1',
+          en: 'We need to negotiate the terms of the contract.',
+          zh: '我們需要針對合約條款進行協商。',
+          scenario: '合約法律'
+        }
+      ],
+      examTips: [],
+      audioUSUrl: null,
+      audioUKUrl: null
+    };
+
+    await db.words.put(word);
+    const savedWord = await db.words.where('frequencyTier').equals('core_1200').first();
+    expect(savedWord).toBeDefined();
+    expect(savedWord?.imageUrl).toContain('unsplash');
+    expect(savedWord?.examples[0].en).toBe('We need to negotiate the terms of the contract.');
+
+    // Save 6 Quizzes Matrix
+    await db.quizzes.bulkPut([
+      {
+        id: 'q_test_mcq_1',
+        wordId: word.id,
+        type: 'multiple_choice',
+        subType: 'vocab_choice',
+        stem: 'Both parties agreed to _____ the contract terms.',
+        options: ['negotiate', 'cancel', 'dismiss', 'violate'],
+        answer: 'negotiate',
+        explanation: '本題考查商務情境單字搭配。',
+        frequencyTier: 'core_1200'
+      },
+      {
+        id: 'q_test_cloze_1',
+        wordId: word.id,
+        type: 'cloze_fill',
+        subType: 'collocation_cloze',
+        stem: 'The delegates will _____ the bilateral agreement next week.',
+        options: ['negotiate', 'refuse', 'ignore', 'delay'],
+        answer: 'negotiate',
+        clozeHint: '提示：協商 (v.)',
+        explanation: '克漏字填空解析。',
+        frequencyTier: 'core_1200'
+      }
+    ]);
+
+    const wordQuizzes = await db.quizzes.where('wordId').equals(word.id).toArray();
+    expect(wordQuizzes).toHaveLength(2);
+
+    const mcqQuizzes = await db.quizzes.where('type').equals('multiple_choice').toArray();
+    expect(mcqQuizzes).toHaveLength(1);
+    expect(mcqQuizzes[0].subType).toBe('vocab_choice');
+  });
 });
+

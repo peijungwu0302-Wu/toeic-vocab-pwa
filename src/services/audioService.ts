@@ -101,6 +101,53 @@ class AudioService {
     return this.playSpeechSynthesis(textToSpeak, params.accent || 'US');
   }
 
+  /**
+   * Dedicated natural pronunciation for long business example sentences using Web Speech API.
+   */
+  public async speakSentence(text: string, accent: 'US' | 'UK' = 'US'): Promise<boolean> {
+    const cleanText = text.trim();
+    if (!cleanText) return false;
+
+    this.stopAll();
+
+    return new Promise((resolve) => {
+      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+        resolve(false);
+        return;
+      }
+
+      try {
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        const targetLang = accent === 'UK' ? 'en-GB' : 'en-US';
+        utterance.lang = targetLang;
+        utterance.rate = 0.88; // Natural, steady cadence for business sentences
+        utterance.pitch = 1.0;
+
+        if (this.availableVoices.length === 0) {
+          this.loadVoices();
+        }
+
+        const matchedVoice =
+          this.availableVoices.find(v => v.lang.replace('_', '-').toLowerCase() === targetLang.toLowerCase()) ||
+          this.availableVoices.find(v => v.lang.startsWith('en'));
+
+        if (matchedVoice) {
+          utterance.voice = matchedVoice;
+        }
+
+        utterance.onend = () => resolve(true);
+        utterance.onerror = () => resolve(false);
+
+        window.speechSynthesis.speak(utterance);
+      } catch (err) {
+        console.warn('[AudioService] Speak sentence error:', err);
+        resolve(false);
+      }
+    });
+  }
+
   private playRemoteAudio(url: string): Promise<boolean> {
     return new Promise((resolve) => {
       const audio = new Audio();

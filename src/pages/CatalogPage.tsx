@@ -4,17 +4,23 @@ import {
   DownloadCloud,
   CheckCircle,
   Trash2,
-  Zap,
   Repeat,
   Search,
   Loader2,
-  AlertCircle
+  AlertCircle,
+  Flame,
+  ChevronDown,
+  ChevronUp,
+  Volume2,
+  FileText,
+  Layers,
+  BookOpen
 } from 'lucide-react';
 import { courseRepository } from '../repositories/courseRepository';
 import { progressRepository } from '../repositories/progressRepository';
 import { useProfile } from '../contexts/ProfileContext';
 import { CourseSummary, DatasetCatalog } from '../types/vocab';
-import { Course } from '../types/db';
+import { Course, Word } from '../types/db';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { audioService } from '../services/audioService';
@@ -26,11 +32,18 @@ export const CatalogPage: React.FC = () => {
   const [catalog, setCatalog] = useState<DatasetCatalog | null>(null);
   const [downloadedMap, setDownloadedMap] = useState<Map<string, Course>>(new Map());
   const [progressCountMap, setProgressCountMap] = useState<Map<string, number>>(new Map());
-  const [selectedFilter, setSelectedFilter] = useState<string>('all');
+  
+  // Dual-Track Mode: 'high_freq' (6 high-yield units) vs 'full_library' (33 granular courses)
+  const [catalogMode, setCatalogMode] = useState<'high_freq' | 'full_library'>('high_freq');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [downloadingCourseId, setDownloadingCourseId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Expanded Unit Words state
+  const [expandedCourseId, setExpandedCourseId] = useState<string | null>(null);
+  const [courseWordsMap, setCourseWordsMap] = useState<Map<string, Word[]>>(new Map());
+  const [loadingWordsCourseId, setLoadingWordsCourseId] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -49,12 +62,11 @@ export const CatalogPage: React.FC = () => {
       });
       setDownloadedMap(map);
 
-      // 3. Fetch student's progress counts per course if profile exists
+      // 3. Fetch student's progress counts per course
       if (activeProfile) {
         const studentProgress = await progressRepository.getAllForProfile(activeProfile.id);
         const learnedWordIds = new Set(studentProgress.map(p => p.wordId));
 
-        // For downloaded courses, count learned
         const countMap = new Map<string, number>();
         for (const c of localCourses) {
           if (c.isDownloaded) {
@@ -103,46 +115,99 @@ export const CatalogPage: React.FC = () => {
     }
   };
 
+  const handleToggleExpand = async (courseId: string) => {
+    if (expandedCourseId === courseId) {
+      setExpandedCourseId(null);
+      return;
+    }
+
+    setExpandedCourseId(courseId);
+    if (!courseWordsMap.has(courseId)) {
+      try {
+        setLoadingWordsCourseId(courseId);
+        const words = await courseRepository.getWordsForCourse(courseId);
+        setCourseWordsMap(prev => new Map(prev).set(courseId, words));
+      } catch (err) {
+        console.error('[CatalogPage] Failed to fetch course words:', err);
+      } finally {
+        setLoadingWordsCourseId(null);
+      }
+    }
+  };
+
   const handleStartReview = async (courseId: string) => {
     await audioService.unlockAudio();
     navigate(`/review?courseId=${courseId}`);
   };
 
-  const handleStartSkim = async (courseId: string) => {
+  const handleStartQuiz = async (courseId: string) => {
     await audioService.unlockAudio();
-    navigate(`/skim?courseId=${courseId}`);
+    navigate(`/quiz?courseId=${courseId}`);
   };
 
-  const filterOptions = [
-    { key: 'all', label: '全部' },
-    { key: '400-600', label: '400-600' },
-    { key: '600-780', label: '600-780' },
-    { key: '780-900', label: '780-900' },
-    { key: '片語句型', label: '片語句型' }
-  ];
+  const allCourses = catalog?.courses || [];
 
-  const filteredCourses = (catalog?.courses || []).filter(c => {
-    const matchesFilter =
-      selectedFilter === 'all' ||
-      c.toeicScoreRange === selectedFilter ||
-      c.category.includes(selectedFilter);
+  // Filter courses by mode
+  const displayedCourses = allCourses.filter(c => {
+    const isHighFreq =
+      c.id.startsWith('course-core') ||
+      c.id.startsWith('course-advanced') ||
+      c.id.startsWith('course-expert') ||
+      c.id.startsWith('course-phrases') ||
+      c.id.startsWith('course-foundation-550-part1') ||
+      c.id.startsWith('course-intermediate-750-part1') ||
+      c.id.startsWith('course-master-990-part1');
+
+    if (catalogMode === 'high_freq' && !isHighFreq) {
+      return false;
+    }
 
     const matchesSearch =
       !searchQuery.trim() ||
       c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.description.toLowerCase().includes(searchQuery.toLowerCase());
+      c.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.category.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesFilter && matchesSearch;
+    return matchesSearch;
   });
 
   return (
     <div className="space-y-4 pb-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-black text-slate-100">TOEIC 分級課程題庫</h2>
-        <p className="text-xs text-slate-400 mt-1">
-          共收錄 11,000+ 多益高頻詞彙，按需下載至 iPhone 離線學習。
+        <h2 className="text-xl font-black text-slate-100">TOEIC 題庫與高頻專屬單元</h2>
+        <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+          收錄全庫 <strong className="text-emerald-400">11,154 字</strong> 與 <strong className="text-amber-400">66,924 題測驗</strong>，支援單元展開瀏覽與離線秒級背誦。
         </p>
+      </div>
+
+      {/* Dual-Track Mode Toggle */}
+      <div className="flex rounded-2xl bg-slate-800/90 p-1 border border-slate-700">
+        <button
+          type="button"
+          onClick={() => setCatalogMode('high_freq')}
+          className={`flex-1 py-2.5 rounded-xl font-black text-xs transition-all flex items-center justify-center space-x-1.5 ${
+            catalogMode === 'high_freq'
+              ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-950/40'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Flame size={15} />
+          <span>🔥 多益必考高頻單元</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setCatalogMode('full_library')}
+          className={`flex-1 py-2.5 rounded-xl font-black text-xs transition-all flex items-center justify-center space-x-1.5 ${
+            catalogMode === 'full_library'
+              ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-950/40'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Layers size={15} />
+          <span>📚 11,154 字全量分級庫</span>
+        </button>
       </div>
 
       {/* Search Bar */}
@@ -150,29 +215,11 @@ export const CatalogPage: React.FC = () => {
         <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
         <input
           type="text"
-          placeholder="搜尋課程名稱、單字或主題..."
+          placeholder="搜尋單元名稱、高頻單字或商務主題..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-100 placeholder-slate-500 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
-      </div>
-
-      {/* Filter Tabs */}
-      <div className="flex space-x-1.5 overflow-x-auto pb-1 scrollbar-none">
-        {filterOptions.map((f) => (
-          <button
-            key={f.key}
-            type="button"
-            onClick={() => setSelectedFilter(f.key)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-              selectedFilter === f.key
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-700/60'
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
       </div>
 
       {/* Error Message */}
@@ -187,20 +234,22 @@ export const CatalogPage: React.FC = () => {
       {isLoading ? (
         <div className="text-center py-12 text-slate-400 flex flex-col items-center">
           <Loader2 className="animate-spin text-emerald-400 mb-2" size={28} />
-          <span className="text-xs">正在載入課程目錄...</span>
+          <span className="text-xs">正在載入題庫與高頻單元...</span>
         </div>
-      ) : filteredCourses.length === 0 ? (
+      ) : displayedCourses.length === 0 ? (
         <div className="bg-slate-800/30 border border-dashed border-slate-700 rounded-2xl p-8 text-center">
-          <p className="text-xs text-slate-400">沒有符合搜尋或篩選條件的課程。</p>
+          <p className="text-xs text-slate-400">沒有符合搜尋或篩選條件的單元。</p>
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredCourses.map((c) => {
+          {displayedCourses.map((c) => {
             const isDownloaded = downloadedMap.has(c.id);
             const isDownloading = downloadingCourseId === c.id;
             const learnedCount = progressCountMap.get(c.id) || 0;
             const progressPercent = c.wordCount > 0 ? Math.round((learnedCount / c.wordCount) * 100) : 0;
-            const sizeKb = c.sizeBytes ? (c.sizeBytes / 1024).toFixed(0) : '900';
+            const isExpanded = expandedCourseId === c.id;
+            const wordsList = courseWordsMap.get(c.id) || [];
+            const isLoadingWords = loadingWordsCourseId === c.id;
 
             return (
               <div
@@ -222,7 +271,7 @@ export const CatalogPage: React.FC = () => {
                       </span>
                     ) : (
                       <span className="text-[11px] text-slate-400 shrink-0">
-                        約 {sizeKb} KB
+                        {c.wordCount} 字 · 未下載
                       </span>
                     )}
                   </div>
@@ -247,13 +296,79 @@ export const CatalogPage: React.FC = () => {
                   </div>
                 )}
 
+                {/* Expand Unit Words Accordion Button */}
+                {isDownloaded && (
+                  <button
+                    type="button"
+                    onClick={() => handleToggleExpand(c.id)}
+                    className="w-full py-1.5 px-3 rounded-xl bg-slate-900/80 hover:bg-slate-900 border border-slate-700/80 text-slate-300 text-xs font-semibold flex items-center justify-between transition-colors"
+                  >
+                    <span className="flex items-center space-x-1.5">
+                      <BookOpen size={13} className="text-emerald-400" />
+                      <span>{isExpanded ? '收合單字清單' : `展開單字清單 (${c.wordCount} 字)`}</span>
+                    </span>
+                    {isExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+                  </button>
+                )}
+
+                {/* Expandable Word List Drawer */}
+                {isExpanded && (
+                  <div className="p-3 rounded-2xl bg-slate-900/95 border border-slate-700/80 space-y-2 animate-in fade-in duration-200">
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 border-b border-slate-800 pb-1.5">
+                      <span className="font-bold text-slate-200">本單元收錄單字 ({wordsList.length} 字)：</span>
+                      <span className="text-[10px]">點擊單字可直接試聽發音</span>
+                    </div>
+
+                    {isLoadingWords ? (
+                      <div className="py-4 text-center text-xs text-slate-400 flex items-center justify-center space-x-2">
+                        <Loader2 size={16} className="animate-spin text-emerald-400" />
+                        <span>正在載入單字清單...</span>
+                      </div>
+                    ) : (
+                      <div className="max-h-60 overflow-y-auto divide-y divide-slate-800/80 pr-1 space-y-1">
+                        {wordsList.map((w, wIdx) => (
+                          <div
+                            key={w.id || wIdx}
+                            className="py-1.5 px-2 rounded-lg hover:bg-slate-800/60 flex items-center justify-between text-xs group transition-colors"
+                          >
+                            <div className="min-w-0 flex-1 mr-2">
+                              <div className="flex items-center space-x-1.5">
+                                <span className="font-bold text-slate-100">{w.headword}</span>
+                                {w.phoneticUS && (
+                                  <span className="text-[10px] font-mono text-emerald-400/90">/{w.phoneticUS}/</span>
+                                )}
+                                <span className="text-[9px] px-1 rounded bg-slate-800 text-slate-400">{w.partsOfSpeech?.[0]}</span>
+                              </div>
+                              <p className="text-[11px] text-slate-400 truncate mt-0.5">{w.definitionZh}</p>
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                audioService.speakSentence(w.headword);
+                              }}
+                              className="p-1.5 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition-colors"
+                              title="試聽朗讀"
+                            >
+                              <Volume2 size={14} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Bottom Actions */}
                 <div className="flex items-center justify-between pt-1 border-t border-slate-700/50">
-                  <div className="text-[11px] text-slate-400">
-                    {c.wordCount} 個詞條
+                  <div className="text-[11px] text-slate-400 flex items-center space-x-1.5">
+                    <span>{c.wordCount} 字</span>
+                    <span>·</span>
+                    <span className="text-emerald-400 font-medium">{c.wordCount * 6} 題測驗</span>
                   </div>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-1.5">
                     {isDownloaded ? (
                       <>
                         <button
@@ -261,23 +376,25 @@ export const CatalogPage: React.FC = () => {
                           onClick={() => handleDelete(c.id)}
                           title="清除快取"
                           aria-label="清除快取"
-                          className="p-2 text-slate-400 hover:text-rose-400 rounded-lg hover:bg-slate-700/50 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+                          className="p-2 text-slate-400 hover:text-rose-400 rounded-lg hover:bg-slate-700/50 transition-colors"
                         >
-                          <Trash2 size={15} />
+                          <Trash2 size={14} />
                         </button>
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => handleStartSkim(c.id)}
+                          onClick={() => handleStartQuiz(c.id)}
+                          className="text-xs px-2.5"
                         >
-                          <Zap size={14} className="mr-1 text-blue-400" /> 速讀
+                          <FileText size={13} className="mr-1 text-blue-400" /> 測驗
                         </Button>
                         <Button
                           size="sm"
                           variant="primary"
                           onClick={() => handleStartReview(c.id)}
+                          className="text-xs px-3"
                         >
-                          <Repeat size={14} className="mr-1" /> 複習
+                          <Repeat size={13} className="mr-1" /> 複習
                         </Button>
                       </>
                     ) : (
@@ -294,7 +411,7 @@ export const CatalogPage: React.FC = () => {
                           </>
                         ) : (
                           <>
-                            <DownloadCloud size={14} className="mr-1.5" /> 下載課程
+                            <DownloadCloud size={14} className="mr-1.5" /> 下載單元
                           </>
                         )}
                       </Button>

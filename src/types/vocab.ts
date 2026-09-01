@@ -2,10 +2,16 @@ import { z } from 'zod';
 
 export type EntryType = 'word' | 'phrase' | 'pattern';
 
+export type FrequencyTier = 'core_1200' | 'advanced_2500' | 'expert_high';
+
 export interface ExampleSentence {
-  id: string;
-  english: string;
-  chinese: string;
+  id?: string;
+  en?: string;
+  zh?: string;
+  scenario?: string;
+  // Backward compatibility aliases
+  english?: string;
+  chinese?: string;
 }
 
 export interface WordForm {
@@ -30,36 +36,83 @@ export interface WordEntry {
   examTips: string[];
   audioUSUrl: string | null;
   audioUKUrl: string | null;
+  imageUrl?: string | null;
+  imageKeyword?: string | null;
+  frequencyTier?: FrequencyTier;
 }
 
 export const ExampleSentenceSchema = z.object({
-  id: z.string(),
-  english: z.string(),
-  chinese: z.string()
+  id: z.string().optional(),
+  en: z.string().optional(),
+  zh: z.string().optional(),
+  scenario: z.string().optional(),
+  english: z.string().optional(),
+  chinese: z.string().optional()
+}).transform((val) => {
+  const en = val.en || val.english || '';
+  const zh = val.zh || val.chinese || '';
+  return {
+    id: val.id || '',
+    en,
+    zh,
+    scenario: val.scenario || '商務實務',
+    english: en,
+    chinese: zh
+  };
 });
 
 export const WordFormSchema = z.object({
-  partOfSpeech: z.string(),
-  forms: z.array(z.string())
-});
+  partOfSpeech: z.string().optional(),
+  part_of_speech: z.string().optional(),
+  forms: z.array(z.string()).optional().default([])
+}).transform((val) => ({
+  partOfSpeech: val.partOfSpeech || val.part_of_speech || '',
+  forms: val.forms || []
+}));
 
 export const WordEntrySchema = z.object({
   id: z.string(),
   headword: z.string(),
-  normalizedHeadword: z.string(),
-  entryType: z.enum(['word', 'phrase', 'pattern']),
-  definitionZh: z.string(),
-  starRating: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-  toeicScoreRange: z.string(),
-  category: z.string(),
-  partsOfSpeech: z.array(z.string()),
-  wordForms: z.array(WordFormSchema),
-  phoneticUS: z.string().nullable(),
-  phoneticUK: z.string().nullable(),
-  examples: z.array(ExampleSentenceSchema),
-  examTips: z.array(z.string()),
-  audioUSUrl: z.string().nullable(),
-  audioUKUrl: z.string().nullable()
+  normalizedHeadword: z.string().optional(),
+  entryType: z.enum(['word', 'phrase', 'pattern']).optional().default('word'),
+  definitionZh: z.string().optional().default(''),
+  starRating: z.number().optional().default(3),
+  toeicScoreRange: z.string().optional().default('400-990'),
+  category: z.string().optional().default('綜合商務'),
+  partsOfSpeech: z.array(z.string()).optional().default([]),
+  wordForms: z.array(WordFormSchema).optional().default([]),
+  phoneticUS: z.string().nullable().optional(),
+  phoneticUK: z.string().nullable().optional(),
+  examples: z.array(ExampleSentenceSchema).optional().default([]),
+  examTips: z.array(z.string()).optional().default([]),
+  audioUSUrl: z.string().nullable().optional(),
+  audioUKUrl: z.string().nullable().optional(),
+  imageUrl: z.string().nullable().optional(),
+  imageKeyword: z.string().nullable().optional(),
+  frequencyTier: z.enum(['core_1200', 'advanced_2500', 'expert_high']).optional()
+}).transform((val) => {
+  const ratingNum = Math.max(1, Math.min(5, Math.round(val.starRating || 3))) as 1 | 2 | 3 | 4 | 5;
+  return {
+    id: val.id,
+    headword: val.headword,
+    normalizedHeadword: val.normalizedHeadword || val.headword.toLowerCase().trim(),
+    entryType: val.entryType || 'word',
+    definitionZh: val.definitionZh || '',
+    starRating: ratingNum,
+    toeicScoreRange: val.toeicScoreRange || '400-990',
+    category: val.category || '綜合商務',
+    partsOfSpeech: val.partsOfSpeech || [],
+    wordForms: val.wordForms || [],
+    phoneticUS: val.phoneticUS || null,
+    phoneticUK: val.phoneticUK || null,
+    examples: val.examples || [],
+    examTips: val.examTips || [],
+    audioUSUrl: val.audioUSUrl || null,
+    audioUKUrl: val.audioUKUrl || null,
+    imageUrl: val.imageUrl || null,
+    imageKeyword: val.imageKeyword || null,
+    frequencyTier: val.frequencyTier
+  };
 });
 
 export interface CourseSummary {
@@ -78,13 +131,13 @@ export interface CourseSummary {
 export const CourseSummarySchema = z.object({
   id: z.string(),
   title: z.string(),
-  description: z.string(),
-  toeicScoreRange: z.string(),
-  category: z.string(),
-  level: z.string(),
-  wordCount: z.number(),
+  description: z.string().optional().default(''),
+  toeicScoreRange: z.string().optional().default('400-990'),
+  category: z.string().optional().default('綜合商務'),
+  level: z.string().optional().default('基礎'),
+  wordCount: z.number().optional().default(0),
   fileName: z.string(),
-  checksum: z.string(),
+  checksum: z.string().optional().default(''),
   sizeBytes: z.number().optional()
 });
 
@@ -103,14 +156,24 @@ export interface CourseDetail {
 export const CourseDetailSchema = z.object({
   id: z.string(),
   title: z.string(),
-  description: z.string(),
-  toeicScoreRange: z.string(),
-  category: z.string(),
-  level: z.string(),
-  version: z.number(),
-  wordCount: z.number(),
+  description: z.string().optional().default(''),
+  toeicScoreRange: z.string().optional().default('400-990'),
+  category: z.string().optional().default('綜合商務'),
+  level: z.string().optional().default('基礎'),
+  version: z.number().optional().default(1),
+  wordCount: z.number().optional(),
   words: z.array(WordEntrySchema)
-});
+}).transform((val) => ({
+  id: val.id,
+  title: val.title,
+  description: val.description || '',
+  toeicScoreRange: val.toeicScoreRange || '400-990',
+  category: val.category || '綜合商務',
+  level: val.level || '基礎',
+  version: val.version || 1,
+  wordCount: typeof val.wordCount === 'number' ? val.wordCount : val.words.length,
+  words: val.words
+}));
 
 export interface DatasetCatalog {
   version: number;

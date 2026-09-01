@@ -237,7 +237,7 @@ export const FastSkimPage: React.FC = () => {
   const progressPercent = Math.min(100, Math.max(0, ((durationSec - remainingTime) / durationSec) * 100));
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-135px)] justify-between max-w-md mx-auto space-y-3 pb-2 select-none">
+    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-2 pb-1 select-none overflow-hidden">
       {/* Top Filter & Micro-session Bar */}
       <div className="space-y-2">
         <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/70 rounded-2xl px-3.5 py-2 shadow-sm">
@@ -306,18 +306,19 @@ export const FastSkimPage: React.FC = () => {
             </select>
           </div>
 
-          {/* Speed Pills */}
+          {/* Speed Pills: 1s, 2s, 3s, 4s, 6s */}
           <div className="flex items-center space-x-1">
-            {[3, 4, 6].map((sec) => (
+            {[1, 2, 3, 4, 6].map((sec) => (
               <button
                 key={sec}
                 type="button"
                 onClick={() => handleDurationChange(sec)}
-                className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
+                className={`px-1.5 py-0.5 text-[10px] font-bold rounded-md transition-all ${
                   durationSec === sec
-                    ? 'bg-emerald-600 text-white'
+                    ? 'bg-emerald-600 text-white shadow-sm'
                     : 'bg-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
+                title={`${sec} 秒/字`}
               >
                 {sec}s
               </button>

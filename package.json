@@ -14,7 +14,9 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
     "data:download": "node scripts/download-dataset.mjs",
     "data:build": "node scripts/build-dataset.mjs",
-    "data:qa": "node scripts/build-dataset.mjs --qa-only"
+    "data:qa": "node scripts/build-dataset.mjs --qa-only",
+    "data:enhance": "node scripts/enhance-dataset.mjs",
+    "data:enhance:dry": "node scripts/enhance-dataset.mjs --dry-run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",

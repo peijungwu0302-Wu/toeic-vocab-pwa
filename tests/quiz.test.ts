@@ -114,4 +114,44 @@ describe('Quiz Service Unit Tests', () => {
     expect(summary.wrongWords).toHaveLength(1);
     expect(summary.wrongWords[0].id).toBe(questions[1].word.id);
   });
+
+  it('validates QuizItemSchema for MCQ and Cloze fill items', async () => {
+    const { QuizItemSchema } = await import('../src/types/quiz');
+
+    const validMcq = {
+      id: 'q_test_1',
+      wordId: 'tw_w_1',
+      type: 'multiple_choice' as const,
+      subType: 'vocab_choice' as const,
+      stem: 'The department needs to _____ the final version.',
+      options: ['finalize', 'reject', 'delay', 'ignore'],
+      answer: 'finalize',
+      explanation: '考查商務語意搭配。',
+      frequencyTier: 'core_1200' as const
+    };
+
+    const validCloze = {
+      id: 'q_test_2',
+      wordId: 'tw_w_1',
+      type: 'cloze_fill' as const,
+      subType: 'active_recall' as const,
+      stem: 'Please _____ the invoice before sending.',
+      options: ['verify', 'cancel', 'dismiss', 'exceed'],
+      answer: 'verify',
+      clozeHint: '首字母：v... 提示：確認/核對',
+      explanation: '主動回憶考點。',
+      frequencyTier: 'core_1200' as const
+    };
+
+    expect(QuizItemSchema.safeParse(validMcq).success).toBe(true);
+    expect(QuizItemSchema.safeParse(validCloze).success).toBe(true);
+
+    const invalidItem = {
+      id: 'q_bad',
+      wordId: 'tw_w_1',
+      type: 'unknown_type' // Invalid enum
+    };
+    expect(QuizItemSchema.safeParse(invalidItem).success).toBe(false);
+  });
 });
+

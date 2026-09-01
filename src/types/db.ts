@@ -1,4 +1,5 @@
 import { WordEntry } from './vocab';
+import { QuizItem } from './quiz';
 
 export interface Profile {
   id: string; // UUID
@@ -29,6 +30,7 @@ export interface Course {
 }
 
 export type Word = WordEntry;
+export type { QuizItem };
 
 export interface CourseWord {
   id?: number; // auto-increment
@@ -61,7 +63,7 @@ export interface ReviewLog {
   id: string; // UUID (client-generated)
   profileId: string;
   wordId: string;
-  rating: 1 | 2 | 3 | 4; // 1: Again, 2: Hard, 3: Good, 4: Easy
+  rating: 1 | 2 | 3 | 4; // 1: Again (忘記), 2: Hard (不熟), 3: Good (掌握), 4: Easy (極熟相容)
   state: FSRSState;
   due: string; // ISO UTC
   stability: number;

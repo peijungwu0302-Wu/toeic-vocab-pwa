@@ -9,6 +9,9 @@ import { CatalogPage } from './pages/CatalogPage';
 import { FastSkimPage } from './pages/FastSkimPage';
 import { FlashcardPage } from './pages/FlashcardPage';
 import { QuizPage } from './pages/QuizPage';
+import { SpeedRunPage } from './pages/SpeedRunPage';
+import { VocabAssessmentPage } from './pages/VocabAssessmentPage';
+import { PrintableCramPage } from './pages/PrintableCramPage';
 import { StatsPage } from './pages/StatsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AttributionPage } from './pages/AttributionPage';
@@ -39,6 +42,9 @@ const AppRoutes: React.FC = () => {
         <Route path="skim" element={<FastSkimPage />} />
         <Route path="review" element={<FlashcardPage />} />
         <Route path="quiz" element={<QuizPage />} />
+        <Route path="speedrun" element={<SpeedRunPage />} />
+        <Route path="assessment" element={<VocabAssessmentPage />} />
+        <Route path="cram-sheet" element={<PrintableCramPage />} />
         <Route path="stats" element={<StatsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="attribution" element={<AttributionPage />} />
