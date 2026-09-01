@@ -16,12 +16,16 @@ import {
   Key,
   Eye,
   EyeOff,
-  Sparkles
+  Sparkles,
+  Mail,
+  Send,
+  LogOut
 } from 'lucide-react';
 import { useProfile } from '../contexts/ProfileContext';
 import { useSync } from '../contexts/SyncContext';
 import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
+import { getSupabaseClient } from '../services/supabaseClient';
 import { db } from '../db';
 import { BackupDataV1, ImportPreviewSummary, ImportStrategy } from '../types/backup';
 import { Button } from '../components/ui/Button';
@@ -58,6 +62,50 @@ export const SettingsPage: React.FC = () => {
   const [teacherShareModalOpen, setTeacherShareModalOpen] = useState(false);
   const [teacherMessage, setTeacherMessage] = useState('');
   const [copied, setCopied] = useState(false);
+
+  // Cloud Magic Link Login State
+  const [loginEmail, setLoginEmail] = useState('');
+  const [isSendingMagicLink, setIsSendingMagicLink] = useState(false);
+  const [magicLinkSentMsg, setMagicLinkSentMsg] = useState<string | null>(null);
+  const [magicLinkError, setMagicLinkError] = useState<string | null>(null);
+
+  const handleSendMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!loginEmail.trim()) return;
+    setIsSendingMagicLink(true);
+    setMagicLinkSentMsg(null);
+    setMagicLinkError(null);
+
+    const client = getSupabaseClient();
+    if (!client) {
+      setMagicLinkError('尚未啟用 Supabase 雲端環境變數 (VITE_ENABLE_CLOUD_SYNC=true)。');
+      setIsSendingMagicLink(false);
+      return;
+    }
+
+    try {
+      const { error } = await client.auth.signInWithOtp({
+        email: loginEmail.trim(),
+        options: {
+          emailRedirectTo: window.location.origin
+        }
+      });
+      if (error) throw error;
+      setMagicLinkSentMsg(`已發送登入魔法連結至 ${loginEmail}！請至信箱點擊連結登入。`);
+    } catch (err: any) {
+      setMagicLinkError(err.message || '登入連結發送失敗，請確認 Email 是否正確。');
+    } finally {
+      setIsSendingMagicLink(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    const client = getSupabaseClient();
+    if (client) {
+      await client.auth.signOut();
+      window.location.reload();
+    }
+  };
 
   // Load storage estimation & API Key from DB
   useEffect(() => {
@@ -532,28 +580,81 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 7. Optional Cloud Sync Status */}
+      {/* 7. Cloud Sync & Magic Link Login */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
             <Cloud size={16} className="text-indigo-400" />
-            <span>雲端同步 (Supabase)</span>
+            <span>雲端帳號與網路連結登入</span>
           </h3>
           <Badge variant={syncState.cloudUserEmail ? 'emerald' : 'slate'}>
-            {syncState.cloudUserEmail ? '已連線' : '本機 Local-only'}
+            {syncState.cloudUserEmail ? '🟢 已連線' : '🔵 本機模式'}
           </Badge>
         </div>
 
-        <p className="text-[11px] text-slate-400 leading-relaxed">
-          {syncState.cloudUserEmail
-            ? `已綁定帳號：${syncState.cloudUserEmail}`
-            : '預設為純本機離線運作。若設定 Supabase 環境變數後可自動跨裝置同步。'}
-        </p>
+        {syncState.cloudUserEmail ? (
+          <div className="space-y-3">
+            <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-700 flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold text-slate-100">{syncState.cloudUserEmail}</p>
+                <p className="text-[10px] text-emerald-400 mt-0.5">跨裝置進度已即時同步</p>
+              </div>
+              <div className="flex space-x-1.5">
+                <Button size="sm" variant="outline" onClick={() => triggerSync()}>
+                  立即同步
+                </Button>
+                <Button size="sm" variant="danger" onClick={handleLogout}>
+                  <LogOut size={13} className="mr-1" /> 登出
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-2.5">
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              輸入 Email 即可接收<strong>「免密碼網路登入連結 (Magic Link)」</strong>，點擊信件連結即可無縫跨手機、平板與電腦同步學習進度。
+            </p>
 
-        {syncState.cloudUserEmail && (
-          <Button size="sm" variant="outline" onClick={() => triggerSync()}>
-            手動立即同步
-          </Button>
+            <form onSubmit={handleSendMagicLink} className="space-y-2">
+              <div className="relative">
+                <input
+                  type="email"
+                  required
+                  placeholder="請輸入您的 Email (如 user@example.com)"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  className="w-full pl-9 pr-24 py-2 rounded-xl bg-slate-900 border border-slate-700 text-slate-100 text-xs focus:outline-none focus:border-indigo-500"
+                />
+                <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <button
+                  type="submit"
+                  disabled={isSendingMagicLink}
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition-colors flex items-center space-x-1 shadow-sm"
+                >
+                  {isSendingMagicLink ? (
+                    <span>發送中...</span>
+                  ) : (
+                    <>
+                      <Send size={11} />
+                      <span>寄送連結</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {magicLinkSentMsg && (
+                <div className="text-emerald-300 bg-emerald-950/60 p-2 rounded-lg border border-emerald-700 text-xs font-medium">
+                  {magicLinkSentMsg}
+                </div>
+              )}
+
+              {magicLinkError && (
+                <div className="text-rose-300 bg-rose-950/60 p-2 rounded-lg border border-rose-800 text-xs">
+                  {magicLinkError}
+                </div>
+              )}
+            </form>
+          </div>
         )}
       </div>
 

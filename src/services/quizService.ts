@@ -270,45 +270,54 @@ export const quizService = {
       const isAdj = !isPhrase && (posLower.includes('adj') || posLower.includes('形容詞'));
       const isAdv = !isPhrase && (posLower.includes('adv') || posLower.includes('副詞'));
 
-      // Strategy 1: Prioritize pre-compiled bespoke quizzes from master dataset
+      // Strategy 1: Prioritize pre-compiled bespoke quizzes from master dataset with dynamic rotation and option shuffling
       if (targetWord.quizzes && targetWord.quizzes.length > 0) {
-        const matchingQuiz = mode === 'cloze_fill'
-          ? targetWord.quizzes.find((q: any) => q.type === 'cloze_fill')
-          : targetWord.quizzes.find((q: any) => q.type === 'multiple_choice');
+        const matchingQuizzes = mode === 'cloze_fill'
+          ? targetWord.quizzes.filter((q: any) => q.type === 'cloze_fill')
+          : targetWord.quizzes.filter((q: any) => q.type === 'multiple_choice');
 
-        if (matchingQuiz && matchingQuiz.stem && matchingQuiz.options?.length >= 4) {
-          const correctIdx = matchingQuiz.options.indexOf(matchingQuiz.answer);
-          const optionAnalyses = matchingQuiz.options.map((opt: string) => {
-            const isCorrect = opt === matchingQuiz.answer;
-            if (isCorrect) {
-              return {
-                option: opt,
-                isCorrect: true,
-                explanation: `【正解】「${shortDef}」（${pos}），精準契合題幹語意與商務搭配。`
-              };
-            } else {
-              return {
-                option: opt,
-                isCorrect: false,
-                explanation: `【干擾】商務語意或搭配與題幹要求不合。`
-              };
-            }
-          });
+        if (matchingQuizzes.length > 0) {
+          // Dynamic rotation: pick randomly among available 3 Part 5 or 3 Part 6 question variants
+          const matchingQuiz = matchingQuizzes[Math.floor(Math.random() * matchingQuizzes.length)];
 
-          return {
-            id: `q_${targetWord.id}_${mode}_${idx}_${Date.now()}`,
-            word: targetWord,
-            mode,
-            difficulty: currentTier,
-            stem: matchingQuiz.stem,
-            stemTranslation: matchingQuiz.stemTranslation || `【題幹翻譯】根據商務語境，本題需填入最符合職場語意之「${shortDef}」。`,
-            options: matchingQuiz.options,
-            correctAnswer: matchingQuiz.answer,
-            correctIndex: correctIdx >= 0 ? correctIdx : 0,
-            clozeHint: matchingQuiz.clozeHint || `核心釋義：${shortDef}`,
-            explanation: matchingQuiz.explanation || `【多益核心考點】本題考查「${shortDef}」之商務語境。`,
-            optionAnalyses
-          };
+          if (matchingQuiz && matchingQuiz.stem && matchingQuiz.options?.length >= 4) {
+            // Re-shuffle options dynamically so answer position rotates randomly (A, B, C, D)
+            const rawOpts = (matchingQuiz.options || []) as string[];
+            const shuffledOptions: string[] = shuffleArray<string>(rawOpts);
+            const correctIdx = shuffledOptions.indexOf(matchingQuiz.answer as string);
+
+            const optionAnalyses = shuffledOptions.map((opt: string) => {
+              const isCorrect = opt === matchingQuiz.answer;
+              if (isCorrect) {
+                return {
+                  option: opt,
+                  isCorrect: true,
+                  explanation: `【正解】「${shortDef}」（${pos}），精準契合題幹語意與商務搭配。`
+                };
+              } else {
+                return {
+                  option: opt,
+                  isCorrect: false,
+                  explanation: `【干擾】商務語意或搭配與題幹要求不合。`
+                };
+              }
+            });
+
+            return {
+              id: `q_${targetWord.id}_${mode}_${idx}_${Date.now()}_${Math.random()}`,
+              word: targetWord,
+              mode,
+              difficulty: currentTier,
+              stem: matchingQuiz.stem,
+              stemTranslation: matchingQuiz.stemTranslation || `【題幹翻譯】根據商務語境，本題需填入最符合職場語意之「${shortDef}」。`,
+              options: shuffledOptions,
+              correctAnswer: matchingQuiz.answer,
+              correctIndex: correctIdx >= 0 ? correctIdx : 0,
+              clozeHint: matchingQuiz.clozeHint || `核心釋義：${shortDef}`,
+              explanation: matchingQuiz.explanation || `【多益核心考點】本題考查「${shortDef}」之商務語境。`,
+              optionAnalyses
+            };
+          }
         }
       }
 

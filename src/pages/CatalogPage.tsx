@@ -204,9 +204,14 @@ export const CatalogPage: React.FC = () => {
     <div className="space-y-4 pb-6">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-black text-slate-100">TOEIC 題庫與高頻專屬單元</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-black text-slate-100">TOEIC 題庫與高頻專屬單元</h2>
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+            🟢 v3.0 最新全真題庫
+          </span>
+        </div>
         <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-          收錄全庫 <strong className="text-emerald-400">11,154 字</strong> 與 <strong className="text-amber-400">66,924 題測驗</strong>，支援單元展開瀏覽與離線秒級背誦。
+          收錄全庫 <strong className="text-emerald-400">11,154 字</strong> 與 <strong className="text-amber-400">66,924 題測驗</strong>，全面升級 13 大職場實景題幹與 1:1 中譯解析。
         </p>
       </div>
 
@@ -329,12 +334,15 @@ export const CatalogPage: React.FC = () => {
                     <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
                       <Badge variant="blue">{c.toeicScoreRange}</Badge>
                       <Badge variant="emerald">{c.level}</Badge>
+                      <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/60">
+                        {c.version ? `${c.version} 精編` : 'v3 精編'}
+                      </span>
                       <span className="text-[11px] text-slate-400">{c.category}</span>
                     </div>
 
                     {isDownloaded ? (
                       <span className="inline-flex items-center text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded-full shrink-0">
-                        <CheckCircle size={12} className="mr-1" /> 已就緒
+                        <CheckCircle size={12} className="mr-1" /> 已就緒 (v3.0)
                       </span>
                     ) : (
                       <span className="text-[11px] text-slate-400 shrink-0">
