@@ -20,6 +20,7 @@ import confetti from 'canvas-confetti';
 import { useProfile } from '../contexts/ProfileContext';
 import { courseRepository } from '../repositories/courseRepository';
 import { quizService, NextGenQuestion, NextGenQuizMode } from '../services/quizService';
+import { geminiService } from '../services/geminiService';
 import { audioService } from '../services/audioService';
 import { QuizSessionSummary } from '../types/quiz';
 import { Word } from '../types/db';
@@ -64,6 +65,29 @@ export const QuizPage: React.FC = () => {
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [isEnqueuing, setIsEnqueuing] = useState<boolean>(false);
   const [enqueuedSuccess, setEnqueuedSuccess] = useState<boolean>(false);
+
+  // Live AI Master Teacher Explainer State
+  const [aiExplanationMap, setAiExplanationMap] = useState<Record<string, any>>({});
+  const [loadingAiExplId, setLoadingAiExplId] = useState<string | null>(null);
+
+  const handleRequestAiExplanation = async (q: NextGenQuestion) => {
+    if (loadingAiExplId || aiExplanationMap[q.id]) return;
+    try {
+      setLoadingAiExplId(q.id);
+      const res = await geminiService.explainQuizInDepthWithAi({
+        stem: q.stem,
+        options: q.options,
+        answer: q.correctAnswer,
+        word: q.word.headword,
+        definitionZh: q.word.definitionZh
+      });
+      setAiExplanationMap(prev => ({ ...prev, [q.id]: res }));
+    } catch (err) {
+      console.error('[QuizPage] Failed to fetch AI explanation:', err);
+    } finally {
+      setLoadingAiExplId(null);
+    }
+  };
 
   // Load available categories and active course title
   useEffect(() => {
@@ -630,6 +654,77 @@ export const QuizPage: React.FC = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* 🌟 AI In-Depth Teacher Analysis Button & Section */}
+            {isDrawerExpanded && (
+              <div className="pt-2 border-t border-slate-800 space-y-2">
+                {!aiExplanationMap[currentQ.id] ? (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    fullWidth
+                    disabled={loadingAiExplId === currentQ.id}
+                    onClick={() => handleRequestAiExplanation(currentQ)}
+                    className="border-purple-600/60 text-purple-300 hover:bg-purple-950/40 text-[11px] py-2"
+                  >
+                    {loadingAiExplId === currentQ.id ? (
+                      <>
+                        <span className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin mr-1.5" />
+                        <span>AI 名師正在構思破題思路...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Bot size={14} className="mr-1.5 text-purple-400" />
+                        <span>🤖 呼叫 Gemini AI 名師深度破題（秒殺法 ＋ 避坑指南）</span>
+                      </>
+                    )}
+                  </Button>
+                ) : (
+                  <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-800/60 text-xs space-y-2 text-left animate-in fade-in duration-200">
+                    <div className="flex items-center justify-between text-[11px] font-bold text-purple-300">
+                      <span className="flex items-center">
+                        <Sparkles size={13} className="mr-1 text-purple-400" />
+                        Gemini AI 名師解題思路
+                      </span>
+                      <span className="text-[10px] px-2 py-0.2 rounded-full bg-purple-900/60 border border-purple-700/50">
+                        {aiExplanationMap[currentQ.id].modelUsed || 'AI Live'}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1.5 text-[11px] text-slate-200">
+                      <div>
+                        <strong className="text-amber-300 block mb-0.5">🎯 5 秒秒殺破題法：</strong>
+                        <p className="text-slate-300 leading-relaxed pl-2 border-l-2 border-amber-500/50">
+                          {aiExplanationMap[currentQ.id].strategy}
+                        </p>
+                      </div>
+
+                      {aiExplanationMap[currentQ.id].examTrapTip && (
+                        <div>
+                          <strong className="text-rose-300 block mb-0.5">⚠️ 多益考場避坑提醒：</strong>
+                          <p className="text-slate-300 leading-relaxed pl-2 border-l-2 border-rose-500/50">
+                            {aiExplanationMap[currentQ.id].examTrapTip}
+                          </p>
+                        </div>
+                      )}
+
+                      {aiExplanationMap[currentQ.id].collocations?.length > 0 && (
+                        <div>
+                          <strong className="text-emerald-300 block mb-0.5">📚 高頻職場搭配片語：</strong>
+                          <div className="flex flex-wrap gap-1.5 mt-1">
+                            {aiExplanationMap[currentQ.id].collocations.map((c: string, cIdx: number) => (
+                              <span key={cIdx} className="px-2 py-0.5 rounded-md bg-emerald-950/80 border border-emerald-800/50 text-[10px] text-emerald-300 font-mono">
+                                {c}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

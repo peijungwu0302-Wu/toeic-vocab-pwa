@@ -468,5 +468,81 @@ Return strict JSON:
       toeicTrapTip: `【多益陷阱提示】在第五部分解題時，請先觀察空格後方的「介系詞」與「受詞名詞」，往往直接決定應選 ${word1} 還是 ${word2}。`,
       isLiveAi: false
     };
+  },
+
+  /**
+   * 🌟 AI Master Teacher In-Depth Quiz Breakdown
+   * Provides real human-like TOEIC pedagogical insights for a specific quiz question.
+   */
+  async explainQuizInDepthWithAi(params: {
+    stem: string;
+    options: string[];
+    answer: string;
+    word: string;
+    definitionZh: string;
+  }): Promise<{
+    strategy: string;
+    analysisAtoD: Array<{ option: string; isCorrect: boolean; explanation: string }>;
+    examTrapTip: string;
+    collocations: string[];
+    isLiveAi: boolean;
+    modelUsed?: string;
+  }> {
+    const apiKey = await this.getApiKey();
+    if (apiKey) {
+      const prompt = `
+You are a 990 Full-Score TOEIC Master Instructor and ETS Senior Test Specialist.
+Analyze the following TOEIC Part 5 / Part 6 question with rich human-teacher pedagogy in Traditional Chinese (繁體中文).
+
+Question Stem: ${params.stem}
+Options: ${params.options.join(', ')}
+Correct Answer: ${params.answer}
+Target Word: ${params.word} (${params.definitionZh})
+
+Return strict JSON:
+{
+  "strategy": "5秒秒殺破題思路（分析題幹結構、空格前後詞性語法要求、關鍵線索詞）",
+  "analysisAtoD": [
+    {
+      "option": "Option string",
+      "isCorrect": true/false,
+      "explanation": "詳細剖析：標明詞性與中文意思，說明為什麼正確或為什麼是干擾陷阱"
+    }
+  ],
+  "examTrapTip": "多益考場避坑指南（考生最容易犯的直覺錯誤與 ETS 出題陷阱）",
+  "collocations": ["2~3 high-yield business collocations related to the target word, e.g. accommodate a request"]
+}
+`;
+      try {
+        const { rawJson, model } = await this.callGeminiRaw(prompt);
+        const parsed = JSON.parse(rawJson);
+        if (parsed.strategy && parsed.analysisAtoD) {
+          return {
+            strategy: parsed.strategy,
+            analysisAtoD: parsed.analysisAtoD,
+            examTrapTip: parsed.examTrapTip || '',
+            collocations: parsed.collocations || [],
+            isLiveAi: true,
+            modelUsed: model
+          };
+        }
+      } catch (err) {
+        console.warn('[GeminiService] explainQuizInDepthWithAi error:', err);
+      }
+    }
+
+    return {
+      strategy: `觀察題幹前後文語意與文法結構，空格處需填入與前後主謂語搭配最自然的詞彙。`,
+      analysisAtoD: params.options.map(opt => ({
+        option: opt,
+        isCorrect: opt === params.answer,
+        explanation: opt === params.answer
+          ? `【正解】「${params.word}」（${params.definitionZh}）— 語義與前後文搭配最契合。`
+          : `【干擾】「${opt}」— 語意或文法結構不符合此題幹情境。`
+      })),
+      examTrapTip: `多益 Part 5 題型中，請注意觀察空格前後的動詞受詞或介系詞搭配，避免僅靠中文直翻選出看似合理的答案。`,
+      collocations: [`${params.word} in business context`],
+      isLiveAi: false
+    };
   }
 };

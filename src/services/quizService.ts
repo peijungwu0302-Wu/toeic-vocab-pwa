@@ -270,6 +270,9 @@ export const quizService = {
       const isAdj = !isPhrase && (posLower.includes('adj') || posLower.includes('形容詞'));
       const isAdv = !isPhrase && (posLower.includes('adv') || posLower.includes('副詞'));
 
+      // Build fast dictionary lookup map for rich distractor analysis
+      const wordDict = new Map<string, Word>(words.map(w => [w.headword.toLowerCase(), w]));
+
       // Strategy 1: Prioritize pre-compiled bespoke quizzes from master dataset with dynamic rotation and option shuffling
       if (targetWord.quizzes && targetWord.quizzes.length > 0) {
         const matchingQuizzes = mode === 'cloze_fill'
@@ -280,11 +283,24 @@ export const quizService = {
           // Dynamic rotation: pick randomly among available 3 Part 5 or 3 Part 6 question variants
           const matchingQuiz = matchingQuizzes[Math.floor(Math.random() * matchingQuizzes.length)];
 
-          if (matchingQuiz && matchingQuiz.stem && matchingQuiz.options?.length >= 4) {
+          // 🛡️ Anti-Corruption Filter: Intercept legacy placeholder garbage from old browser cache
+          const isLegacyGarbage =
+            matchingQuiz.options?.includes('handle properly') ||
+            (matchingQuiz.stem?.includes('agreed to _____ the urgent request') && !isVerb) ||
+            matchingQuiz.stem?.includes('designated _____ within our standard procedures');
+
+          if (!isLegacyGarbage && matchingQuiz && matchingQuiz.stem && matchingQuiz.options?.length >= 4) {
             // Re-shuffle options dynamically so answer position rotates randomly (A, B, C, D)
             const rawOpts = (matchingQuiz.options || []) as string[];
             const shuffledOptions: string[] = shuffleArray<string>(rawOpts);
             const correctIdx = shuffledOptions.indexOf(matchingQuiz.answer as string);
+
+            let cleanTranslation = matchingQuiz.stemTranslation || '';
+            if (!cleanTranslation || cleanTranslation.includes('根據商務語境，本題需填入')) {
+              cleanTranslation = `【全句中譯】` + matchingQuiz.stem.replace('_____', `【${shortDef}】`);
+            } else {
+              cleanTranslation = cleanTranslation.replace(/^【題幹翻譯】\s*/, '').trim();
+            }
 
             const optionAnalyses = shuffledOptions.map((opt: string) => {
               const isCorrect = opt === matchingQuiz.answer;
@@ -292,13 +308,23 @@ export const quizService = {
                 return {
                   option: opt,
                   isCorrect: true,
-                  explanation: `【正解】「${shortDef}」（${pos}），精準契合題幹語意與商務搭配。`
+                  explanation: `【🟢 正解 · ${pos}】「${shortDef}」— 精準契合題幹語境，為多益職場標準高頻搭配。`
                 };
               } else {
+                const distWord = wordDict.get(opt.toLowerCase());
+                if (distWord) {
+                  const distDef = getShortDefinition(distWord.definitionZh);
+                  const distPos = distWord.partsOfSpeech?.[0] || '單字';
+                  return {
+                    option: opt,
+                    isCorrect: false,
+                    explanation: `【❌ 干擾 · ${distPos}】「${distDef}」— 詞義與題幹商務語境不符，無法作為本題最佳答案。`
+                  };
+                }
                 return {
                   option: opt,
                   isCorrect: false,
-                  explanation: `【干擾】商務語意或搭配與題幹要求不合。`
+                  explanation: `【❌ 干擾項】「${opt}」— 文法結構或商務語意與題幹前後文不符。`
                 };
               }
             });
@@ -309,12 +335,12 @@ export const quizService = {
               mode,
               difficulty: currentTier,
               stem: matchingQuiz.stem,
-              stemTranslation: matchingQuiz.stemTranslation || `【題幹翻譯】根據商務語境，本題需填入最符合職場語意之「${shortDef}」。`,
+              stemTranslation: cleanTranslation,
               options: shuffledOptions,
               correctAnswer: matchingQuiz.answer,
               correctIndex: correctIdx >= 0 ? correctIdx : 0,
               clozeHint: matchingQuiz.clozeHint || `核心釋義：${shortDef}`,
-              explanation: matchingQuiz.explanation || `【多益核心考點】本題考查「${shortDef}」之商務語境。`,
+              explanation: matchingQuiz.explanation || `【多益核心考點】本題考查「${shortDef}」之職場商務用法。`,
               optionAnalyses
             };
           }
