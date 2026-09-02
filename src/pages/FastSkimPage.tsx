@@ -33,7 +33,7 @@ export const FastSkimPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { activeProfile, updateProfile } = useProfile();
-  const { settings, updateSettings, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
+  const { settings, updateSettings, zoomIn, zoomOut, currentPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
 
   const courseId = searchParams.get('courseId');
 
@@ -302,6 +302,31 @@ export const FastSkimPage: React.FC = () => {
               <option value={30}>30字/節</option>
               <option value={999}>全部</option>
             </select>
+
+            {/* Quick Font Size Stepper (A- / A+) */}
+            <div className="flex items-center bg-slate-900 border border-slate-700/80 rounded-lg px-1 py-0.5 space-x-0.5">
+              <button
+                type="button"
+                onClick={zoomOut}
+                disabled={currentPreset === 'compact'}
+                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+                title="縮小字體"
+              >
+                A-
+              </button>
+              <span className="text-[9px] text-slate-400 font-mono">
+                {currentPreset === 'compact' ? '小' : currentPreset === 'standard' ? '中' : currentPreset === 'large' ? '大' : '特'}
+              </span>
+              <button
+                type="button"
+                onClick={zoomIn}
+                disabled={currentPreset === 'huge'}
+                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+                title="放大字體"
+              >
+                A+
+              </button>
+            </div>
 
             <button
               type="button"

@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 export type HeadwordSize = 'sm' | 'md' | 'lg' | 'xl';
 export type ExampleEnSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -28,6 +28,9 @@ interface TypographyContextType {
   updateSettings: (newSettings: Partial<TypographySettings>) => void;
   resetSettings: () => void;
   applyPreset: (preset: 'compact' | 'standard' | 'large' | 'huge') => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
+  currentPreset: 'compact' | 'standard' | 'large' | 'huge' | 'custom';
   // CSS Class mappings
   headwordClass: string;
   exampleEnClass: string;
@@ -143,6 +146,26 @@ export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
   }, [settings.definitionSize]);
 
+  const currentPreset: 'compact' | 'standard' | 'large' | 'huge' | 'custom' = useMemo(() => {
+    if (settings.headwordSize === 'sm' && settings.exampleEnSize === 'xs') return 'compact';
+    if (settings.headwordSize === 'md' && settings.exampleEnSize === 'md') return 'standard';
+    if (settings.headwordSize === 'lg' && settings.exampleEnSize === 'lg') return 'large';
+    if (settings.headwordSize === 'xl' && settings.exampleEnSize === 'xl') return 'huge';
+    return 'custom';
+  }, [settings]);
+
+  const zoomIn = () => {
+    if (currentPreset === 'compact') applyPreset('standard');
+    else if (currentPreset === 'standard') applyPreset('large');
+    else if (currentPreset === 'large') applyPreset('huge');
+  };
+
+  const zoomOut = () => {
+    if (currentPreset === 'huge') applyPreset('large');
+    else if (currentPreset === 'large') applyPreset('standard');
+    else if (currentPreset === 'standard' || currentPreset === 'custom') applyPreset('compact');
+  };
+
   return (
     <TypographyContext.Provider
       value={{
@@ -150,6 +173,9 @@ export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         updateSettings,
         resetSettings,
         applyPreset,
+        zoomIn,
+        zoomOut,
+        currentPreset,
         headwordClass,
         exampleEnClass,
         exampleZhClass,

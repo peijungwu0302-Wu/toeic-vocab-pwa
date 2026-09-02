@@ -48,7 +48,7 @@ export const FlashcardPage: React.FC = () => {
   const navigate = useNavigate();
   const { activeProfile } = useProfile();
   const { syncState } = useSync();
-  const { headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
+  const { zoomIn, zoomOut, currentPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
 
   const courseId = searchParams.get('courseId');
 
@@ -580,6 +580,31 @@ export const FlashcardPage: React.FC = () => {
               <option value={20}>20字</option>
               <option value={30}>30字</option>
             </select>
+
+            {/* Quick Font Size Stepper (A- / A+) */}
+            <div className="flex items-center bg-slate-900 border border-slate-700/80 rounded-lg px-1 py-0.5 space-x-0.5">
+              <button
+                type="button"
+                onClick={zoomOut}
+                disabled={currentPreset === 'compact'}
+                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+                title="縮小字體"
+              >
+                A-
+              </button>
+              <span className="text-[9px] text-slate-400 font-mono">
+                {currentPreset === 'compact' ? '小' : currentPreset === 'standard' ? '中' : currentPreset === 'large' ? '大' : '特'}
+              </span>
+              <button
+                type="button"
+                onClick={zoomIn}
+                disabled={currentPreset === 'huge'}
+                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+                title="放大字體"
+              >
+                A+
+              </button>
+            </div>
 
             <button
               type="button"
