@@ -7,8 +7,8 @@ from google import genai
 DEFAULT_PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "project-5dc653c7-c4ff-4154-99e")
 DEFAULT_LOCATION = os.environ.get("GCP_LOCATION", "us-central1")
 MODEL_NAME = "gemini-2.5-flash-image"
-PRICE_PER_IMAGE = 0.02
-MAX_BUDGET_USD = 250.0
+PRICE_PER_IMAGE = 0.0338  # 实测单张成本 ~1.08 TWD ($0.0338 USD)
+MAX_BUDGET_USD = 250.0   # 硬熔断上限 $250 USD (保留 $50 安全缓冲)
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
