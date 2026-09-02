@@ -12,7 +12,8 @@ import {
   CloudOff,
   RefreshCw,
   User,
-  Search
+  Search,
+  ChevronUp
 } from 'lucide-react';
 import { useProfile } from '../../contexts/ProfileContext';
 import { useSync } from '../../contexts/SyncContext';
@@ -24,7 +25,7 @@ import { SearchModal } from '../ui/SearchModal';
 export const AppLayout: React.FC = () => {
   const { activeProfile } = useProfile();
   const { syncState, triggerSync } = useSync();
-  const { navStyle, islandBottomOffset } = useNavigationStyle();
+  const { navStyle, navOffset } = useNavigationStyle();
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -35,6 +36,24 @@ export const AppLayout: React.FC = () => {
     location.pathname.startsWith('/speedrun') ||
     location.pathname.startsWith('/quiz') ||
     location.pathname.startsWith('/assessment');
+
+  // Auto-hide bottom nav during study sessions; reveal on demand via edge handle or tap
+  const [isNavRevealedInStudy, setIsNavRevealedInStudy] = useState(false);
+  const hideTimerRef = React.useRef<number | null>(null);
+
+  // Auto collapse when entering or changing study routes
+  React.useEffect(() => {
+    setIsNavRevealedInStudy(false);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+  }, [location.pathname]);
+
+  const handleRevealNav = () => {
+    setIsNavRevealedInStudy(true);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = window.setTimeout(() => {
+      setIsNavRevealedInStudy(false);
+    }, 4500);
+  };
 
   const navItems = [
     { to: '/', label: '首頁', icon: LayoutDashboard },
@@ -128,12 +147,30 @@ export const AppLayout: React.FC = () => {
       {/* iOS Safari Installation Banner */}
       <InstallPrompt />
 
-      {/* Bottom Navigation Bar - ALWAYS Accessible across all tabs */}
+      {/* Floating Edge Handle to reveal bottom nav when in study screen */}
+      {isStudyScreen && !isNavRevealedInStudy && (
+        <button
+          type="button"
+          onClick={handleRevealNav}
+          onTouchStart={handleRevealNav}
+          className="fixed bottom-1.5 left-1/2 -translate-x-1/2 z-50 flex items-center space-x-1 px-3 py-0.5 rounded-full bg-slate-850/90 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700/80 shadow-lg backdrop-blur-md transition-all active:scale-95 animate-fade-in"
+          title="點擊或上滑展開導覽底欄"
+        >
+          <ChevronUp size={11} className="text-emerald-400" />
+          <span className="text-[9px] font-medium tracking-tight">底欄選單</span>
+        </button>
+      )}
+
+      {/* Bottom Navigation Bar - Auto collapses during study screen, accessible via edge handle */}
       {navStyle === 'island' ? (
         // 方案 B：Apple Music 同款 · 懸浮膠囊島 (iOS 18 Floating Island)
         <nav
-          className="fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[26px] bg-slate-900/90 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5 transition-[bottom] duration-150"
-          style={{ bottom: `${islandBottomOffset}px` }}
+          className={`fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[26px] bg-slate-900/90 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5 transition-all duration-300 ${
+            isStudyScreen && !isNavRevealedInStudy
+              ? 'translate-y-[200%] opacity-0 pointer-events-none'
+              : 'translate-y-0 opacity-100 pointer-events-auto'
+          }`}
+          style={{ bottom: `${navOffset}px` }}
         >
           <div className="flex items-center justify-around">
             {navItems.map((item) => {
@@ -159,7 +196,14 @@ export const AppLayout: React.FC = () => {
         </nav>
       ) : navStyle === 'flush' ? (
         // 方案 A：穿透毛玻璃 · 極致下沉貼底 (Ultra-Flush Frosted Glass)
-        <nav className="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-slate-900/85 backdrop-blur-2xl border-t border-white/10 z-40 pb-2">
+        <nav
+          className={`fixed left-0 right-0 max-w-lg mx-auto bg-slate-900/85 backdrop-blur-2xl border-t border-white/10 z-40 pb-2 transition-all duration-300 ${
+            isStudyScreen && !isNavRevealedInStudy
+              ? 'translate-y-[200%] opacity-0 pointer-events-none'
+              : 'translate-y-0 opacity-100 pointer-events-auto'
+          }`}
+          style={{ bottom: `${navOffset}px` }}
+        >
           <div className="flex items-center justify-around px-1 pt-1.5 pb-0">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -184,7 +228,14 @@ export const AppLayout: React.FC = () => {
         </nav>
       ) : (
         // 傳統模式：經典全寬，目前模式
-        <nav className="shrink-0 bg-slate-900/98 backdrop-blur-md border-t border-slate-800 z-30 pb-2">
+        <nav
+          className={`fixed left-0 right-0 max-w-lg mx-auto bg-slate-900/98 backdrop-blur-md border-t border-slate-800 z-30 pb-2 transition-all duration-300 ${
+            isStudyScreen && !isNavRevealedInStudy
+              ? 'translate-y-[200%] opacity-0 pointer-events-none'
+              : 'translate-y-0 opacity-100 pointer-events-auto'
+          }`}
+          style={{ bottom: `${navOffset}px` }}
+        >
           <div className="flex items-center justify-around px-1 pt-1.5 pb-0">
             {navItems.map((item) => {
               const Icon = item.icon;
