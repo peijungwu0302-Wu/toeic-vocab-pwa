@@ -48,7 +48,7 @@ export const FlashcardPage: React.FC = () => {
   const navigate = useNavigate();
   const { activeProfile } = useProfile();
   const { syncState } = useSync();
-  const { zoomIn, zoomOut, currentPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
+  const { zoomIn, zoomOut, currentPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass } = useTypography();
 
   const courseId = searchParams.get('courseId');
 
@@ -59,6 +59,8 @@ export const FlashcardPage: React.FC = () => {
   const [intervalPreviews, setIntervalPreviews] = useState<IntervalPreviewItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [imgFailed, setImgFailed] = useState(false);
+  const [resumedNotice, setResumedNotice] = useState<string | null>(null);
+  const cardBackScrollRef = useRef<HTMLDivElement>(null);
 
   // Micro-sessions & Filters
   const [batchSize, setBatchSize] = useState<number>(20);
@@ -185,8 +187,28 @@ export const FlashcardPage: React.FC = () => {
         }
       }
 
+      // Check saved review session in localStorage (valid for 24 hours)
+      const sessionKey = `toeic_active_review_${profileId}_${courseId || 'all'}`;
+      let restoredIndex = 0;
+      try {
+        const raw = localStorage.getItem(sessionKey);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Date.now() - parsed.timestamp < 24 * 60 * 60 * 1000) {
+            restoredIndex = parsed.currentIndex || 0;
+          }
+        }
+      } catch {}
+
       setQueue(items);
-      setCurrentIndex(0);
+
+      if (restoredIndex > 0 && restoredIndex < items.length) {
+        setCurrentIndex(restoredIndex);
+        setResumedNotice(`已為您恢復進度：第 ${restoredIndex + 1} / ${items.length} 詞 ↩️`);
+      } else {
+        setCurrentIndex(0);
+      }
+
       setIsFlipped(false);
       setPreConfidence(null);
       cardStartTimeRef.current = Date.now();
@@ -204,6 +226,29 @@ export const FlashcardPage: React.FC = () => {
   useEffect(() => {
     loadStudyQueue();
   }, [loadStudyQueue]);
+
+  // Auto-save review session progress
+  useEffect(() => {
+    if (queue.length > 0 && !isLoading && activeProfile) {
+      const sessionKey = `toeic_active_review_${activeProfile.id}_${courseId || 'all'}`;
+      try {
+        localStorage.setItem(sessionKey, JSON.stringify({
+          currentIndex,
+          timestamp: Date.now()
+        }));
+      } catch {}
+    }
+  }, [currentIndex, queue.length, isLoading, activeProfile, courseId]);
+
+  const handleRestartReviewFromBeginning = () => {
+    if (activeProfile) {
+      const sessionKey = `toeic_active_review_${activeProfile.id}_${courseId || 'all'}`;
+      try { localStorage.removeItem(sessionKey); } catch {}
+    }
+    setCurrentIndex(0);
+    setIsFlipped(false);
+    setResumedNotice(null);
+  };
 
   const currentItem = queue[currentIndex];
 
@@ -287,9 +332,16 @@ export const FlashcardPage: React.FC = () => {
 
       // Next card immediately without flipping back
       if (currentIndex < queue.length - 1) {
+        if (cardBackScrollRef.current) {
+          cardBackScrollRef.current.scrollTop = 0;
+        }
         setCurrentIndex(prev => prev + 1);
       } else {
         // Session completed!
+        if (activeProfile) {
+          const sessionKey = `toeic_active_review_${activeProfile.id}_${courseId || 'all'}`;
+          try { localStorage.removeItem(sessionKey); } catch {}
+        }
         confetti({
           particleCount: 90,
           spread: 80,
@@ -654,6 +706,20 @@ export const FlashcardPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Resumed Progress Notification Banner */}
+      {resumedNotice && (
+        <div className="flex items-center justify-between px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-600/50 text-emerald-200 text-xs shadow-md animate-in fade-in">
+          <span className="font-semibold">{resumedNotice}</span>
+          <button
+            type="button"
+            onClick={handleRestartReviewFromBeginning}
+            className="text-xs underline text-emerald-400 hover:text-emerald-300 font-bold ml-2 py-0.5"
+          >
+            從頭開始
+          </button>
+        </div>
+      )}
+
       {/* Swipeable 3D Flashcard */}
       <div className="flex-1 flex flex-col justify-center min-h-0 py-1">
         <SwipeableCard
@@ -703,7 +769,7 @@ export const FlashcardPage: React.FC = () => {
                     {word.headword}
                   </h2>
                   {word.phoneticUS && (
-                    <p className="text-sm font-mono text-emerald-400/90 mt-1">
+                    <p className={`${supportingClass} font-mono text-emerald-400/90 mt-1`}>
                       /{word.phoneticUS}/
                     </p>
                   )}
@@ -769,7 +835,10 @@ export const FlashcardPage: React.FC = () => {
               } rounded-3xl p-3.5 shadow-2xl flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden cursor-default`}
             >
               {/* Scrollable Container Inside Card (Smooth vertical reading with zero drag interference) */}
-              <div className="space-y-2.5 overflow-y-auto max-h-[calc(100dvh-230px)] overscroll-contain touch-pan-y pr-1">
+              <div
+                ref={cardBackScrollRef}
+                className="space-y-2.5 overflow-y-auto max-h-[calc(100dvh-230px)] overscroll-contain touch-pan-y pr-1 scroll-smooth"
+              >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-1.5">
                     <Badge variant="emerald">{word.partsOfSpeech.join(', ')}</Badge>
@@ -1013,7 +1082,7 @@ export const FlashcardPage: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 20, opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="space-y-1 pt-1 shrink-0 z-20"
+            className="sticky bottom-0 z-30 pt-2.5 pb-2 bg-slate-900/95 backdrop-blur-md border-t border-slate-800/80 -mx-1 px-1 shrink-0 shadow-2xl"
           >
             <div className="grid grid-cols-3 gap-2">
               {/* 1. Again (忘記) */}
@@ -1023,7 +1092,7 @@ export const FlashcardPage: React.FC = () => {
                   e.stopPropagation();
                   handleRate(1);
                 }}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-rose-950/90 hover:bg-rose-900 active:scale-95 border border-rose-700 text-white shadow-lg min-h-[52px] transition-all"
+                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-rose-950/90 hover:bg-rose-900 active:scale-95 border border-rose-700 text-white shadow-lg min-h-[56px] transition-all"
               >
                 <div className="text-xs font-black text-rose-300">💥 忘記 (1)</div>
                 <div className="text-[10px] text-rose-200/80 font-mono mt-0.5">
@@ -1038,7 +1107,7 @@ export const FlashcardPage: React.FC = () => {
                   e.stopPropagation();
                   handleRate(2);
                 }}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-amber-950/90 hover:bg-amber-900 active:scale-95 border border-amber-700 text-white shadow-lg min-h-[52px] transition-all"
+                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-amber-950/90 hover:bg-amber-900 active:scale-95 border border-amber-700 text-white shadow-lg min-h-[56px] transition-all"
               >
                 <div className="text-xs font-black text-amber-300">🤔 不熟 (2)</div>
                 <div className="text-[10px] text-amber-200/80 font-mono mt-0.5">
@@ -1053,7 +1122,7 @@ export const FlashcardPage: React.FC = () => {
                   e.stopPropagation();
                   handleRate(3);
                 }}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-emerald-950/90 hover:bg-emerald-900 active:scale-95 border border-emerald-600 text-white shadow-lg min-h-[52px] transition-all"
+                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-emerald-950/90 hover:bg-emerald-900 active:scale-95 border border-emerald-600 text-white shadow-lg min-h-[56px] transition-all"
               >
                 <div className="text-xs font-black text-emerald-300">💡 掌握 (3)</div>
                 <div className="text-[10px] text-emerald-200/80 font-mono mt-0.5">

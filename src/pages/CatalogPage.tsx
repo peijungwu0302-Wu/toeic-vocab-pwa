@@ -16,7 +16,8 @@ import {
   Layers,
   BookOpen,
   Sparkles,
-  RefreshCw
+  RefreshCw,
+  Zap
 } from 'lucide-react';
 import { courseRepository } from '../repositories/courseRepository';
 import { progressRepository } from '../repositories/progressRepository';
@@ -147,6 +148,11 @@ export const CatalogPage: React.FC = () => {
   const handleStartQuiz = async (courseId: string) => {
     await audioService.unlockAudio();
     navigate(`/quiz?courseId=${courseId}`);
+  };
+
+  const handleStartSkim = async (courseId: string) => {
+    await audioService.unlockAudio();
+    navigate(`/skim?courseId=${courseId}`);
   };
 
   const allCourses = catalog?.courses || [];
@@ -455,6 +461,14 @@ export const CatalogPage: React.FC = () => {
                         >
                           <Trash2 size={14} />
                         </button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleStartSkim(c.id)}
+                          className="text-xs px-2.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border-amber-500/40"
+                        >
+                          <Zap size={13} className="mr-1 text-amber-400" /> 速讀
+                        </Button>
                         <Button
                           size="sm"
                           variant="outline"

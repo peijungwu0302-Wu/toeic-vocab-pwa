@@ -39,7 +39,7 @@ import { Modal } from '../components/ui/Modal';
 export const SettingsPage: React.FC = () => {
   const { activeProfile, profiles, switchProfile, createProfile, updateProfile, deleteProfile } = useProfile();
   const { syncState, triggerSync } = useSync();
-  const { settings, updateSettings, resetSettings, applyPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
+  const { settings, updateSettings, resetSettings, applyPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
 
   const [isNewProfileModalOpen, setIsNewProfileModalOpen] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
@@ -560,30 +560,30 @@ export const SettingsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 自由無級比例縮放 (Continuous Free Scale Slider) */}
+        {/* 自由無級比例縮放 (Continuous Free Scale Slider up to 200%) */}
         <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-700/60 space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold text-slate-200 flex items-center">
               <Sliders size={14} className="mr-1.5 text-emerald-400" />
-              自由自訂比例縮放 (護眼防用眼過度)
+              自由自訂比例縮放 (最高允許 200% 雙倍護眼)
             </span>
-            <span className="font-mono font-bold text-emerald-400 text-xs">
+            <span className="font-mono font-bold text-emerald-400 text-sm">
               {settings.fontScalePercent || 100}%
             </span>
           </div>
           <input
             type="range"
             min={75}
-            max={175}
+            max={200}
             step={5}
             value={settings.fontScalePercent || 100}
             onChange={(e) => {
               const val = Number(e.target.value);
               if (val <= 85) applyPreset('compact');
               else if (val <= 105) applyPreset('standard');
-              else if (val <= 120) applyPreset('large');
-              else if (val <= 140) applyPreset('huge');
-              else if (val <= 160) applyPreset('giant');
+              else if (val <= 125) applyPreset('large');
+              else if (val <= 150) applyPreset('huge');
+              else if (val <= 180) applyPreset('giant');
               else applyPreset('ultra');
               updateSettings({ fontScalePercent: val });
             }}
@@ -592,9 +592,40 @@ export const SettingsPage: React.FC = () => {
           <div className="flex justify-between text-[10px] text-slate-500 font-mono">
             <span>75% 緊湊</span>
             <span>100% 標準</span>
-            <span>130% 特大</span>
-            <span>150% 超大(+1)</span>
-            <span>175% 至尊(+2)</span>
+            <span>120% 大字</span>
+            <span>140% 特大</span>
+            <span>170% 超大(+1)</span>
+            <span>200% 至尊(+2)</span>
+          </div>
+        </div>
+
+        {/* 物理像素即時對照看板 (Live Physical Pixel Matrix) */}
+        <div className="p-3 bg-slate-900/90 rounded-xl border border-emerald-500/30 space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-emerald-400 flex items-center">
+              <Sparkles size={13} className="mr-1 text-amber-400" />
+              物理像素換算對照 (Live px Matrix · 隨心所欲調整)
+            </span>
+            <span className="text-[10px] text-slate-400">真實顯示數值</span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
+              <span className="text-[10px] text-slate-400 block">核心單字</span>
+              <span className="font-black text-slate-100 text-sm font-mono">{pixelMetrics.headwordPx} px</span>
+            </div>
+            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
+              <span className="text-[10px] text-slate-400 block">中文釋義</span>
+              <span className="font-bold text-emerald-300 text-sm font-mono">{pixelMetrics.definitionPx} px</span>
+            </div>
+            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
+              <span className="text-[10px] text-slate-400 block">例句英文</span>
+              <span className="font-semibold text-slate-200 text-sm font-mono">{pixelMetrics.exampleEnPx} px</span>
+            </div>
+            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
+              <span className="text-[10px] text-slate-400 block">音標/考點/搭配</span>
+              <span className="font-semibold text-teal-300 text-sm font-mono">{pixelMetrics.supportingPx} px</span>
+            </div>
           </div>
         </div>
 

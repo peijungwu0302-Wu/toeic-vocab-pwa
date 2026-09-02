@@ -33,7 +33,7 @@ export const FastSkimPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { activeProfile, updateProfile } = useProfile();
-  const { settings, updateSettings, zoomIn, zoomOut, currentPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
+  const { settings, updateSettings, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass, zoomIn, zoomOut, currentPreset } = useTypography();
 
   const courseId = searchParams.get('courseId');
 
@@ -54,10 +54,11 @@ export const FastSkimPage: React.FC = () => {
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [showRecapModal, setShowRecapModal] = useState<boolean>(false);
   const [starredWordIds, setStarredWordIds] = useState<Set<string>>(new Set());
+  const [resumedNotice, setResumedNotice] = useState<string | null>(null);
 
   const timerRef = useRef<number | null>(null);
 
-  // Load words & categories
+  // Load words & categories with Session Persistence
   const loadWords = useCallback(async () => {
     if (!activeProfile) return;
     try {
@@ -98,11 +99,33 @@ export const FastSkimPage: React.FC = () => {
 
       setAllWords(loadedWords);
 
-      // Slice to first batch
-      const initialBatch = batchSize >= 999 ? loadedWords : loadedWords.slice(0, batchSize);
+      // Check saved session in localStorage (valid for 24 hours)
+      const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
+      let restoredIndex = 0;
+      let restoredBatch = 0;
+      try {
+        const raw = localStorage.getItem(sessionKey);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Date.now() - parsed.timestamp < 24 * 60 * 60 * 1000) {
+            restoredIndex = parsed.currentIndex || 0;
+            restoredBatch = parsed.currentBatchIndex || 0;
+          }
+        }
+      } catch {}
+
+      const batchStart = restoredBatch * batchSize;
+      const initialBatch = batchSize >= 999 ? loadedWords : loadedWords.slice(batchStart, batchStart + batchSize);
       setActiveWords(initialBatch);
-      setCurrentIndex(0);
-      setCurrentBatchIndex(0);
+
+      if (restoredIndex > 0 && restoredIndex < initialBatch.length) {
+        setCurrentIndex(restoredIndex);
+        setCurrentBatchIndex(restoredBatch);
+        setResumedNotice(`已為您恢復進度：第 ${restoredIndex + 1} / ${initialBatch.length} 詞 ↩️`);
+      } else {
+        setCurrentIndex(0);
+        setCurrentBatchIndex(0);
+      }
       setShowRecapModal(false);
 
       const cats = await courseRepository.getDownloadedCategories();
@@ -129,10 +152,34 @@ export const FastSkimPage: React.FC = () => {
     });
   }, [activeProfile]);
 
+  // Auto-save session progress
+  useEffect(() => {
+    if (activeWords.length > 0 && !isLoading) {
+      const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
+      try {
+        localStorage.setItem(sessionKey, JSON.stringify({
+          currentIndex,
+          currentBatchIndex,
+          timestamp: Date.now()
+        }));
+      } catch {}
+    }
+  }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, courseId]);
+
+  const handleRestartFromBeginning = () => {
+    const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
+    try { localStorage.removeItem(sessionKey); } catch {}
+    setCurrentIndex(0);
+    setRemainingTime(durationSec);
+    setResumedNotice(null);
+  };
+
   const handleBatchComplete = useCallback(() => {
+    const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
+    try { localStorage.removeItem(sessionKey); } catch {}
     setIsPaused(true);
     setShowRecapModal(true);
-  }, []);
+  }, [courseId]);
 
   const goToNext = useCallback(() => {
     if (activeWords.length === 0) return;
@@ -401,6 +448,20 @@ export const FastSkimPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Resumed Progress Notification Banner */}
+      {resumedNotice && (
+        <div className="flex items-center justify-between px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-600/50 text-emerald-200 text-xs shadow-md animate-in fade-in">
+          <span className="font-semibold">{resumedNotice}</span>
+          <button
+            type="button"
+            onClick={handleRestartFromBeginning}
+            className="text-xs underline text-emerald-400 hover:text-emerald-300 font-bold ml-2 py-0.5"
+          >
+            從頭開始
+          </button>
+        </div>
+      )}
+
       {/* Main Flashcard View */}
       <div className="flex-1 flex flex-col justify-center">
         <AnimatePresence mode="wait">
@@ -460,7 +521,7 @@ export const FastSkimPage: React.FC = () => {
                   )}
                 </div>
                 {currentWord.phoneticUS && (
-                  <p className="text-sm font-mono text-emerald-400/90 mt-0.5">
+                  <p className={`${supportingClass} font-mono text-emerald-400/90 mt-0.5`}>
                     /{currentWord.phoneticUS}/
                   </p>
                 )}

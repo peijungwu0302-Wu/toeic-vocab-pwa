@@ -1,9 +1,9 @@
 ﻿import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
-export type HeadwordSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
-export type ExampleEnSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
-export type ExampleZhSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-export type DefinitionSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+export type HeadwordSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+export type ExampleEnSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+export type ExampleZhSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
+export type DefinitionSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 
 export type TypographyPreset = 'compact' | 'standard' | 'large' | 'huge' | 'giant' | 'ultra';
 
@@ -12,7 +12,7 @@ export interface TypographySettings {
   exampleEnSize: ExampleEnSize;
   exampleZhSize: ExampleZhSize;
   definitionSize: DefinitionSize;
-  fontScalePercent: number; // 75 ~ 175%
+  fontScalePercent: number; // 75 ~ 200%
   fastSkimDurationSec: number;
   fastSkimShowImage: boolean;
 }
@@ -27,6 +27,14 @@ const DEFAULT_SETTINGS: TypographySettings = {
   fastSkimShowImage: true
 };
 
+export interface PixelMetrics {
+  headwordPx: number;
+  exampleEnPx: number;
+  exampleZhPx: number;
+  definitionPx: number;
+  supportingPx: number;
+}
+
 interface TypographyContextType {
   settings: TypographySettings;
   updateSettings: (newSettings: Partial<TypographySettings>) => void;
@@ -35,16 +43,18 @@ interface TypographyContextType {
   zoomIn: () => void;
   zoomOut: () => void;
   currentPreset: TypographyPreset | 'custom';
+  pixelMetrics: PixelMetrics;
   // CSS Class mappings
   headwordClass: string;
   exampleEnClass: string;
   exampleZhClass: string;
   definitionClass: string;
+  supportingClass: string;
 }
 
 const TypographyContext = createContext<TypographyContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'toeic_typography_settings_v2';
+const STORAGE_KEY = 'toeic_typography_settings_v3';
 
 export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [settings, setSettings] = useState<TypographySettings>(() => {
@@ -100,7 +110,7 @@ export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           exampleEnSize: 'lg',
           exampleZhSize: 'md',
           definitionSize: 'lg',
-          fontScalePercent: 115
+          fontScalePercent: 120
         }));
         break;
       case 'huge':
@@ -110,64 +120,67 @@ export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           exampleEnSize: 'xl',
           exampleZhSize: 'lg',
           definitionSize: 'xl',
-          fontScalePercent: 130
+          fontScalePercent: 140
         }));
         break;
-      case 'giant': // 大一級
+      case 'giant': // 大一級 (170%)
         setSettings(prev => ({
           ...prev,
           headwordSize: '2xl',
           exampleEnSize: '2xl',
           exampleZhSize: 'xl',
           definitionSize: '2xl',
-          fontScalePercent: 150
+          fontScalePercent: 170
         }));
         break;
-      case 'ultra': // 大二級 (護眼至尊)
+      case 'ultra': // 大二級 / 護眼至尊 (200% 雙倍字體)
         setSettings(prev => ({
           ...prev,
           headwordSize: '3xl',
           exampleEnSize: '3xl',
           exampleZhSize: '2xl',
           definitionSize: '3xl',
-          fontScalePercent: 175
+          fontScalePercent: 200
         }));
         break;
     }
   };
 
-  // Dynamic CSS Class Mappings
+  // Dynamic CSS Class Mappings with generous line-height for zero overlapping
   const headwordClass = useMemo(() => {
     switch (settings.headwordSize) {
       case 'sm': return 'text-xl md:text-2xl font-black';
       case 'md': return 'text-2xl md:text-3xl font-black';
       case 'lg': return 'text-3xl md:text-4xl font-black';
       case 'xl': return 'text-4xl md:text-5xl font-black';
-      case '2xl': return 'text-5xl md:text-6xl font-black tracking-tight';
+      case '2xl': return 'text-5xl md:text-6xl font-black tracking-tight leading-tight';
       case '3xl': return 'text-6xl md:text-7xl font-black tracking-tight leading-none';
+      case '4xl': return 'text-7xl md:text-8xl font-black tracking-tight leading-none';
     }
   }, [settings.headwordSize]);
 
   const exampleEnClass = useMemo(() => {
     switch (settings.exampleEnSize) {
-      case 'xs': return 'text-[11px] md:text-xs leading-relaxed';
-      case 'sm': return 'text-xs md:text-[13px] leading-relaxed';
-      case 'md': return 'text-[13px] md:text-sm leading-relaxed font-medium';
-      case 'lg': return 'text-sm md:text-base leading-relaxed font-semibold';
-      case 'xl': return 'text-base md:text-lg leading-relaxed font-bold';
-      case '2xl': return 'text-lg md:text-xl leading-relaxed font-bold';
-      case '3xl': return 'text-xl md:text-2xl leading-relaxed font-black';
+      case 'xs': return 'text-xs md:text-sm leading-relaxed';
+      case 'sm': return 'text-sm md:text-base leading-relaxed';
+      case 'md': return 'text-base md:text-lg leading-relaxed font-medium';
+      case 'lg': return 'text-lg md:text-xl leading-relaxed font-semibold';
+      case 'xl': return 'text-xl md:text-2xl leading-relaxed font-bold';
+      case '2xl': return 'text-2xl md:text-3xl leading-relaxed font-bold';
+      case '3xl': return 'text-3xl md:text-4xl leading-relaxed font-black';
+      case '4xl': return 'text-4xl md:text-5xl leading-relaxed font-black';
     }
   }, [settings.exampleEnSize]);
 
   const exampleZhClass = useMemo(() => {
     switch (settings.exampleZhSize) {
-      case 'xs': return 'text-[10px] md:text-[11px] leading-normal';
-      case 'sm': return 'text-[11px] md:text-xs leading-normal font-medium';
-      case 'md': return 'text-xs md:text-sm leading-normal font-semibold';
-      case 'lg': return 'text-sm md:text-base leading-normal font-bold';
-      case 'xl': return 'text-base md:text-lg leading-normal font-bold';
-      case '2xl': return 'text-lg md:text-xl leading-normal font-black';
+      case 'xs': return 'text-xs md:text-sm leading-normal';
+      case 'sm': return 'text-sm md:text-base leading-normal font-medium';
+      case 'md': return 'text-base md:text-lg leading-normal font-semibold';
+      case 'lg': return 'text-lg md:text-xl leading-normal font-bold';
+      case 'xl': return 'text-xl md:text-2xl leading-normal font-bold';
+      case '2xl': return 'text-2xl md:text-3xl leading-normal font-black';
+      case '3xl': return 'text-3xl md:text-4xl leading-normal font-black';
     }
   }, [settings.exampleZhSize]);
 
@@ -179,12 +192,35 @@ export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       case 'xl': return 'text-xl md:text-2xl font-black';
       case '2xl': return 'text-2xl md:text-3xl font-black';
       case '3xl': return 'text-3xl md:text-4xl font-black';
+      case '4xl': return 'text-4xl md:text-5xl font-black';
     }
   }, [settings.definitionSize]);
 
+  // Dynamic supporting class for phonetics, tags, and small notes (Never smaller than 13px)
+  const supportingClass = useMemo(() => {
+    const scale = settings.fontScalePercent || 100;
+    if (scale <= 90) return 'text-xs md:text-sm';
+    if (scale <= 110) return 'text-xs md:text-sm';
+    if (scale <= 130) return 'text-sm md:text-base font-medium';
+    if (scale <= 160) return 'text-base md:text-lg font-semibold';
+    return 'text-lg md:text-xl font-bold';
+  }, [settings.fontScalePercent]);
+
+  // Live Physical Pixel Metrics (base physical CSS pixels)
+  const pixelMetrics: PixelMetrics = useMemo(() => {
+    const ratio = (settings.fontScalePercent || 100) / 100;
+    return {
+      headwordPx: Math.round(28 * ratio),
+      exampleEnPx: Math.round(15 * ratio),
+      exampleZhPx: Math.round(13 * ratio),
+      definitionPx: Math.round(17 * ratio),
+      supportingPx: Math.round(13 * ratio)
+    };
+  }, [settings.fontScalePercent]);
+
   const currentPreset: TypographyPreset | 'custom' = useMemo(() => {
     if (settings.headwordSize === 'sm' && settings.exampleEnSize === 'xs') return 'compact';
-    if (settings.headwordSize === 'md' && settings.exampleEnSize === 'md') return 'standard';
+    if (settings.headwordSize === 'md' && settings.exampleEnSize === 'md' && (settings.fontScalePercent || 100) <= 105) return 'standard';
     if (settings.headwordSize === 'lg' && settings.exampleEnSize === 'lg') return 'large';
     if (settings.headwordSize === 'xl' && settings.exampleEnSize === 'xl') return 'huge';
     if (settings.headwordSize === '2xl' && settings.exampleEnSize === '2xl') return 'giant';
@@ -222,10 +258,12 @@ export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         zoomIn,
         zoomOut,
         currentPreset,
+        pixelMetrics,
         headwordClass,
         exampleEnClass,
         exampleZhClass,
-        definitionClass
+        definitionClass,
+        supportingClass
       }}
     >
       {children}

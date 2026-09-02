@@ -177,94 +177,115 @@ export const DashboardPage: React.FC = () => {
 
       {/* Next-Gen 4 Core Action Hub */}
       <div className="grid grid-cols-2 gap-2.5">
-        {/* 1. Flashcards */}
+        {/* 1. Flashcards (FSRS Review) */}
         <button
           onClick={() => handleStartReview()}
-          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white shadow-lg shadow-emerald-950/40 border border-emerald-500/40 transition-all active:scale-[0.98] text-left group min-h-[105px]"
+          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 text-white shadow-lg shadow-emerald-950/40 border border-emerald-500/40 transition-all active:scale-[0.98] text-left group min-h-[110px]"
         >
           <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center mb-1">
             <Repeat size={18} className="text-white" />
           </div>
           <div>
-            <div className="text-[10px] text-emerald-200 font-medium">三態手勢</div>
-            <div className="text-sm font-black leading-tight mt-0.5">間隔重複複習</div>
-            <div className="text-[10px] text-emerald-200/80 mt-0.5">
+            <div className="text-xs text-emerald-200 font-medium">FSRS 記憶曲線</div>
+            <div className="text-base font-black leading-tight mt-0.5">間隔重複複習</div>
+            <div className="text-xs text-emerald-200/80 mt-0.5">
               {dueCount > 0 ? `${dueCount} 個單字到期` : '目前無逾期單字'}
             </div>
           </div>
         </button>
 
-        {/* 2. Speed Run 60s */}
-        <Link
-          to="/speedrun"
-          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-amber-600 to-red-700 hover:from-amber-500 hover:to-red-600 text-white shadow-lg shadow-red-950/40 border border-amber-500/40 transition-all active:scale-[0.98] text-left group min-h-[105px]"
+        {/* 2. Fast Skim (1.5s Rapid Muscle Memory) - PROMOTED TO CORE ACTION HUB! */}
+        <button
+          onClick={() => handleStartSkim()}
+          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-amber-600 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white shadow-lg shadow-amber-950/40 border border-amber-500/40 transition-all active:scale-[0.98] text-left group min-h-[110px]"
         >
           <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center mb-1">
             <Zap size={18} className="text-white" />
           </div>
           <div>
-            <div className="text-[10px] text-amber-200 font-medium">1秒直覺反應</div>
-            <div className="text-sm font-black leading-tight mt-0.5">60秒極速衝刺</div>
-            <div className="text-[10px] text-amber-200/80 mt-0.5">
-              Combo 連擊加分
+            <div className="text-xs text-amber-200 font-medium">1.5秒無痛過詞</div>
+            <div className="text-base font-black leading-tight mt-0.5">極速肌肉速讀</div>
+            <div className="text-xs text-amber-200/80 mt-0.5">
+              高頻預熱 · 沉浸聽音
             </div>
           </div>
-        </Link>
+        </button>
 
         {/* 3. Part 5 & Cloze Quiz Arena */}
         <Link
           to="/quiz"
-          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-800 hover:from-blue-500 hover:to-indigo-700 text-white shadow-lg shadow-indigo-950/40 border border-blue-500/40 transition-all active:scale-[0.98] text-left group min-h-[105px]"
+          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-800 hover:from-blue-500 hover:to-indigo-700 text-white shadow-lg shadow-indigo-950/40 border border-blue-500/40 transition-all active:scale-[0.98] text-left group min-h-[110px]"
         >
           <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center mb-1">
             <FileText size={18} className="text-white" />
           </div>
           <div>
-            <div className="text-[10px] text-blue-200 font-medium">實戰題庫</div>
-            <div className="text-sm font-black leading-tight mt-0.5">Part 5 測驗競技場</div>
-            <div className="text-[10px] text-blue-200/80 mt-0.5">
+            <div className="text-xs text-blue-200 font-medium">實戰題庫</div>
+            <div className="text-base font-black leading-tight mt-0.5">Part 5 測驗競技場</div>
+            <div className="text-xs text-blue-200/80 mt-0.5">
               選擇題 · 克漏字 · 詳解
             </div>
           </div>
         </Link>
 
-        {/* 4. Printable Cram PDF */}
+        {/* 4. Speed Run 60s */}
         <Link
-          to="/cram-sheet"
-          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-purple-600 to-slate-800 hover:from-purple-500 hover:to-slate-700 text-white shadow-lg shadow-purple-950/40 border border-purple-500/40 transition-all active:scale-[0.98] text-left group min-h-[105px]"
+          to="/speedrun"
+          className="flex flex-col items-start justify-between p-3.5 rounded-2xl bg-gradient-to-br from-rose-600 to-red-800 hover:from-rose-500 hover:to-red-700 text-white shadow-lg shadow-red-950/40 border border-rose-500/40 transition-all active:scale-[0.98] text-left group min-h-[110px]"
         >
           <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center mb-1">
-            <Printer size={18} className="text-white" />
+            <Flame size={18} className="text-white" />
           </div>
           <div>
-            <div className="text-[10px] text-purple-200 font-medium">考前衝刺</div>
-            <div className="text-sm font-black leading-tight mt-0.5">匯出 100 題 PDF</div>
-            <div className="text-[10px] text-purple-200/80 mt-0.5">
-              實體紙本 · 離線背誦
+            <div className="text-xs text-rose-200 font-medium">1秒直覺反應</div>
+            <div className="text-base font-black leading-tight mt-0.5">60秒極速衝刺</div>
+            <div className="text-xs text-rose-200/80 mt-0.5">
+              Combo 連擊搶分
             </div>
           </div>
         </Link>
       </div>
 
-      {/* AI Vocab Assessment Banner */}
-      <Link
-        to="/assessment"
-        className="p-3.5 rounded-2xl bg-gradient-to-r from-indigo-950/80 via-purple-950/60 to-slate-900 border border-indigo-500/40 hover:border-indigo-400/80 transition-all flex items-center justify-between group shadow-md shadow-indigo-950/30"
-      >
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">
-            <Sparkles size={20} className="text-indigo-400 animate-pulse" />
-          </div>
-          <div>
-            <div className="flex items-center space-x-1.5">
-              <span className="text-xs font-bold text-slate-100">AI 多益詞彙量與落點分數評測</span>
-              <Badge variant="purple">自適應 15 題</Badge>
+      {/* Auxiliary Learning Tools: Printable Cram Sheet & AI Vocab Assessment */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <Link
+          to="/assessment"
+          className="p-3 rounded-2xl bg-gradient-to-r from-indigo-950/80 to-purple-950/60 border border-indigo-500/40 hover:border-indigo-400/80 transition-all flex items-center justify-between group shadow-md"
+        >
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">
+              <Sparkles size={16} className="text-indigo-400" />
             </div>
-            <p className="text-[10px] text-slate-400 mt-0.5">即時診斷單字儲備量 · 預估多益金色/藍色證書落點</p>
+            <div>
+              <div className="text-xs font-bold text-slate-100 flex items-center space-x-1">
+                <span>AI 詞彙量落點評測</span>
+                <Badge variant="purple">15題</Badge>
+              </div>
+              <p className="text-[11px] text-slate-400">診斷多益藍/金證書落點</p>
+            </div>
           </div>
-        </div>
-        <ArrowRight size={16} className="text-indigo-400 group-hover:translate-x-1 transition-transform" />
-      </Link>
+          <ArrowRight size={15} className="text-indigo-400 group-hover:translate-x-0.5 transition-transform" />
+        </Link>
+
+        <Link
+          to="/cram-sheet"
+          className="p-3 rounded-2xl bg-slate-800/80 border border-purple-500/30 hover:border-purple-400/60 transition-all flex items-center justify-between group shadow-md"
+        >
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+              <Printer size={16} className="text-purple-400" />
+            </div>
+            <div>
+              <div className="text-xs font-bold text-slate-100 flex items-center space-x-1">
+                <span>考前 100 題紙本 PDF</span>
+                <Badge variant="emerald">可列印</Badge>
+              </div>
+              <p className="text-[11px] text-slate-400">匯出實體紙本離線背誦</p>
+            </div>
+          </div>
+          <ArrowRight size={15} className="text-purple-400 group-hover:translate-x-0.5 transition-transform" />
+        </Link>
+      </div>
 
       {/* Downloaded Courses Overview */}
       <div className="space-y-2.5">
