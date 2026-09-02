@@ -1,4 +1,4 @@
-﻿import fs from 'node:fs';
+import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -84,7 +84,7 @@ function getNextKey() {
   return k;
 }
 
-async function callGeminiEnrichBatch(words, retries = 3) {
+async function callGeminiEnrichBatch(words, retries = 20) {
   const prompt = `
 You are an elite ETS TOEIC Master Lexicographer and Mnemonic Expert (equivalent to BBWord / 不背單詞 VIP level).
 For the following English vocabulary items, generate the complete, high-value, pedagogical learning enrichment data in Traditional Chinese.
@@ -146,8 +146,8 @@ Return strictly a JSON array of word objects.
       if (!res.ok) {
         const text = await res.text();
         if (res.status === 429) {
-          console.warn(`⏳ [Key ${keyIndex % keyPool.length + 1}] 觸發限速 (429)，自動輪換下一組金鑰並等待 6s...`);
-          await new Promise(r => setTimeout(r, 6000));
+          console.warn(`⏳ [Key ${keyIndex % keyPool.length + 1}] 觸發限速 (429)，自動輪換至健康金鑰中...`);
+          await new Promise(r => setTimeout(r, 1500));
           continue;
         }
         throw new Error(`HTTP ${res.status}: ${text}`);
@@ -159,80 +159,77 @@ Return strictly a JSON array of word objects.
     } catch (err) {
       if (attempt === retries) throw err;
       console.warn(`⚠️ 批次嘗試 ${attempt} 失敗: ${err.message}. 輪換金鑰重試中...`);
-      await new Promise(r => setTimeout(r, 3000));
+      await new Promise(r => setTimeout(r, 2000));
     }
   }
 }
 
 async function runEnrichment() {
   const BATCH_SIZE = 10; // High throughput: 10 words per call
-  const uncompleted = wordsList.filter(w => !cacheMap.has(w.headword.toLowerCase().trim()));
+  
+  while (true) {
+    const uncompleted = wordsList.filter(w => !cacheMap.has(w.headword.toLowerCase().trim()));
+    if (uncompleted.length === 0) break;
 
-  console.log(`📋 總待精修單字數：${uncompleted.length} 詞（已完成：${cacheMap.size} 詞）`);
+    console.log(`📋 總待精修單字數：${uncompleted.length} 詞（已完成：${cacheMap.size} / ${wordsList.length} 詞）`);
 
-  for (let i = 0; i < uncompleted.length; i += BATCH_SIZE) {
-    const batch = uncompleted.slice(i, i + BATCH_SIZE);
-    const progressPct = Math.round(((cacheMap.size + batch.length) / wordsList.length) * 100);
+    for (let i = 0; i < uncompleted.length; i += BATCH_SIZE) {
+      const batch = uncompleted.slice(i, i + BATCH_SIZE);
+      const progressPct = Math.round(((cacheMap.size + batch.length) / wordsList.length) * 100);
 
-    console.log(`\n⏳ [${cacheMap.size + 1}~${Math.min(cacheMap.size + batch.length, wordsList.length)}/${wordsList.length}] (${progressPct}%) 正在精修: ${batch.map(b => b.headword).slice(0, 4).join(', ')}... (+${batch.length} 詞)`);
+      console.log(`\n⏳ [${cacheMap.size + 1}~${Math.min(cacheMap.size + batch.length, wordsList.length)}/${wordsList.length}] (${progressPct}%) 正在精修: ${batch.map(b => b.headword).slice(0, 4).join(', ')}... (+${batch.length} 詞)`);
 
-    try {
-      const results = await callGeminiEnrichBatch(batch);
-      for (const res of results) {
-        const key = (res.headword || '').toLowerCase().trim();
-        const origWord = wordsList.find(w => w.headword.toLowerCase().trim() === key) || {};
-        
-        // 🌟 100% 鎖定保護具象第一例句與視覺生圖提示詞
-        const heroExample = origWord.examples?.[0] || {
-          id: 'ex_1',
-          scenario: '日常商務 (具象核心)',
-          en: `Please review the standard procedures regarding ${origWord.headword || key}.`,
-          zh: `請審查關於【${origWord.definitionZh || key}】之標準程序。`
-        };
+      try {
+        const results = await callGeminiEnrichBatch(batch);
+        if (Array.isArray(results)) {
+          for (const res of results) {
+            const key = (res.headword || '').toLowerCase().trim();
+            const origWord = wordsList.find(w => w.headword.toLowerCase().trim() === key) || {};
+            
+            // 🌟 100% 鎖定保護具象第一例句與視覺生圖提示詞
+            const heroExample = origWord.examples?.[0] || {
+              id: 'ex_1',
+              scenario: '日常商務 (具象核心)',
+              en: `Please review the standard procedures regarding ${origWord.headword || key}.`,
+              zh: `請審查關於【${origWord.definitionZh || key}】之標準程序。`
+            };
 
-        const ex2 = res.extendedExamples?.ex_2 || {
-          scenario: '營運管理',
-          en: `Management confirmed updated protocols for ${origWord.headword || key}.`,
-          zh: `管理層確認了關於【${origWord.definitionZh || key}】之最新規範。`
-        };
+            const ex2 = res.extendedExamples?.ex_2 || res.extendedExamples?.sentenceA || res.sentenceA || res.extendedExamples?.[0] || res.examples?.[1] || null;
+            const ex3 = res.extendedExamples?.ex_3 || res.extendedExamples?.sentenceB || res.sentenceB || res.extendedExamples?.[1] || res.examples?.[2] || null;
 
-        const ex3 = res.extendedExamples?.ex_3 || {
-          scenario: '策略拓展',
-          en: `The committee approved strategic guidelines concerning ${origWord.headword || key}.`,
-          zh: `委員會核准了關於【${origWord.definitionZh || key}】之策略方針。`
-        };
+            const merged = {
+              ...origWord,
+              examFocus: res.examFocus,
+              etymology: res.etymology,
+              wordFamily: res.wordFamily,
+              synonymDiscrimination: res.synonymDiscrimination,
+              collocations: res.collocations,
+              examples: [
+                { ...heroExample, id: 'ex_1' },
+                ex2 ? { ...ex2, id: 'ex_2' } : null,
+                ex3 ? { ...ex3, id: 'ex_3' } : null
+              ].filter(Boolean) as any[],
+              visualAnchor: origWord.visualAnchor || {
+                imagePrompt: `Professional modern business workplace setting representing ${origWord.headword || key}, photorealistic, 8k`,
+                scene: `企業同仁於商務情境中處理 ${origWord.headword || key} 之應用場景`
+              }
+            };
 
-        const merged = {
-          ...origWord,
-          examFocus: res.examFocus,
-          etymology: res.etymology,
-          wordFamily: res.wordFamily,
-          synonymDiscrimination: res.synonymDiscrimination,
-          collocations: res.collocations,
-          examples: [
-            { ...heroExample, id: 'ex_1' },
-            { ...ex2, id: 'ex_2' },
-            { ...ex3, id: 'ex_3' }
-          ],
-          visualAnchor: origWord.visualAnchor || {
-            imagePrompt: `Professional modern business workplace setting representing ${origWord.headword || key}, photorealistic, 8k`,
-            scene: `企業同仁於商務情境中處理 ${origWord.headword || key} 之應用場景`
+            cacheMap.set(key, merged);
           }
-        };
 
-        cacheMap.set(key, merged);
+          // Save incremental checkpoint
+          const currentProgress = Array.from(cacheMap.values());
+          fs.writeFileSync(cacheFilePath, JSON.stringify(currentProgress), 'utf8');
+          console.log(`✅ 已寫入進度快照（累計已完成：${cacheMap.size} 詞）`);
+        }
+
+        // 雙金鑰交替間隔 (2.5 秒 = 24 RPM 總吞吐量)
+        await new Promise(r => setTimeout(r, 2000));
+      } catch (batchErr) {
+        console.error(`❌ 批次精修失敗 (${batch.map(b => b.headword).join(', ')}):`, batchErr.message);
+        await new Promise(r => setTimeout(r, 3000));
       }
-
-      // Save incremental checkpoint
-      const currentProgress = Array.from(cacheMap.values());
-      fs.writeFileSync(cacheFilePath, JSON.stringify(currentProgress), 'utf8');
-      console.log(`✅ 已寫入進度快照（累計已完成：${cacheMap.size} 詞）`);
-
-      // 雙金鑰交替間隔 (2.5 秒 = 24 RPM 總吞吐量)
-      await new Promise(r => setTimeout(r, 2500));
-    } catch (batchErr) {
-      console.error(`❌ 批次精修失敗 (${batch.map(b => b.headword).join(', ')}):`, batchErr.message);
-      await new Promise(r => setTimeout(r, 5000));
     }
   }
 
