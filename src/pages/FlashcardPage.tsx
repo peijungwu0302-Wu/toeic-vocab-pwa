@@ -763,9 +763,41 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 🎯 多益考點與避坑提醒 (examFocus) */}
+                {/* 🌟 1. 情境視覺印記 ＋ 具象第一例句 (1:1 呼應配圖 · 記憶錨點) */}
+                {currentExamples.length > 0 && (
+                  <div className="p-2.5 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2 shadow-sm">
+                    <div className="flex items-center justify-between">
+                      <div className="text-[10px] text-emerald-400 font-bold tracking-wider flex items-center space-x-1">
+                        <Sparkles size={11} className="text-amber-400 shrink-0" />
+                        <span>專屬具象商務例句</span>
+                      </div>
+                      <span className="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[9px] text-emerald-300 border border-emerald-800/50 font-semibold inline-block">
+                        🏢 {currentExamples[0]?.scenario || word.category || '商務溝通'}
+                      </span>
+                    </div>
+
+                    {/* Hero Primary Example */}
+                    <div
+                      onClick={() => audioService.speakSentence(currentExamples[0]?.en || currentExamples[0]?.english || '')}
+                      className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
+                      title="點擊播放例句真人朗讀"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
+                          {currentExamples[0]?.en || currentExamples[0]?.english}
+                        </p>
+                        <Volume2 size={14} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
+                      </div>
+                      <p className={`text-emerald-400/90 ${exampleZhClass} mt-1.5`}>
+                        {currentExamples[0]?.zh || currentExamples[0]?.chinese}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* 🎯 2. 多益考點與避坑提醒 (examFocus) */}
                 {word.examFocus && (
-                  <div className="p-2 rounded-xl bg-indigo-950/40 border border-indigo-700/40 text-[11px] space-y-1">
+                  <div className="p-2.5 rounded-xl bg-indigo-950/40 border border-indigo-700/40 text-[11px] space-y-1 shadow-sm">
                     <div className="flex items-center justify-between text-indigo-300 font-bold text-[10px]">
                       <span>🎯 多益核心考點：{word.examFocus.primaryBusinessSense}</span>
                     </div>
@@ -777,9 +809,27 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* 🧩 詞根詞綴與構詞記憶 (優先使用單字專屬 etymology) */}
+                {/* 🔗 3. 常考商務搭配語塊 (collocations - 取代舊版套版搭配詞) */}
+                {word.collocations && word.collocations.length > 0 && (
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-teal-800/40 space-y-1.5 text-xs shadow-sm">
+                    <div className="text-teal-400 font-bold text-[11px] flex items-center justify-between">
+                      <span>🔗 常考商務搭配語塊 (Collocations)</span>
+                      <span className="text-[9px] text-teal-500/80">必考黃金語塊</span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-1 text-[10px]">
+                      {word.collocations.map((c: any, cIdx: number) => (
+                        <div key={cIdx} className="px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+                          <span className="text-emerald-300 font-bold">{c.en}</span>
+                          <span className="text-slate-300">{c.zh}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 🧩 4. 詞根字首拆解與構詞記憶 (etymology / morphology) */}
                 {(word.etymology || morphology) && (
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-amber-800/40 space-y-1.5 text-xs">
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-amber-800/40 space-y-1.5 text-xs shadow-sm">
                     <div className="flex items-center justify-between text-amber-400 font-bold text-[11px]">
                       <span className="flex items-center"><Layers size={12} className="mr-1" /> 詞根字首拆解與構詞記憶</span>
                     </div>
@@ -839,9 +889,9 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* 🔄 多益同反義詞微辨析 (synonymDiscrimination) */}
+                {/* 🔄 5. 多益同反義詞微辨析 (synonymDiscrimination) */}
                 {word.synonymDiscrimination && (
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-blue-800/40 space-y-1 text-xs">
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-blue-800/40 space-y-1 text-xs shadow-sm">
                     <div className="flex items-center justify-between text-blue-400 font-bold text-[11px]">
                       <span>🔄 多益同義替換與微辨析</span>
                     </div>
@@ -863,110 +913,48 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* 🔗 黃金商務搭配語塊 (collocations) */}
-                {word.collocations && word.collocations.length > 0 && (
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-teal-800/40 space-y-1 text-xs">
-                    <div className="text-teal-400 font-bold text-[11px] flex items-center">
-                      <span>🔗 常考商務搭配語塊 (Collocations)</span>
-                    </div>
-                    <div className="grid grid-cols-1 gap-1 text-[10px]">
-                      {word.collocations.map((c: any, cIdx: number) => (
-                        <div key={cIdx} className="px-2 py-1 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
-                          <span className="text-emerald-300 font-bold">{c.en}</span>
-                          <span className="text-slate-400">{c.zh}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* 🌟 具象畫面感第一例句 (1:1 呼應配圖 · 記憶錨點) */}
-                {currentExamples.length > 0 && (
-                  <div className="p-2.5 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <div className="text-[10px] text-emerald-400 font-bold tracking-wider flex items-center space-x-1">
-                        <Sparkles size={11} className="text-amber-400 shrink-0" />
-                        <span>專屬具象商務例句</span>
-                      </div>
-                      <span className="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[9px] text-emerald-300 border border-emerald-800/50 font-semibold inline-block">
-                        🏢 {currentExamples[0]?.scenario || word.category || '商務溝通'}
-                      </span>
-                    </div>
-
-                    {/* Hero Primary Example */}
-                    <div
-                      onClick={() => audioService.speakSentence(currentExamples[0]?.en || currentExamples[0]?.english || '')}
-                      className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
-                      title="點擊播放例句真人朗讀"
+                {/* 🏢 6. 進階延伸商務例句摺疊區 (可選展開 ex_2, ex_3) */}
+                {currentExamples.length > 1 && (
+                  <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs space-y-2 shadow-sm">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveTabExample(prev => prev === 0 ? 1 : 0);
+                      }}
+                      className="text-[11px] text-slate-300 hover:text-emerald-400 flex items-center justify-between w-full py-0.5 transition-colors font-bold"
                     >
-                      <div className="flex items-start justify-between gap-2">
-                        <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
-                          {currentExamples[0]?.en || currentExamples[0]?.english}
-                        </p>
-                        <Volume2 size={14} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
-                      </div>
-                      <p className={`text-emerald-400/90 ${exampleZhClass} mt-1.5`}>
-                        {currentExamples[0]?.zh || currentExamples[0]?.chinese}
-                      </p>
-                    </div>
+                      <span className="flex items-center">
+                        <BookOpen size={12} className="mr-1.5 text-teal-400" />
+                        {activeTabExample > 0 ? '收起進階延伸例句' : '展開更多情境延伸例句（營運／策略）...'}
+                      </span>
+                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                        {activeTabExample > 0 ? '收起' : `+${currentExamples.length - 1} 句`}
+                      </span>
+                    </button>
 
-                    {/* 進階延伸例句摺疊區 (可選展開) */}
-                    {currentExamples.length > 1 && (
-                      <div className="pt-1 border-t border-slate-800/60">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setActiveTabExample(prev => prev === 0 ? 1 : 0);
-                          }}
-                          className="text-[10px] text-slate-400 hover:text-slate-200 flex items-center justify-between w-full py-0.5 transition-colors font-medium"
-                        >
-                          <span className="flex items-center">
-                            <BookOpen size={10} className="mr-1 text-slate-500" />
-                            {activeTabExample > 0 ? '收起延伸例句' : '查看更多情境延伸例句...'}
-                          </span>
-                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400">
-                            {activeTabExample > 0 ? '收起' : `+${currentExamples.length - 1}`}
-                          </span>
-                        </button>
-
-                        {activeTabExample > 0 && (
-                          <div className="space-y-1.5 pt-1.5">
-                            {currentExamples.slice(1).map((ex, idx) => (
-                              <div
-                                key={idx}
-                                onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
-                                className="p-2 rounded-lg bg-slate-950/50 border border-slate-800/60 hover:bg-slate-800/50 cursor-pointer group"
-                              >
-                                <div className="flex items-start justify-between gap-1">
-                                  <p className="text-slate-300 text-[11px] leading-relaxed">
-                                    {ex.en || ex.english}
-                                  </p>
-                                  <Volume2 size={12} className="text-slate-500 group-hover:text-emerald-400 shrink-0 mt-0.5" />
-                                </div>
-                                <p className="text-slate-400 text-[10px] mt-0.5">
-                                  {ex.zh || ex.chinese}
-                                </p>
-                              </div>
-                            ))}
+                    {activeTabExample > 0 && (
+                      <div className="space-y-1.5 pt-1 border-t border-slate-800">
+                        {currentExamples.slice(1).map((ex, idx) => (
+                          <div
+                            key={idx}
+                            onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
+                            className="p-2 rounded-lg bg-slate-950/70 border border-slate-800/80 hover:bg-slate-800/50 cursor-pointer group"
+                          >
+                            <div className="flex items-center justify-between text-[10px] text-teal-400 font-semibold mb-1">
+                              <span>🏢 {ex.scenario || (idx === 0 ? '營運管理' : '策略拓展')}</span>
+                              <Volume2 size={12} className="text-slate-500 group-hover:text-emerald-400 shrink-0" />
+                            </div>
+                            <p className="text-slate-200 text-[11px] leading-relaxed">
+                              {ex.en || ex.english}
+                            </p>
+                            <p className="text-slate-400 text-[10px] mt-0.5">
+                              {ex.zh || ex.chinese}
+                            </p>
                           </div>
-                        )}
+                        ))}
                       </div>
                     )}
-                  </div>
-                )}
-
-                {/* 多益考點搭配詞 */}
-                {morphology && morphology.collocations && morphology.collocations.length > 0 && (
-                  <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] space-y-1">
-                    <div className="text-[10px] text-emerald-400 font-bold">🎯 多益常考高頻搭配詞：</div>
-                    <div className="flex flex-wrap gap-1">
-                      {morphology.collocations.map((col, cIdx) => (
-                        <span key={cIdx} className="px-2 py-0.5 rounded-md bg-slate-950 border border-slate-800 text-slate-300 text-[10px]">
-                          {col}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 )}
               </div>

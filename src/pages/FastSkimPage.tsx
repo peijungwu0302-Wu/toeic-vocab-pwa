@@ -263,7 +263,7 @@ export const FastSkimPage: React.FC = () => {
   const progressPercent = Math.min(100, Math.max(0, ((durationSec - remainingTime) / durationSec) * 100));
 
   return (
-    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-2 pb-1 select-none overflow-hidden">
+    <div className="flex flex-col min-h-[calc(100dvh-5.5rem)] justify-between max-w-md mx-auto space-y-2 pb-2 select-none">
       {/* Top Filter & Micro-session Bar */}
       <div className="space-y-2">
         <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/70 rounded-2xl px-3.5 py-2 shadow-sm">
@@ -423,10 +423,17 @@ export const FastSkimPage: React.FC = () => {
                 <AudioButton headword={currentWord.headword} audioUrl={currentWord.audioUSUrl} />
               </div>
 
-              <div className={showImage ? "mt-1.5" : "mt-4"}>
-                <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight`}>
-                  {currentWord.headword}
-                </h2>
+              <div className={showImage ? "mt-1.5" : "mt-3"}>
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight`}>
+                    {currentWord.headword}
+                  </h2>
+                  {currentWord.partsOfSpeech && currentWord.partsOfSpeech.length > 0 && (
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-950/70 border border-emerald-700/60 text-emerald-300">
+                      {currentWord.partsOfSpeech.join(', ')}
+                    </span>
+                  )}
+                </div>
                 {currentWord.phoneticUS && (
                   <p className="text-sm font-mono text-emerald-400/90 mt-0.5">
                     /{currentWord.phoneticUS}/
@@ -436,7 +443,7 @@ export const FastSkimPage: React.FC = () => {
             </div>
 
             {/* Definition & Examples */}
-            <div className="my-2.5 space-y-2.5">
+            <div className="my-2 space-y-2">
               <div className="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
                 <div className="text-[10px] text-slate-400 font-semibold mb-0.5">中文釋義</div>
                 <div className={`${definitionClass} text-emerald-300`}>
@@ -461,16 +468,15 @@ export const FastSkimPage: React.FC = () => {
             </div>
 
             {/* Bottom info bar */}
-            <div className="text-[11px] text-slate-400 flex items-center justify-between border-t border-slate-800 pt-2.5">
-              <span>詞性：{currentWord.partsOfSpeech.join(', ')}</span>
-              <span className="text-slate-400 font-mono">剩餘 {remainingTime.toFixed(1)} 秒</span>
+            <div className="text-[11px] text-slate-400 flex items-center justify-end border-t border-slate-800/70 pt-2">
+              <span className="text-slate-400 font-mono">倒數 {remainingTime.toFixed(1)} 秒</span>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Bottom Floating Control Bar */}
-      <div className="flex items-center justify-center space-x-4 bg-slate-800/90 border border-slate-700/80 rounded-2xl py-2.5 px-6 shadow-xl backdrop-blur">
+      {/* Bottom Floating Control Bar (Sticky & Uncuttable) */}
+      <div className="flex items-center justify-center space-x-4 bg-slate-800/95 border border-slate-700/80 rounded-2xl py-2 px-6 shadow-xl backdrop-blur shrink-0 sticky bottom-0 z-20">
         <button
           type="button"
           onClick={goToPrev}
