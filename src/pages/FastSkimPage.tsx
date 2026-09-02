@@ -76,6 +76,26 @@ export const FastSkimPage: React.FC = () => {
         });
       }
 
+      // Fallback: Auto-download course-core-1200 if local DB is clean
+      if (loadedWords.length === 0) {
+        try {
+          await courseRepository.downloadAndSaveCourse('course-core-1200', 'course-core-1200.json');
+          if (courseId) {
+            loadedWords = await courseRepository.getWordsForCourse(courseId, {
+              category: selectedCategory,
+              shuffle: isShuffle
+            });
+          } else {
+            loadedWords = await courseRepository.getAllDownloadedWords({
+              category: selectedCategory,
+              shuffle: isShuffle
+            });
+          }
+        } catch (autoErr) {
+          console.warn('[FastSkim] Auto-download fallback error:', autoErr);
+        }
+      }
+
       setAllWords(loadedWords);
 
       // Slice to first batch

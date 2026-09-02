@@ -167,6 +167,22 @@ export const FlashcardPage: React.FC = () => {
             items.push(...newWords);
           }
         }
+
+        // 3. Fallback: Auto-load default core 1,200 course if local DB is clean
+        if (items.length === 0) {
+          try {
+            await courseRepository.downloadAndSaveCourse('course-core-1200', 'course-core-1200.json');
+            const autoWords = await progressRepository.getNewWordsForCourse(
+              profileId,
+              'course-core-1200',
+              batchSize,
+              { category: selectedCategory, shuffle: isShuffle }
+            );
+            items.push(...autoWords);
+          } catch (autoErr) {
+            console.warn('[FlashcardPage] Auto-download fallback error:', autoErr);
+          }
+        }
       }
 
       setQueue(items);
@@ -426,6 +442,44 @@ export const FlashcardPage: React.FC = () => {
     return (
       <div className="text-center py-16 text-slate-400">
         <p className="text-xs">正在載入複習單字卡...</p>
+      </div>
+    );
+  }
+
+  // Empty queue screen (No words in queue)
+  if (queue.length === 0) {
+    return (
+      <div className="min-h-[70dvh] flex flex-col justify-center items-center max-w-sm mx-auto text-center space-y-4 px-4">
+        <div className="w-16 h-16 rounded-3xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+          <Sparkles size={32} />
+        </div>
+        <div>
+          <h2 className="text-lg font-bold text-slate-100">本機尚未下載題庫或已無新單字</h2>
+          <p className="text-xs text-slate-400 mt-1">請點擊下方按鈕一鍵載入高頻核心 1,200 詞題庫。</p>
+        </div>
+        <div className="w-full space-y-2 pt-2">
+          <Button
+            size="lg"
+            fullWidth
+            variant="primary"
+            onClick={async () => {
+              setIsLoading(true);
+              try {
+                await courseRepository.downloadAndSaveCourse('course-core-1200', 'course-core-1200.json');
+                await loadStudyQueue();
+              } catch (err) {
+                alert('載入失敗：' + (err as Error).message);
+              } finally {
+                setIsLoading(false);
+              }
+            }}
+          >
+            🔥 立即載入核心 1,200 必考題庫
+          </Button>
+          <Button size="md" fullWidth variant="outline" onClick={() => navigate('/catalog')}>
+            前往課程目錄挑選
+          </Button>
+        </div>
       </div>
     );
   }
