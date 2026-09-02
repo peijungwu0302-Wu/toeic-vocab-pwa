@@ -123,11 +123,8 @@ export const AppLayout: React.FC = () => {
       <InstallPrompt />
 
       {/* Bottom Navigation Bar - ALWAYS Accessible across all tabs */}
-      <nav
-        className="shrink-0 bg-slate-900/98 backdrop-blur-md border-t border-slate-800 z-30"
-        style={{ paddingBottom: 'max(4px, calc(env(safe-area-inset-bottom, 0px) - 20px))' }}
-      >
-        <div className="flex items-center justify-around px-1 pt-1 pb-0">
+      <nav className="shrink-0 bg-slate-900/98 backdrop-blur-md border-t border-slate-800 z-30 pb-2">
+        <div className="flex items-center justify-around px-1 pt-1.5 pb-0">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
