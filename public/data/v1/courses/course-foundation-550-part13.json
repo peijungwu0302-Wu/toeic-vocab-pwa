@@ -5,7 +5,7 @@
   "toeicScoreRange": "400-600",
   "category": "綜合商務",
   "level": "基礎",
-  "version": 8,
+  "version": 9,
   "words": [
     {
       "id": "tw_p_26038a54d78d",
@@ -38,18 +38,6 @@
           "en": "The technician used a microfiber cloth to wipe off the dust from the optical sensors of the manufacturing equipment.",
           "zh": "技術人員使用超細纖維布擦拭掉製造設備光學感測器上的灰塵。",
           "scenario": "設備檢修"
-        },
-        {
-          "id": "ex_2_wipe off",
-          "en": "Senior stakeholders finalized the commercial memorandum wipe off before the annual gala.",
-          "zh": "高層關係人在年度晚會前【擦拭掉】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wipe off",
-          "en": "Commercial stakeholders agreed that maintaining wipe off is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【擦拭掉】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -398,18 +386,6 @@
           "en": "Our office recently upgraded its infrastructure to provide high-speed wireless connectivity in every conference room.",
           "zh": "我們的辦公室最近升級了基礎設施，在每個會議室提供高速無線連線。",
           "scenario": "科技與技術支援"
-        },
-        {
-          "id": "ex_2_wireless",
-          "en": "The senior analyst delivered a wireless report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【無線的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wireless",
-          "en": "Commercial stakeholders agreed that maintaining wireless is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【無線的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -757,18 +733,6 @@
           "en": "Investing in cybersecurity training for all employees is a wise decision given the recent rise in digital threats.",
           "zh": "鑑於近期數位威脅的增加，投資所有員工的網路安全培訓是一個明智的決定。",
           "scenario": "法務合規與安全"
-        },
-        {
-          "id": "ex_2_wise",
-          "en": "The senior analyst delivered a wise report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【聰明的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wise",
-          "en": "Commercial stakeholders agreed that maintaining wise is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【聰明的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -1126,18 +1090,6 @@
           "en": "I wish to express my sincere gratitude for your hard work on this challenging project.",
           "zh": "我希望能對您在這個充滿挑戰的專案中所付出的辛勞，表達我誠摯的感謝。",
           "scenario": "溝通互動"
-        },
-        {
-          "id": "ex_2_wish",
-          "en": "The executive committee agreed to wish additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【希望、期望】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wish",
-          "en": "Commercial stakeholders agreed that maintaining wish is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【希望、期望】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -1493,18 +1445,6 @@
           "en": "The management team sends their best wishes to all employees for a successful and productive year ahead.",
           "zh": "管理團隊向所有員工致上最誠摯的祝福，期許未來一年成功且富有成效。",
           "scenario": "溝通互動"
-        },
-        {
-          "id": "ex_2_wishes",
-          "en": "Our organization strictly prioritizes wishes across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【願望】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wishes",
-          "en": "Commercial stakeholders agreed that maintaining wishes is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【願望】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -1844,18 +1784,6 @@
           "en": "To promote energy conservation, cleaning staff are reminded to turn off the lights when leaving rather than working with the lights on in empty rooms.",
           "zh": "為了促進節能，提醒清潔人員離開時關閉燈光，而不是在空房間裡開著燈工作。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_with the lights on",
-          "en": "Senior stakeholders finalized the commercial memorandum with the lights on before the annual gala.",
-          "zh": "高層關係人在年度晚會前【燈光未關閉的狀態】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_with the lights on",
-          "en": "Commercial stakeholders agreed that maintaining with the lights on is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【燈光未關閉的狀態】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -2196,18 +2124,6 @@
           "en": "All expense reports must be submitted within five business days after the completion of the business trip.",
           "zh": "所有費用報銷單必須在出差結束後的五個工作天內提交。",
           "scenario": "財務審計"
-        },
-        {
-          "id": "ex_2_within",
-          "en": "Financial analysts forecast steady revenue growth throughout the upcoming within.",
-          "zh": "財務分析師預測，在即將到來的【在...範圍內】內營收將呈現穩健增長。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_within",
-          "en": "Commercial stakeholders agreed that maintaining within is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【在...範圍內】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -2561,18 +2477,6 @@
           "en": "The project cannot proceed without the final approval from the regional director.",
           "zh": "沒有區域總監的最終批准，該專案無法進行。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_without",
-          "en": "Our organization strictly prioritizes without across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【沒有】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_without",
-          "en": "Commercial stakeholders agreed that maintaining without is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【沒有】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -2919,18 +2823,6 @@
           "en": "Once the client approves the revised blueprints, our engineering team will proceed with manufacturing without delay.",
           "zh": "一旦客戶批准修改後的藍圖，我們的工程團隊將立即進行製造。",
           "scenario": "設備檢修"
-        },
-        {
-          "id": "ex_2_without delay",
-          "en": "Senior stakeholders finalized the commercial memorandum without delay before the annual gala.",
-          "zh": "高層關係人在年度晚會前【立即】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_without delay",
-          "en": "Commercial stakeholders agreed that maintaining without delay is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【立即】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -3277,18 +3169,6 @@
           "en": "The system maintenance had to be performed without notice due to an unexpected surge in server traffic.",
           "zh": "由於伺服器流量無預警暴增，系統維護不得不臨時進行。",
           "scenario": "科技與技術支援"
-        },
-        {
-          "id": "ex_2_without notice",
-          "en": "Senior stakeholders finalized the commercial memorandum without notice before the annual gala.",
-          "zh": "高層關係人在年度晚會前【未事先通知】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_without notice",
-          "en": "Commercial stakeholders agreed that maintaining without notice is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【未事先通知】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -3635,18 +3515,6 @@
           "en": "The woman in the navy suit is the lead architect for our new headquarters.",
           "zh": "那位穿著海軍藍套裝的女士是我們新總部的首席建築師。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_woman",
-          "en": "Our organization strictly prioritizes woman across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【成年女性】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_woman",
-          "en": "Commercial stakeholders agreed that maintaining woman is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【成年女性】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -3993,18 +3861,6 @@
           "en": "The company is launching a new mentorship program to support women in leadership roles.",
           "zh": "公司正在啟動一項新的導師計畫，以支持擔任領導職務的女性。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_women",
-          "en": "Our organization strictly prioritizes women across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【女性】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_women",
-          "en": "Commercial stakeholders agreed that maintaining women is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【女性】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -4353,18 +4209,6 @@
           "en": "Our marketing team won the industry award for the most innovative campaign of the year.",
           "zh": "我們的行銷團隊贏得了年度最具創新廣告活動的產業獎項。",
           "scenario": "營運管理"
-        },
-        {
-          "id": "ex_2_won",
-          "en": "The executive committee agreed to won additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【贏得】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_won",
-          "en": "Commercial stakeholders agreed that maintaining won is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【贏得】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -4722,18 +4566,6 @@
           "en": "I wonder if the new software update will resolve the connectivity issues we experienced last week.",
           "zh": "我很好奇新的軟體更新是否能解決我們上週遇到的連線問題。",
           "scenario": "溝通互動"
-        },
-        {
-          "id": "ex_2_wonder",
-          "en": "Our organization strictly prioritizes wonder across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【驚奇】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wonder",
-          "en": "Commercial stakeholders agreed that maintaining wonder is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【驚奇】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -5082,18 +4914,6 @@
           "en": "It was a wonderful opportunity to network with potential investors at the annual gala.",
           "zh": "這是一個在年度晚宴上與潛在投資者建立人脈的絕佳機會。",
           "scenario": "溝通互動"
-        },
-        {
-          "id": "ex_2_wonderful",
-          "en": "The senior analyst delivered a wonderful report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【極好的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wonderful",
-          "en": "Commercial stakeholders agreed that maintaining wonderful is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【極好的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -5451,18 +5271,6 @@
           "en": "The project manager was wondering if the new software update would be released before the quarterly review.",
           "zh": "專案經理在想，新的軟體更新是否會在季度審查前發布。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_wondering",
-          "en": "By wondering automated cloud infrastructure, the startup reduced operational costs substantially.",
-          "zh": "藉由【感到好奇、想知道】自動化雲端基礎架構，該新創公司大幅降低了營運成本。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wondering",
-          "en": "Commercial stakeholders agreed that maintaining wondering is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【感到好奇、想知道】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -5810,18 +5618,6 @@
           "en": "The furniture manufacturer sources high-quality wood from sustainable forests to ensure durability.",
           "zh": "該家具製造商從永續森林採購高品質木材，以確保耐用性。",
           "scenario": "採購與物流"
-        },
-        {
-          "id": "ex_2_wood",
-          "en": "Our organization strictly prioritizes wood across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【木材】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wood",
-          "en": "Commercial stakeholders agreed that maintaining wood is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【木材】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -6170,18 +5966,6 @@
           "en": "The warehouse supervisor inspected the stacked wooden pallets to ensure they could safely support the heavy cargo.",
           "zh": "倉庫主管檢查了堆疊的木棧板，以確保它們能夠安全支撐沉重的貨物。",
           "scenario": "物流倉儲"
-        },
-        {
-          "id": "ex_2_wooden",
-          "en": "The senior analyst delivered a wooden report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【由木材製成的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wooden",
-          "en": "Commercial stakeholders agreed that maintaining wooden is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【由木材製成的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -6528,18 +6312,6 @@
           "en": "The newly imported merino wool from New Zealand is primarily utilized to manufacture our luxury winter overcoats.",
           "zh": "從紐西蘭新進口的美麗諾羊毛主要用於製造我們的奢華冬季大衣。",
           "scenario": "採購與物流"
-        },
-        {
-          "id": "ex_2_wool",
-          "en": "Our organization strictly prioritizes wool across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【羊毛】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wool",
-          "en": "Commercial stakeholders agreed that maintaining wool is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【羊毛】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -6897,18 +6669,6 @@
           "en": "Please keep your word regarding the delivery deadline, as our production schedule depends on it.",
           "zh": "請遵守您關於交貨期限的承諾，因為我們的生產進度取決於此。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_word",
-          "en": "Our organization strictly prioritizes word across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【字詞】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_word",
-          "en": "Commercial stakeholders agreed that maintaining word is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【字詞】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -7255,18 +7015,6 @@
           "en": "Choose your words carefully when presenting the quarterly financial results to the board.",
           "zh": "在向董事會報告季度財務業績時，請謹慎選擇您的用詞。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_words",
-          "en": "Our organization strictly prioritizes words across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【詞語】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_words",
-          "en": "Commercial stakeholders agreed that maintaining words is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【詞語】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -7624,18 +7372,6 @@
           "en": "The team has been working hard to complete the audit before the end of the fiscal year.",
           "zh": "團隊一直努力工作，以便在財政年度結束前完成審計。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_work",
-          "en": "Our organization strictly prioritizes work across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【工作】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work",
-          "en": "Commercial stakeholders agreed that maintaining work is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -7983,18 +7719,6 @@
           "en": "The company takes pride in offering a collaborative and inclusive work environment that boosts employee productivity.",
           "zh": "公司以提供能提升員工生產力的協作且包容的工作環境而自豪。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_work environment",
-          "en": "Senior stakeholders finalized the commercial memorandum work environment before the annual gala.",
-          "zh": "高層關係人在年度晚會前【工作環境：指員工在辦公室或工作場所中實際工作的情境】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work environment",
-          "en": "Commercial stakeholders agreed that maintaining work environment is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作環境：指員工在辦公室或工作場所中實際工作的情境】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -8342,18 +8066,6 @@
           "en": "The human resources director carefully reviewed the candidate's impressive work history before scheduling the final interview.",
           "zh": "人力資源總監在安排最後面試之前，仔細審閱了這位候選人令人印象深刻的工作經歷。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_work history",
-          "en": "Senior stakeholders finalized the commercial memorandum work history before the annual gala.",
-          "zh": "高層關係人在年度晚會前【工作經歷】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work history",
-          "en": "Commercial stakeholders agreed that maintaining work history is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作經歷】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -8700,18 +8412,6 @@
           "en": "During the leadership training seminar, participants were instructed to work in groups to solve a complex case study.",
           "zh": "在領導力培訓研討會期間，參與者被指示以小組方式合作來解決一個複雜的案例研究。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_work in groups",
-          "en": "Senior stakeholders finalized the commercial memorandum work in groups before the annual gala.",
-          "zh": "高層關係人在年度晚會前【以小組方式工作】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work in groups",
-          "en": "Commercial stakeholders agreed that maintaining work in groups is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【以小組方式工作】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -9061,18 +8761,6 @@
           "en": "Our engineers are currently working on a new prototype to improve energy efficiency.",
           "zh": "我們的工程師目前正致力於開發一種能提高能源效率的新原型機。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_work on",
-          "en": "Senior stakeholders finalized the commercial memorandum work on before the annual gala.",
-          "zh": "高層關係人在年度晚會前【致力於】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work on",
-          "en": "Commercial stakeholders agreed that maintaining work on is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【致力於】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -9422,18 +9110,6 @@
           "en": "Staff members who work overtime during the peak season will be compensated with extra leave.",
           "zh": "在旺季加班的員工將獲得額外休假作為補償。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_work overtime",
-          "en": "Senior stakeholders finalized the commercial memorandum work overtime before the annual gala.",
-          "zh": "高層關係人在年度晚會前【加班】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work overtime",
-          "en": "Commercial stakeholders agreed that maintaining work overtime is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【加班】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -9780,18 +9456,6 @@
           "en": "The IT technician ran a series of diagnostic tests to ensure the newly installed server would work properly.",
           "zh": "IT技術員運行了一系列診斷測試，以確保新安裝的伺服器能夠正常運作。",
           "scenario": "設備檢修"
-        },
-        {
-          "id": "ex_2_work properly",
-          "en": "Senior stakeholders finalized the commercial memorandum work properly before the annual gala.",
-          "zh": "高層關係人在年度晚會前【正常運作】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work properly",
-          "en": "Commercial stakeholders agreed that maintaining work properly is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【正常運作】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -10139,18 +9803,6 @@
           "en": "Factory employees must clock in ten minutes before their scheduled work shift begins.",
           "zh": "工廠員工必須在排定的工作班次開始前十分鐘打卡上班。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_work shift",
-          "en": "Senior stakeholders finalized the commercial memorandum work shift before the annual gala.",
-          "zh": "高層關係人在年度晚會前【工作排班】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_work shift",
-          "en": "Commercial stakeholders agreed that maintaining work shift is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作排班】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -10497,18 +10149,6 @@
           "en": "All trainees received a comprehensive workbook containing financial exercises and tax compliance guidelines.",
           "zh": "所有受訓人員都收到一本包含財務練習和稅務合規指南的綜合工作簿。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_workbook",
-          "en": "Our organization strictly prioritizes workbook across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【活頁簿】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workbook",
-          "en": "Commercial stakeholders agreed that maintaining workbook is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【活頁簿】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -10856,18 +10496,6 @@
           "en": "To maximize productivity, team leaders prefer to schedule all major strategy meetings in the morning of every workday.",
           "zh": "為了最大化生產力，團隊領導者傾向於在每個工作日的早晨安排所有主要的策略會議。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_workday",
-          "en": "Our organization strictly prioritizes workday across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【工作日】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workday",
-          "en": "Commercial stakeholders agreed that maintaining workday is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作日】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -11215,18 +10843,6 @@
           "en": "Each worker is required to wear safety gear while operating the heavy machinery.",
           "zh": "每位工作人員在操作重型機械時都必須穿戴安全裝備。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_worker",
-          "en": "Our company is seeking a qualified worker with strong analytical and communication skills.",
-          "zh": "我司正尋找具備出色分析與溝通能力的合格【勞工】。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_worker",
-          "en": "Commercial stakeholders agreed that maintaining worker is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【勞工】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -11573,18 +11189,6 @@
           "en": "The factory workers are undergoing specialized training to handle the new automated assembly line.",
           "zh": "工廠員工正在接受專業培訓，以操作新的自動化裝配線。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_workers",
-          "en": "Our company is seeking a qualified workers with strong analytical and communication skills.",
-          "zh": "我司正尋找具備出色分析與溝通能力的合格【勞工】。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workers",
-          "en": "Commercial stakeholders agreed that maintaining workers is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【勞工】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -11932,18 +11536,6 @@
           "en": "The labor union negotiated with management to secure safer working condition standards across all manufacturing plants.",
           "zh": "工會與管理層進行協商，以確保所有製造工廠都有更安全的工作條件標準。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_working condition",
-          "en": "Senior stakeholders finalized the commercial memorandum working condition before the annual gala.",
-          "zh": "高層關係人在年度晚會前【工作條件】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_working condition",
-          "en": "Commercial stakeholders agreed that maintaining working condition is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作條件】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -12301,18 +11893,6 @@
           "en": "Many employees take advantage of the on-site corporate gym for a quick workout during their lunch break.",
           "zh": "許多員工利用午休時間去公司附設的健身房進行快速鍛鍊。",
           "scenario": "營運管理"
-        },
-        {
-          "id": "ex_2_workout",
-          "en": "Our organization strictly prioritizes workout across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【鍛鍊】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workout",
-          "en": "Commercial stakeholders agreed that maintaining workout is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【鍛鍊】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -12659,18 +12239,6 @@
           "en": "The corporate wellness coordinator organized weekly fitness classes and personalized workouts to improve employee health.",
           "zh": "企業健康協調員組織了每週健身課程與個人化鍛鍊，以改善員工健康。",
           "scenario": "營運管理"
-        },
-        {
-          "id": "ex_2_workouts",
-          "en": "Our organization strictly prioritizes workouts across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【鍛鍊】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workouts",
-          "en": "Commercial stakeholders agreed that maintaining workouts is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【鍛鍊】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -13018,18 +12586,6 @@
           "en": "We are committed to maintaining a safe and inclusive workplace for all employees.",
           "zh": "我們致力於為所有員工維護一個安全且具包容性的工作場所。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_workplace",
-          "en": "Our organization strictly prioritizes workplace across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【工作場所】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workplace",
-          "en": "Commercial stakeholders agreed that maintaining workplace is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作場所】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -13377,18 +12933,6 @@
           "en": "Please complete the attached financial worksheet before attending tomorrow's budgeting workshop.",
           "zh": "請在參加明天的預算編製工作坊之前，完成附件中的財務工作表。",
           "scenario": "財務審計"
-        },
-        {
-          "id": "ex_2_worksheet",
-          "en": "Our organization strictly prioritizes worksheet across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【工作表】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_worksheet",
-          "en": "Commercial stakeholders agreed that maintaining worksheet is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作表】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -13736,18 +13280,6 @@
           "en": "The HR department is organizing a workshop on effective communication skills for managers.",
           "zh": "人力資源部門正在為經理們舉辦一場關於有效溝通技巧的工作坊。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_workshop",
-          "en": "Our organization strictly prioritizes workshop across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【工作坊】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workshop",
-          "en": "Commercial stakeholders agreed that maintaining workshop is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作坊】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -14095,18 +13627,6 @@
           "en": "The company redesigned its headquarters to create a more open and flexible workspace for cross-functional teams.",
           "zh": "公司重新設計了總部，為跨職能團隊打造更開放且靈活的工作空間。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_workspace",
-          "en": "Our organization strictly prioritizes workspace across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【工作空間】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workspace",
-          "en": "Commercial stakeholders agreed that maintaining workspace is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作空間】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -14454,18 +13974,6 @@
           "en": "Each customer service representative is equipped with an ergonomic workstation and dual computer monitors.",
           "zh": "每位客服代表都配備了符合人體工學的工作站和雙電腦螢幕。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_workstation",
-          "en": "The manufacturing plant invested in automated workstation to accelerate output efficiency.",
-          "zh": "該製造工廠投資了自動化【工作站】，以加速產出效率。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_workstation",
-          "en": "Commercial stakeholders agreed that maintaining workstation is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【工作站】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -14813,18 +14321,6 @@
           "en": "Our company has expanded its operations to reach customers all over the world.",
           "zh": "我們公司已擴展業務，觸及世界各地的客戶。",
           "scenario": "營運管理"
-        },
-        {
-          "id": "ex_2_world",
-          "en": "Our organization strictly prioritizes world across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【全球】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_world",
-          "en": "Commercial stakeholders agreed that maintaining world is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【全球】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -15173,18 +14669,6 @@
           "en": "The logistics corporation has established a worldwide distribution network to ensure rapid delivery of goods.",
           "zh": "這家物流公司已建立全球性的配送網路，以確保貨物的快速交付。",
           "scenario": "營運管理"
-        },
-        {
-          "id": "ex_2_worldwide",
-          "en": "The senior analyst delivered a worldwide report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【全球性的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_worldwide",
-          "en": "Commercial stakeholders agreed that maintaining worldwide is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【全球性的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -15542,18 +15026,6 @@
           "en": "The manager is worried about the potential impact of the supply chain disruption on our quarterly targets.",
           "zh": "經理對供應鏈中斷對我們季度目標的潛在影響感到擔憂。",
           "scenario": "溝通互動"
-        },
-        {
-          "id": "ex_2_worried",
-          "en": "The senior analyst delivered a worried report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【擔憂】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_worried",
-          "en": "Commercial stakeholders agreed that maintaining worried is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【擔憂】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -15900,18 +15372,6 @@
           "en": "The CEO's reassuring speech during the town hall meeting successfully addressed investor worries about market volatility.",
           "zh": "執行長在全體員工大會上的安撫演說，成功化解了投資人對市場波動的擔憂。",
           "scenario": "董事會議"
-        },
-        {
-          "id": "ex_2_worries",
-          "en": "Our organization strictly prioritizes worries across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【擔憂、顧慮】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_worries",
-          "en": "Commercial stakeholders agreed that maintaining worries is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【擔憂、顧慮】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -16269,18 +15729,6 @@
           "en": "There is no need to worry about the budget, as we have secured additional funding for the project.",
           "zh": "無需擔心預算問題，因為我們已經為該專案獲得了額外資金。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_worry",
-          "en": "The executive committee agreed to worry additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【擔憂】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_worry",
-          "en": "Commercial stakeholders agreed that maintaining worry is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【擔憂】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -16629,18 +16077,6 @@
           "en": "A sudden drop in quarterly sales figures is a worrying trend that requires immediate strategic intervention.",
           "zh": "季度銷售數據的突然下滑是一個令人擔憂的趨勢，需要立即採取策略干預。",
           "scenario": "財務審計"
-        },
-        {
-          "id": "ex_2_worrying",
-          "en": "The senior analyst delivered a worrying report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【令人擔憂的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_worrying",
-          "en": "Commercial stakeholders agreed that maintaining worrying is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【令人擔憂的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -16987,18 +16423,6 @@
           "en": "Would you please send the revised contract to the legal department by the end of the day?",
           "zh": "您是否可以請在今天結束前將修訂後的合約發送給法務部門？",
           "scenario": "溝通互動"
-        },
-        {
-          "id": "ex_2_would",
-          "en": "The executive committee agreed to would additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【（will 的過去式）將會；願意；想要；慣於；表示委婉的請求、建議、假定或條件】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_would",
-          "en": "Commercial stakeholders agreed that maintaining would is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【（will 的過去式）將會；願意；想要；慣於；表示委婉的請求、建議、假定或條件】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -17356,18 +16780,6 @@
           "en": "The warehouse staff carefully wrap each fragile electronic item in protective bubble wrap before boxing.",
           "zh": "倉庫員工在裝箱前，細心地用保護氣泡膜包覆每一件易碎的電子產品。",
           "scenario": "物流倉儲"
-        },
-        {
-          "id": "ex_2_wrap",
-          "en": "The executive committee agreed to wrap additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【包覆】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wrap",
-          "en": "Commercial stakeholders agreed that maintaining wrap is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【包覆】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -17724,18 +17136,6 @@
           "en": "Please ensure that all export shipments have weather-resistant wrapping to protect them from moisture during transit.",
           "zh": "請確保所有出口貨物都採用防潮包裝，以保護它們在運輸過程中不受潮。",
           "scenario": "物流倉儲"
-        },
-        {
-          "id": "ex_2_wrapping",
-          "en": "By wrapping automated cloud infrastructure, the startup reduced operational costs substantially.",
-          "zh": "藉由【包裝】自動化雲端基礎架構，該新創公司大幅降低了營運成本。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wrapping",
-          "en": "Commercial stakeholders agreed that maintaining wrapping is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【包裝】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -18082,18 +17482,6 @@
           "en": "Office ergonomics experts recommend keeping your wrist straight while typing to prevent repetitive strain injuries.",
           "zh": "辦公室人體工學專家建議打字時保持手腕打直，以預防重複性勞損傷害。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_wrist",
-          "en": "Our organization strictly prioritizes wrist across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【手腕】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wrist",
-          "en": "Commercial stakeholders agreed that maintaining wrist is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【手腕】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -18440,18 +17828,6 @@
           "en": "He glanced down at his wristwatch to check the time before heading into the boardroom for his presentation.",
           "zh": "他在走進董事會議室進行簡報前，低頭看了一下腕錶來確認時間。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_wristwatch",
-          "en": "Our organization strictly prioritizes wristwatch across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【腕錶】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wristwatch",
-          "en": "Commercial stakeholders agreed that maintaining wristwatch is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【腕錶】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -18802,18 +18178,6 @@
           "en": "The consultant will write a comprehensive report detailing the findings of the market analysis.",
           "zh": "顧問將撰寫一份詳盡的報告，詳細說明市場分析的結果。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_write",
-          "en": "The executive committee agreed to write additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【書寫】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_write",
-          "en": "Commercial stakeholders agreed that maintaining write is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【書寫】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -19164,18 +18528,6 @@
           "en": "Please write down the meeting minutes so we can distribute them to the team later.",
           "zh": "請記錄下會議記錄，以便我們稍後分發給團隊。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_write down",
-          "en": "Senior stakeholders finalized the commercial memorandum write down before the annual gala.",
-          "zh": "高層關係人在年度晚會前【記錄下來】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_write down",
-          "en": "Commercial stakeholders agreed that maintaining write down is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【記錄下來】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -19523,18 +18875,6 @@
           "en": "The technical writer is responsible for creating clear and concise user manuals for our products.",
           "zh": "技術撰稿人負責為我們的產品編寫清晰簡潔的使用手冊。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_writer",
-          "en": "Our organization strictly prioritizes writer across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【撰稿人】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_writer",
-          "en": "Commercial stakeholders agreed that maintaining writer is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【撰稿人】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -19881,18 +19221,6 @@
           "en": "Our marketing department collaborates closely with external copywriters to produce engaging digital content.",
           "zh": "我們的行銷部門與外部文案撰寫人員密切合作，以產出吸引人的數位內容。",
           "scenario": "行銷推廣"
-        },
-        {
-          "id": "ex_2_writers",
-          "en": "Our organization strictly prioritizes writers across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【作家】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_writers",
-          "en": "Commercial stakeholders agreed that maintaining writers is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【作家】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -20242,18 +19570,6 @@
           "en": "Our CEO writes a monthly newsletter to keep all employees informed about company developments.",
           "zh": "我們的執行長每月撰寫一份通訊，讓所有員工了解公司的發展情況。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_writes",
-          "en": "Our quality assurance process writes that all deliverables meet international benchmarks.",
-          "zh": "我們的品質保證流程【書寫】所有交付成果均符合國際基準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_writes",
-          "en": "Commercial stakeholders agreed that maintaining writes is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【書寫】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -20601,18 +19917,6 @@
           "en": "During the client orientation seminar, attendees diligently jotted down key takeaways on their branded writing pads.",
           "zh": "在客戶說明會期間，與會者努力在印有品牌標誌的書寫墊上記錄重點。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_writing pad",
-          "en": "Senior stakeholders finalized the commercial memorandum writing pad before the annual gala.",
-          "zh": "高層關係人在年度晚會前【書寫墊】敲定了商業備忘錄。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_writing pad",
-          "en": "Commercial stakeholders agreed that maintaining writing pad is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【書寫墊】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -20968,18 +20272,6 @@
           "en": "I think there is a wrong entry in the financial statement that needs to be corrected immediately.",
           "zh": "我認為財務報表中有一項錯誤的條目，需要立即更正。",
           "scenario": "辦公日常"
-        },
-        {
-          "id": "ex_2_wrong",
-          "en": "The senior analyst delivered a wrong report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【錯誤的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_wrong",
-          "en": "Commercial stakeholders agreed that maintaining wrong is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【錯誤的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -21327,18 +20619,6 @@
           "en": "The logistics company uses a secure paved yard to park and inspect their fleet of delivery trucks.",
           "zh": "這家物流公司使用一個安全鋪面且有圍牆的場地來停放並檢查他們的貨車車隊。",
           "scenario": "物流倉儲"
-        },
-        {
-          "id": "ex_2_yard",
-          "en": "Our organization strictly prioritizes yard across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【庭院】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yard",
-          "en": "Commercial stakeholders agreed that maintaining yard is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【庭院】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -21679,18 +20959,6 @@
           "en": "Yeah, I agree that we should postpone the product launch until the marketing materials are finalized.",
           "zh": "沒錯，我同意我們應該將產品發布推遲到行銷素材定案之後。",
           "scenario": "董事會議"
-        },
-        {
-          "id": "ex_2_yeah",
-          "en": "Our organization strictly prioritizes yeah across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【表示肯定、同意或肯定的口語表達。】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yeah",
-          "en": "Commercial stakeholders agreed that maintaining yeah is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【表示肯定、同意或肯定的口語表達。】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -22037,18 +21305,6 @@
           "en": "The company reported a significant increase in revenue for the current fiscal year.",
           "zh": "公司報告顯示本財政年度的營收有顯著成長。",
           "scenario": "財務審計"
-        },
-        {
-          "id": "ex_2_year",
-          "en": "Financial analysts forecast steady revenue growth throughout the upcoming year.",
-          "zh": "財務分析師預測，在即將到來的【年】內營收將呈現穩健增長。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_year",
-          "en": "Commercial stakeholders agreed that maintaining year is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【年】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -22396,18 +21652,6 @@
           "en": "All department heads are required to submit their year-end performance reports by Friday.",
           "zh": "所有部門主管皆須在週五前提交年度末績效報告。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_year-end",
-          "en": "Financial analysts forecast steady revenue growth throughout the upcoming year-end.",
-          "zh": "財務分析師預測，在即將到來的【年度末】內營收將呈現穩健增長。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_year-end",
-          "en": "Commercial stakeholders agreed that maintaining year-end is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【年度末】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -22763,18 +22007,6 @@
           "en": "Employees look forward to the yearly performance review because it directly impacts their career advancement and bonuses.",
           "zh": "員工們都很期待一年一度的績效考核，因為它直接影響他們的職涯晉升與獎金。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_yearly",
-          "en": "The executive committee agreed to yearly additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【每年的】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yearly",
-          "en": "Commercial stakeholders agreed that maintaining yearly is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【每年的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -23132,18 +22364,6 @@
           "en": "Due to the loud machinery on the factory floor, the supervisor had to yell to give safety instructions.",
           "zh": "由於廠房內機械聲嘈雜，主管不得不大聲喊叫來下達安全指示。",
           "scenario": "設備檢修"
-        },
-        {
-          "id": "ex_2_yell",
-          "en": "The executive committee agreed to yell additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【大聲喊叫】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yell",
-          "en": "Commercial stakeholders agreed that maintaining yell is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【大聲喊叫】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -23500,18 +22720,6 @@
           "en": "Maintaining a professional composure is vital, even when an irate customer starts yelling over the phone.",
           "zh": "保持專業的態度至關重要，即使憤怒的客戶在電話那頭咆哮也是如此。",
           "scenario": "客戶洽談"
-        },
-        {
-          "id": "ex_2_yelling",
-          "en": "By yelling automated cloud infrastructure, the startup reduced operational costs substantially.",
-          "zh": "藉由【大聲喊叫】自動化雲端基礎架構，該新創公司大幅降低了營運成本。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yelling",
-          "en": "Commercial stakeholders agreed that maintaining yelling is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【大聲喊叫】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -23866,18 +23074,6 @@
           "en": "Please highlight the revised sections of the contract with a yellow marker for easier review.",
           "zh": "請用黃色螢光筆標記合約中修改的部分，以便審閱。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_yellow",
-          "en": "The senior analyst delivered a yellow report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【黃色的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yellow",
-          "en": "Commercial stakeholders agreed that maintaining yellow is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【黃色的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -24231,18 +23427,6 @@
           "en": "Yep, the logistics contract has been fully approved by the legal department.",
           "zh": "沒錯，物流合約已經獲得法務部門的全面批准。",
           "scenario": "物流倉儲"
-        },
-        {
-          "id": "ex_2_yep",
-          "en": "Our organization strictly prioritizes yep across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【是的】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yep",
-          "en": "Commercial stakeholders agreed that maintaining yep is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【是的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -24604,18 +23788,6 @@
           "en": "Yes, the client confirmed that the proposal meets all their requirements.",
           "zh": "是的，客戶確認該提案符合他們所有的需求。",
           "scenario": "客戶洽談"
-        },
-        {
-          "id": "ex_2_yes",
-          "en": "Our organization strictly prioritizes yes across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【是】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yes",
-          "en": "Commercial stakeholders agreed that maintaining yes is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【是】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -24970,18 +24142,6 @@
           "en": "The shipment that was scheduled for yesterday finally arrived at the warehouse this morning.",
           "zh": "原定於昨天送達的貨物終於在今天早上抵達倉庫。",
           "scenario": "物流倉儲"
-        },
-        {
-          "id": "ex_2_yesterday",
-          "en": "The executive committee agreed to yesterday additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【昨天】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yesterday",
-          "en": "Commercial stakeholders agreed that maintaining yesterday is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【昨天】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -25335,18 +24495,6 @@
           "en": "The IT department has not yet completed the installation of the new security software.",
           "zh": "資訊部門尚未完成新安全軟體的安裝。",
           "scenario": "設備檢修"
-        },
-        {
-          "id": "ex_2_yet",
-          "en": "The executive committee agreed to yet additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【至今】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yet",
-          "en": "Commercial stakeholders agreed that maintaining yet is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【至今】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -25694,18 +24842,6 @@
           "en": "To promote employee wellness, the company offers weekly yoga sessions in the multipurpose wellness room.",
           "zh": "為了促進員工健康，公司在多功能健康室提供每週的瑜伽課程。",
           "scenario": "營運管理"
-        },
-        {
-          "id": "ex_2_yoga",
-          "en": "Our organization strictly prioritizes yoga across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【瑜伽】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yoga",
-          "en": "Commercial stakeholders agreed that maintaining yoga is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【瑜伽】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -26053,18 +25189,6 @@
           "en": "The hotel restaurant expanded its breakfast buffet to include artisanal Greek yogurt and fresh fruit toppings.",
           "zh": "飯店餐廳擴大了其早餐自助吧，加入了手工希臘優格及新鮮水果配料。",
           "scenario": "餐飲住宿"
-        },
-        {
-          "id": "ex_2_yogurt",
-          "en": "Our organization strictly prioritizes yogurt across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【優格】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yogurt",
-          "en": "Commercial stakeholders agreed that maintaining yogurt is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【優格】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -26421,18 +25545,6 @@
           "en": "Our logistics team established a new distribution hub in York to streamline northern regional deliveries.",
           "zh": "我們的物流團隊在約克建立了一個新的配送樞紐，以優化北部地區的配送效率。",
           "scenario": "物流倉儲"
-        },
-        {
-          "id": "ex_2_york",
-          "en": "Our organization strictly prioritizes york across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【約克郡】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_york",
-          "en": "Commercial stakeholders agreed that maintaining york is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【約克郡】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -26780,18 +25892,6 @@
           "en": "The young entrepreneur presented an innovative business model that impressed the board of directors.",
           "zh": "這位年輕的企業家提出了一種讓董事會印象深刻的創新商業模式。",
           "scenario": "董事會議"
-        },
-        {
-          "id": "ex_2_young",
-          "en": "The senior analyst delivered a young report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【年輕的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_young",
-          "en": "Commercial stakeholders agreed that maintaining young is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【年輕的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -27138,18 +26238,6 @@
           "en": "You should familiarize yourself with the company's safety protocols before entering the laboratory.",
           "zh": "在進入實驗室之前，你應該先熟悉公司的安全規範。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_yourself",
-          "en": "Our organization strictly prioritizes yourself across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【指代自己】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yourself",
-          "en": "Commercial stakeholders agreed that maintaining yourself is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【指代自己】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -27497,18 +26585,6 @@
           "en": "The corporate internship program is specifically designed to attract ambitious youth eager to enter the tech industry.",
           "zh": "企業實習計畫旨在吸引渴望進入科技產業的有抱負的年輕一代。",
           "scenario": "人力資源"
-        },
-        {
-          "id": "ex_2_youth",
-          "en": "Financial analysts forecast steady revenue growth throughout the upcoming youth.",
-          "zh": "財務分析師預測，在即將到來的【年輕時期】內營收將呈現穩健增長。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_youth",
-          "en": "Commercial stakeholders agreed that maintaining youth is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【年輕時期】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -27856,18 +26932,6 @@
           "en": "Yukiko managed the cross-border merger project with exceptional attention to regulatory compliance.",
           "zh": "裕子以對法規遵循的卓越專注力，成功管理了這項跨國併購專案。",
           "scenario": "董事會議"
-        },
-        {
-          "id": "ex_2_yukiko",
-          "en": "Our organization strictly prioritizes yukiko across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【裕子】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yukiko",
-          "en": "Commercial stakeholders agreed that maintaining yukiko is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【裕子】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -28214,18 +27278,6 @@
           "en": "The executive chef received glowing feedback from the corporate clients regarding the yummy dessert selection.",
           "zh": "行政主廚收到了企業客戶對美味甜點選項的熱烈好評。",
           "scenario": "餐飲住宿"
-        },
-        {
-          "id": "ex_2_yummy",
-          "en": "The senior analyst delivered a yummy report on upcoming macroeconomic developments.",
-          "zh": "資深分析師就即將到來的總體經濟發展提交了一份【美味的】的報告。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_yummy",
-          "en": "Commercial stakeholders agreed that maintaining yummy is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【美味的】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -28572,18 +27624,6 @@
           "en": "Although 'zack' is primarily slang, the startup's energetic marketing director used it to describe how zack impressive their Q3 sales growth was during the general assembly.",
           "zh": "雖然『zack』主要是俚語，但該新創公司的活力行銷總監在全體大會上用它來形容第三季的銷售成長是多麼驚人。",
           "scenario": "行銷推廣"
-        },
-        {
-          "id": "ex_2_zack",
-          "en": "The executive committee agreed to zack additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【（俚語）非常；極其；驚人地】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_zack",
-          "en": "Commercial stakeholders agreed that maintaining zack is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【（俚語）非常；極其；驚人地】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -28940,18 +27980,6 @@
           "en": "Our goal is to achieve zero downtime during the server migration process.",
           "zh": "我們的目標是在伺服器遷移過程中實現零停機時間。",
           "scenario": "設備檢修"
-        },
-        {
-          "id": "ex_2_zero",
-          "en": "Our organization strictly prioritizes zero across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【零】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_zero",
-          "en": "Commercial stakeholders agreed that maintaining zero is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【零】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -29301,18 +28329,6 @@
           "en": "Please remember to zip all high-resolution design files into a single archive before uploading them to the client portal.",
           "zh": "在將高畫質設計檔案上傳至客戶端入口網站之前，請記得將它們壓縮成單一的壓縮檔。",
           "scenario": "科技與技術支援"
-        },
-        {
-          "id": "ex_2_zip",
-          "en": "The executive committee agreed to zip additional funding for software development.",
-          "zh": "執行委員會同意為軟體研發【將…壓縮成 ZIP 檔案】額外資金。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_zip",
-          "en": "Commercial stakeholders agreed that maintaining zip is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【將…壓縮成 ZIP 檔案】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -29660,18 +28676,6 @@
           "en": "Heavy machinery must be operated strictly within the designated safety zone of the factory floor.",
           "zh": "重型機械必須嚴格在工廠車間指定的安全區域內操作。",
           "scenario": "營運管理"
-        },
-        {
-          "id": "ex_2_zone",
-          "en": "Our organization strictly prioritizes zone across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【區域】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_zone",
-          "en": "Commercial stakeholders agreed that maintaining zone is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【區域】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [
@@ -30018,18 +29022,6 @@
           "en": "The corporate event planning committee decided to host the annual company family day at the city zoo, offering interactive animal exhibits for employees and their children.",
           "zh": "公司活動策劃委員會決定將年度公司家庭日辦在市立動物園，為員工及其子女提供互動式動物展覽。",
           "scenario": "辦公行政"
-        },
-        {
-          "id": "ex_2_zoo",
-          "en": "Our organization strictly prioritizes zoo across all international operational branches.",
-          "zh": "我司在所有跨國營運分部中，均切實貫徹【動物園】之標準。",
-          "scenario": "營運管理"
-        },
-        {
-          "id": "ex_3_zoo",
-          "en": "Commercial stakeholders agreed that maintaining zoo is essential for sustainable overseas market expansion.",
-          "zh": "商業關係人一致認為，維持【動物園】對於可持續的海外市場擴張至關重要。",
-          "scenario": "市場拓展"
         }
       ],
       "examTips": [

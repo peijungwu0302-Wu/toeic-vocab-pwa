@@ -250,7 +250,7 @@ Return strictly a JSON array adhering to this schema:
 }
 
 async function runPipeline() {
-  const BATCH_SIZE = 2; // Process 2 words per API call to guarantee complete 8K token budget
+  const BATCH_SIZE = 3; // Process 3 words per API call within 8K token budget
   const uncompleted = wordsList.filter(w => !cacheMap.has(w.headword.toLowerCase().trim()));
 
   console.log(`📋 總待處理單字數：${uncompleted.length} 詞（已完成：${cacheMap.size} 詞）`);
@@ -279,11 +279,11 @@ async function runPipeline() {
       fs.writeFileSync(cacheFilePath, JSON.stringify(currentProgress), 'utf8');
       console.log(`✅ 已寫入進度快照（累計：${cacheMap.size} 詞）`);
 
-      // Rate limit delay (4.5 seconds = ~13 RPM safe zone)
-      await new Promise(r => setTimeout(r, 4500));
+      // Rate limit delay (4.0 seconds = ~14 RPM safe zone)
+      await new Promise(r => setTimeout(r, 4000));
     } catch (batchErr) {
       console.error(`❌ 批次生成失敗 (${batch.map(b => b.headword).join(', ')}):`, batchErr.message);
-      await new Promise(r => setTimeout(r, 6000));
+      await new Promise(r => setTimeout(r, 5000));
     }
   }
 

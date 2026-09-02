@@ -1,7 +1,7 @@
 import { db } from '../db';
 import { courseRepository } from '../repositories/courseRepository';
 
-export const CURRENT_DATASET_VERSION = 5;
+export const CURRENT_DATASET_VERSION = 9;
 
 export const datasetMigrationService = {
   /**

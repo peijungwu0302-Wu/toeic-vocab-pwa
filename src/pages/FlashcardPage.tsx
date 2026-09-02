@@ -479,12 +479,10 @@ export const FlashcardPage: React.FC = () => {
 
   const { word, progress } = currentItem;
   
-  // Fixed Exactly 3 Business Examples
-  const currentExamples = word.examples && word.examples.length >= 3 ? word.examples.slice(0, 3) : [
-    { en: `The company management decided to utilize this strategic ${word.headword} in the global market.`, zh: `公司管理層決定在國際市場中充分發揮這項關鍵優勢。`, scenario: '內部營運' },
-    { en: `Our team will negotiate the contract terms to ${word.headword} our client's expectations.`, zh: `我們的團隊將積極協商合約條款，以符合客戶的各項預期。`, scenario: '客戶談判' },
-    { en: `The board of directors agreed on the long-term ${word.headword} to ensure sustainable growth.`, zh: `董事會就長期戰略方針達成共識，以確保企業永續成長。`, scenario: '企業戰略' }
-  ];
+  // 100% authentic bespoke examples directly from dataset (Zero template fallback)
+  const currentExamples = Array.isArray(word.examples) && word.examples.length > 0
+    ? word.examples
+    : [];
 
   // High-associative business imagery
   const imgInfo = imageService.getImageForWord(word.headword, word.category);
