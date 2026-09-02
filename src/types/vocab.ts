@@ -42,6 +42,32 @@ export interface WordEntry {
     imagePrompt?: string;
     scene?: string;
   };
+  examFocus?: {
+    primaryBusinessSense?: string;
+    trapWarning?: string;
+  };
+  etymology?: {
+    prefix?: string | null;
+    root?: string;
+    suffix?: string | null;
+    memoryHook?: string;
+  };
+  wordFamily?: {
+    noun?: string[];
+    verb?: string[];
+    adjective?: string[];
+    adverb?: string[];
+    cognates?: string[];
+  };
+  synonymDiscrimination?: {
+    synonyms?: string[];
+    antonyms?: string[];
+    discrimination?: string;
+  };
+  collocations?: Array<{
+    en: string;
+    zh: string;
+  }>;
   frequencyTier?: FrequencyTier;
   quizzes?: any[];
 }
@@ -98,6 +124,32 @@ export const WordEntrySchema = z.object({
     imagePrompt: z.string().optional(),
     scene: z.string().optional()
   }).optional(),
+  examFocus: z.object({
+    primaryBusinessSense: z.string().optional(),
+    trapWarning: z.string().optional()
+  }).optional(),
+  etymology: z.object({
+    prefix: z.string().nullable().optional(),
+    root: z.string().optional(),
+    suffix: z.string().nullable().optional(),
+    memoryHook: z.string().optional()
+  }).optional(),
+  wordFamily: z.object({
+    noun: z.array(z.string()).optional(),
+    verb: z.array(z.string()).optional(),
+    adjective: z.array(z.string()).optional(),
+    adverb: z.array(z.string()).optional(),
+    cognates: z.array(z.string()).optional()
+  }).passthrough().optional(),
+  synonymDiscrimination: z.object({
+    synonyms: z.array(z.string()).optional(),
+    antonyms: z.array(z.string()).optional(),
+    discrimination: z.string().optional()
+  }).passthrough().optional(),
+  collocations: z.array(z.object({
+    en: z.string(),
+    zh: z.string()
+  })).optional(),
   frequencyTier: z.enum(['core_1200', 'advanced_2500', 'expert_high']).optional(),
   quizzes: z.array(z.any()).optional().default([])
 }).transform((val) => {
@@ -123,6 +175,11 @@ export const WordEntrySchema = z.object({
     imageUrl: val.imageUrl || null,
     imageKeyword: val.imageKeyword || null,
     visualAnchor: val.visualAnchor,
+    examFocus: val.examFocus,
+    etymology: val.etymology,
+    wordFamily: val.wordFamily,
+    synonymDiscrimination: val.synonymDiscrimination,
+    collocations: val.collocations,
     frequencyTier: val.frequencyTier,
     quizzes: val.quizzes || []
   };

@@ -709,15 +709,44 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 🧩 詞根詞綴與構詞記憶 */}
-                {morphology && (
+                {/* 🎯 多益考點與避坑提醒 (examFocus) */}
+                {word.examFocus && (
+                  <div className="p-2 rounded-xl bg-indigo-950/40 border border-indigo-700/40 text-[11px] space-y-1">
+                    <div className="flex items-center justify-between text-indigo-300 font-bold text-[10px]">
+                      <span>🎯 多益核心考點：{word.examFocus.primaryBusinessSense}</span>
+                    </div>
+                    {word.examFocus.trapWarning && (
+                      <p className="text-amber-300/90 text-[10px] leading-relaxed">
+                        ⚠️ <strong>考場避坑</strong>：{word.examFocus.trapWarning}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {/* 🧩 詞根詞綴與構詞記憶 (優先使用單字專屬 etymology) */}
+                {(word.etymology || morphology) && (
                   <div className="p-2.5 rounded-xl bg-slate-950/80 border border-amber-800/40 space-y-1.5 text-xs">
                     <div className="flex items-center justify-between text-amber-400 font-bold text-[11px]">
-                      <span className="flex items-center"><Layers size={12} className="mr-1" /> 詞根詞綴與構詞記憶</span>
+                      <span className="flex items-center"><Layers size={12} className="mr-1" /> 詞根字首拆解與構詞記憶</span>
                     </div>
 
                     <div className="flex flex-wrap gap-1">
-                      {morphology.roots.map((r, idx) => (
+                      {word.etymology?.prefix && (
+                        <span className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
+                          <strong className="text-amber-300">前綴</strong>：{word.etymology.prefix}
+                        </span>
+                      )}
+                      {word.etymology?.root && (
+                        <span className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
+                          <strong className="text-amber-300">字根</strong>：{word.etymology.root}
+                        </span>
+                      )}
+                      {word.etymology?.suffix && (
+                        <span className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
+                          <strong className="text-amber-300">字尾</strong>：{word.etymology.suffix}
+                        </span>
+                      )}
+                      {!word.etymology && morphology?.roots.map((r, idx) => (
                         <span key={idx} className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
                           <strong className="text-amber-300">{r.part}</strong>：{r.meaning}
                         </span>
@@ -725,24 +754,75 @@ export const FlashcardPage: React.FC = () => {
                     </div>
 
                     <p className="text-slate-300 text-[11px] leading-relaxed pt-0.5">
-                      💡 <strong>構詞記憶</strong>：{morphology.mnemonic}
+                      💡 <strong>構詞記憶</strong>：{word.etymology?.memoryHook || morphology?.mnemonic}
                     </p>
 
                     {/* Word Family 派生詞 */}
-                    {morphology.wordFamily && morphology.wordFamily.length > 1 && (
+                    {(word.wordFamily || (morphology?.wordFamily && morphology.wordFamily.length > 1)) && (
                       <div className="pt-1.5 border-t border-slate-800/80 space-y-1">
                         <div className="text-[10px] font-bold text-slate-400 flex items-center">
-                          <GitBranch size={11} className="mr-1 text-emerald-400" /> 派生詞家族：
+                          <GitBranch size={11} className="mr-1 text-emerald-400" /> 派生詞與同根詞：
                         </div>
-                        <div className="grid grid-cols-2 gap-1 text-[10px]">
-                          {morphology.wordFamily.map((wf, wfIdx) => (
-                            <div key={wfIdx} className="p-1 rounded bg-slate-900 border border-slate-800 text-slate-200 truncate">
-                              <strong className="text-emerald-400">{wf.word}</strong> <span className="text-slate-400">({wf.pos})</span> {wf.meaning}
-                            </div>
+                        <div className="flex flex-wrap gap-1 text-[10px]">
+                          {word.wordFamily?.noun?.map((n: string, idx: number) => (
+                            <span key={idx} className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-200">
+                              <span className="text-blue-400">n.</span> {n}
+                            </span>
+                          ))}
+                          {word.wordFamily?.adjective?.map((a: string, idx: number) => (
+                            <span key={idx} className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-200">
+                              <span className="text-emerald-400">adj.</span> {a}
+                            </span>
+                          ))}
+                          {word.wordFamily?.cognates?.map((c: string, idx: number) => (
+                            <span key={idx} className="px-1.5 py-0.5 rounded bg-purple-950/40 border border-purple-800/50 text-purple-300">
+                              🔗 {c}
+                            </span>
                           ))}
                         </div>
                       </div>
                     )}
+                  </div>
+                )}
+
+                {/* 🔄 多益同反義詞微辨析 (synonymDiscrimination) */}
+                {word.synonymDiscrimination && (
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-blue-800/40 space-y-1 text-xs">
+                    <div className="flex items-center justify-between text-blue-400 font-bold text-[11px]">
+                      <span>🔄 多益同義替換與微辨析</span>
+                    </div>
+                    {word.synonymDiscrimination.synonyms && word.synonymDiscrimination.synonyms.length > 0 && (
+                      <div className="flex flex-wrap gap-1 text-[10px]">
+                        <span className="text-slate-400">同義詞：</span>
+                        {word.synonymDiscrimination.synonyms.map((s: string, sIdx: number) => (
+                          <span key={sIdx} className="px-1.5 py-0.2 rounded bg-blue-950/60 text-blue-300 border border-blue-700/40">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {word.synonymDiscrimination.discrimination && (
+                      <p className="text-slate-300 text-[10px] leading-relaxed pt-0.5">
+                        💡 <strong>考點微辨析</strong>：{word.synonymDiscrimination.discrimination}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {/* 🔗 黃金商務搭配語塊 (collocations) */}
+                {word.collocations && word.collocations.length > 0 && (
+                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-teal-800/40 space-y-1 text-xs">
+                    <div className="text-teal-400 font-bold text-[11px] flex items-center">
+                      <span>🔗 常考商務搭配語塊 (Collocations)</span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-1 text-[10px]">
+                      {word.collocations.map((c: any, cIdx: number) => (
+                        <div key={cIdx} className="px-2 py-1 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                          <span className="text-emerald-300 font-bold">{c.en}</span>
+                          <span className="text-slate-400">{c.zh}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
 

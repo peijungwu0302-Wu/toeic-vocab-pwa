@@ -1,11 +1,56 @@
 import { db } from '../db';
 import { courseRepository } from '../repositories/courseRepository';
 
-export const CURRENT_DATASET_VERSION = 9;
+export const CURRENT_DATASET_VERSION = 10;
+export const DATASET_RELEASE_TAG = 'v6.0.0-bbword-vip-lexicon';
+export const APP_RELEASE_VERSION = 'v6.0.0 (Build 2026.09.03)';
+
+export interface DatasetDiagnostics {
+  appVersion: string;
+  datasetReleaseTag: string;
+  indexedDbMigrationVersion: number;
+  localIndexedDbVersion: number;
+  cachedWordsCount: number;
+  cachedCoursesCount: number;
+  isUpToDate: boolean;
+}
 
 export const datasetMigrationService = {
   /**
-   * Automatically migrates local IndexedDB words and courses to v5 (v5.0.0-llm-bespoke-visual).
+   * Get real-time diagnostic information for the user UI
+   */
+  async getDiagnostics(): Promise<DatasetDiagnostics> {
+    try {
+      const versionSetting = await db.appSettings.get('dataset_version');
+      const currentLocalVersion = versionSetting ? parseInt(versionSetting.value, 10) : 1;
+      const cachedWordsCount = await db.words.count();
+      const localCourses = await db.courses.toArray();
+      const cachedCoursesCount = localCourses.filter(c => c.isDownloaded).length;
+
+      return {
+        appVersion: APP_RELEASE_VERSION,
+        datasetReleaseTag: DATASET_RELEASE_TAG,
+        indexedDbMigrationVersion: CURRENT_DATASET_VERSION,
+        localIndexedDbVersion: currentLocalVersion,
+        cachedWordsCount,
+        cachedCoursesCount,
+        isUpToDate: currentLocalVersion >= CURRENT_DATASET_VERSION
+      };
+    } catch {
+      return {
+        appVersion: APP_RELEASE_VERSION,
+        datasetReleaseTag: DATASET_RELEASE_TAG,
+        indexedDbMigrationVersion: CURRENT_DATASET_VERSION,
+        localIndexedDbVersion: 1,
+        cachedWordsCount: 0,
+        cachedCoursesCount: 0,
+        isUpToDate: false
+      };
+    }
+  },
+
+  /**
+   * Automatically migrates local IndexedDB words and courses to v6 (v6.0.0-bbword-vip-lexicon).
    * Runs silently in the background on App startup without interrupting the user.
    */
   async autoMigrateIfOutdated(): Promise<boolean> {

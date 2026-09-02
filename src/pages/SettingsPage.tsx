@@ -72,16 +72,29 @@ export const SettingsPage: React.FC = () => {
   const [magicLinkSentMsg, setMagicLinkSentMsg] = useState<string | null>(null);
   const [magicLinkError, setMagicLinkError] = useState<string | null>(null);
 
-  // Dataset v3.0 Force Refresh State
+  // Dataset Version & Real-Time Diagnostics
   const [isRefreshingDataset, setIsRefreshingDataset] = useState(false);
   const [datasetRefreshMsg, setDatasetRefreshMsg] = useState<string | null>(null);
+  const [diagnostics, setDiagnostics] = useState<any | null>(null);
+
+  const loadDiagnostics = async () => {
+    try {
+      const diag = await datasetMigrationService.getDiagnostics();
+      setDiagnostics(diag);
+    } catch {}
+  };
+
+  useEffect(() => {
+    loadDiagnostics();
+  }, []);
 
   const handleForceRefreshDataset = async () => {
     try {
       setIsRefreshingDataset(true);
       setDatasetRefreshMsg(null);
       await datasetMigrationService.forceRefreshAllCourses();
-      setDatasetRefreshMsg('✅ 題庫已成功刷新至最新 v5.0.0！全量 11,154 詞之 3 例句、視覺圖與 3+3 全真試題已更新完畢。');
+      await loadDiagnostics();
+      setDatasetRefreshMsg('✅ 題庫已成功刷新至最新 v6.0.0！不背單詞 VIP 級 3 階梯例句、詞根字首、同反義微辨析與搭配語塊已更新完畢。');
       setTimeout(() => setDatasetRefreshMsg(null), 5000);
     } catch (err) {
       alert(`刷新題庫失敗：${(err as Error).message}`);
@@ -877,20 +890,42 @@ export const SettingsPage: React.FC = () => {
         )}
       </div>
 
-      {/* 8. Dataset Version & Offline Cache Force Refresh */}
+      {/* 8. Dataset Version & Real-time Diagnostics (版本診斷面板) */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
             <Sparkles size={16} className="text-teal-400" />
-            <span>題庫版本與離線快取更新</span>
+            <span>系統版本與題庫診斷面板</span>
           </h3>
           <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
-            v5.0.0 視覺圖 ＋ 3+3 全真版
+            {diagnostics?.appVersion || 'v6.0.0'}
           </span>
         </div>
 
+        {/* Diagnostic Metadata Grid */}
+        <div className="grid grid-cols-2 gap-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800 text-[11px]">
+          <div>
+            <span className="text-slate-500 block">📱 應用程式版本：</span>
+            <span className="font-bold text-slate-200">{diagnostics?.appVersion || 'v6.0.0'}</span>
+          </div>
+          <div>
+            <span className="text-slate-500 block">👑 題庫架構規格：</span>
+            <span className="font-bold text-emerald-400">{diagnostics?.datasetReleaseTag || 'v6.0.0-bbword-vip'}</span>
+          </div>
+          <div className="pt-1.5 border-t border-slate-800/80">
+            <span className="text-slate-500 block">💾 本機已快取單字：</span>
+            <span className="font-bold text-blue-400">{diagnostics?.cachedWordsCount ?? 0} 詞</span>
+          </div>
+          <div className="pt-1.5 border-t border-slate-800/80">
+            <span className="text-slate-500 block">🔄 本機儲存庫狀態：</span>
+            <span className={`font-bold ${diagnostics?.isUpToDate ? 'text-emerald-400' : 'text-amber-400'}`}>
+              v{diagnostics?.localIndexedDbVersion ?? 1} {diagnostics?.isUpToDate ? '🟢 最新' : '🟡 待升級'}
+            </span>
+          </div>
+        </div>
+
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          收錄全量 <strong className="text-emerald-400">11,154 詞</strong>、<strong className="text-teal-300">33,462 句商務例句與生圖錨點</strong> 與 <strong className="text-amber-400">66,924 題大模型 3+3 全真測驗</strong>，每題皆具備「5秒破題 + 考場避坑 + 1:1繁中中譯 + ABCD選項獨立剖析」。點擊下方按鈕可將手機本機快取一鍵熱升級（個人學習進度 100% 完整保留）。
+          收錄全量 <strong className="text-emerald-400">11,154 詞</strong> 之「不背單詞 VIP 級」<strong className="text-teal-300">3 階梯商務例句、8K生圖提示詞、字根字首拆解、多益考點陷阱、詞族衍生樹與同反義微辨析</strong>。手機端若有快取延遲，可點擊下方按鈕一鍵熱升級（個人學習進度與 FSRS 曲線 100% 完整保留）。
         </p>
 
         <Button
@@ -907,7 +942,7 @@ export const SettingsPage: React.FC = () => {
             </>
           ) : (
             <>
-              <span>🔄 立即刷新本機題庫至最新 v5.0.0 (保留學習進度)</span>
+              <span>🔄 立即刷新本機題庫至最新 v6.0.0 (保留學習進度)</span>
             </>
           )}
         </Button>
