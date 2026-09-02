@@ -16,12 +16,15 @@ export const AttributionPage: React.FC = () => {
       </div>
 
       {/* GitHub Project Repository Link */}
-      <div className="bg-gradient-to-r from-slate-800 to-indigo-950/60 border border-indigo-700/50 rounded-2xl p-4 flex items-center justify-between shadow-lg">
-        <div>
-          <h3 className="text-sm font-bold text-slate-100 flex items-center">
-            <span>TOEIC 速記 PWA 開源倉庫</span>
-          </h3>
-          <p className="text-[11px] text-slate-400 mt-0.5 font-mono">
+      <div className="bg-gradient-to-r from-slate-850 to-indigo-950/70 border border-indigo-500/30 rounded-2xl p-4 flex items-center justify-between shadow-xl">
+        <div className="space-y-1">
+          <div className="flex items-center space-x-1.5">
+            <span className="text-xs font-black text-indigo-400">專案原始碼與開發內容</span>
+          </div>
+          <p className="text-xs text-slate-300">
+            若要查看本專案完整內容與進度，可造訪此 GitHub 專案：
+          </p>
+          <p className="text-[11px] text-slate-400 font-mono">
             peijungwu0302-Wu/toeic-vocab-pwa
           </p>
         </div>
@@ -29,10 +32,10 @@ export const AttributionPage: React.FC = () => {
           href="https://github.com/peijungwu0302-Wu/toeic-vocab-pwa"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md flex items-center space-x-1"
+          className="shrink-0 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md shadow-indigo-950/50 flex items-center space-x-1.5 active:scale-95"
         >
-          <span>查看 GitHub</span>
-          <ExternalLink size={12} />
+          <span>前往專案</span>
+          <ExternalLink size={13} />
         </a>
       </div>
 
