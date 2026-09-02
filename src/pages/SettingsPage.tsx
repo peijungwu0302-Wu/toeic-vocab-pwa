@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Users,
   Plus,
@@ -1062,14 +1061,16 @@ export const SettingsPage: React.FC = () => {
       </div>
 
       {/* 9. License & Notices */}
-      <div className="text-center pt-2">
-        <Link
-          to="/attribution"
-          className="text-xs text-slate-400 hover:text-emerald-400 transition-colors inline-flex items-center space-x-1"
+      <div className="text-center pt-2 pb-4">
+        <a
+          href="https://github.com/peijungwu0302-Wu/toeic-vocab-pwa"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-slate-400 hover:text-emerald-400 transition-colors inline-flex items-center space-x-1.5 py-1 px-3 rounded-full hover:bg-slate-800/60"
         >
-          <span>資料來源、CC BY-SA 4.0 授權與第三方聲明</span>
+          <span>資料來源、開源專案與 CC BY-SA 4.0 授權聲明</span>
           <ExternalLink size={12} />
-        </Link>
+        </a>
       </div>
 
       {/* Modal: New Profile */}

@@ -125,9 +125,9 @@ export const AppLayout: React.FC = () => {
       {/* Bottom Navigation Bar - ALWAYS Accessible across all tabs */}
       <nav
         className="shrink-0 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800/80 z-30"
-        style={{ paddingBottom: 'max(6px, env(safe-area-inset-bottom))' }}
+        style={{ paddingBottom: 'max(6px, calc(env(safe-area-inset-bottom, 0px) - 12px))' }}
       >
-        <div className="flex items-center justify-around px-2 pt-1">
+        <div className="flex items-center justify-around px-1.5 pt-1.5 pb-0.5">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -135,15 +135,15 @@ export const AppLayout: React.FC = () => {
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex flex-col items-center justify-center py-1 px-1.5 rounded-xl transition-all min-w-[46px] min-h-[42px] ${
+                  `flex flex-col items-center justify-center py-0.5 px-1 rounded-xl transition-all min-w-[42px] ${
                     isActive
                       ? 'text-emerald-400 font-bold scale-105'
                       : 'text-slate-400 hover:text-slate-200 font-medium'
                   }`
                 }
               >
-                <Icon size={19} />
-                <span className="text-[10px] mt-0.5 tracking-tight">{item.label}</span>
+                <Icon size={18} />
+                <span className="text-[10px] mt-0.5 tracking-tight leading-none">{item.label}</span>
               </NavLink>
             );
           })}

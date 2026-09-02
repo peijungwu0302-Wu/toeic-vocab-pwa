@@ -15,6 +15,27 @@ export const AttributionPage: React.FC = () => {
         <h2 className="text-lg font-black text-slate-100">資料來源與開源授權聲明</h2>
       </div>
 
+      {/* GitHub Project Repository Link */}
+      <div className="bg-gradient-to-r from-slate-800 to-indigo-950/60 border border-indigo-700/50 rounded-2xl p-4 flex items-center justify-between shadow-lg">
+        <div>
+          <h3 className="text-sm font-bold text-slate-100 flex items-center">
+            <span>TOEIC 速記 PWA 開源倉庫</span>
+          </h3>
+          <p className="text-[11px] text-slate-400 mt-0.5 font-mono">
+            peijungwu0302-Wu/toeic-vocab-pwa
+          </p>
+        </div>
+        <a
+          href="https://github.com/peijungwu0302-Wu/toeic-vocab-pwa"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md flex items-center space-x-1"
+        >
+          <span>查看 GitHub</span>
+          <ExternalLink size={12} />
+        </a>
+      </div>
+
       {/* Dataset Attribution */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 space-y-3">
         <div className="flex items-center space-x-2 text-emerald-400">
