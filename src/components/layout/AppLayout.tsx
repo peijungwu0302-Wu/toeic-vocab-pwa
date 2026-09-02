@@ -24,7 +24,7 @@ import { SearchModal } from '../ui/SearchModal';
 export const AppLayout: React.FC = () => {
   const { activeProfile } = useProfile();
   const { syncState, triggerSync } = useSync();
-  const { navStyle } = useNavigationStyle();
+  const { navStyle, islandBottomOffset } = useNavigationStyle();
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -132,8 +132,8 @@ export const AppLayout: React.FC = () => {
       {navStyle === 'island' ? (
         // 方案 B：Apple Music 同款 · 懸浮膠囊島 (iOS 18 Floating Island)
         <nav
-          className="fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[26px] bg-slate-900/90 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5"
-          style={{ bottom: 'max(8px, calc(env(safe-area-inset-bottom, 0px) - 24px))' }}
+          className="fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[26px] bg-slate-900/90 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5 transition-[bottom] duration-150"
+          style={{ bottom: `${islandBottomOffset}px` }}
         >
           <div className="flex items-center justify-around">
             {navItems.map((item) => {

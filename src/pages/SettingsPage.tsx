@@ -42,7 +42,7 @@ export const SettingsPage: React.FC = () => {
   const { activeProfile, profiles, switchProfile, createProfile, updateProfile, deleteProfile } = useProfile();
   const { syncState, triggerSync } = useSync();
   const { settings, updateSettings, resetSettings, applyPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
-  const { navStyle, setNavStyle } = useNavigationStyle();
+  const { navStyle, setNavStyle, islandBottomOffset, setIslandBottomOffset } = useNavigationStyle();
 
   const [isNewProfileModalOpen, setIsNewProfileModalOpen] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
@@ -949,6 +949,67 @@ export const SettingsPage: React.FC = () => {
             </div>
           </button>
         </div>
+
+        {/* Real-time Pixel Micro-Adjustment Slider for Island Mode */}
+        {navStyle === 'island' && (
+          <div className="mt-2 p-3.5 rounded-xl bg-slate-900/90 border border-purple-500/40 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-xs font-bold text-purple-300 flex items-center space-x-1.5">
+                  <Sliders size={13} className="text-purple-400" />
+                  <span>膠囊島距底物理像素微調 (即時位移)</span>
+                </div>
+                <div className="text-[10px] text-slate-400 mt-0.5">
+                  拖曳滑軌可將底欄下推至「不遮擋文字」的物理極限
+                </div>
+              </div>
+              <span className="px-2 py-0.5 rounded-md bg-purple-950 text-purple-300 font-mono font-bold text-xs border border-purple-800">
+                {islandBottomOffset} px
+              </span>
+            </div>
+
+            <div className="space-y-1.5">
+              <input
+                type="range"
+                min="0"
+                max="24"
+                step="1"
+                value={islandBottomOffset}
+                onChange={(e) => setIslandBottomOffset(parseInt(e.target.value, 10))}
+                className="w-full accent-purple-500 cursor-pointer h-1.5 bg-slate-700 rounded-lg appearance-none"
+              />
+              <div className="flex justify-between text-[9px] text-slate-400 px-0.5">
+                <span>0px (貼齊玻璃)</span>
+                <span className="text-purple-400 font-semibold">8px (極限不遮擋·推薦)</span>
+                <span>14px (舒適呼吸)</span>
+                <span>24px (原預設)</span>
+              </div>
+            </div>
+
+            {/* Quick preset buttons */}
+            <div className="flex items-center space-x-1.5 pt-1">
+              {[
+                { label: '極限貼底 6px', val: 6 },
+                { label: '黃金推薦 8px', val: 8 },
+                { label: '舒適呼吸 12px', val: 12 },
+                { label: '高空懸浮 16px', val: 16 }
+              ].map((p) => (
+                <button
+                  key={p.val}
+                  type="button"
+                  onClick={() => setIslandBottomOffset(p.val)}
+                  className={`flex-1 py-1 text-[10px] font-bold rounded-lg border transition-all ${
+                    islandBottomOffset === p.val
+                      ? 'bg-purple-600 border-purple-400 text-white shadow-sm'
+                      : 'bg-slate-800 border-slate-700 text-slate-300 hover:text-white'
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 7. Backup & Restore (Local-first) */}
