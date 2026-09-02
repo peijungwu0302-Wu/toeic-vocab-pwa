@@ -84,14 +84,57 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
     setTimeout(() => setAddedMessage(false), 2000);
   };
 
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  const [pullOffset, setPullOffset] = useState<number>(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartY !== null) {
+      const delta = e.touches[0].clientY - touchStartY;
+      if (delta > 0) {
+        setPullOffset(delta);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (pullOffset > 85) {
+      onClose();
+    }
+    setTouchStartY(null);
+    setPullOffset(0);
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-      <div className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[90dvh] sm:max-h-[85dvh] overflow-hidden">
-        
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          transform: pullOffset > 0 ? `translateY(${pullOffset}px)` : undefined,
+          transition: touchStartY === null ? 'transform 0.2s ease-out' : 'none'
+        }}
+        className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col h-[82dvh] sm:h-[80dvh] max-h-[90dvh] overflow-hidden select-none"
+      >
+        {/* iOS Pull Indicator / Grabber Handle Bar (藥丸導引條) */}
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          className="pt-2.5 pb-1 flex items-center justify-center sm:hidden cursor-grab active:cursor-grabbing shrink-0"
+        >
+          <div className="w-10 h-1.5 rounded-full bg-slate-600 hover:bg-slate-500 transition-colors" />
+        </div>
+
         {/* Search Header */}
-        <div className="p-4 border-b border-slate-800 flex items-center space-x-2 shrink-0">
+        <div className="px-4 pb-3 sm:pt-3 border-b border-slate-800 flex items-center space-x-2 shrink-0">
           <div className="relative flex-1">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input

@@ -48,7 +48,7 @@ export const FlashcardPage: React.FC = () => {
   const navigate = useNavigate();
   const { activeProfile } = useProfile();
   const { syncState } = useSync();
-  const { zoomIn, zoomOut, currentPreset, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass } = useTypography();
+  const { zoomIn, zoomOut, currentPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass } = useTypography();
 
   const courseId = searchParams.get('courseId');
 
@@ -721,7 +721,7 @@ export const FlashcardPage: React.FC = () => {
       )}
 
       {/* Swipeable 3D Flashcard */}
-      <div className="flex-1 flex flex-col justify-center min-h-0 py-1">
+      <div className="flex-1 flex flex-col min-h-0 py-0.5">
         <SwipeableCard
           onSwipeLeft={handleSwipeLeft}
           onSwipeRight={handleSwipeRight}
@@ -837,7 +837,7 @@ export const FlashcardPage: React.FC = () => {
               {/* Scrollable Container Inside Card (Smooth vertical reading with zero drag interference) */}
               <div
                 ref={cardBackScrollRef}
-                className="space-y-2.5 overflow-y-auto max-h-[calc(100dvh-230px)] overscroll-contain touch-pan-y pr-1 scroll-smooth"
+                className="space-y-2.5 overflow-y-auto flex-1 min-h-0 overscroll-contain touch-pan-y pr-1 scroll-smooth"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-1.5">
@@ -891,12 +891,12 @@ export const FlashcardPage: React.FC = () => {
 
                 {/* 🎯 2. 多益考點與避坑提醒 (examFocus) */}
                 {word.examFocus && (
-                  <div className="p-2.5 rounded-xl bg-indigo-950/40 border border-indigo-700/40 text-[11px] space-y-1 shadow-sm">
-                    <div className="flex items-center justify-between text-indigo-300 font-bold text-[10px]">
+                  <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-700/50 space-y-1.5 shadow-sm">
+                    <div className="text-indigo-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
                       <span>🎯 多益核心考點：{word.examFocus.primaryBusinessSense}</span>
                     </div>
                     {word.examFocus.trapWarning && (
-                      <p className="text-amber-300/90 text-[10px] leading-relaxed">
+                      <p className="text-amber-300/90 leading-relaxed" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
                         ⚠️ <strong>考場避坑</strong>：{word.examFocus.trapWarning}
                       </p>
                     )}
@@ -905,16 +905,16 @@ export const FlashcardPage: React.FC = () => {
 
                 {/* 🔗 3. 常考商務搭配語塊 (collocations - 取代舊版套版搭配詞) */}
                 {word.collocations && word.collocations.length > 0 && (
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-teal-800/40 space-y-1.5 text-xs shadow-sm">
-                    <div className="text-teal-400 font-bold text-[11px] flex items-center justify-between">
+                  <div className="p-3 rounded-2xl bg-slate-950/80 border border-teal-800/50 space-y-2 shadow-sm">
+                    <div className="text-teal-400 font-bold flex items-center justify-between" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
                       <span>🔗 常考商務搭配語塊 (Collocations)</span>
-                      <span className="text-[9px] text-teal-500/80">必考黃金語塊</span>
+                      <span className="text-teal-500/80 font-semibold" style={{ fontSize: `${Math.max(11, pixelMetrics.supportingPx - 1)}px` }}>必考黃金語塊</span>
                     </div>
-                    <div className="grid grid-cols-1 gap-1 text-[10px]">
+                    <div className="grid grid-cols-1 gap-1.5">
                       {word.collocations.map((c: any, cIdx: number) => (
-                        <div key={cIdx} className="px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-800 flex items-center justify-between">
-                          <span className="text-emerald-300 font-bold">{c.en}</span>
-                          <span className="text-slate-300">{c.zh}</span>
+                        <div key={cIdx} className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+                          <span className="text-emerald-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>{c.en}</span>
+                          <span className="text-slate-300 font-medium" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>{c.zh}</span>
                         </div>
                       ))}
                     </div>
@@ -923,35 +923,35 @@ export const FlashcardPage: React.FC = () => {
 
                 {/* 🧩 4. 詞根字首拆解與構詞記憶 (etymology / morphology) */}
                 {(word.etymology || morphology) && (
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-amber-800/40 space-y-1.5 text-xs shadow-sm">
-                    <div className="flex items-center justify-between text-amber-400 font-bold text-[11px]">
-                      <span className="flex items-center"><Layers size={12} className="mr-1" /> 詞根字首拆解與構詞記憶</span>
+                  <div className="p-3 rounded-2xl bg-slate-950/80 border border-amber-800/50 space-y-2 shadow-sm">
+                    <div className="text-amber-400 font-bold flex items-center" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
+                      <Layers size={14} className="mr-1.5" /> 詞根字首拆解與構詞記憶
                     </div>
 
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-1.5">
                       {word.etymology?.prefix && (
-                        <span className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
+                        <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
                           <strong className="text-amber-300">前綴</strong>：{word.etymology.prefix}
                         </span>
                       )}
                       {word.etymology?.root && (
-                        <span className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
+                        <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
                           <strong className="text-amber-300">字根</strong>：{word.etymology.root}
                         </span>
                       )}
                       {word.etymology?.suffix && (
-                        <span className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
+                        <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
                           <strong className="text-amber-300">字尾</strong>：{word.etymology.suffix}
                         </span>
                       )}
                       {!word.etymology && morphology?.roots.map((r, idx) => (
-                        <span key={idx} className="px-2 py-0.5 rounded bg-amber-950/40 border border-amber-700/50 text-[10px] text-amber-200">
+                        <span key={idx} className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
                           <strong className="text-amber-300">{r.part}</strong>：{r.meaning}
                         </span>
                       ))}
                     </div>
 
-                    <p className="text-slate-300 text-[11px] leading-relaxed pt-0.5">
+                    <p className="text-slate-200 leading-relaxed pt-1" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
                       💡 <strong>構詞記憶</strong>：{word.etymology?.memoryHook || morphology?.mnemonic}
                     </p>
 

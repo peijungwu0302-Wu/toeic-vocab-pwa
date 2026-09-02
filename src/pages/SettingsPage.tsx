@@ -610,49 +610,78 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
-              <span className="text-[10px] text-slate-400 block">核心單字</span>
-              <span className="font-black text-slate-100 text-sm font-mono">{pixelMetrics.headwordPx} px</span>
+            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-center flex flex-col justify-between overflow-hidden min-h-[85px]">
+              <span className="text-[10px] text-slate-400 block mb-0.5">核心單字</span>
+              <div
+                style={{ fontSize: `${Math.min(36, pixelMetrics.headwordPx)}px` }}
+                className="font-black text-slate-100 tracking-tight leading-tight truncate my-auto"
+              >
+                contract
+              </div>
+              <span className="font-mono text-emerald-400 text-[10px] mt-0.5">{pixelMetrics.headwordPx} px</span>
             </div>
-            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
-              <span className="text-[10px] text-slate-400 block">中文釋義</span>
-              <span className="font-bold text-emerald-300 text-sm font-mono">{pixelMetrics.definitionPx} px</span>
+
+            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-center flex flex-col justify-between overflow-hidden min-h-[85px]">
+              <span className="text-[10px] text-slate-400 block mb-0.5">中文釋義</span>
+              <div
+                style={{ fontSize: `${Math.min(30, pixelMetrics.definitionPx)}px` }}
+                className="font-bold text-emerald-300 tracking-tight leading-tight truncate my-auto"
+              >
+                合約；協議
+              </div>
+              <span className="font-mono text-emerald-400 text-[10px] mt-0.5">{pixelMetrics.definitionPx} px</span>
             </div>
-            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
-              <span className="text-[10px] text-slate-400 block">例句英文</span>
-              <span className="font-semibold text-slate-200 text-sm font-mono">{pixelMetrics.exampleEnPx} px</span>
+
+            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-center flex flex-col justify-between overflow-hidden min-h-[85px]">
+              <span className="text-[10px] text-slate-400 block mb-0.5">例句英文</span>
+              <div
+                style={{ fontSize: `${Math.min(26, pixelMetrics.exampleEnPx)}px` }}
+                className="font-semibold text-slate-200 tracking-tight leading-tight truncate my-auto"
+              >
+                Sign contract.
+              </div>
+              <span className="font-mono text-emerald-400 text-[10px] mt-0.5">{pixelMetrics.exampleEnPx} px</span>
             </div>
-            <div className="bg-slate-950/80 p-2 rounded-lg border border-slate-800 text-center">
-              <span className="text-[10px] text-slate-400 block">音標/考點/搭配</span>
-              <span className="font-semibold text-teal-300 text-sm font-mono">{pixelMetrics.supportingPx} px</span>
+
+            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800 text-center flex flex-col justify-between overflow-hidden min-h-[85px]">
+              <span className="text-[10px] text-slate-400 block mb-0.5">音標/考點/搭配</span>
+              <div
+                style={{ fontSize: `${Math.min(24, pixelMetrics.supportingPx)}px` }}
+                className="font-semibold text-teal-300 tracking-tight leading-tight truncate my-auto"
+              >
+                /kɑːntrækt/
+              </div>
+              <span className="font-mono text-emerald-400 text-[10px] mt-0.5">{pixelMetrics.supportingPx} px</span>
             </div>
           </div>
         </div>
 
-        {/* Granular Individual Controls (分項獨立微調) */}
+        {/* Granular Individual Controls (分項獨立微調 · 雙向聯動) */}
         <div className="space-y-3 pt-2 border-t border-slate-700/60">
-          <div className="text-xs font-bold text-slate-300">分項獨立自訂大小</div>
+          <div className="text-xs font-bold text-slate-300">分項獨立自訂大小 (雙向聯動)</div>
 
           {/* 1. Headword Size */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <div>
               <div className="text-xs font-semibold text-slate-200">單字英文標題大小</div>
               <div className="text-[10px] text-slate-400">卡片正反面核心單字標題</div>
             </div>
-            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+            <div className="flex flex-wrap bg-slate-900 p-1 rounded-lg border border-slate-700 gap-0.5">
               {[
-                { id: 'sm', label: '小 (20px)' },
-                { id: 'md', label: '標準 (24px)' },
-                { id: 'lg', label: '大字 (30px)' },
-                { id: 'xl', label: '特大 (36px)' }
+                { id: 'sm', label: '小 (20px)', scale: 85 },
+                { id: 'md', label: '標準 (28px)', scale: 100 },
+                { id: 'lg', label: '大 (34px)', scale: 120 },
+                { id: 'xl', label: '特 (40px)', scale: 140 },
+                { id: '2xl', label: '超 (48px)', scale: 170 },
+                { id: '3xl', label: '尊 (56px)', scale: 200 }
               ].map((item) => (
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => updateSettings({ headwordSize: item.id as any })}
+                  onClick={() => updateSettings({ headwordSize: item.id as any, fontScalePercent: item.scale })}
                   className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
                     settings.headwordSize === item.id
-                      ? 'bg-emerald-600 text-white'
+                      ? 'bg-emerald-600 text-white shadow-sm'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
@@ -663,26 +692,28 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           {/* 2. Example EN Size */}
-          <div className="flex items-center justify-between border-t border-slate-700/40 pt-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-t border-slate-700/40 pt-2.5">
             <div>
               <div className="text-xs font-semibold text-slate-200">例句英文本文字體</div>
               <div className="text-[10px] text-slate-400">具象長句英文本文字體大小</div>
             </div>
-            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+            <div className="flex flex-wrap bg-slate-900 p-1 rounded-lg border border-slate-700 gap-0.5">
               {[
-                { id: 'xs', label: '12px' },
-                { id: 'sm', label: '14px' },
-                { id: 'md', label: '16px (標準)' },
-                { id: 'lg', label: '18px' },
-                { id: 'xl', label: '20px' }
+                { id: 'xs', label: '12px', scale: 85 },
+                { id: 'sm', label: '14px', scale: 95 },
+                { id: 'md', label: '15px (標準)', scale: 100 },
+                { id: 'lg', label: '18px', scale: 120 },
+                { id: 'xl', label: '21px', scale: 140 },
+                { id: '2xl', label: '26px', scale: 170 },
+                { id: '3xl', label: '30px', scale: 200 }
               ].map((item) => (
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => updateSettings({ exampleEnSize: item.id as any })}
+                  onClick={() => updateSettings({ exampleEnSize: item.id as any, fontScalePercent: item.scale })}
                   className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
                     settings.exampleEnSize === item.id
-                      ? 'bg-emerald-600 text-white'
+                      ? 'bg-emerald-600 text-white shadow-sm'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
@@ -693,25 +724,27 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           {/* 3. Example ZH Size */}
-          <div className="flex items-center justify-between border-t border-slate-700/40 pt-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-t border-slate-700/40 pt-2.5">
             <div>
               <div className="text-xs font-semibold text-slate-200">例句中文翻譯字體</div>
               <div className="text-[10px] text-slate-400">綠色繁中對譯文字大小</div>
             </div>
-            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+            <div className="flex flex-wrap bg-slate-900 p-1 rounded-lg border border-slate-700 gap-0.5">
               {[
-                { id: 'xs', label: '11px' },
-                { id: 'sm', label: '13px (標準)' },
-                { id: 'md', label: '15px' },
-                { id: 'lg', label: '17px' }
+                { id: 'xs', label: '11px', scale: 85 },
+                { id: 'sm', label: '13px (標準)', scale: 100 },
+                { id: 'md', label: '16px', scale: 120 },
+                { id: 'lg', label: '18px', scale: 140 },
+                { id: 'xl', label: '22px', scale: 170 },
+                { id: '2xl', label: '26px', scale: 200 }
               ].map((item) => (
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => updateSettings({ exampleZhSize: item.id as any })}
+                  onClick={() => updateSettings({ exampleZhSize: item.id as any, fontScalePercent: item.scale })}
                   className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
                     settings.exampleZhSize === item.id
-                      ? 'bg-emerald-600 text-white'
+                      ? 'bg-emerald-600 text-white shadow-sm'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
@@ -722,25 +755,27 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           {/* 4. Definition Size */}
-          <div className="flex items-center justify-between border-t border-slate-700/40 pt-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-t border-slate-700/40 pt-2.5">
             <div>
               <div className="text-xs font-semibold text-slate-200">單字中文釋義大小</div>
               <div className="text-[10px] text-slate-400">卡片背面核心中文釋義</div>
             </div>
-            <div className="flex bg-slate-900 p-1 rounded-lg border border-slate-700">
+            <div className="flex flex-wrap bg-slate-900 p-1 rounded-lg border border-slate-700 gap-0.5">
               {[
-                { id: 'sm', label: '14px' },
-                { id: 'md', label: '16px (標準)' },
-                { id: 'lg', label: '18px' },
-                { id: 'xl', label: '20px' }
+                { id: 'sm', label: '14px', scale: 85 },
+                { id: 'md', label: '17px (標準)', scale: 100 },
+                { id: 'lg', label: '20px', scale: 120 },
+                { id: 'xl', label: '24px', scale: 140 },
+                { id: '2xl', label: '29px', scale: 170 },
+                { id: '3xl', label: '34px', scale: 200 }
               ].map((item) => (
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => updateSettings({ definitionSize: item.id as any })}
+                  onClick={() => updateSettings({ definitionSize: item.id as any, fontScalePercent: item.scale })}
                   className={`px-2 py-1 text-[11px] font-bold rounded-md transition-all ${
                     settings.definitionSize === item.id
-                      ? 'bg-emerald-600 text-white'
+                      ? 'bg-emerald-600 text-white shadow-sm'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
