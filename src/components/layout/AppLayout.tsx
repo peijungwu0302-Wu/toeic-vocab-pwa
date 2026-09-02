@@ -132,8 +132,8 @@ export const AppLayout: React.FC = () => {
       {navStyle === 'island' ? (
         // 方案 B：Apple Music 同款 · 懸浮膠囊島 (iOS 18 Floating Island)
         <nav
-          className="fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[28px] bg-slate-900/85 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5"
-          style={{ bottom: 'calc(-1 * env(safe-area-inset-bottom, 0px) + 14px)' }}
+          className="fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[26px] bg-slate-900/90 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5"
+          style={{ bottom: 'max(8px, calc(env(safe-area-inset-bottom, 0px) - 24px))' }}
         >
           <div className="flex items-center justify-around">
             {navItems.map((item) => {
@@ -159,11 +159,8 @@ export const AppLayout: React.FC = () => {
         </nav>
       ) : navStyle === 'flush' ? (
         // 方案 A：穿透毛玻璃 · 極致下沉貼底 (Ultra-Flush Frosted Glass)
-        <nav
-          className="fixed left-0 right-0 max-w-lg mx-auto bg-slate-900/80 backdrop-blur-2xl border-t border-white/10 z-40"
-          style={{ bottom: 'calc(-1 * env(safe-area-inset-bottom, 0px) + 8px)', paddingBottom: '4px' }}
-        >
-          <div className="flex items-center justify-around px-1 pt-1 pb-0">
+        <nav className="fixed bottom-0 left-0 right-0 max-w-lg mx-auto bg-slate-900/85 backdrop-blur-2xl border-t border-white/10 z-40 pb-2">
+          <div className="flex items-center justify-around px-1 pt-1.5 pb-0">
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
