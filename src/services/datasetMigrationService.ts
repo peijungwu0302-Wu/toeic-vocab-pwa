@@ -1,8 +1,8 @@
 import { db } from '../db';
 import { courseRepository } from '../repositories/courseRepository';
 
-export const CURRENT_DATASET_VERSION = 11;
-export const DATASET_RELEASE_TAG = 'v6.1.0-bbword-vip-lexicon';
+export const CURRENT_DATASET_VERSION = 12;
+export const DATASET_RELEASE_TAG = 'v6.2.0-bbword-vip-lexicon';
 export const APP_RELEASE_VERSION = 'v1.0.0 (Official Release)';
 
 export interface DatasetDiagnostics {

@@ -13,7 +13,7 @@ function shuffleList<T>(array: T[]): T[] {
 
 export const courseRepository = {
   async fetchCatalog(): Promise<DatasetCatalog> {
-    const res = await fetch('/data/v1/catalog.json');
+    const res = await fetch(`/data/v1/catalog.json?t=${Date.now()}`, { cache: 'no-cache' });
     if (!res.ok) {
       throw new Error(`Failed to fetch course catalog: HTTP ${res.status}`);
     }
@@ -152,7 +152,7 @@ export const courseRepository = {
   },
 
   async downloadAndSaveCourse(courseId: string, fileName: string): Promise<void> {
-    const res = await fetch(`/data/v1/courses/${fileName}`);
+    const res = await fetch(`/data/v1/courses/${fileName}?t=${Date.now()}`, { cache: 'no-cache' });
     if (!res.ok) {
       throw new Error(`Failed to download course file ${fileName}: HTTP ${res.status}`);
     }
