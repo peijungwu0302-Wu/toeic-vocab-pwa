@@ -45,7 +45,7 @@ export const AppLayout: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col h-dvh max-h-dvh max-w-lg mx-auto bg-slate-900 border-x border-slate-800 shadow-2xl relative overflow-hidden select-none">
+    <div className="fixed inset-0 flex flex-col w-full max-w-lg mx-auto bg-slate-900 border-x border-slate-800 shadow-2xl overflow-hidden select-none">
       <UpdatePrompt />
 
       {/* Top Header */}
