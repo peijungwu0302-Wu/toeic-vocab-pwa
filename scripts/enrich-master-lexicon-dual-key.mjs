@@ -208,7 +208,7 @@ async function runEnrichment() {
                 { ...heroExample, id: 'ex_1' },
                 ex2 ? { ...ex2, id: 'ex_2' } : null,
                 ex3 ? { ...ex3, id: 'ex_3' } : null
-              ].filter(Boolean) as any[],
+              ].filter(Boolean),
               visualAnchor: origWord.visualAnchor || {
                 imagePrompt: `Professional modern business workplace setting representing ${origWord.headword || key}, photorealistic, 8k`,
                 scene: `企業同仁於商務情境中處理 ${origWord.headword || key} 之應用場景`
