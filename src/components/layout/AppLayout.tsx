@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useProfile } from '../../contexts/ProfileContext';
 import { useSync } from '../../contexts/SyncContext';
+import { useNavigationStyle } from '../../contexts/NavigationStyleContext';
 import { InstallPrompt } from '../pwa/InstallPrompt';
 import { UpdatePrompt } from '../pwa/UpdatePrompt';
 import { SearchModal } from '../ui/SearchModal';
@@ -23,6 +24,7 @@ import { SearchModal } from '../ui/SearchModal';
 export const AppLayout: React.FC = () => {
   const { activeProfile } = useProfile();
   const { syncState, triggerSync } = useSync();
+  const { navStyle } = useNavigationStyle();
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -114,7 +116,11 @@ export const AppLayout: React.FC = () => {
 
       {/* Main Content Area: Takes EXACT remaining space between header and bottom nav */}
       <main className={`flex-1 min-h-0 px-3.5 py-1.5 ${
-        isStudyScreen ? 'overflow-hidden flex flex-col justify-between' : 'overflow-y-auto pb-4'
+        isStudyScreen
+          ? 'overflow-hidden flex flex-col justify-between'
+          : navStyle === 'classic'
+            ? 'overflow-y-auto pb-4'
+            : 'overflow-y-auto pb-20'
       }`}>
         <Outlet />
       </main>
@@ -123,29 +129,88 @@ export const AppLayout: React.FC = () => {
       <InstallPrompt />
 
       {/* Bottom Navigation Bar - ALWAYS Accessible across all tabs */}
-      <nav className="shrink-0 bg-slate-900/98 backdrop-blur-md border-t border-slate-800 z-30 pb-2">
-        <div className="flex items-center justify-around px-1 pt-1.5 pb-0">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `flex flex-col items-center justify-center py-0.5 px-1 rounded-xl transition-all min-w-[42px] ${
-                    isActive
-                      ? 'text-emerald-400 font-bold scale-105'
-                      : 'text-slate-400 hover:text-slate-200 font-medium'
-                  }`
-                }
-              >
-                <Icon size={18} />
-                <span className="text-[10px] mt-0.5 tracking-tight leading-none">{item.label}</span>
-              </NavLink>
-            );
-          })}
-        </div>
-      </nav>
+      {navStyle === 'island' ? (
+        // 方案 B：Apple Music 同款 · 懸浮膠囊島 (iOS 18 Floating Island)
+        <nav
+          className="fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[28px] bg-slate-900/85 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5"
+          style={{ bottom: 'calc(-1 * env(safe-area-inset-bottom, 0px) + 14px)' }}
+        >
+          <div className="flex items-center justify-around">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `flex flex-col items-center justify-center transition-all min-w-[40px] ${
+                      isActive
+                        ? 'bg-emerald-500/20 text-emerald-400 font-bold px-2 py-1 rounded-2xl scale-105 border border-emerald-500/30'
+                        : 'text-slate-400 hover:text-slate-200 font-medium px-1.5 py-1'
+                    }`
+                  }
+                >
+                  <Icon size={18} />
+                  <span className="text-[10px] mt-0.5 tracking-tight leading-none">{item.label}</span>
+                </NavLink>
+              );
+            })}
+          </div>
+        </nav>
+      ) : navStyle === 'flush' ? (
+        // 方案 A：穿透毛玻璃 · 極致下沉貼底 (Ultra-Flush Frosted Glass)
+        <nav
+          className="fixed left-0 right-0 max-w-lg mx-auto bg-slate-900/80 backdrop-blur-2xl border-t border-white/10 z-40"
+          style={{ bottom: 'calc(-1 * env(safe-area-inset-bottom, 0px) + 8px)', paddingBottom: '4px' }}
+        >
+          <div className="flex items-center justify-around px-1 pt-1 pb-0">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `flex flex-col items-center justify-center py-0.5 px-1 rounded-xl transition-all min-w-[42px] ${
+                      isActive
+                        ? 'text-emerald-400 font-bold scale-105'
+                        : 'text-slate-400 hover:text-slate-200 font-medium'
+                    }`
+                  }
+                >
+                  <Icon size={18} />
+                  <span className="text-[10px] mt-0.5 tracking-tight leading-none">{item.label}</span>
+                </NavLink>
+              );
+            })}
+          </div>
+        </nav>
+      ) : (
+        // 傳統模式：經典全寬，目前模式
+        <nav className="shrink-0 bg-slate-900/98 backdrop-blur-md border-t border-slate-800 z-30 pb-2">
+          <div className="flex items-center justify-around px-1 pt-1.5 pb-0">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    `flex flex-col items-center justify-center py-0.5 px-1 rounded-xl transition-all min-w-[42px] ${
+                      isActive
+                        ? 'text-emerald-400 font-bold scale-105'
+                        : 'text-slate-400 hover:text-slate-200 font-medium'
+                    }`
+                  }
+                >
+                  <Icon size={18} />
+                  <span className="text-[10px] mt-0.5 tracking-tight leading-none">{item.label}</span>
+                </NavLink>
+              );
+            })}
+          </div>
+        </nav>
+      )}
     </div>
   );
 };

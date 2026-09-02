@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ProfileProvider, useProfile } from './contexts/ProfileContext';
 import { SyncProvider } from './contexts/SyncContext';
 import { TypographyProvider } from './contexts/TypographyContext';
+import { NavigationStyleProvider } from './contexts/NavigationStyleContext';
 import { AppLayout } from './components/layout/AppLayout';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -76,7 +77,9 @@ export const App: React.FC = () => {
       <ProfileProvider>
         <SyncProvider>
           <TypographyProvider>
-            <AppRoutes />
+            <NavigationStyleProvider>
+              <AppRoutes />
+            </NavigationStyleProvider>
           </TypographyProvider>
         </SyncProvider>
       </ProfileProvider>

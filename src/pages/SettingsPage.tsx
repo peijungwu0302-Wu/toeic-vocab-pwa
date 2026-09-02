@@ -21,11 +21,13 @@ import {
   Send,
   LogOut,
   Type,
-  Sliders
+  Sliders,
+  Smartphone
 } from 'lucide-react';
 import { useProfile } from '../contexts/ProfileContext';
 import { useSync } from '../contexts/SyncContext';
 import { useTypography } from '../contexts/TypographyContext';
+import { useNavigationStyle } from '../contexts/NavigationStyleContext';
 import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
 import { getSupabaseClient } from '../services/supabaseClient';
@@ -40,6 +42,7 @@ export const SettingsPage: React.FC = () => {
   const { activeProfile, profiles, switchProfile, createProfile, updateProfile, deleteProfile } = useProfile();
   const { syncState, triggerSync } = useSync();
   const { settings, updateSettings, resetSettings, applyPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
+  const { navStyle, setNavStyle } = useNavigationStyle();
 
   const [isNewProfileModalOpen, setIsNewProfileModalOpen] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
@@ -840,7 +843,115 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Backup & Restore (Local-first) */}
+      {/* 6. iPhone 底部導覽列外觀與貼合風格 (Bottom Navigation Appearance) */}
+      <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Smartphone size={17} className="text-purple-400" />
+            <h3 className="text-sm font-bold text-slate-200">iPhone 底部導覽列外觀風格</h3>
+          </div>
+          <span className="text-[10px] font-bold text-purple-300 bg-purple-950/80 border border-purple-800/60 px-2 py-0.5 rounded-full">
+            即時切換生效
+          </span>
+        </div>
+        <p className="text-[11px] text-slate-400 leading-relaxed">
+          針對 iPhone 全螢幕與小白條（Home Indicator）設計，可即時比較不同底欄貼合美感。
+        </p>
+
+        <div className="grid grid-cols-1 gap-2 pt-1">
+          {/* Option 1: Classic */}
+          <button
+            type="button"
+            onClick={() => setNavStyle('classic')}
+            className={`p-3 rounded-xl border text-left transition-all flex items-start justify-between ${
+              navStyle === 'classic'
+                ? 'bg-slate-900 border-emerald-500 shadow-md shadow-emerald-950/20'
+                : 'bg-slate-900/60 border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-slate-200">1. 傳統模式（經典全寬）</span>
+                {navStyle === 'classic' && (
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    目前生效
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                全螢幕經典貼邊底板，保持陽春簡約，適合習慣傳統網頁滿版結構。
+              </p>
+            </div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
+              navStyle === 'classic' ? 'border-emerald-500 bg-emerald-500' : 'border-slate-600'
+            }`}>
+              {navStyle === 'classic' && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+            </div>
+          </button>
+
+          {/* Option 2: Flush (Scheme A) */}
+          <button
+            type="button"
+            onClick={() => setNavStyle('flush')}
+            className={`p-3 rounded-xl border text-left transition-all flex items-start justify-between ${
+              navStyle === 'flush'
+                ? 'bg-slate-900 border-emerald-500 shadow-md shadow-emerald-950/20'
+                : 'bg-slate-900/60 border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-slate-200">2. 方案 A：穿透毛玻璃 · 極致下沉貼底</span>
+                {navStyle === 'flush' && (
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    目前生效
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                採用負向偏移抵消 WebKit 上頂，按鈕下沉貼合小白條，磨砂毛玻璃透光穿透。
+              </p>
+            </div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
+              navStyle === 'flush' ? 'border-emerald-500 bg-emerald-500' : 'border-slate-600'
+            }`}>
+              {navStyle === 'flush' && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+            </div>
+          </button>
+
+          {/* Option 3: Island (Scheme B - Apple Music) */}
+          <button
+            type="button"
+            onClick={() => setNavStyle('island')}
+            className={`p-3 rounded-xl border text-left transition-all flex items-start justify-between ${
+              navStyle === 'island'
+                ? 'bg-slate-900 border-purple-500 shadow-md shadow-purple-950/30'
+                : 'bg-slate-900/60 border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-purple-300">3. 方案 B：Apple Music 同款 · 懸浮膠囊島 (推薦)</span>
+                {navStyle === 'island' && (
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-950 text-purple-300 border border-purple-800">
+                    目前生效
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                對標 iOS 18 蘋果原生美學！左右圓弧微縮懸浮膠囊島，選中項帶藥丸背景，層次分明。
+              </p>
+            </div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
+              navStyle === 'island' ? 'border-purple-500 bg-purple-500' : 'border-slate-600'
+            }`}>
+              {navStyle === 'island' && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* 7. Backup & Restore (Local-first) */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
           <Download size={16} className="text-blue-400" />
