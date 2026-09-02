@@ -20,7 +20,8 @@ import {
   Mail,
   Send,
   LogOut,
-  Type
+  Type,
+  Sliders
 } from 'lucide-react';
 import { useProfile } from '../contexts/ProfileContext';
 import { useSync } from '../contexts/SyncContext';
@@ -538,22 +539,62 @@ export const SettingsPage: React.FC = () => {
               重設為預設值
             </button>
           </div>
-          <div className="grid grid-cols-4 gap-1.5">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
             {[
               { id: 'compact', label: '📱 緊湊' },
-              { id: 'standard', label: '🖥️ 標準 (推薦)' },
-              { id: 'large', label: '👓 清晰大字' },
-              { id: 'huge', label: '👴 特大字體' }
+              { id: 'standard', label: '🖥️ 標準' },
+              { id: 'large', label: '👓 大字' },
+              { id: 'huge', label: '👴 特大' },
+              { id: 'giant', label: '🔍 超大 (+1級)' },
+              { id: 'ultra', label: '🛡️ 護眼至尊 (+2級)' }
             ].map((p) => (
               <button
                 key={p.id}
                 type="button"
                 onClick={() => applyPreset(p.id as any)}
-                className="py-1.5 px-1 rounded-xl bg-slate-900 border border-slate-700 text-[11px] font-bold text-slate-300 hover:bg-slate-700 hover:text-white transition-all text-center"
+                className="py-2 px-1 rounded-xl bg-slate-900 border border-slate-700 text-[11px] font-bold text-slate-300 hover:bg-slate-700 hover:text-white transition-all text-center"
               >
                 {p.label}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* 自由無級比例縮放 (Continuous Free Scale Slider) */}
+        <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-700/60 space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-slate-200 flex items-center">
+              <Sliders size={14} className="mr-1.5 text-emerald-400" />
+              自由自訂比例縮放 (護眼防用眼過度)
+            </span>
+            <span className="font-mono font-bold text-emerald-400 text-xs">
+              {settings.fontScalePercent || 100}%
+            </span>
+          </div>
+          <input
+            type="range"
+            min={75}
+            max={175}
+            step={5}
+            value={settings.fontScalePercent || 100}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              if (val <= 85) applyPreset('compact');
+              else if (val <= 105) applyPreset('standard');
+              else if (val <= 120) applyPreset('large');
+              else if (val <= 140) applyPreset('huge');
+              else if (val <= 160) applyPreset('giant');
+              else applyPreset('ultra');
+              updateSettings({ fontScalePercent: val });
+            }}
+            className="w-full accent-emerald-500 cursor-pointer h-2 bg-slate-800 rounded-lg appearance-none"
+          />
+          <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+            <span>75% 緊湊</span>
+            <span>100% 標準</span>
+            <span>130% 特大</span>
+            <span>150% 超大(+1)</span>
+            <span>175% 至尊(+2)</span>
           </div>
         </div>
 

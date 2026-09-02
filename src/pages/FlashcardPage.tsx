@@ -593,12 +593,12 @@ export const FlashcardPage: React.FC = () => {
                 A-
               </button>
               <span className="text-[9px] text-slate-400 font-mono">
-                {currentPreset === 'compact' ? '小' : currentPreset === 'standard' ? '中' : currentPreset === 'large' ? '大' : '特'}
+                {currentPreset === 'compact' ? '小' : currentPreset === 'standard' ? '中' : currentPreset === 'large' ? '大' : currentPreset === 'huge' ? '特' : currentPreset === 'giant' ? '超' : currentPreset === 'ultra' ? '尊' : '自'}
               </span>
               <button
                 type="button"
                 onClick={zoomIn}
-                disabled={currentPreset === 'huge'}
+                disabled={currentPreset === 'ultra'}
                 className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
                 title="放大字體"
               >
