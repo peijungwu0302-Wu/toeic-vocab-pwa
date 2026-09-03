@@ -3,8 +3,6 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
   Play,
   Pause,
-  ChevronLeft,
-  ChevronRight,
   Settings2,
   X,
   Shuffle,
@@ -57,6 +55,13 @@ export const FastSkimPage: React.FC = () => {
   const [resumedNotice, setResumedNotice] = useState<string | null>(null);
   const [showProgressPopover, setShowProgressPopover] = useState<boolean>(false);
   const [imgFailed, setImgFailed] = useState(false);
+
+  // IG Story Hold & Tap Feedback states
+  const [isHolding, setIsHolding] = useState<boolean>(false);
+  const [tapFeedback, setTapFeedback] = useState<'left' | 'right' | null>(null);
+  const holdTimerRef = useRef<number | null>(null);
+  const isHoldingRef = useRef<boolean>(false);
+  const lastTapTimeRef = useRef<number>(0);
 
   const timerRef = useRef<number | null>(null);
 
@@ -208,9 +213,9 @@ export const FastSkimPage: React.FC = () => {
     }
   }, [currentIndex, activeWords, showRecapModal, playCurrentCardAudio]);
 
-  // Timer loop with background tab freeze protection
+  // Timer loop with background tab freeze protection & IG long-press hold freeze
   useEffect(() => {
-    if (isPaused || isLoading || showRecapModal || activeWords.length === 0) {
+    if (isPaused || isHolding || isLoading || showRecapModal || activeWords.length === 0) {
       if (timerRef.current) clearInterval(timerRef.current);
       return;
     }
@@ -231,7 +236,7 @@ export const FastSkimPage: React.FC = () => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused, isLoading, showRecapModal, activeWords.length, durationSec, goToNext]);
+  }, [isPaused, isHolding, isLoading, showRecapModal, activeWords.length, durationSec, goToNext]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -327,6 +332,67 @@ export const FastSkimPage: React.FC = () => {
       </div>
     );
   }
+
+  // IG Story Gestures: Hold to pause/freeze, release to resume
+  const handlePointerDown = () => {
+    isHoldingRef.current = false;
+    if (holdTimerRef.current) clearTimeout(holdTimerRef.current);
+    holdTimerRef.current = window.setTimeout(() => {
+      isHoldingRef.current = true;
+      setIsHolding(true);
+    }, 180); // 180ms hold threshold for IG story freeze
+  };
+
+  const handlePointerUp = () => {
+    if (holdTimerRef.current) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+    if (isHoldingRef.current) {
+      setIsHolding(false);
+      // Brief lockout so pointerup doesn't trigger onClick
+      setTimeout(() => {
+        isHoldingRef.current = false;
+      }, 60);
+    }
+  };
+
+  const handlePointerCancel = () => {
+    if (holdTimerRef.current) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+    isHoldingRef.current = false;
+    setIsHolding(false);
+  };
+
+  const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isHoldingRef.current) return;
+
+    // Double-tap detection: Double-tap toggles permanent study pause
+    const now = Date.now();
+    if (now - lastTapTimeRef.current < 320) {
+      lastTapTimeRef.current = 0;
+      setIsPaused(prev => !prev);
+      return;
+    }
+    lastTapTimeRef.current = now;
+
+    // Left 35% -> Prev word, Right 65% -> Next word
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+
+    if (clickX < width * 0.35) {
+      setTapFeedback('left');
+      setTimeout(() => setTapFeedback(null), 160);
+      goToPrev();
+    } else {
+      setTapFeedback('right');
+      setTimeout(() => setTapFeedback(null), 160);
+      goToNext();
+    }
+  };
 
   const currentWord = activeWords[currentIndex] || activeWords[0];
   const progressPercent = Math.min(100, Math.max(0, ((durationSec - remainingTime) / durationSec) * 100));
@@ -544,7 +610,7 @@ export const FastSkimPage: React.FC = () => {
             transition={{ duration: 0.15 }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.4}
+            dragElastic={0.35}
             onDragEnd={(_: unknown, info: PanInfo) => {
               if (info.offset.x < -40 || info.velocity.x < -200) {
                 goToNext();
@@ -552,27 +618,50 @@ export const FastSkimPage: React.FC = () => {
                 goToPrev();
               }
             }}
-            onClick={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const clickX = e.clientX - rect.left;
-              const width = rect.width;
-              if (clickX < width * 0.28) {
-                goToPrev();
-              } else if (clickX > width * 0.72) {
-                goToNext();
-              } else {
-                setIsPaused(prev => !prev);
-              }
-            }}
-            className="bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700/80 rounded-3xl p-5 shadow-2xl flex flex-col justify-between min-h-[380px] relative overflow-hidden cursor-pointer select-none"
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerCancel}
+            onPointerLeave={handlePointerCancel}
+            onClick={handleCardClick}
+            className="bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700/80 rounded-3xl p-5 shadow-2xl flex flex-col justify-between min-h-[420px] relative overflow-hidden cursor-pointer select-none"
           >
-            {/* Top Timer Bar */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-slate-900 z-10">
+            {/* Top Timer Bar (IG Story Segmented Bar with Pulse during Hold) */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-slate-900 z-20">
               <div
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-100 ease-linear"
+                className={`h-full transition-all duration-100 ease-linear ${
+                  isHolding
+                    ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.9)]'
+                    : isPaused
+                      ? 'bg-amber-500/80'
+                      : 'bg-gradient-to-r from-emerald-500 to-teal-400'
+                }`}
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
+
+            {/* Tap Feedback Micro-ripple (Left 35% / Right 65%) */}
+            {tapFeedback === 'left' && (
+              <div className="absolute inset-y-0 left-0 w-[35%] bg-white/10 pointer-events-none rounded-l-3xl transition-opacity duration-150 z-20" />
+            )}
+            {tapFeedback === 'right' && (
+              <div className="absolute inset-y-0 right-0 w-[65%] bg-white/10 pointer-events-none rounded-r-3xl transition-opacity duration-150 z-20" />
+            )}
+
+            {/* IG Story Hold Badge (Pops up when long-pressing anywhere) */}
+            <AnimatePresence>
+              {isHolding && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85 }}
+                  transition={{ duration: 0.12 }}
+                  className="absolute top-3 right-3 z-30 px-2.5 py-1 rounded-full bg-slate-950/90 border border-amber-500/60 text-amber-300 font-bold text-[10px] flex items-center space-x-1 shadow-xl backdrop-blur-md"
+                >
+                  <Pause size={10} className="fill-amber-300" />
+                  <span>凍結中 (放開繼續)</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Associative Scenario Image Banner (Enlarged & uncropped 1:1 view) */}
             {showImage && !imgFailed && (
@@ -661,43 +750,35 @@ export const FastSkimPage: React.FC = () => {
               )}
             </div>
 
-            {/* Bottom info bar */}
-            <div className="text-[11px] text-slate-400 flex items-center justify-end border-t border-slate-800/70 pt-2">
-              <span className="text-slate-400 font-mono">倒數 {remainingTime.toFixed(1)} 秒</span>
+            {/* Bottom info bar: Long-press / Double-tap affordance & countdown */}
+            <div className="text-[11px] text-slate-400 flex items-center justify-between border-t border-slate-800/70 pt-2 shrink-0">
+              <div className="flex items-center space-x-1 text-[10px] text-slate-500">
+                <span>長按凍結</span>
+                <span>•</span>
+                <span>雙擊暫停</span>
+              </div>
+
+              {isPaused ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPaused(false);
+                  }}
+                  className="px-2.5 py-0.5 rounded-full bg-amber-950/80 hover:bg-amber-900 border border-amber-500/50 text-amber-300 font-bold text-[10px] flex items-center space-x-1 shadow-sm transition-all active:scale-95"
+                  title="點擊恢復自動輪播"
+                >
+                  <Play size={10} className="fill-amber-300" />
+                  <span>研讀中 · 點擊繼續</span>
+                </button>
+              ) : (
+                <span className="text-slate-400 font-mono text-[10px]">
+                  {isHolding ? '⏸ 凍結中' : `倒數 ${remainingTime.toFixed(1)}s`}
+                </span>
+              )}
             </div>
           </motion.div>
         </AnimatePresence>
-      </div>
-
-      {/* Bottom Floating Control Bar (Sticky & Uncuttable) */}
-      <div className="flex items-center justify-center space-x-4 bg-slate-800/95 border border-slate-700/80 rounded-2xl py-2 px-6 shadow-xl backdrop-blur shrink-0 sticky bottom-0 z-20">
-        <button
-          type="button"
-          onClick={goToPrev}
-          disabled={currentIndex === 0}
-          aria-label="上一個單字"
-          className="p-3 rounded-xl bg-slate-900 hover:bg-slate-700 disabled:opacity-40 text-slate-200 transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center"
-        >
-          <ChevronLeft size={22} />
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setIsPaused(prev => !prev)}
-          aria-label={isPaused ? '繼續速讀' : '暫停速讀'}
-          className="p-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-950/40 transition-transform active:scale-95 min-w-[52px] min-h-[52px] flex items-center justify-center"
-        >
-          {isPaused ? <Play size={24} className="fill-white" /> : <Pause size={24} className="fill-white" />}
-        </button>
-
-        <button
-          type="button"
-          onClick={goToNext}
-          aria-label="下一個單字"
-          className="p-3 rounded-xl bg-slate-900 hover:bg-slate-700 text-slate-200 transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center"
-        >
-          <ChevronRight size={22} />
-        </button>
       </div>
 
       {/* Modal: Flash Recap at end of micro-session */}
