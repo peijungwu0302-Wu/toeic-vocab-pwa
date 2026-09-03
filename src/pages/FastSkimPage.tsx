@@ -55,6 +55,7 @@ export const FastSkimPage: React.FC = () => {
   const [showRecapModal, setShowRecapModal] = useState<boolean>(false);
   const [starredWordIds, setStarredWordIds] = useState<Set<string>>(new Set());
   const [resumedNotice, setResumedNotice] = useState<string | null>(null);
+  const [showProgressPopover, setShowProgressPopover] = useState<boolean>(false);
   const [imgFailed, setImgFailed] = useState(false);
 
   const timerRef = useRef<number | null>(null);
@@ -123,6 +124,7 @@ export const FastSkimPage: React.FC = () => {
         setCurrentIndex(restoredIndex);
         setCurrentBatchIndex(restoredBatch);
         setResumedNotice(`已為您恢復進度：第 ${restoredIndex + 1} / ${initialBatch.length} 詞 ↩️`);
+        setShowProgressPopover(true);
       } else {
         setCurrentIndex(0);
         setCurrentBatchIndex(0);
@@ -257,13 +259,14 @@ export const FastSkimPage: React.FC = () => {
   }, [currentIndex]);
 
   useEffect(() => {
-    if (resumedNotice) {
+    if (resumedNotice || showProgressPopover) {
       const t = setTimeout(() => {
         setResumedNotice(null);
+        setShowProgressPopover(false);
       }, 4000);
       return () => clearTimeout(t);
     }
-  }, [resumedNotice]);
+  }, [resumedNotice, showProgressPopover]);
 
   const handleDurationChange = async (newSec: number) => {
     setDurationSec(newSec);
@@ -331,7 +334,7 @@ export const FastSkimPage: React.FC = () => {
   return (
     <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-1.5 pb-1 select-none touch-pan-y overscroll-y-contain">
       {/* Top Filter & Micro-session Bar */}
-      <div className="space-y-1.5 shrink-0">
+      <div className="relative z-50 space-y-1.5 shrink-0">
         <div className="flex items-center justify-between bg-slate-800/85 backdrop-blur-md border border-slate-750 rounded-2xl px-2.5 py-1 shadow-sm">
           <div className="flex items-center space-x-1.5">
             <button
@@ -344,10 +347,69 @@ export const FastSkimPage: React.FC = () => {
               <X size={16} />
             </button>
 
-            <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-bold text-[11px]">
-              <span>{currentIndex + 1}</span>
-              <span className="text-emerald-500/70">/</span>
-              <span>{activeWords.length}</span>
+            {/* Interactive Progress Pill */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowProgressPopover(prev => !prev)}
+                className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600/60 text-emerald-300 font-bold text-[11px] shadow-sm transition-all active:scale-95 cursor-pointer"
+                title="點擊查看進度與重新開始"
+              >
+                <span>{currentIndex + 1}</span>
+                <span className="text-emerald-500/70">/</span>
+                <span>{activeWords.length}</span>
+                <span className="text-[8px] text-emerald-400/80 ml-0.5">▾</span>
+              </button>
+
+              {/* Anchored Progress Popover (Floats cleanly over card & image) */}
+              <AnimatePresence>
+                {(resumedNotice || showProgressPopover) && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-2.5 z-[100] min-w-[210px] p-3 rounded-2xl bg-slate-900/98 border border-emerald-500/60 shadow-2xl shadow-black/90 backdrop-blur-xl flex flex-col space-y-2"
+                  >
+                    <div className="absolute -top-1.5 left-6 w-3 h-3 bg-slate-900 border-t border-l border-emerald-500/60 transform rotate-45" />
+
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-emerald-300 flex items-center">
+                        <Sparkles size={12} className="mr-1 text-emerald-400" />
+                        速讀進度
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setResumedNotice(null);
+                          setShowProgressPopover(false);
+                        }}
+                        className="text-slate-400 hover:text-slate-200 p-0.5"
+                      >
+                        <X size={13} />
+                      </button>
+                    </div>
+
+                    <p className="text-[11px] text-slate-300 leading-tight">
+                      {resumedNotice || `目前進度：第 ${currentIndex + 1} / ${activeWords.length} 詞`}
+                    </p>
+
+                    <div className="flex items-center space-x-2 pt-1 border-t border-slate-800">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleRestartFromBeginning();
+                          setResumedNotice(null);
+                          setShowProgressPopover(false);
+                        }}
+                        className="flex-1 py-1 px-2 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white text-[11px] font-bold transition-colors text-center shadow-sm"
+                      >
+                        從第 1 詞開始 ↺
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <span className="text-[10px] text-slate-400">
@@ -471,36 +533,8 @@ export const FastSkimPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Resumed Progress Notification: Floating Micro-Toast (Zero layout shift) */}
-      <AnimatePresence>
-        {resumedNotice && (
-          <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            className="fixed top-14 left-1/2 -translate-x-1/2 z-40 px-3.5 py-1.5 rounded-full bg-slate-900/95 border border-emerald-500/50 text-emerald-200 text-xs shadow-xl backdrop-blur-md flex items-center space-x-2 whitespace-nowrap"
-          >
-            <span className="font-semibold text-[11px]">{resumedNotice}</span>
-            <button
-              type="button"
-              onClick={handleRestartFromBeginning}
-              className="px-2 py-0.5 rounded-md bg-emerald-600/80 hover:bg-emerald-500 text-white text-[10px] font-bold transition-colors shadow-sm"
-            >
-              從頭開始 ↺
-            </button>
-            <button
-              type="button"
-              onClick={() => setResumedNotice(null)}
-              className="text-slate-400 hover:text-slate-200 p-0.5"
-            >
-              <X size={12} />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Main Flashcard View with IG Story Gestures (Swipe & Tap Sides) */}
-      <div className="flex-1 flex flex-col justify-center relative">
+      <div className="relative z-10 flex-1 flex flex-col justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentWord.id}

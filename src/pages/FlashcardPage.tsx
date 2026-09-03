@@ -691,7 +691,7 @@ export const FlashcardPage: React.FC = () => {
   return (
     <div className="flex flex-col h-full justify-between w-full max-w-md mx-auto space-y-1 pb-1 select-none overscroll-y-contain touch-pan-y overflow-x-hidden">
       {/* 🚀 Unified Immersive Study Header (Never overflows, 100% symmetrically centered) */}
-      <div className="flex items-center justify-between w-full bg-slate-800/85 backdrop-blur-md border border-slate-750 rounded-2xl px-2 py-1 shadow-sm shrink-0 text-xs gap-1">
+      <div className="relative z-50 flex items-center justify-between w-full bg-slate-800/85 backdrop-blur-md border border-slate-750 rounded-2xl px-2 py-1 shadow-sm shrink-0 text-xs gap-1">
         {/* Left: Exit button + Interactive Progress Pill with Popover */}
         <div className="flex items-center space-x-1.5 shrink-0">
           <button
@@ -718,7 +718,7 @@ export const FlashcardPage: React.FC = () => {
               <span className="text-[8px] text-emerald-400/80 ml-0.5">▾</span>
             </button>
 
-            {/* Bubble Popover right beneath progress pill */}
+            {/* Bubble Popover right beneath progress pill (Highest z-index, floats over cards and images) */}
             <AnimatePresence>
               {(resumedNotice || showProgressPopover) && (
                 <motion.div
@@ -726,7 +726,7 @@ export const FlashcardPage: React.FC = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -6, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-2.5 z-50 min-w-[210px] p-3 rounded-2xl bg-slate-900/98 border border-emerald-500/60 shadow-2xl shadow-black/90 backdrop-blur-xl flex flex-col space-y-2"
+                  className="absolute top-full left-0 mt-2.5 z-[100] min-w-[210px] p-3 rounded-2xl bg-slate-900/98 border border-emerald-500/60 shadow-2xl shadow-black/90 backdrop-blur-xl flex flex-col space-y-2"
                 >
                   {/* Upward triangle caret pointing to progress pill */}
                   <div className="absolute -top-1.5 left-6 w-3 h-3 bg-slate-900 border-t border-l border-emerald-500/60 transform rotate-45" />
@@ -870,7 +870,7 @@ export const FlashcardPage: React.FC = () => {
       </div>
 
       {/* Swipeable 3D Flashcard */}
-      <div className="flex-1 flex flex-col min-h-0 py-0.5">
+      <div className="relative z-10 flex-1 flex flex-col min-h-0 py-0.5">
         <SwipeableCard
           onSwipeLeft={handleSwipeLeft}
           onSwipeRight={handleSwipeRight}
