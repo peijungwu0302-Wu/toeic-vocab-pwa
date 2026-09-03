@@ -117,7 +117,7 @@ export const AppLayout: React.FC = () => {
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       {/* Main Content Area: Takes EXACT remaining space between header and bottom nav */}
-      <main className={`flex-1 min-h-0 px-3.5 py-1.5 ${
+      <main className={`flex-1 min-h-0 w-full max-w-full overflow-x-hidden px-3.5 py-1.5 ${
         isStudyScreen
           ? 'overflow-hidden flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top))]'
           : navStyle === 'classic'

@@ -542,7 +542,7 @@ export const FastSkimPage: React.FC = () => {
 
             {/* Associative Scenario Image Banner (Enlarged & uncropped 1:1 view) */}
             {showImage && !imgFailed && (
-              <div className="relative -mx-5 -mt-5 mb-3 h-40 sm:h-44 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
+              <div className="relative -mx-5 -mt-5 mb-3 h-48 sm:h-52 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
                 <img
                   src={imageService.getImageForWord(currentWord.headword, currentWord.category).url}
                   alt={currentWord.headword}

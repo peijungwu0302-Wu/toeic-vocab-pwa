@@ -60,6 +60,7 @@ export const FlashcardPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [imgFailed, setImgFailed] = useState(false);
   const [resumedNotice, setResumedNotice] = useState<string | null>(null);
+  const [showProgressPopover, setShowProgressPopover] = useState(false);
   const cardBackScrollRef = useRef<HTMLDivElement>(null);
 
   // Micro-sessions & Filters
@@ -265,6 +266,7 @@ export const FlashcardPage: React.FC = () => {
       if (restoredIndex > 0 && restoredIndex < items.length) {
         setCurrentIndex(restoredIndex);
         setResumedNotice(`已為您恢復進度：第 ${restoredIndex + 1} / ${items.length} 詞 ↩️`);
+        setShowProgressPopover(true);
       } else {
         setCurrentIndex(0);
       }
@@ -287,15 +289,16 @@ export const FlashcardPage: React.FC = () => {
     loadStudyQueue();
   }, [loadStudyQueue]);
 
-  // Auto-dismiss resumedNotice after 4s
+  // Auto-dismiss resumedNotice & popover after 4s
   useEffect(() => {
-    if (resumedNotice) {
+    if (resumedNotice || showProgressPopover) {
       const t = setTimeout(() => {
         setResumedNotice(null);
+        setShowProgressPopover(false);
       }, 4000);
       return () => clearTimeout(t);
     }
-  }, [resumedNotice]);
+  }, [resumedNotice, showProgressPopover]);
 
   // Auto-save review session progress
   useEffect(() => {
@@ -686,10 +689,10 @@ export const FlashcardPage: React.FC = () => {
   const finalImageUrl = imgInfo.url;
 
   return (
-    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-1 pb-1 select-none overscroll-y-contain touch-pan-y">
-      {/* 🚀 Unified Immersive Study Header (Single 40px row · Reclaims ~90px vertical height) */}
-      <div className="flex items-center justify-between bg-slate-800/85 backdrop-blur-md border border-slate-750 rounded-2xl px-2.5 py-1 shadow-sm shrink-0 gap-1.5 text-xs">
-        {/* Left: Exit button + Progress Pill + Score Tier */}
+    <div className="flex flex-col h-full justify-between w-full max-w-md mx-auto space-y-1 pb-1 select-none overscroll-y-contain touch-pan-y overflow-x-hidden">
+      {/* 🚀 Unified Immersive Study Header (Never overflows, 100% symmetrically centered) */}
+      <div className="flex items-center justify-between w-full bg-slate-800/85 backdrop-blur-md border border-slate-750 rounded-2xl px-2 py-1 shadow-sm shrink-0 text-xs gap-1">
+        {/* Left: Exit button + Interactive Progress Pill with Popover */}
         <div className="flex items-center space-x-1.5 shrink-0">
           <button
             type="button"
@@ -701,42 +704,112 @@ export const FlashcardPage: React.FC = () => {
             <X size={16} />
           </button>
 
-          <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-bold text-[11px]">
-            <span>{currentIndex + 1}</span>
-            <span className="text-emerald-500/70">/</span>
-            <span>{queue.length}</span>
-          </div>
+          {/* Interactive Progress Pill (Tap to toggle bubble popover) */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowProgressPopover(prev => !prev)}
+              className="flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600/60 text-emerald-300 font-bold text-[11px] shadow-sm transition-all active:scale-95 cursor-pointer"
+              title="點擊查看進度與重新開始"
+            >
+              <span>{currentIndex + 1}</span>
+              <span className="text-emerald-500/70">/</span>
+              <span>{queue.length}</span>
+              <span className="text-[8px] text-emerald-400/80 ml-0.5">▾</span>
+            </button>
 
-          <Badge variant="blue" className="hidden xs:inline-flex text-[10px] px-1.5 py-0">{word.toeicScoreRange}</Badge>
+            {/* Bubble Popover right beneath progress pill */}
+            <AnimatePresence>
+              {(resumedNotice || showProgressPopover) && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full left-0 mt-2.5 z-50 min-w-[210px] p-3 rounded-2xl bg-slate-900/98 border border-emerald-500/60 shadow-2xl shadow-black/90 backdrop-blur-xl flex flex-col space-y-2"
+                >
+                  {/* Upward triangle caret pointing to progress pill */}
+                  <div className="absolute -top-1.5 left-6 w-3 h-3 bg-slate-900 border-t border-l border-emerald-500/60 transform rotate-45" />
+
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-emerald-300 flex items-center">
+                      <Sparkles size={12} className="mr-1 text-emerald-400" />
+                      學習進度
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setResumedNotice(null);
+                        setShowProgressPopover(false);
+                      }}
+                      className="text-slate-400 hover:text-slate-200 p-0.5"
+                    >
+                      <X size={13} />
+                    </button>
+                  </div>
+
+                  <p className="text-[11px] text-slate-300 leading-tight">
+                    {resumedNotice || `目前進度：第 ${currentIndex + 1} / ${queue.length} 詞`}
+                  </p>
+
+                  <div className="flex items-center space-x-2 pt-1 border-t border-slate-800">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleRestartReviewFromBeginning();
+                        setResumedNotice(null);
+                        setShowProgressPopover(false);
+                      }}
+                      className="flex-1 py-1 px-2 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white text-[11px] font-bold transition-colors text-center shadow-sm"
+                    >
+                      從第 1 詞開始 ↺
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[11px] text-slate-300">
+                    <span className="text-[10px] text-slate-400 font-medium">每節題量：</span>
+                    <div className="flex items-center space-x-1">
+                      {[15, 20, 30].map((size) => (
+                        <button
+                          key={size}
+                          type="button"
+                          onClick={() => {
+                            setBatchSize(size);
+                            setShowProgressPopover(false);
+                          }}
+                          className={`px-2 py-0.5 rounded-md font-bold text-[10px] transition-colors ${
+                            batchSize === size
+                              ? 'bg-emerald-600 text-white shadow-sm'
+                              : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                          }`}
+                        >
+                          {size}字
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* Center: Clean Category Dropdown & Batch Size */}
-        <div className="flex-1 min-w-0 flex items-center justify-center space-x-1 max-w-[170px]">
+        {/* Center: Clean Category Dropdown */}
+        <div className="flex-1 min-w-0 max-w-[125px] flex items-center justify-center px-0.5">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             aria-label="主題篩選"
-            className="truncate flex-1 bg-slate-900/90 border border-slate-700/80 rounded-lg px-1.5 py-0.5 text-[11px] text-slate-300 font-medium focus:outline-none cursor-pointer"
+            className="w-full truncate bg-slate-900/90 border border-slate-700/80 rounded-lg px-2 py-0.5 text-[11px] text-slate-300 font-medium focus:outline-none text-center cursor-pointer"
           >
-            <option value="all" className="bg-slate-900">全部主題</option>
+            <option value="all" className="bg-slate-900">全部商務主題</option>
             {availableCategories.map(cat => (
               <option key={cat} value={cat} className="bg-slate-900">{cat}</option>
             ))}
           </select>
-
-          <select
-            value={batchSize}
-            onChange={(e) => setBatchSize(Number(e.target.value))}
-            aria-label="複習題量"
-            className="bg-slate-900/90 border border-slate-700/80 rounded-lg px-1 py-0.5 text-[11px] text-slate-300 font-bold focus:outline-none cursor-pointer shrink-0"
-          >
-            <option value={15}>15字</option>
-            <option value={20}>20字</option>
-            <option value={30}>30字</option>
-          </select>
         </div>
 
-        {/* Right: Essential Action Controls (Font, Shuffle, Star, AI) */}
+        {/* Right: Quick Action Controls (Font, Shuffle, Star, AI) */}
         <div className="flex items-center space-x-1 shrink-0">
           {/* Quick Font Size Stepper (A- / A+) */}
           <div className="flex items-center bg-slate-900/90 border border-slate-700/80 rounded-lg px-1 py-0.5 space-x-0.5">
@@ -796,34 +869,6 @@ export const FlashcardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Resumed Progress Notification: Floating Micro-Toast (Zero layout shift) */}
-      <AnimatePresence>
-        {resumedNotice && (
-          <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            className="fixed top-14 left-1/2 -translate-x-1/2 z-40 px-3.5 py-1.5 rounded-full bg-slate-900/95 border border-emerald-500/50 text-emerald-200 text-xs shadow-xl backdrop-blur-md flex items-center space-x-2 whitespace-nowrap"
-          >
-            <span className="font-semibold text-[11px]">{resumedNotice}</span>
-            <button
-              type="button"
-              onClick={handleRestartReviewFromBeginning}
-              className="px-2 py-0.5 rounded-md bg-emerald-600/80 hover:bg-emerald-500 text-white text-[10px] font-bold transition-colors shadow-sm"
-            >
-              從頭開始 ↺
-            </button>
-            <button
-              type="button"
-              onClick={() => setResumedNotice(null)}
-              className="text-slate-400 hover:text-slate-200 p-0.5"
-            >
-              <X size={12} />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Swipeable 3D Flashcard */}
       <div className="flex-1 flex flex-col min-h-0 py-0.5">
         <SwipeableCard
@@ -844,7 +889,7 @@ export const FlashcardPage: React.FC = () => {
             >
               {/* Associative Scenario Image Banner (Enlarged & uncropped 1:1 view) */}
               {!imgFailed && (
-                <div className="relative -mx-4 -mt-4 mb-2.5 h-36 sm:h-40 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
+                <div className="relative -mx-4 -mt-4 mb-2.5 h-48 sm:h-52 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
                   <img
                     src={finalImageUrl}
                     alt={word.headword}
@@ -852,7 +897,7 @@ export const FlashcardPage: React.FC = () => {
                     className="w-full h-full object-cover object-center brightness-90 contrast-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
-                  <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
+                  <div className="absolute bottom-2.5 left-3.5 flex items-center space-x-1.5">
                     <Badge variant="emerald">{word.category}</Badge>
                   </div>
                 </div>
@@ -958,7 +1003,7 @@ export const FlashcardPage: React.FC = () => {
               >
                 {/* 🌟 具象商務情境圖片橫幅 (頂部左右 100% 貼齊外框 · 圓角契合 · 零溢出) */}
                 {!imgFailed && (
-                  <div className="relative w-full h-40 sm:h-44 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
+                  <div className="relative w-full h-48 sm:h-52 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
                     <img
                       src={finalImageUrl}
                       alt={word.headword}
@@ -1279,7 +1324,7 @@ export const FlashcardPage: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 20, opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="sticky bottom-0 z-30 pt-2.5 pb-2 bg-slate-900/95 backdrop-blur-md border-t border-slate-800/80 -mx-1 px-1 shrink-0 shadow-2xl"
+            className="sticky bottom-0 z-30 pt-2 pb-1.5 bg-slate-900/95 backdrop-blur-md border-t border-slate-800/80 w-full shrink-0 shadow-2xl"
           >
             <div className="grid grid-cols-3 gap-2">
               {/* 1. Again (忘記) */}
