@@ -193,6 +193,8 @@ export const FastSkimPage: React.FC = () => {
 
   const goToNext = useCallback(() => {
     if (activeWords.length === 0) return;
+    setIsHolding(false);
+    setIsPaused(false);
     if (currentIndex < activeWords.length - 1) {
       setCurrentIndex(prev => prev + 1);
       setRemainingTime(durationSec);
@@ -203,6 +205,8 @@ export const FastSkimPage: React.FC = () => {
 
   const goToPrev = useCallback(() => {
     if (currentIndex > 0) {
+      setIsHolding(false);
+      setIsPaused(false);
       setCurrentIndex(prev => prev - 1);
       setRemainingTime(durationSec);
     }
@@ -744,26 +748,22 @@ export const FastSkimPage: React.FC = () => {
                   {!showImage && <span className="text-xs text-slate-400">{currentWord.category}</span>}
                 </div>
 
-                <div onClick={(e) => {
-                  e.stopPropagation();
-                  setIsPaused(true);
-                }}>
+                <div onClick={(e) => e.stopPropagation()}>
                   <AudioButton headword={currentWord.headword} audioUrl={currentWord.audioUSUrl} />
                 </div>
               </div>
 
-              {/* Click Word to Pronounce (Auto-pauses to allow peaceful study) */}
+              {/* Click Word to Pronounce */}
               <div
                 onClick={(e) => {
                   e.stopPropagation();
-                  setIsPaused(true);
                   audioService.playWord({
                     headword: currentWord.headword,
                     audioUrl: currentWord.audioUSUrl
                   });
                 }}
                 className={`cursor-pointer group active:scale-98 transition-transform select-none ${showImage ? "mt-1.5" : "mt-3"}`}
-                title="點擊單字發音並暫停研讀"
+                title="點擊單字直接發音"
               >
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight group-hover:text-emerald-300 transition-colors flex items-center`}>
@@ -784,15 +784,8 @@ export const FastSkimPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Definition & Examples (Click to pause and study) */}
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsPaused(true);
-              }}
-              className="my-2 space-y-2 cursor-pointer"
-              title="點擊釋義或例句暫停研讀"
-            >
+            {/* Definition & Examples */}
+            <div className="my-2 space-y-2">
               <div className="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
                 <div className="text-[10px] text-slate-400 font-semibold mb-0.5">中文釋義</div>
                 <div className={`${definitionClass} text-emerald-300`}>
