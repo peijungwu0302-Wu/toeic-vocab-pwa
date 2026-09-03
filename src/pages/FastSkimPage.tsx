@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
-  Play,
   Pause,
+  Lock,
+  Unlock,
   Settings2,
   X,
   Shuffle,
@@ -58,6 +59,7 @@ export const FastSkimPage: React.FC = () => {
 
   // IG Story Hold & Tap Feedback states
   const [isHolding, setIsHolding] = useState<boolean>(false);
+  const [showUnlockNotice, setShowUnlockNotice] = useState<boolean>(false);
   const [tapFeedback, setTapFeedback] = useState<'left' | 'right' | null>(null);
   const holdTimerRef = useRef<number | null>(null);
   const pressStartTimeRef = useRef<number>(0);
@@ -611,14 +613,38 @@ export const FastSkimPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
             transition={{ duration: 0.15 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
+            drag={true}
+            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
             dragElastic={0.35}
             onDragEnd={(_: unknown, info: PanInfo) => {
-              if (info.offset.x < -40 || info.velocity.x < -200) {
-                goToNext();
-              } else if (info.offset.x > 40 || info.velocity.x > 200) {
-                goToPrev();
+              const { offset, velocity } = info;
+              const absX = Math.abs(offset.x);
+              const absY = Math.abs(offset.y);
+
+              // Predominantly horizontal swipe (換詞) - 保持水平滑動翻頁！
+              if (absX > absY) {
+                if (offset.x < -40 || velocity.x < -200) {
+                  goToNext();
+                } else if (offset.x > 40 || velocity.x > 200) {
+                  goToPrev();
+                }
+              } else {
+                // Predominantly vertical swipe (Facebook 同款狀態控制)
+                if (offset.y < -35 || velocity.y < -200) {
+                  // 上推 ➔ 鎖定暫停 🔒
+                  setIsPaused(true);
+                  setIsHolding(false);
+                  wasHoldingRef.current = true;
+                  try { navigator.vibrate?.(20); } catch {}
+                } else if (offset.y > 35 || velocity.y > 200) {
+                  // 下滑 ➔ 解鎖輪播 🔓
+                  setIsPaused(false);
+                  setIsHolding(false);
+                  wasHoldingRef.current = true;
+                  setShowUnlockNotice(true);
+                  setTimeout(() => setShowUnlockNotice(false), 1200);
+                  try { navigator.vibrate?.([15, 30, 15]); } catch {}
+                }
               }
             }}
             onPointerDown={handlePointerDown}
@@ -650,18 +676,44 @@ export const FastSkimPage: React.FC = () => {
               <div className="absolute inset-y-0 right-0 w-[65%] bg-white/10 pointer-events-none rounded-r-3xl transition-opacity duration-150 z-20" />
             )}
 
-            {/* IG Story Hold Badge (Pops up when long-pressing anywhere) */}
+            {/* Status Badges: Holding / Locked / Just Unlocked */}
             <AnimatePresence>
-              {isHolding && (
+              {showUnlockNotice && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
+                  initial={{ opacity: 0, scale: 0.85, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.85, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-3 right-3 z-30 px-2.5 py-1 rounded-full bg-emerald-950/95 border border-emerald-400 text-emerald-200 font-bold text-[10px] flex items-center space-x-1.5 shadow-xl backdrop-blur-md"
+                >
+                  <Unlock size={11} className="text-emerald-300" />
+                  <span>已解鎖，恢復輪播 ▶</span>
+                </motion.div>
+              )}
+
+              {!showUnlockNotice && isPaused && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.85, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.85, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-3 right-3 z-30 px-2.5 py-1 rounded-full bg-slate-950/95 border border-emerald-500/80 text-emerald-300 font-bold text-[10px] flex items-center space-x-1.5 shadow-xl backdrop-blur-md"
+                >
+                  <Lock size={11} className="text-emerald-400" />
+                  <span>已鎖定研讀 · 下滑解鎖 ▾</span>
+                </motion.div>
+              )}
+
+              {!showUnlockNotice && !isPaused && isHolding && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.85, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.85, y: -4 }}
                   transition={{ duration: 0.12 }}
                   className="absolute top-3 right-3 z-30 px-2.5 py-1 rounded-full bg-slate-950/90 border border-amber-500/60 text-amber-300 font-bold text-[10px] flex items-center space-x-1 shadow-xl backdrop-blur-md"
                 >
                   <Pause size={10} className="fill-amber-300" />
-                  <span>凍結中 (放開繼續)</span>
+                  <span>凍結中 · 上推鎖定 ▴</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -764,41 +816,31 @@ export const FastSkimPage: React.FC = () => {
               )}
             </div>
 
-            {/* Bottom info bar: Long-press affordance & Instant Pause/Resume Capsule */}
-            <div className="text-[11px] text-slate-400 flex items-center justify-between border-t border-slate-800/70 pt-2 shrink-0">
-              <div className="flex items-center space-x-1.5 text-[10px] text-slate-400 font-medium">
+            {/* Bottom info bar: Full-gesture legend & status (Zero buttons) */}
+            <div className="text-[10px] text-slate-500 flex items-center justify-between border-t border-slate-800/70 pt-2 shrink-0 select-none">
+              <div className="flex items-center space-x-1.5 text-slate-400">
                 <span>長按凍結</span>
                 <span className="text-slate-600">•</span>
-                <span>點右側前進</span>
+                <span>上推鎖定</span>
+                <span className="text-slate-600">•</span>
+                <span>下滑解鎖</span>
               </div>
 
-              {/* Seamless Pause/Resume Pill */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsPaused(prev => !prev);
-                }}
-                className={`px-3 py-1 rounded-full font-bold text-[10px] flex items-center space-x-1.5 transition-all active:scale-95 shadow-md ${
-                  isPaused
-                    ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/80 text-amber-300'
-                    : 'bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200'
-                }`}
-                title={isPaused ? '點擊繼續自動輪播' : '點擊暫停輪播'}
-              >
+              <div className="flex items-center space-x-1 font-mono">
                 {isPaused ? (
-                  <>
-                    <Play size={10} className="fill-amber-300" />
-                    <span>繼續速讀</span>
-                  </>
+                  <span className="text-emerald-400 font-bold flex items-center">
+                    <Lock size={10} className="mr-1 text-emerald-400" /> 已鎖定研讀
+                  </span>
+                ) : isHolding ? (
+                  <span className="text-amber-400 font-bold flex items-center">
+                    <Pause size={10} className="mr-1 fill-amber-400" /> 凍結中
+                  </span>
                 ) : (
-                  <>
-                    <Pause size={10} className="fill-slate-300" />
-                    <span>暫停</span>
-                    <span className="text-emerald-400 font-mono pl-0.5">{remainingTime.toFixed(1)}s</span>
-                  </>
+                  <span className="text-slate-400">
+                    倒數 {remainingTime.toFixed(1)}s
+                  </span>
                 )}
-              </button>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
