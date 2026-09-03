@@ -31,17 +31,12 @@ dist-ssr
 data-raw
 
 # Generated large image assets and caches (prevent GitHub bloat)
-public/assets/images/words/*
-!public/assets/images/words/.gitkeep
 public/assets/images/benchmark/*
 public/assets/images/originals/*
 scripts/.*cache*.json
 scripts/image_queue_state.json
 scripts/image_generation_audit.json
 *.backup.json
-*.webp
-*.jpg
-*.png
 gcp_models_list.txt
 .llm-cache/
 

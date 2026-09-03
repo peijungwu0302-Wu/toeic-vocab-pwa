@@ -109,11 +109,38 @@ export const FlashcardPage: React.FC = () => {
   const handleOpenPeekWord = useCallback(async (rawTerm: string) => {
     const clean = rawTerm.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
     if (!clean) return;
-    const found = await db.words.where('headword').equalsIgnoreCase(clean).first();
-    if (found) {
-      setPeekWord(found);
-      setIsPeekOpen(true);
-    } else {
+
+    try {
+      const target = clean.toLowerCase();
+      const found = await db.words.where('normalizedHeadword').equals(target).first()
+        || await db.words.filter(w => w.headword.toLowerCase() === target).first();
+
+      if (found) {
+        setPeekWord(found);
+        setIsPeekOpen(true);
+      } else {
+        setPeekWord({
+          id: `peek-${clean}`,
+          headword: clean,
+          normalizedHeadword: target,
+          entryType: 'word',
+          definitionZh: rawTerm,
+          starRating: 3,
+          toeicScoreRange: '550-750',
+          category: '關聯延伸',
+          partsOfSpeech: ['關聯詞'],
+          wordForms: [],
+          phoneticUS: null,
+          phoneticUK: null,
+          examples: [],
+          examTips: [],
+          audioUSUrl: null,
+          audioUKUrl: null
+        });
+        setIsPeekOpen(true);
+      }
+    } catch (err) {
+      console.warn('Word peek fallback:', err);
       setPeekWord({
         id: `peek-${clean}`,
         headword: clean,
@@ -325,9 +352,11 @@ export const FlashcardPage: React.FC = () => {
       const morph = morphologyService.getMorphology(currentItem.word.headword, currentItem.word.category);
       setMorphology(morph);
 
-      // Instant scroll reset to top for new card
+      // Triple-layer instant scroll reset to top for new card
       requestAnimationFrame(() => {
         cardBackScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+        document.querySelector('main')?.scrollTo({ top: 0, behavior: 'instant' });
+        window.scrollTo({ top: 0, behavior: 'instant' });
       });
     }
   }, [currentIndex, queue, activeProfile, currentItem]);
@@ -344,6 +373,8 @@ export const FlashcardPage: React.FC = () => {
         // Flipping to back: ensure view starts at top
         requestAnimationFrame(() => {
           cardBackScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+          document.querySelector('main')?.scrollTo({ top: 0, behavior: 'instant' });
+          window.scrollTo({ top: 0, behavior: 'instant' });
         });
       }
       return !prev;
@@ -355,6 +386,8 @@ export const FlashcardPage: React.FC = () => {
     setIsFlipped(true);
     requestAnimationFrame(() => {
       cardBackScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+      document.querySelector('main')?.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
     });
   };
 

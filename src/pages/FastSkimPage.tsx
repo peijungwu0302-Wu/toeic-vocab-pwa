@@ -55,6 +55,7 @@ export const FastSkimPage: React.FC = () => {
   const [showRecapModal, setShowRecapModal] = useState<boolean>(false);
   const [starredWordIds, setStarredWordIds] = useState<Set<string>>(new Set());
   const [resumedNotice, setResumedNotice] = useState<string | null>(null);
+  const [imgFailed, setImgFailed] = useState(false);
 
   const timerRef = useRef<number | null>(null);
 
@@ -245,6 +246,15 @@ export const FastSkimPage: React.FC = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [goToNext, goToPrev]);
+
+  // Triple-layer scroll reset to top on word change
+  useEffect(() => {
+    setImgFailed(false);
+    requestAnimationFrame(() => {
+      document.querySelector('main')?.scrollTo({ top: 0, behavior: 'instant' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  }, [currentIndex]);
 
   const handleDurationChange = async (newSec: number) => {
     setDurationSec(newSec);
@@ -482,11 +492,12 @@ export const FastSkimPage: React.FC = () => {
             </div>
 
             {/* Associative Scenario Image Banner */}
-            {showImage && (
+            {showImage && !imgFailed && (
               <div className="relative -mx-6 -mt-6 mb-3 h-28 overflow-hidden rounded-t-3xl border-b border-slate-700/60">
                 <img
                   src={imageService.getImageForWord(currentWord.headword, currentWord.category).url}
                   alt={currentWord.headword}
+                  onError={() => setImgFailed(true)}
                   className="w-full h-full object-cover brightness-85"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />

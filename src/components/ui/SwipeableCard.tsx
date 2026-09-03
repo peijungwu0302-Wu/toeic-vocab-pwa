@@ -28,18 +28,16 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
 
   const handleDragEnd = (_: unknown, info: PanInfo) => {
     setIsDragging(false);
-    const thresholdX = 80;
-    const velocityThreshold = 350;
+    const thresholdX = 55;
+    const velocityThreshold = 250;
 
-    // Strict directional axis locking:
-    // If vertical displacement is substantial (|offset.y| >= |offset.x| * 0.75), user is scrolling vertically!
-    // Never trigger horizontal card swipe on vertical reading scrolls!
-    const isHorizontalDominant = Math.abs(info.offset.x) > Math.abs(info.offset.y) * 1.35;
-    if (!isHorizontalDominant) {
+    // Smart Anti-misoperation:
+    // Only lock out horizontal swipe if the user was actively performing a deep vertical scroll (|offset.y| > 35px and dominant)
+    if (Math.abs(info.offset.y) > 35 && Math.abs(info.offset.y) > Math.abs(info.offset.x) * 1.1) {
       return;
     }
 
-    // Check horizontal swipes with horizontal dominance guaranteed
+    // Check horizontal swipes with responsive natural feel
     if (info.offset.x > thresholdX || info.velocity.x > velocityThreshold) {
       if (onSwipeRight) onSwipeRight(); // Right = Again
     } else if (info.offset.x < -thresholdX || info.velocity.x < -velocityThreshold) {
@@ -52,7 +50,6 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       <motion.div
         style={{ x, rotate }}
         drag={disabled ? false : 'x'}
-        dragDirectionLock
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.65}
         onDragStart={() => setIsDragging(true)}

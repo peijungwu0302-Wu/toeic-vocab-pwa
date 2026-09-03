@@ -147,27 +147,29 @@ export const AppLayout: React.FC = () => {
       {/* iOS Safari Installation Banner */}
       <InstallPrompt />
 
-      {/* 1B + 1C Fusion: 100% Pure Clean Screen with Invisible Edge Swipe-Up Sensor */}
+      {/* 方案 1A：iOS 原生極簡手柄線 (Minimalist Grabber Line) */}
       {isStudyScreen && !isNavRevealedInStudy && (
-        <div
+        <button
+          type="button"
+          onClick={handleRevealNav}
           onTouchStart={(e) => {
             touchStartY.current = e.touches[0].clientY;
           }}
           onTouchMove={(e) => {
             if (touchStartY.current !== null) {
               const deltaY = touchStartY.current - e.touches[0].clientY;
-              if (deltaY > 18) {
+              if (deltaY > 12) {
                 handleRevealNav();
                 touchStartY.current = null;
               }
             }
           }}
-          onTouchEnd={() => {
-            touchStartY.current = null;
-          }}
-          className="fixed bottom-0 left-0 right-0 h-6 z-40 pointer-events-auto"
-          aria-label="向上滑動呼出底欄"
-        />
+          className="fixed bottom-1.5 left-1/2 -translate-x-1/2 z-40 px-6 py-2 flex items-center justify-center cursor-pointer select-none active:scale-90 transition-transform"
+          aria-label="展開導覽列"
+          title="展開導覽列"
+        >
+          <span className="w-10 h-1 rounded-full bg-slate-400/40 hover:bg-slate-300/70 shadow-sm transition-colors" />
+        </button>
       )}
 
       {/* Bottom Navigation Bar - Auto collapses during study screen, accessible via edge handle */}
