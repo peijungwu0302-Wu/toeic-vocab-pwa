@@ -329,31 +329,44 @@ export const FastSkimPage: React.FC = () => {
   const progressPercent = Math.min(100, Math.max(0, ((durationSec - remainingTime) / durationSec) * 100));
 
   return (
-    <div className="flex flex-col min-h-[calc(100dvh-5.5rem)] justify-between max-w-md mx-auto space-y-2 pb-2 select-none touch-pan-y overscroll-y-contain">
+    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-1.5 pb-1 select-none touch-pan-y overscroll-y-contain">
       {/* Top Filter & Micro-session Bar */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/70 rounded-2xl px-3.5 py-2 shadow-sm">
-          <div className="flex items-center space-x-2">
-            <span className="text-xs font-bold text-emerald-400">
-              第 {currentIndex + 1} / {activeWords.length} 字
-            </span>
+      <div className="space-y-1.5 shrink-0">
+        <div className="flex items-center justify-between bg-slate-800/85 backdrop-blur-md border border-slate-750 rounded-2xl px-2.5 py-1 shadow-sm">
+          <div className="flex items-center space-x-1.5">
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="p-1 rounded-full text-slate-400 hover:text-slate-100 hover:bg-slate-700/60 transition-colors"
+              aria-label="退出速讀"
+              title="退出速讀"
+            >
+              <X size={16} />
+            </button>
+
+            <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-bold text-[11px]">
+              <span>{currentIndex + 1}</span>
+              <span className="text-emerald-500/70">/</span>
+              <span>{activeWords.length}</span>
+            </div>
+
             <span className="text-[10px] text-slate-400">
-              (第 {currentBatchIndex + 1} 小節)
+              (第 {currentBatchIndex + 1} 節)
             </span>
           </div>
 
-          <div className="flex items-center space-x-1.5">
+          <div className="flex items-center space-x-1">
             {/* Shuffle toggle */}
             <button
               type="button"
               onClick={() => setIsShuffle(prev => !prev)}
               aria-label={isShuffle ? '隨機洗牌已開啟' : '順序模式'}
               className={`p-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                isShuffle ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900 text-slate-400'
+                isShuffle ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900 text-slate-400 border border-slate-700/70'
               }`}
               title={isShuffle ? '隨機洗牌中' : '字母順序'}
             >
-              <Shuffle size={14} />
+              <Shuffle size={13} />
             </button>
 
             {/* Batch size selector */}
@@ -361,11 +374,11 @@ export const FastSkimPage: React.FC = () => {
               value={batchSize}
               onChange={(e) => setBatchSize(Number(e.target.value))}
               aria-label="每小節單字量"
-              className="px-2 py-1 rounded-lg bg-slate-900 border border-slate-700 text-[11px] text-slate-200 font-bold focus:outline-none"
+              className="px-1.5 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[11px] text-slate-200 font-bold focus:outline-none"
             >
-              <option value={15}>15字/節</option>
-              <option value={20}>20字/節</option>
-              <option value={30}>30字/節</option>
+              <option value={15}>15字</option>
+              <option value={20}>20字</option>
+              <option value={30}>30字</option>
               <option value={999}>全部</option>
             </select>
 
@@ -375,7 +388,7 @@ export const FastSkimPage: React.FC = () => {
                 type="button"
                 onClick={zoomOut}
                 disabled={currentPreset === 'compact'}
-                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+                className="text-[10px] font-bold px-0.5 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
                 title="縮小字體"
               >
                 A-
@@ -387,29 +400,20 @@ export const FastSkimPage: React.FC = () => {
                 type="button"
                 onClick={zoomIn}
                 disabled={currentPreset === 'ultra'}
-                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+                className="text-[10px] font-bold px-0.5 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
                 title="放大字體"
               >
                 A+
               </button>
             </div>
-
-            <button
-              type="button"
-              onClick={() => navigate('/')}
-              className="text-slate-400 hover:text-slate-200 p-1"
-              aria-label="退出速讀"
-            >
-              <X size={18} />
-            </button>
           </div>
         </div>
 
         {/* Category & Speed Pill Bar */}
-        <div className="flex items-center justify-between px-1">
+        <div className="flex items-center justify-between px-1 text-xs">
           {/* Category Dropdown */}
           <div className="flex items-center space-x-1">
-            <ListFilter size={13} className="text-slate-400" />
+            <ListFilter size={12} className="text-slate-400" />
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
@@ -548,9 +552,6 @@ export const FastSkimPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                 <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
                   <Badge variant="emerald">{currentWord.category}</Badge>
-                  <span className="text-[10px] text-slate-300 font-medium bg-slate-950/60 px-1.5 py-0.5 rounded-md border border-slate-800">
-                    🏢 商務情境
-                  </span>
                 </div>
               </div>
             )}

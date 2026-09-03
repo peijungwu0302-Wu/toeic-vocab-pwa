@@ -5,7 +5,6 @@ import {
   Sparkles,
   X,
   Shuffle,
-  ListFilter,
   AlertCircle,
   HelpCircle,
   Lightbulb,
@@ -687,113 +686,112 @@ export const FlashcardPage: React.FC = () => {
   const finalImageUrl = imgInfo.url;
 
   return (
-    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-1.5 pb-2 select-none overscroll-y-contain touch-pan-y">
-      {/* Top Header & Micro-session Controls */}
-      <div className="space-y-1 shrink-0">
-        <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/70 rounded-2xl px-3 py-1.5 shadow-sm">
-          <div className="flex items-center space-x-1.5">
-            <span className="text-xs font-bold text-emerald-400">
-              第 {currentIndex + 1} / {queue.length} 字
-            </span>
-            <Badge variant="blue">{word.toeicScoreRange}</Badge>
-            <Badge variant={word.frequencyTier === 'core_1200' ? 'emerald' : 'purple'}>
-              {word.frequencyTier === 'core_1200' ? '高頻核心' : '商務實戰'}
-            </Badge>
+    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-1 pb-1 select-none overscroll-y-contain touch-pan-y">
+      {/* 🚀 Unified Immersive Study Header (Single 40px row · Reclaims ~90px vertical height) */}
+      <div className="flex items-center justify-between bg-slate-800/85 backdrop-blur-md border border-slate-750 rounded-2xl px-2.5 py-1 shadow-sm shrink-0 gap-1.5 text-xs">
+        {/* Left: Exit button + Progress Pill + Score Tier */}
+        <div className="flex items-center space-x-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="p-1 rounded-full text-slate-400 hover:text-slate-100 hover:bg-slate-700/60 transition-colors"
+            aria-label="離開複習"
+            title="退出複習"
+          >
+            <X size={16} />
+          </button>
+
+          <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-bold text-[11px]">
+            <span>{currentIndex + 1}</span>
+            <span className="text-emerald-500/70">/</span>
+            <span>{queue.length}</span>
           </div>
 
-          <div className="flex items-center space-x-1">
-            <button
-              type="button"
-              onClick={() => setIsShuffle(prev => !prev)}
-              aria-label={isShuffle ? '隨機洗牌已開啟' : '順序模式'}
-              className={`p-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                isShuffle ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900 text-slate-400'
-              }`}
-              title={isShuffle ? '隨機洗牌中' : '順序'}
-            >
-              <Shuffle size={13} />
-            </button>
-
-            <select
-              value={batchSize}
-              onChange={(e) => setBatchSize(Number(e.target.value))}
-              aria-label="複習題量"
-              className="px-1.5 py-1 rounded-lg bg-slate-900 border border-slate-700 text-[11px] text-slate-200 font-bold focus:outline-none"
-            >
-              <option value={15}>15字</option>
-              <option value={20}>20字</option>
-              <option value={30}>30字</option>
-            </select>
-
-            {/* Quick Font Size Stepper (A- / A+) */}
-            <div className="flex items-center bg-slate-900 border border-slate-700/80 rounded-lg px-1 py-0.5 space-x-0.5">
-              <button
-                type="button"
-                onClick={zoomOut}
-                disabled={currentPreset === 'compact'}
-                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
-                title="縮小字體"
-              >
-                A-
-              </button>
-              <span className="text-[9px] text-slate-400 font-mono">
-                {currentPreset === 'compact' ? '小' : currentPreset === 'standard' ? '中' : currentPreset === 'large' ? '大' : currentPreset === 'huge' ? '特' : currentPreset === 'giant' ? '超' : currentPreset === 'ultra' ? '尊' : '自'}
-              </span>
-              <button
-                type="button"
-                onClick={zoomIn}
-                disabled={currentPreset === 'ultra'}
-                className="text-[10px] font-bold px-1 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
-                title="放大字體"
-              >
-                A+
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleToggleStar}
-              aria-label={isStarred ? '取消收藏' : '收藏單字'}
-              className="p-1 text-slate-400 hover:text-amber-400 transition-colors"
-            >
-              <Star size={16} className={isStarred ? 'fill-amber-400 text-amber-400' : ''} />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate('/')}
-              className="text-slate-400 hover:text-slate-200 p-1"
-              aria-label="離開複習"
-            >
-              <X size={16} />
-            </button>
-          </div>
+          <Badge variant="blue" className="hidden xs:inline-flex text-[10px] px-1.5 py-0">{word.toeicScoreRange}</Badge>
         </div>
 
-        {/* Category filter & AI Tools */}
-        <div className="flex items-center justify-between px-1 text-[11px]">
-          <div className="flex items-center space-x-1 text-slate-400">
-            <ListFilter size={12} />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              aria-label="主題篩選"
-              className="bg-transparent text-slate-400 focus:outline-none"
+        {/* Center: Clean Category Dropdown & Batch Size */}
+        <div className="flex-1 min-w-0 flex items-center justify-center space-x-1 max-w-[170px]">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            aria-label="主題篩選"
+            className="truncate flex-1 bg-slate-900/90 border border-slate-700/80 rounded-lg px-1.5 py-0.5 text-[11px] text-slate-300 font-medium focus:outline-none cursor-pointer"
+          >
+            <option value="all" className="bg-slate-900">全部主題</option>
+            {availableCategories.map(cat => (
+              <option key={cat} value={cat} className="bg-slate-900">{cat}</option>
+            ))}
+          </select>
+
+          <select
+            value={batchSize}
+            onChange={(e) => setBatchSize(Number(e.target.value))}
+            aria-label="複習題量"
+            className="bg-slate-900/90 border border-slate-700/80 rounded-lg px-1 py-0.5 text-[11px] text-slate-300 font-bold focus:outline-none cursor-pointer shrink-0"
+          >
+            <option value={15}>15字</option>
+            <option value={20}>20字</option>
+            <option value={30}>30字</option>
+          </select>
+        </div>
+
+        {/* Right: Essential Action Controls (Font, Shuffle, Star, AI) */}
+        <div className="flex items-center space-x-1 shrink-0">
+          {/* Quick Font Size Stepper (A- / A+) */}
+          <div className="flex items-center bg-slate-900/90 border border-slate-700/80 rounded-lg px-1 py-0.5 space-x-0.5">
+            <button
+              type="button"
+              onClick={zoomOut}
+              disabled={currentPreset === 'compact'}
+              className="text-[10px] font-bold px-0.5 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+              title="縮小字體"
             >
-              <option value="all" className="bg-slate-900">全部商務主題</option>
-              {availableCategories.map(cat => (
-                <option key={cat} value={cat} className="bg-slate-900">{cat}</option>
-              ))}
-            </select>
+              A-
+            </button>
+            <button
+              type="button"
+              onClick={zoomIn}
+              disabled={currentPreset === 'ultra'}
+              className="text-[10px] font-bold px-0.5 text-slate-400 hover:text-emerald-400 disabled:opacity-30 transition-colors"
+              title="放大字體"
+            >
+              A+
+            </button>
           </div>
 
+          {/* Shuffle Toggle */}
+          <button
+            type="button"
+            onClick={() => setIsShuffle(prev => !prev)}
+            aria-label={isShuffle ? '隨機洗牌已開啟' : '順序模式'}
+            className={`p-1.5 rounded-lg text-xs font-semibold transition-colors ${
+              isShuffle ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900/90 text-slate-400 border border-slate-700/70'
+            }`}
+            title={isShuffle ? '隨機洗牌中' : '順序'}
+          >
+            <Shuffle size={13} />
+          </button>
+
+          {/* Star Button */}
+          <button
+            type="button"
+            onClick={handleToggleStar}
+            aria-label={isStarred ? '取消收藏' : '收藏單字'}
+            className="p-1 text-slate-400 hover:text-amber-400 transition-colors"
+            title="收藏"
+          >
+            <Star size={15} className={isStarred ? 'fill-amber-400 text-amber-400' : ''} />
+          </button>
+
+          {/* AI Coach */}
           <button
             type="button"
             onClick={() => setIsAiModalOpen(true)}
-            className="flex items-center space-x-1 text-amber-400 hover:text-amber-300 font-bold text-[11px] px-2 py-0.5 rounded-lg bg-amber-950/40 border border-amber-800/40"
+            className="p-1 rounded-lg text-amber-400 hover:text-amber-300 bg-amber-950/40 border border-amber-800/40 transition-colors"
+            title="AI 商務教練"
           >
-            <Bot size={12} />
-            <span>AI 商務教練</span>
+            <Bot size={13} />
           </button>
         </div>
       </div>
@@ -856,9 +854,6 @@ export const FlashcardPage: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                   <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
                     <Badge variant="emerald">{word.category}</Badge>
-                    <span className="text-[10px] text-slate-300 font-medium bg-slate-950/60 px-1.5 py-0.5 rounded-md border border-slate-800">
-                      🏢 商務情境
-                    </span>
                   </div>
                 </div>
               )}
@@ -953,17 +948,17 @@ export const FlashcardPage: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
               className={`absolute inset-0 w-full h-full bg-slate-900 border ${
                 isStarred ? 'border-amber-500/50' : 'border-emerald-500/40'
-              } rounded-3xl p-3.5 shadow-2xl flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden cursor-default`}
+              } rounded-3xl shadow-2xl flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden cursor-default`}
             >
-              {/* Scrollable Container Inside Card (Strict overflow-x-hidden to prevent horizontal shift) */}
+              {/* Scrollable Container Inside Card (Edge-to-edge top image, smooth non-blocking vertical scroll) */}
               <div
                 ref={cardBackScrollRef}
-                style={{ WebkitOverflowScrolling: 'touch', willChange: 'scroll-position' }}
-                className="space-y-3 overflow-y-auto overflow-x-hidden flex-1 min-h-0 overscroll-y-contain touch-pan-y pr-1"
+                style={{ WebkitOverflowScrolling: 'touch', willChange: 'scroll-position', touchAction: 'pan-y' }}
+                className="overflow-y-auto overflow-x-hidden flex-1 min-h-0 overscroll-y-contain touch-pan-y"
               >
-                {/* 🌟 具象商務情境圖片橫幅 (背面常駐 · 美感大圖 · 零溢出) */}
+                {/* 🌟 具象商務情境圖片橫幅 (頂部左右 100% 貼齊外框 · 圓角契合 · 零溢出) */}
                 {!imgFailed && (
-                  <div className="relative w-full h-36 sm:h-40 overflow-hidden rounded-2xl border border-slate-700/60 shadow-lg shrink-0 mb-1">
+                  <div className="relative w-full h-40 sm:h-44 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
                     <img
                       src={finalImageUrl}
                       alt={word.headword}
@@ -971,281 +966,288 @@ export const FlashcardPage: React.FC = () => {
                       className="w-full h-full object-cover object-center brightness-90 contrast-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
-                    <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
+                    <div className="absolute bottom-2.5 left-3.5 flex items-center space-x-1.5">
                       <Badge variant="emerald">{word.category}</Badge>
-                      <span className="text-[10px] text-slate-300 font-medium bg-slate-950/70 px-2 py-0.5 rounded-md border border-slate-800">
-                        🏢 商務具象場景
-                      </span>
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-1.5">
-                    <Badge variant="emerald">{word.partsOfSpeech.join(', ')}</Badge>
-                    <span className="text-xs text-slate-400">{word.category}</span>
-                  </div>
-                  <AudioButton headword={word.headword} audioUrl={word.audioUSUrl} size="sm" />
-                </div>
-
-                {/* Headword & Meaning (Click word to pronounce) */}
-                <div>
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      audioService.playWord({
-                        headword: word.headword,
-                        audioUrl: word.audioUSUrl || word.audioUKUrl
-                      });
-                    }}
-                    className="cursor-pointer group active:scale-98 transition-transform select-none"
-                    title="點擊單字直接發音"
-                  >
-                    <h3 className={`${headwordClass} text-slate-100 group-hover:text-emerald-300 transition-colors flex items-center`}>
-                      {word.headword}
-                      <Volume2 size={16} className="ml-2 text-emerald-400/60 group-hover:text-emerald-400 transition-all shrink-0" />
-                    </h3>
-                  </div>
-                  <div className="mt-1 p-2 rounded-xl bg-slate-900/90 border border-slate-800">
-                    <div className={`${definitionClass} text-emerald-300`}>
-                      {word.definitionZh}
+                {/* Text Content Body (Consistent padding & native smooth scrolling) */}
+                <div className="p-3.5 space-y-3 touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-1.5">
+                      <Badge variant="emerald">{word.partsOfSpeech.join(', ')}</Badge>
+                      <span className="text-xs text-slate-400">{word.category}</span>
                     </div>
+                    <AudioButton headword={word.headword} audioUrl={word.audioUSUrl} size="sm" />
                   </div>
-                </div>
 
-                {/* 🌟 1. 核心專屬具象商務例句 (第一記憶錨點) */}
-                {currentExamples.length > 0 && (
-                  <div className="p-3 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <div className="text-[10px] text-emerald-400 font-bold tracking-wider flex items-center space-x-1">
-                        <Sparkles size={11} className="text-amber-400 shrink-0" />
-                        <span>核心商務例句</span>
-                      </div>
-                      <span className="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[9px] text-emerald-300 border border-emerald-800/50 font-semibold inline-block">
-                        🏢 {currentExamples[0]?.scenario || word.category || '商務溝通'}
-                      </span>
-                    </div>
-
+                  {/* Headword & Meaning (Click word to pronounce) */}
+                  <div>
                     <div
-                      onClick={() => audioService.speakSentence(currentExamples[0]?.en || currentExamples[0]?.english || '')}
-                      className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
-                      title="點擊播放例句真人朗讀"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        audioService.playWord({
+                          headword: word.headword,
+                          audioUrl: word.audioUSUrl || word.audioUKUrl
+                        });
+                      }}
+                      className="cursor-pointer group select-none touch-pan-y"
+                      style={{ touchAction: 'pan-y' }}
+                      title="點擊單字直接發音"
                     >
-                      <div className="flex items-start justify-between gap-2">
-                        <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
-                          {currentExamples[0]?.en || currentExamples[0]?.english}
-                        </p>
-                        <Volume2 size={13} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
+                      <h3 className={`${headwordClass} text-slate-100 group-hover:text-emerald-300 transition-colors flex items-center`}>
+                        {word.headword}
+                        <Volume2 size={16} className="ml-2 text-emerald-400/60 group-hover:text-emerald-400 transition-all shrink-0" />
+                      </h3>
+                    </div>
+                    <div className="mt-1 p-2 rounded-xl bg-slate-900/90 border border-slate-800 touch-pan-y" style={{ touchAction: 'pan-y' }}>
+                      <div className={`${definitionClass} text-emerald-300`}>
+                        {word.definitionZh}
                       </div>
-                      <p className={`text-emerald-400/90 ${exampleZhClass} mt-1`}>
-                        {currentExamples[0]?.zh || currentExamples[0]?.chinese}
-                      </p>
                     </div>
                   </div>
-                )}
 
-                {/* 🎯 2. 多益考點與避坑提醒 (examFocus) */}
-                {word.examFocus && (
-                  <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-700/50 space-y-1.5 shadow-sm">
-                    <div className="text-indigo-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
-                      <span>🎯 多益核心考點：{word.examFocus.primaryBusinessSense}</span>
-                    </div>
-                    {word.examFocus.trapWarning && (
-                      <p className="text-amber-300/90 leading-relaxed" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
-                        ⚠️ <strong>考場避坑</strong>：{word.examFocus.trapWarning}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* 🔗 3. 常考商務搭配語塊 (collocations - 取代舊版套版搭配詞) */}
-                {word.collocations && word.collocations.length > 0 && (
-                  <div className="p-3 rounded-2xl bg-slate-950/80 border border-teal-800/50 space-y-2 shadow-sm">
-                    <div className="text-teal-400 font-bold flex items-center justify-between" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
-                      <span>🔗 常考商務搭配語塊 (Collocations)</span>
-                      <span className="text-teal-500/80 font-semibold" style={{ fontSize: `${Math.max(11, pixelMetrics.supportingPx - 1)}px` }}>必考黃金語塊</span>
-                    </div>
-                    <div className="grid grid-cols-1 gap-1.5">
-                      {word.collocations.map((c: any, cIdx: number) => (
-                        <div key={cIdx} className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between">
-                          <span className="text-emerald-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>{c.en}</span>
-                          <span className="text-slate-300 font-medium" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>{c.zh}</span>
+                  {/* 🌟 1. 核心專屬具象商務例句 (第一記憶錨點) */}
+                  {currentExamples.length > 0 && (
+                    <div className="p-3 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <div className="flex items-center justify-between">
+                        <div className="text-[10px] text-emerald-400 font-bold tracking-wider flex items-center space-x-1">
+                          <Sparkles size={11} className="text-amber-400 shrink-0" />
+                          <span>核心商務例句</span>
                         </div>
-                      ))}
+                        <span className="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[9px] text-emerald-300 border border-emerald-800/50 font-semibold inline-block">
+                          🏢 {currentExamples[0]?.scenario || word.category || '商務溝通'}
+                        </span>
+                      </div>
+
+                      <div
+                        onClick={() => audioService.speakSentence(currentExamples[0]?.en || currentExamples[0]?.english || '')}
+                        className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group touch-pan-y"
+                        style={{ touchAction: 'pan-y' }}
+                        title="點擊播放例句真人朗讀"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
+                            {currentExamples[0]?.en || currentExamples[0]?.english}
+                          </p>
+                          <Volume2 size={13} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
+                        </div>
+                        <p className={`text-emerald-400/90 ${exampleZhClass} mt-1`}>
+                          {currentExamples[0]?.zh || currentExamples[0]?.chinese}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* 🧩 4. 詞根字首拆解與構詞記憶 (etymology / morphology) */}
-                {(word.etymology || morphology) && (
-                  <div className="p-3 rounded-2xl bg-slate-950/80 border border-amber-800/50 space-y-2 shadow-sm">
-                    <div className="text-amber-400 font-bold flex items-center" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
-                      <Layers size={14} className="mr-1.5" /> 詞根字首拆解與構詞記憶
+                  {/* 🎯 2. 多益考點與避坑提醒 (examFocus) */}
+                  {word.examFocus && (
+                    <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-700/50 space-y-1.5 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <div className="text-indigo-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
+                        <span>🎯 多益核心考點：{word.examFocus.primaryBusinessSense}</span>
+                      </div>
+                      {word.examFocus.trapWarning && (
+                        <p className="text-amber-300/90 leading-relaxed" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
+                          ⚠️ <strong>考場避坑</strong>：{word.examFocus.trapWarning}
+                        </p>
+                      )}
                     </div>
+                  )}
 
-                    <div className="flex flex-wrap gap-1.5">
-                      {word.etymology?.prefix && (
-                        <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
-                          <strong className="text-amber-300">前綴</strong>：{word.etymology.prefix}
-                        </span>
-                      )}
-                      {word.etymology?.root && (
-                        <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
-                          <strong className="text-amber-300">字根</strong>：{word.etymology.root}
-                        </span>
-                      )}
-                      {word.etymology?.suffix && (
-                        <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
-                          <strong className="text-amber-300">字尾</strong>：{word.etymology.suffix}
-                        </span>
-                      )}
-                      {!word.etymology && morphology?.roots.map((r, idx) => (
-                        <span key={idx} className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
-                          <strong className="text-amber-300">{r.part}</strong>：{r.meaning}
-                        </span>
-                      ))}
+                  {/* 🔗 3. 常考商務搭配語塊 (collocations - 取代舊版套版搭配詞) */}
+                  {word.collocations && word.collocations.length > 0 && (
+                    <div className="p-3 rounded-2xl bg-slate-950/80 border border-teal-800/50 space-y-2 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <div className="text-teal-400 font-bold flex items-center justify-between" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
+                        <span>🔗 常考商務搭配語塊 (Collocations)</span>
+                        <span className="text-teal-500/80 font-semibold" style={{ fontSize: `${Math.max(11, pixelMetrics.supportingPx - 1)}px` }}>必考黃金語塊</span>
+                      </div>
+                      <div className="grid grid-cols-1 gap-1.5">
+                        {word.collocations.map((c: any, cIdx: number) => (
+                          <div key={cIdx} className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between touch-pan-y" style={{ touchAction: 'pan-y' }}>
+                            <span className="text-emerald-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>{c.en}</span>
+                            <span className="text-slate-300 font-medium" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>{c.zh}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                  )}
 
-                    <p className="text-slate-200 leading-relaxed pt-1" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
-                      💡 <strong>構詞記憶</strong>：{word.etymology?.memoryHook || morphology?.mnemonic}
-                    </p>
+                  {/* 🧩 4. 詞根字首拆解與構詞記憶 (etymology / morphology) */}
+                  {(word.etymology || morphology) && (
+                    <div className="p-3 rounded-2xl bg-slate-950/80 border border-amber-800/50 space-y-2 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <div className="text-amber-400 font-bold flex items-center" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
+                        <Layers size={14} className="mr-1.5" /> 詞根字首拆解與構詞記憶
+                      </div>
 
-                    {/* Word Family 派生詞 (點擊直達關聯詞微型閃卡) */}
-                    {(word.wordFamily || (morphology?.wordFamily && morphology.wordFamily.length > 1)) && (
-                      <div className="pt-1.5 border-t border-slate-800/80 space-y-1">
-                        <div className="text-[10px] font-bold text-slate-400 flex items-center justify-between">
-                          <span className="flex items-center">
-                            <GitBranch size={11} className="mr-1 text-emerald-400" /> 派生詞與同根詞：
+                      <div className="flex flex-wrap gap-1.5">
+                        {word.etymology?.prefix && (
+                          <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
+                            <strong className="text-amber-300">前綴</strong>：{word.etymology.prefix}
                           </span>
-                          <span className="text-[9px] text-slate-500">點擊速查閃卡 ↗</span>
+                        )}
+                        {word.etymology?.root && (
+                          <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
+                            <strong className="text-amber-300">字根</strong>：{word.etymology.root}
+                          </span>
+                        )}
+                        {word.etymology?.suffix && (
+                          <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
+                            <strong className="text-amber-300">字尾</strong>：{word.etymology.suffix}
+                          </span>
+                        )}
+                        {!word.etymology && morphology?.roots.map((r, idx) => (
+                          <span key={idx} className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
+                            <strong className="text-amber-300">{r.part}</strong>：{r.meaning}
+                          </span>
+                        ))}
+                      </div>
+
+                      <p className="text-slate-200 leading-relaxed pt-1" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
+                        💡 <strong>構詞記憶</strong>：{word.etymology?.memoryHook || morphology?.mnemonic}
+                      </p>
+
+                      {/* Word Family 派生詞 (點擊直達關聯詞微型閃卡) */}
+                      {(word.wordFamily || (morphology?.wordFamily && morphology.wordFamily.length > 1)) && (
+                        <div className="pt-1.5 border-t border-slate-800/80 space-y-1">
+                          <div className="text-[10px] font-bold text-slate-400 flex items-center justify-between">
+                            <span className="flex items-center">
+                              <GitBranch size={11} className="mr-1 text-emerald-400" /> 派生詞與同根詞：
+                            </span>
+                            <span className="text-[9px] text-slate-500">點擊速查閃卡 ↗</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1.5 text-[10px]">
+                            {word.wordFamily?.noun?.map((n: string, idx: number) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                style={{ touchAction: 'pan-y' }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleOpenPeekWord(n);
+                                }}
+                                className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-blue-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                title="點擊速查此衍生詞"
+                              >
+                                <span className="text-blue-400 font-bold">n.</span>
+                                <span>{n}</span>
+                                <span className="text-[8px] text-blue-400 opacity-80">↗</span>
+                              </button>
+                            ))}
+                            {word.wordFamily?.adjective?.map((a: string, idx: number) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                style={{ touchAction: 'pan-y' }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleOpenPeekWord(a);
+                                }}
+                                className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                title="點擊速查此衍生詞"
+                              >
+                                <span className="text-emerald-400 font-bold">adj.</span>
+                                <span>{a}</span>
+                                <span className="text-[8px] text-emerald-400 opacity-80">↗</span>
+                              </button>
+                            ))}
+                            {word.wordFamily?.cognates?.map((c: string, idx: number) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                style={{ touchAction: 'pan-y' }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleOpenPeekWord(c);
+                                }}
+                                className="px-2 py-0.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/60 border border-purple-800/60 hover:border-purple-500 text-purple-300 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                title="點擊速查此衍生詞"
+                              >
+                                <span>🔗 {c}</span>
+                                <span className="text-[8px] text-purple-400 opacity-80">↗</span>
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                        <div className="flex flex-wrap gap-1.5 text-[10px]">
-                          {word.wordFamily?.noun?.map((n: string, idx: number) => (
+                      )}
+                    </div>
+                  )}
+
+                  {/* 🔄 5. 多益同反義詞微辨析 (synonymDiscrimination - 點擊直達關聯詞微型閃卡) */}
+                  {word.synonymDiscrimination && (
+                    <div className="p-2.5 rounded-xl bg-slate-950/80 border border-blue-800/40 space-y-1 text-xs shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <div className="flex items-center justify-between text-blue-400 font-bold text-[11px]">
+                        <span>🔄 多益同義替換與微辨析</span>
+                        <span className="text-[9px] text-blue-500/80">點擊速查 ↗</span>
+                      </div>
+                      {word.synonymDiscrimination.synonyms && word.synonymDiscrimination.synonyms.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 text-[10px] items-center">
+                          <span className="text-slate-400 text-[10px]">同義詞：</span>
+                          {word.synonymDiscrimination.synonyms.map((s: string, sIdx: number) => (
                             <button
-                              key={idx}
+                              key={sIdx}
                               type="button"
+                              style={{ touchAction: 'pan-y' }}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handleOpenPeekWord(n);
+                                handleOpenPeekWord(s);
                               }}
-                              className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-blue-500/60 text-slate-200 cursor-pointer transition-all flex items-center space-x-1 shadow-sm"
-                              title="點擊速查此衍生詞"
+                              className="px-2 py-0.5 rounded-lg bg-blue-950/80 hover:bg-blue-900/80 text-blue-300 border border-blue-700/50 hover:border-blue-400 transition-colors flex items-center space-x-1 cursor-pointer shadow-sm touch-pan-y"
+                              title="點擊預覽此同義詞閃卡"
                             >
-                              <span className="text-blue-400 font-bold">n.</span>
-                              <span>{n}</span>
+                              <span>{s}</span>
                               <span className="text-[8px] text-blue-400 opacity-80">↗</span>
                             </button>
                           ))}
-                          {word.wordFamily?.adjective?.map((a: string, idx: number) => (
-                            <button
-                              key={idx}
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleOpenPeekWord(a);
-                              }}
-                              className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-emerald-500/60 text-slate-200 cursor-pointer transition-all flex items-center space-x-1 shadow-sm"
-                              title="點擊速查此衍生詞"
-                            >
-                              <span className="text-emerald-400 font-bold">adj.</span>
-                              <span>{a}</span>
-                              <span className="text-[8px] text-emerald-400 opacity-80">↗</span>
-                            </button>
-                          ))}
-                          {word.wordFamily?.cognates?.map((c: string, idx: number) => (
-                            <button
-                              key={idx}
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleOpenPeekWord(c);
-                              }}
-                              className="px-2 py-0.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/60 active:scale-95 border border-purple-800/60 hover:border-purple-500 text-purple-300 cursor-pointer transition-all flex items-center space-x-1 shadow-sm"
-                              title="點擊速查此衍生詞"
-                            >
-                              <span>🔗 {c}</span>
-                              <span className="text-[8px] text-purple-400 opacity-80">↗</span>
-                            </button>
-                          ))}
                         </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* 🔄 5. 多益同反義詞微辨析 (synonymDiscrimination - 點擊直達關聯詞微型閃卡) */}
-                {word.synonymDiscrimination && (
-                  <div className="p-2.5 rounded-xl bg-slate-950/80 border border-blue-800/40 space-y-1 text-xs shadow-sm">
-                    <div className="flex items-center justify-between text-blue-400 font-bold text-[11px]">
-                      <span>🔄 多益同義替換與微辨析</span>
-                      <span className="text-[9px] text-blue-500/80">點擊速查 ↗</span>
+                      )}
+                      {word.synonymDiscrimination.discrimination && (
+                        <p className="text-slate-300 text-[10px] leading-relaxed pt-0.5">
+                          💡 <strong>考點微辨析</strong>：{word.synonymDiscrimination.discrimination}
+                        </p>
+                      )}
                     </div>
-                    {word.synonymDiscrimination.synonyms && word.synonymDiscrimination.synonyms.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 text-[10px] items-center">
-                        <span className="text-slate-400 text-[10px]">同義詞：</span>
-                        {word.synonymDiscrimination.synonyms.map((s: string, sIdx: number) => (
-                          <button
-                            key={sIdx}
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleOpenPeekWord(s);
-                            }}
-                            className="px-2 py-0.5 rounded-lg bg-blue-950/80 hover:bg-blue-900/80 active:scale-95 text-blue-300 border border-blue-700/50 hover:border-blue-400 transition-all flex items-center space-x-1 cursor-pointer shadow-sm"
-                            title="點擊預覽此同義詞閃卡"
+                  )}
+
+                  {/* 🏢 6. 進階延伸商務例句 (全量平鋪於最底部 · 營運與策略場景) */}
+                  {currentExamples.length > 1 && (
+                    <div className="p-3 rounded-2xl bg-slate-900/90 border border-teal-800/40 text-xs space-y-2.5 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <div className="flex items-center justify-between text-teal-400 font-bold text-[11px]">
+                        <span className="flex items-center">
+                          <Sparkles size={12} className="mr-1.5 text-amber-400" />
+                          進階商務延伸例句（營運與策略拓展）
+                        </span>
+                        <span className="text-[9px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                          +{currentExamples.length - 1} 句
+                        </span>
+                      </div>
+
+                      <div className="space-y-2 pt-1">
+                        {currentExamples.slice(1).map((ex, exIdx) => (
+                          <div
+                            key={exIdx}
+                            style={{ touchAction: 'pan-y' }}
+                            onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
+                            className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group touch-pan-y"
+                            title="點擊播放例句真人朗讀"
                           >
-                            <span>{s}</span>
-                            <span className="text-[8px] text-blue-400 opacity-80">↗</span>
-                          </button>
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <span className="px-1.5 py-0.5 rounded bg-teal-950/80 text-[9px] text-teal-300 border border-teal-800/50 font-semibold">
+                                🏢 {ex.scenario || (exIdx === 0 ? '營運管理' : '策略拓展')}
+                              </span>
+                              <Volume2 size={13} className="text-slate-500 group-hover:text-teal-400 shrink-0" />
+                            </div>
+                            <p className={`text-slate-100 ${exampleEnClass}`}>
+                              {ex.en || ex.english}
+                            </p>
+                            <p className={`text-teal-400/90 ${exampleZhClass} mt-1`}>
+                              {ex.zh || ex.chinese}
+                            </p>
+                          </div>
                         ))}
                       </div>
-                    )}
-                    {word.synonymDiscrimination.discrimination && (
-                      <p className="text-slate-300 text-[10px] leading-relaxed pt-0.5">
-                        💡 <strong>考點微辨析</strong>：{word.synonymDiscrimination.discrimination}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* 🏢 6. 進階延伸商務例句 (全量平鋪於最底部 · 營運與策略場景) */}
-                {currentExamples.length > 1 && (
-                  <div className="p-3 rounded-2xl bg-slate-900/90 border border-teal-800/40 text-xs space-y-2.5 shadow-sm">
-                    <div className="flex items-center justify-between text-teal-400 font-bold text-[11px]">
-                      <span className="flex items-center">
-                        <Sparkles size={12} className="mr-1.5 text-amber-400" />
-                        進階商務延伸例句（營運與策略拓展）
-                      </span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                        +{currentExamples.length - 1} 句
-                      </span>
                     </div>
-
-                    <div className="space-y-2 pt-1">
-                      {currentExamples.slice(1).map((ex, exIdx) => (
-                        <div
-                          key={exIdx}
-                          onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
-                          className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
-                          title="點擊播放例句真人朗讀"
-                        >
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <span className="px-1.5 py-0.5 rounded bg-teal-950/80 text-[9px] text-teal-300 border border-teal-800/50 font-semibold">
-                              🏢 {ex.scenario || (exIdx === 0 ? '營運管理' : '策略拓展')}
-                            </span>
-                            <Volume2 size={13} className="text-slate-500 group-hover:text-teal-400 shrink-0" />
-                          </div>
-                          <p className={`text-slate-100 ${exampleEnClass}`}>
-                            {ex.en || ex.english}
-                          </p>
-                          <p className={`text-teal-400/90 ${exampleZhClass} mt-1`}>
-                            {ex.zh || ex.chinese}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
 
               {/* Downgrade '記錯了' option if pre-confidence was confident */}

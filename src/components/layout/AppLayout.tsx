@@ -50,66 +50,68 @@ export const AppLayout: React.FC = () => {
     <div className="fixed inset-0 flex flex-col w-full max-w-lg mx-auto bg-slate-900 border-x border-slate-800 shadow-2xl overflow-hidden select-none">
       <UpdatePrompt />
 
-      {/* Top Header */}
-      <header className="shrink-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-3.5 py-2 flex items-center justify-between pt-[max(8px,env(safe-area-inset-top))]">
-        <div className="flex items-center space-x-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center font-black text-white text-xs shadow-md shadow-emerald-900/40">
-            T
-          </div>
-          <div>
-            <h1 className="font-bold text-xs text-slate-100 leading-tight">TOEIC 速記</h1>
-            <p className="text-[9px] text-emerald-400 font-medium">FSRS 智慧單字卡</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          {/* Global Dictionary Search Button */}
-          <button
-            onClick={() => setIsSearchOpen(true)}
-            className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-emerald-400 transition-colors"
-            title="字典搜尋"
-          >
-            <Search size={13} />
-          </button>
-
-          {/* Cloud Sync Status */}
-          {syncState.status === 'syncing' ? (
-            <button
-              onClick={() => triggerSync()}
-              className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-blue-950/60 border border-blue-800 text-[10px] text-blue-300"
-              title="雲端同步中..."
-            >
-              <RefreshCw size={11} className="animate-spin text-blue-400" />
-              <span>同步中</span>
-            </button>
-          ) : syncState.status === 'error' ? (
-            <button
-              onClick={() => triggerSync()}
-              className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-rose-950/60 border border-rose-800 text-[10px] text-rose-300"
-              title={syncState.lastError || '同步失敗，點擊重試'}
-            >
-              <CloudOff size={11} className="text-rose-400" />
-              <span>重試</span>
-            </button>
-          ) : syncState.cloudUserEmail ? (
-            <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800 text-[10px] text-emerald-300">
-              <Cloud size={11} className="text-emerald-400" />
-              <span>已同步</span>
+      {/* Top Header (Hidden during study sessions for 100% immersive focus) */}
+      {!isStudyScreen && (
+        <header className="shrink-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-3.5 py-2 flex items-center justify-between pt-[max(8px,env(safe-area-inset-top))]">
+          <div className="flex items-center space-x-2">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center font-black text-white text-xs shadow-md shadow-emerald-900/40">
+              T
             </div>
-          ) : null}
+            <div>
+              <h1 className="font-bold text-xs text-slate-100 leading-tight">TOEIC 速記</h1>
+              <p className="text-[9px] text-emerald-400 font-medium">FSRS 智慧單字卡</p>
+            </div>
+          </div>
 
-          {/* Active Profile Pill */}
-          <NavLink
-            to="/settings"
-            className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-200 transition-colors"
-          >
-            <User size={12} className="text-emerald-400" />
-            <span className="max-w-[70px] truncate font-medium">
-              {activeProfile?.displayName || '未選擇'}
-            </span>
-          </NavLink>
-        </div>
-      </header>
+          <div className="flex items-center space-x-2">
+            {/* Global Dictionary Search Button */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-emerald-400 transition-colors"
+              title="字典搜尋"
+            >
+              <Search size={13} />
+            </button>
+
+            {/* Cloud Sync Status */}
+            {syncState.status === 'syncing' ? (
+              <button
+                onClick={() => triggerSync()}
+                className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-blue-950/60 border border-blue-800 text-[10px] text-blue-300"
+                title="雲端同步中..."
+              >
+                <RefreshCw size={11} className="animate-spin text-blue-400" />
+                <span>同步中</span>
+              </button>
+            ) : syncState.status === 'error' ? (
+              <button
+                onClick={() => triggerSync()}
+                className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-rose-950/60 border border-rose-800 text-[10px] text-rose-300"
+                title={syncState.lastError || '同步失敗，點擊重試'}
+              >
+                <CloudOff size={11} className="text-rose-400" />
+                <span>重試</span>
+              </button>
+            ) : syncState.cloudUserEmail ? (
+              <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800 text-[10px] text-emerald-300">
+                <Cloud size={11} className="text-emerald-400" />
+                <span>已同步</span>
+              </div>
+            ) : null}
+
+            {/* Active Profile Pill */}
+            <NavLink
+              to="/settings"
+              className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-200 transition-colors"
+            >
+              <User size={12} className="text-emerald-400" />
+              <span className="max-w-[70px] truncate font-medium">
+                {activeProfile?.displayName || '未選擇'}
+              </span>
+            </NavLink>
+          </div>
+        </header>
+      )}
 
       {/* Global Dictionary Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
@@ -117,7 +119,7 @@ export const AppLayout: React.FC = () => {
       {/* Main Content Area: Takes EXACT remaining space between header and bottom nav */}
       <main className={`flex-1 min-h-0 px-3.5 py-1.5 ${
         isStudyScreen
-          ? 'overflow-hidden flex flex-col justify-between'
+          ? 'overflow-hidden flex flex-col justify-between pt-[max(6px,env(safe-area-inset-top))]'
           : navStyle === 'classic'
             ? 'overflow-y-auto pb-4'
             : 'overflow-y-auto pb-20'
