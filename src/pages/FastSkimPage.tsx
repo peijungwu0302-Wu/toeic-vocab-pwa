@@ -60,8 +60,8 @@ export const FastSkimPage: React.FC = () => {
   const [isHolding, setIsHolding] = useState<boolean>(false);
   const [tapFeedback, setTapFeedback] = useState<'left' | 'right' | null>(null);
   const holdTimerRef = useRef<number | null>(null);
-  const isHoldingRef = useRef<boolean>(false);
-  const lastTapTimeRef = useRef<number>(0);
+  const pressStartTimeRef = useRef<number>(0);
+  const wasHoldingRef = useRef<boolean>(false);
 
   const timerRef = useRef<number | null>(null);
 
@@ -333,12 +333,13 @@ export const FastSkimPage: React.FC = () => {
     );
   }
 
-  // IG Story Gestures: Hold to pause/freeze, release to resume
+  // IG Story Gestures: Hold to pause/freeze, release to resume (no skipping word on release)
   const handlePointerDown = () => {
-    isHoldingRef.current = false;
+    pressStartTimeRef.current = Date.now();
+    wasHoldingRef.current = false;
     if (holdTimerRef.current) clearTimeout(holdTimerRef.current);
     holdTimerRef.current = window.setTimeout(() => {
-      isHoldingRef.current = true;
+      wasHoldingRef.current = true;
       setIsHolding(true);
     }, 180); // 180ms hold threshold for IG story freeze
   };
@@ -348,12 +349,10 @@ export const FastSkimPage: React.FC = () => {
       clearTimeout(holdTimerRef.current);
       holdTimerRef.current = null;
     }
-    if (isHoldingRef.current) {
+    const pressDuration = Date.now() - pressStartTimeRef.current;
+    if (pressDuration >= 180 || wasHoldingRef.current) {
+      wasHoldingRef.current = true;
       setIsHolding(false);
-      // Brief lockout so pointerup doesn't trigger onClick
-      setTimeout(() => {
-        isHoldingRef.current = false;
-      }, 60);
     }
   };
 
@@ -362,23 +361,19 @@ export const FastSkimPage: React.FC = () => {
       clearTimeout(holdTimerRef.current);
       holdTimerRef.current = null;
     }
-    isHoldingRef.current = false;
     setIsHolding(false);
+    wasHoldingRef.current = false;
   };
 
   const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isHoldingRef.current) return;
-
-    // Double-tap detection: Double-tap toggles permanent study pause
-    const now = Date.now();
-    if (now - lastTapTimeRef.current < 320) {
-      lastTapTimeRef.current = 0;
-      setIsPaused(prev => !prev);
+    // If user held down (long-press), drop the click completely! Do not jump to next word!
+    const pressDuration = Date.now() - pressStartTimeRef.current;
+    if (wasHoldingRef.current || pressDuration >= 180) {
+      wasHoldingRef.current = false;
       return;
     }
-    lastTapTimeRef.current = now;
 
-    // Left 35% -> Prev word, Right 65% -> Next word
+    // Normal rapid tap (0ms delay, instant response)
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const width = rect.width;
@@ -390,6 +385,10 @@ export const FastSkimPage: React.FC = () => {
     } else {
       setTapFeedback('right');
       setTimeout(() => setTapFeedback(null), 160);
+      // If was paused, advance to next word AND resume auto-playback
+      if (isPaused) {
+        setIsPaused(false);
+      }
       goToNext();
     }
   };
@@ -427,7 +426,7 @@ export const FastSkimPage: React.FC = () => {
                 <span className="text-[8px] text-emerald-400/80 ml-0.5">▾</span>
               </button>
 
-              {/* Anchored Progress Popover (Floats cleanly over card & image) */}
+              {/* Anchored Progress Popover (100% Solid Opaque Pitch-Black) */}
               <AnimatePresence>
                 {(resumedNotice || showProgressPopover) && (
                   <motion.div
@@ -435,12 +434,16 @@ export const FastSkimPage: React.FC = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -6, scale: 0.95 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-2.5 z-[100] min-w-[210px] p-3 rounded-2xl bg-slate-900/98 border border-emerald-500/60 shadow-2xl shadow-black/90 backdrop-blur-xl flex flex-col space-y-2"
+                    style={{ backgroundColor: '#020617', opacity: 1 }}
+                    className="absolute top-full left-0 mt-2.5 z-[100] min-w-[220px] p-3.5 rounded-2xl bg-slate-950 border-2 border-emerald-500 shadow-[0_12px_40px_rgba(0,0,0,0.95)] flex flex-col space-y-2.5"
                   >
-                    <div className="absolute -top-1.5 left-6 w-3 h-3 bg-slate-900 border-t border-l border-emerald-500/60 transform rotate-45" />
+                    <div
+                      style={{ backgroundColor: '#020617' }}
+                      className="absolute -top-1.5 left-6 w-3 h-3 bg-slate-950 border-t-2 border-l-2 border-emerald-500 transform rotate-45"
+                    />
 
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-emerald-300 flex items-center">
+                      <span className="font-bold text-emerald-400 flex items-center">
                         <Sparkles size={12} className="mr-1 text-emerald-400" />
                         速讀進度
                       </span>
@@ -450,13 +453,13 @@ export const FastSkimPage: React.FC = () => {
                           setResumedNotice(null);
                           setShowProgressPopover(false);
                         }}
-                        className="text-slate-400 hover:text-slate-200 p-0.5"
+                        className="text-slate-400 hover:text-slate-100 p-0.5"
                       >
                         <X size={13} />
                       </button>
                     </div>
 
-                    <p className="text-[11px] text-slate-300 leading-tight">
+                    <p className="text-xs text-slate-100 font-bold leading-relaxed">
                       {resumedNotice || `目前進度：第 ${currentIndex + 1} / ${activeWords.length} 詞`}
                     </p>
 
@@ -689,22 +692,26 @@ export const FastSkimPage: React.FC = () => {
                   {!showImage && <span className="text-xs text-slate-400">{currentWord.category}</span>}
                 </div>
 
-                <div onClick={(e) => e.stopPropagation()}>
+                <div onClick={(e) => {
+                  e.stopPropagation();
+                  setIsPaused(true);
+                }}>
                   <AudioButton headword={currentWord.headword} audioUrl={currentWord.audioUSUrl} />
                 </div>
               </div>
 
-              {/* Click Word to Pronounce */}
+              {/* Click Word to Pronounce (Auto-pauses to allow peaceful study) */}
               <div
                 onClick={(e) => {
                   e.stopPropagation();
+                  setIsPaused(true);
                   audioService.playWord({
                     headword: currentWord.headword,
                     audioUrl: currentWord.audioUSUrl
                   });
                 }}
                 className={`cursor-pointer group active:scale-98 transition-transform select-none ${showImage ? "mt-1.5" : "mt-3"}`}
-                title="點擊單字直接發音"
+                title="點擊單字發音並暫停研讀"
               >
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight group-hover:text-emerald-300 transition-colors flex items-center`}>
@@ -725,8 +732,15 @@ export const FastSkimPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Definition & Examples */}
-            <div className="my-2 space-y-2">
+            {/* Definition & Examples (Click to pause and study) */}
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsPaused(true);
+              }}
+              className="my-2 space-y-2 cursor-pointer"
+              title="點擊釋義或例句暫停研讀"
+            >
               <div className="p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
                 <div className="text-[10px] text-slate-400 font-semibold mb-0.5">中文釋義</div>
                 <div className={`${definitionClass} text-emerald-300`}>
@@ -750,32 +764,41 @@ export const FastSkimPage: React.FC = () => {
               )}
             </div>
 
-            {/* Bottom info bar: Long-press / Double-tap affordance & countdown */}
+            {/* Bottom info bar: Long-press affordance & Instant Pause/Resume Capsule */}
             <div className="text-[11px] text-slate-400 flex items-center justify-between border-t border-slate-800/70 pt-2 shrink-0">
-              <div className="flex items-center space-x-1 text-[10px] text-slate-500">
+              <div className="flex items-center space-x-1.5 text-[10px] text-slate-400 font-medium">
                 <span>長按凍結</span>
-                <span>•</span>
-                <span>雙擊暫停</span>
+                <span className="text-slate-600">•</span>
+                <span>點右側前進</span>
               </div>
 
-              {isPaused ? (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsPaused(false);
-                  }}
-                  className="px-2.5 py-0.5 rounded-full bg-amber-950/80 hover:bg-amber-900 border border-amber-500/50 text-amber-300 font-bold text-[10px] flex items-center space-x-1 shadow-sm transition-all active:scale-95"
-                  title="點擊恢復自動輪播"
-                >
-                  <Play size={10} className="fill-amber-300" />
-                  <span>研讀中 · 點擊繼續</span>
-                </button>
-              ) : (
-                <span className="text-slate-400 font-mono text-[10px]">
-                  {isHolding ? '⏸ 凍結中' : `倒數 ${remainingTime.toFixed(1)}s`}
-                </span>
-              )}
+              {/* Seamless Pause/Resume Pill */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsPaused(prev => !prev);
+                }}
+                className={`px-3 py-1 rounded-full font-bold text-[10px] flex items-center space-x-1.5 transition-all active:scale-95 shadow-md ${
+                  isPaused
+                    ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/80 text-amber-300'
+                    : 'bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200'
+                }`}
+                title={isPaused ? '點擊繼續自動輪播' : '點擊暫停輪播'}
+              >
+                {isPaused ? (
+                  <>
+                    <Play size={10} className="fill-amber-300" />
+                    <span>繼續速讀</span>
+                  </>
+                ) : (
+                  <>
+                    <Pause size={10} className="fill-slate-300" />
+                    <span>暫停</span>
+                    <span className="text-emerald-400 font-mono pl-0.5">{remainingTime.toFixed(1)}s</span>
+                  </>
+                )}
+              </button>
             </div>
           </motion.div>
         </AnimatePresence>

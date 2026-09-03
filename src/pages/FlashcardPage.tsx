@@ -718,7 +718,7 @@ export const FlashcardPage: React.FC = () => {
               <span className="text-[8px] text-emerald-400/80 ml-0.5">▾</span>
             </button>
 
-            {/* Bubble Popover right beneath progress pill (Highest z-index, floats over cards and images) */}
+            {/* Bubble Popover right beneath progress pill (100% Solid Opaque Pitch-Black) */}
             <AnimatePresence>
               {(resumedNotice || showProgressPopover) && (
                 <motion.div
@@ -726,13 +726,17 @@ export const FlashcardPage: React.FC = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -6, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute top-full left-0 mt-2.5 z-[100] min-w-[210px] p-3 rounded-2xl bg-slate-900/98 border border-emerald-500/60 shadow-2xl shadow-black/90 backdrop-blur-xl flex flex-col space-y-2"
+                  style={{ backgroundColor: '#020617', opacity: 1 }}
+                  className="absolute top-full left-0 mt-2.5 z-[100] min-w-[220px] p-3.5 rounded-2xl bg-slate-950 border-2 border-emerald-500 shadow-[0_12px_40px_rgba(0,0,0,0.95)] flex flex-col space-y-2.5"
                 >
                   {/* Upward triangle caret pointing to progress pill */}
-                  <div className="absolute -top-1.5 left-6 w-3 h-3 bg-slate-900 border-t border-l border-emerald-500/60 transform rotate-45" />
+                  <div
+                    style={{ backgroundColor: '#020617' }}
+                    className="absolute -top-1.5 left-6 w-3 h-3 bg-slate-950 border-t-2 border-l-2 border-emerald-500 transform rotate-45"
+                  />
 
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-emerald-300 flex items-center">
+                    <span className="font-bold text-emerald-400 flex items-center">
                       <Sparkles size={12} className="mr-1 text-emerald-400" />
                       學習進度
                     </span>
@@ -742,13 +746,13 @@ export const FlashcardPage: React.FC = () => {
                         setResumedNotice(null);
                         setShowProgressPopover(false);
                       }}
-                      className="text-slate-400 hover:text-slate-200 p-0.5"
+                      className="text-slate-400 hover:text-slate-100 p-0.5"
                     >
                       <X size={13} />
                     </button>
                   </div>
 
-                  <p className="text-[11px] text-slate-300 leading-tight">
+                  <p className="text-xs text-slate-100 font-bold leading-relaxed">
                     {resumedNotice || `目前進度：第 ${currentIndex + 1} / ${queue.length} 詞`}
                   </p>
 
