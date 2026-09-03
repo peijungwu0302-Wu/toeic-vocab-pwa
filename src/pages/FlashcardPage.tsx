@@ -45,6 +45,55 @@ interface StudyItem {
   progress: Progress;
 }
 
+interface ClickableSentenceProps {
+  text: string;
+  className?: string;
+  onWordClick: (word: string) => void;
+}
+
+const ClickableSentence: React.FC<ClickableSentenceProps> = ({ text, className = '', onWordClick }) => {
+  const tokens = text.match(/([a-zA-Z0-9'\-]+|[^a-zA-Z0-9'\-]+)/g) || [text];
+
+  return (
+    <span className={className}>
+      {tokens.map((token, i) => {
+        const isWord = /^[a-zA-Z0-9'\-]+$/.test(token) && token.length > 1;
+        if (!isWord) {
+          return <span key={i}>{token}</span>;
+        }
+        return (
+          <span
+            key={i}
+            onClick={(e) => {
+              e.stopPropagation();
+              onWordClick(token);
+            }}
+            className="hover:text-emerald-300 hover:underline cursor-pointer transition-colors active:opacity-75"
+            title={`點擊速查「${token}」`}
+          >
+            {token}
+          </span>
+        );
+      })}
+    </span>
+  );
+};
+
+const formatWordFamilyItem = (raw: string) => {
+  const head = raw.trim().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
+  let zh = '';
+  if (raw.includes('(') || raw.includes('（')) {
+    const match = raw.match(/[\(（]([^\)）]+)[\)）]/);
+    if (match) zh = match[1];
+  } else if (raw.includes(' ')) {
+    const parts = raw.trim().split(/\s+/);
+    if (parts.length > 1 && /[\u4e00-\u9fa5]/.test(parts.slice(1).join(''))) {
+      zh = parts.slice(1).join('');
+    }
+  }
+  return { head, zh };
+};
+
 export const FlashcardPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -113,23 +162,34 @@ export const FlashcardPage: React.FC = () => {
 
     try {
       const target = clean.toLowerCase();
-      const found = await db.words.where('normalizedHeadword').equals(target).first()
+      // 1. Check local active course in IndexedDB
+      let found = await db.words.where('normalizedHeadword').equals(target).first()
         || await db.words.filter(w => w.headword.toLowerCase() === target).first();
+
+      // 2. Cross-Course Master Dictionary Lookup (All 11,154 Words)
+      if (!found) {
+        found = (await courseRepository.findGlobalMasterWord(target)) || undefined;
+      }
 
       if (found) {
         setPeekWord(found);
         setIsPeekOpen(true);
       } else {
+        // Extract Chinese translation from string if available (e.g. "agendum (少用)" -> "少用")
+        const extractedZh = rawTerm.includes('(') || rawTerm.includes('（') || rawTerm.includes(' ')
+          ? rawTerm.replace(/^[a-zA-Z\s\-]+/, '').replace(/^[\(（\s]+/, '').replace(/[\)）\s]+$/, '')
+          : '';
+
         setPeekWord({
           id: `peek-${clean}`,
           headword: clean,
           normalizedHeadword: target,
           entryType: 'word',
-          definitionZh: rawTerm,
+          definitionZh: extractedZh || '延伸單字',
           starRating: 3,
           toeicScoreRange: '550-750',
-          category: '關聯延伸',
-          partsOfSpeech: ['關聯詞'],
+          category: '延伸補充',
+          partsOfSpeech: ['衍生詞'],
           wordForms: [],
           phoneticUS: null,
           phoneticUK: null,
@@ -147,11 +207,11 @@ export const FlashcardPage: React.FC = () => {
         headword: clean,
         normalizedHeadword: clean.toLowerCase(),
         entryType: 'word',
-        definitionZh: rawTerm,
+        definitionZh: '延伸單字',
         starRating: 3,
         toeicScoreRange: '550-750',
-        category: '關聯延伸',
-        partsOfSpeech: ['關聯詞'],
+        category: '延伸補充',
+        partsOfSpeech: ['衍生詞'],
         wordForms: [],
         phoneticUS: null,
         phoneticUK: null,
@@ -905,9 +965,6 @@ export const FlashcardPage: React.FC = () => {
                     className="w-full h-full object-cover object-center brightness-90 contrast-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
-                  <div className="absolute bottom-2.5 left-3.5 flex items-center space-x-1.5">
-                    <Badge variant="emerald">{word.category}</Badge>
-                  </div>
                 </div>
               )}
 
@@ -1033,9 +1090,6 @@ export const FlashcardPage: React.FC = () => {
                       className="w-full h-full object-cover object-center brightness-90 contrast-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
-                    <div className="absolute bottom-2.5 left-3.5 flex items-center space-x-1.5">
-                      <Badge variant="emerald">{word.category}</Badge>
-                    </div>
                   </div>
                 )}
 
@@ -1096,7 +1150,10 @@ export const FlashcardPage: React.FC = () => {
                       >
                         <div className="flex items-start justify-between gap-2">
                           <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
-                            {currentExamples[0]?.en || currentExamples[0]?.english}
+                            <ClickableSentence
+                              text={currentExamples[0]?.en || currentExamples[0]?.english || ''}
+                              onWordClick={handleOpenPeekWord}
+                            />
                           </p>
                           <Volume2 size={13} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
                         </div>
@@ -1195,56 +1252,68 @@ export const FlashcardPage: React.FC = () => {
                             <span className="text-[9px] text-slate-500">點擊速查閃卡 ↗</span>
                           </div>
                           <div className="flex flex-wrap gap-1.5 text-[10px]">
-                            {word.wordFamily?.noun?.map((n: string, idx: number) => (
-                              <button
-                                key={idx}
-                                type="button"
-                                style={{ touchAction: 'pan-y' }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleOpenPeekWord(n);
-                                }}
-                                className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-blue-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
-                                title="點擊速查此衍生詞"
-                              >
-                                <span className="text-blue-400 font-bold">n.</span>
-                                <span>{n}</span>
-                                <span className="text-[8px] text-blue-400 opacity-80">↗</span>
-                              </button>
-                            ))}
-                            {word.wordFamily?.adjective?.map((a: string, idx: number) => (
-                              <button
-                                key={idx}
-                                type="button"
-                                style={{ touchAction: 'pan-y' }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleOpenPeekWord(a);
-                                }}
-                                className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
-                                title="點擊速查此衍生詞"
-                              >
-                                <span className="text-emerald-400 font-bold">adj.</span>
-                                <span>{a}</span>
-                                <span className="text-[8px] text-emerald-400 opacity-80">↗</span>
-                              </button>
-                            ))}
-                            {word.wordFamily?.cognates?.map((c: string, idx: number) => (
-                              <button
-                                key={idx}
-                                type="button"
-                                style={{ touchAction: 'pan-y' }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleOpenPeekWord(c);
-                                }}
-                                className="px-2 py-0.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/60 border border-purple-800/60 hover:border-purple-500 text-purple-300 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
-                                title="點擊速查此衍生詞"
-                              >
-                                <span>🔗 {c}</span>
-                                <span className="text-[8px] text-purple-400 opacity-80">↗</span>
-                              </button>
-                            ))}
+                            {word.wordFamily?.noun?.map((n: string, idx: number) => {
+                              const item = formatWordFamilyItem(n);
+                              return (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  style={{ touchAction: 'pan-y' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenPeekWord(n);
+                                  }}
+                                  className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-blue-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                  title="點擊速查此衍生詞"
+                                >
+                                  <span className="text-blue-400 font-bold">n.</span>
+                                  <span>{item.head}</span>
+                                  {item.zh && <span className="text-slate-400 text-[9px]">({item.zh})</span>}
+                                  <span className="text-[8px] text-blue-400 opacity-80">↗</span>
+                                </button>
+                              );
+                            })}
+                            {word.wordFamily?.adjective?.map((a: string, idx: number) => {
+                              const item = formatWordFamilyItem(a);
+                              return (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  style={{ touchAction: 'pan-y' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenPeekWord(a);
+                                  }}
+                                  className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                  title="點擊速查此衍生詞"
+                                >
+                                  <span className="text-emerald-400 font-bold">adj.</span>
+                                  <span>{item.head}</span>
+                                  {item.zh && <span className="text-slate-400 text-[9px]">({item.zh})</span>}
+                                  <span className="text-[8px] text-emerald-400 opacity-80">↗</span>
+                                </button>
+                              );
+                            })}
+                            {word.wordFamily?.cognates?.map((c: string, idx: number) => {
+                              const item = formatWordFamilyItem(c);
+                              return (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  style={{ touchAction: 'pan-y' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenPeekWord(c);
+                                  }}
+                                  className="px-2 py-0.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/60 border border-purple-800/60 hover:border-purple-500 text-purple-300 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                  title="點擊速查此衍生詞"
+                                >
+                                  <span>🔗 {item.head}</span>
+                                  {item.zh && <span className="text-purple-300/80 text-[9px]">({item.zh})</span>}
+                                  <span className="text-[8px] text-purple-400 opacity-80">↗</span>
+                                </button>
+                              );
+                            })}
                           </div>
                         </div>
                       )}
@@ -1301,7 +1370,7 @@ export const FlashcardPage: React.FC = () => {
                       </div>
 
                       <div className="space-y-2 pt-1">
-                        {currentExamples.slice(1).map((ex, exIdx) => (
+                        {currentExamples.slice(1).map((ex: any, exIdx: number) => (
                           <div
                             key={exIdx}
                             style={{ touchAction: 'pan-y' }}
@@ -1316,7 +1385,10 @@ export const FlashcardPage: React.FC = () => {
                               <Volume2 size={13} className="text-slate-500 group-hover:text-teal-400 shrink-0" />
                             </div>
                             <p className={`text-slate-100 ${exampleEnClass}`}>
-                              {ex.en || ex.english}
+                              <ClickableSentence
+                                text={ex.en || ex.english || ''}
+                                onWordClick={handleOpenPeekWord}
+                              />
                             </p>
                             <p className={`text-teal-400/90 ${exampleZhClass} mt-1`}>
                               {ex.zh || ex.chinese}

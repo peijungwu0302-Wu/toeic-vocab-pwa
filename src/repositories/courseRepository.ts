@@ -151,6 +151,24 @@ export const courseRepository = {
     return [...exactMatches, ...prefixMatches, ...containsMatches].slice(0, limit);
   },
 
+  async findGlobalMasterWord(term: string): Promise<Word | null> {
+    const clean = term.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
+    if (!clean) return null;
+
+    try {
+      const local = await db.words.where('normalizedHeadword').equals(clean).first()
+        || await db.words.filter(w => w.headword.toLowerCase() === clean).first();
+      if (local) return local;
+    } catch {}
+
+    const matches = await this.searchGlobalMasterWords(clean, 20);
+    const exact = matches.find(w => w.headword.toLowerCase() === clean || w.normalizedHeadword?.toLowerCase() === clean);
+    if (exact) return exact;
+
+    const prefix = matches.find(w => w.headword.toLowerCase().startsWith(clean));
+    return prefix || null;
+  },
+
   async downloadAndSaveCourse(courseId: string, fileName: string): Promise<void> {
     const res = await fetch(`/data/v1/courses/${fileName}?t=${Date.now()}`, { cache: 'no-cache' });
     if (!res.ok) {

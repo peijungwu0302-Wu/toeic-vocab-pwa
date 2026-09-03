@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, Star, Sparkles, X, BookOpen } from 'lucide-react';
+import { Volume2, Star, Sparkles, X, BookOpen, Plus, Check, BookmarkCheck } from 'lucide-react';
 import { motion, PanInfo } from 'framer-motion';
 import { Word, Progress } from '../../types/db';
 import { audioService } from '../../services/audioService';
 import { progressRepository } from '../../repositories/progressRepository';
+import { fsrsService } from '../../services/fsrsService';
+import { db } from '../../db';
 import { useProfile } from '../../contexts/ProfileContext';
 import { Badge } from './Badge';
 
@@ -20,6 +22,7 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
 }) => {
   const { activeProfile } = useProfile();
   const [isStarred, setIsStarred] = useState(false);
+  const [addedMessage, setAddedMessage] = useState(false);
 
   useEffect(() => {
     if (word && activeProfile) {
@@ -33,8 +36,21 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
 
   const handleToggleStar = async () => {
     if (!word || !activeProfile) return;
+    await db.words.put(word);
     const newStar = await progressRepository.toggleStarred(activeProfile.id, word.id);
     setIsStarred(newStar);
+  };
+
+  const handleAddToTodayReview = async () => {
+    if (!word || !activeProfile) return;
+    await db.words.put(word);
+    const existing = await progressRepository.getByWordId(activeProfile.id, word.id);
+    if (!existing) {
+      const init = fsrsService.createInitialProgress(activeProfile.id, word.id);
+      await db.progress.put(init);
+    }
+    setAddedMessage(true);
+    setTimeout(() => setAddedMessage(false), 2000);
   };
 
   const handlePlayAudio = () => {
@@ -158,6 +174,32 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
             </div>
           )}
 
+          {/* Golden Business Collocations */}
+          {Array.isArray(word.collocations) && word.collocations.length > 0 && (
+            <div className="space-y-1.5">
+              <div className="text-[11px] text-emerald-400 font-bold flex items-center space-x-1">
+                <BookmarkCheck size={12} />
+                <span>黃金商務搭配詞</span>
+              </div>
+              <div className="grid grid-cols-1 gap-1.5">
+                {word.collocations.slice(0, 3).map((c, cIdx) => (
+                  <div
+                    key={cIdx}
+                    onClick={() => audioService.speakSentence(c.en)}
+                    className="p-2 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center justify-between cursor-pointer hover:border-emerald-600/50 transition-colors group"
+                    title="點擊朗讀"
+                  >
+                    <span className="text-xs font-bold text-emerald-300 flex items-center">
+                      {c.en}
+                      <Volume2 size={11} className="ml-1 text-slate-500 group-hover:text-emerald-400" />
+                    </span>
+                    <span className="text-[11px] text-slate-400">{c.zh}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Core Exam Pitfalls / Collocations if present */}
           {word.examTips && word.examTips.length > 0 && (
             <div className="p-3 rounded-2xl bg-slate-800/60 border border-slate-700/70 text-xs">
@@ -174,23 +216,31 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
         </div>
 
         {/* Footer actions */}
-        <div className="p-3.5 border-t border-slate-800 bg-slate-900/95 flex space-x-2">
+        <div className="p-3 border-t border-slate-800 bg-slate-900/95 flex items-center space-x-2">
+          <button
+            type="button"
+            onClick={handleAddToTodayReview}
+            className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-700/60 text-emerald-300 text-xs font-bold transition-all flex items-center justify-center space-x-1"
+          >
+            {addedMessage ? <Check size={14} className="text-emerald-400" /> : <Plus size={14} />}
+            <span>{addedMessage ? '已加入今日複習！' : '➕ 加入今日複習'}</span>
+          </button>
           <button
             type="button"
             onClick={handleToggleStar}
-            className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1.5 border ${
+            className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-center ${
               isStarred
                 ? 'bg-amber-500/20 border-amber-500/40 text-amber-300'
-                : 'bg-slate-800 border-slate-700 text-slate-200 hover:bg-slate-700'
+                : 'bg-slate-800 border-slate-700 text-slate-300 hover:text-amber-300'
             }`}
+            title={isStarred ? '已收藏' : '收藏'}
           >
-            <Star size={14} className={isStarred ? 'fill-amber-400' : ''} />
-            <span>{isStarred ? '已收藏此關聯詞' : '⭐ 收藏至個人生詞庫'}</span>
+            <Star size={16} className={isStarred ? 'fill-amber-400 text-amber-400' : ''} />
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="py-2.5 px-5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition-colors"
+            className="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition-colors"
           >
             關閉
           </button>
