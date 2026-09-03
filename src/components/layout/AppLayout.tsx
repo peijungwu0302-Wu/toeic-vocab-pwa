@@ -36,25 +36,6 @@ export const AppLayout: React.FC = () => {
     location.pathname.startsWith('/quiz') ||
     location.pathname.startsWith('/assessment');
 
-  // Auto-hide bottom nav during study sessions; reveal on demand via edge handle or tap
-  const [isNavRevealedInStudy, setIsNavRevealedInStudy] = useState(false);
-  const hideTimerRef = React.useRef<number | null>(null);
-  const touchStartY = React.useRef<number | null>(null);
-
-  // Auto collapse when entering or changing study routes
-  React.useEffect(() => {
-    setIsNavRevealedInStudy(false);
-    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
-  }, [location.pathname]);
-
-  const handleRevealNav = () => {
-    setIsNavRevealedInStudy(true);
-    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
-    hideTimerRef.current = window.setTimeout(() => {
-      setIsNavRevealedInStudy(false);
-    }, 4500);
-  };
-
   const navItems = [
     { to: '/', label: '首頁', icon: LayoutDashboard },
     { to: '/catalog', label: '課程', icon: BookOpen },
@@ -147,37 +128,12 @@ export const AppLayout: React.FC = () => {
       {/* iOS Safari Installation Banner */}
       <InstallPrompt />
 
-      {/* 方案 1A：iOS 原生極簡手柄線 (Minimalist Grabber Line) */}
-      {isStudyScreen && !isNavRevealedInStudy && (
-        <button
-          type="button"
-          onClick={handleRevealNav}
-          onTouchStart={(e) => {
-            touchStartY.current = e.touches[0].clientY;
-          }}
-          onTouchMove={(e) => {
-            if (touchStartY.current !== null) {
-              const deltaY = touchStartY.current - e.touches[0].clientY;
-              if (deltaY > 12) {
-                handleRevealNav();
-                touchStartY.current = null;
-              }
-            }
-          }}
-          className="fixed bottom-1.5 left-1/2 -translate-x-1/2 z-40 px-6 py-2 flex items-center justify-center cursor-pointer select-none active:scale-90 transition-transform"
-          aria-label="展開導覽列"
-          title="展開導覽列"
-        >
-          <span className="w-10 h-1 rounded-full bg-slate-400/40 hover:bg-slate-300/70 shadow-sm transition-colors" />
-        </button>
-      )}
-
       {/* Bottom Navigation Bar - Auto collapses during study screen, accessible via edge handle */}
       {navStyle === 'island' ? (
         // 方案 B：Apple Music 同款 · 懸浮膠囊島 (iOS 18 Floating Island)
         <nav
           className={`fixed left-3 right-3 max-w-[calc(32rem-1.5rem)] mx-auto rounded-[26px] bg-slate-900/90 backdrop-blur-2xl border border-white/15 shadow-2xl shadow-black/90 z-40 px-2 py-1.5 transition-all duration-300 ${
-            isStudyScreen && !isNavRevealedInStudy
+            isStudyScreen
               ? 'translate-y-[200%] opacity-0 pointer-events-none'
               : 'translate-y-0 opacity-100 pointer-events-auto'
           }`}
@@ -209,7 +165,7 @@ export const AppLayout: React.FC = () => {
         // 方案 A：穿透毛玻璃 · 極致下沉貼底 (Ultra-Flush Frosted Glass)
         <nav
           className={`fixed left-0 right-0 max-w-lg mx-auto bg-slate-900/85 backdrop-blur-2xl border-t border-white/10 z-40 pb-2 transition-all duration-300 ${
-            isStudyScreen && !isNavRevealedInStudy
+            isStudyScreen
               ? 'translate-y-[200%] opacity-0 pointer-events-none'
               : 'translate-y-0 opacity-100 pointer-events-auto'
           }`}
@@ -241,7 +197,7 @@ export const AppLayout: React.FC = () => {
         // 傳統模式：經典全寬，目前模式
         <nav
           className={`fixed left-0 right-0 max-w-lg mx-auto bg-slate-900/98 backdrop-blur-md border-t border-slate-800 z-30 pb-2 transition-all duration-300 ${
-            isStudyScreen && !isNavRevealedInStudy
+            isStudyScreen
               ? 'translate-y-[200%] opacity-0 pointer-events-none'
               : 'translate-y-0 opacity-100 pointer-events-auto'
           }`}

@@ -288,6 +288,16 @@ export const FlashcardPage: React.FC = () => {
     loadStudyQueue();
   }, [loadStudyQueue]);
 
+  // Auto-dismiss resumedNotice after 4s
+  useEffect(() => {
+    if (resumedNotice) {
+      const t = setTimeout(() => {
+        setResumedNotice(null);
+      }, 4000);
+      return () => clearTimeout(t);
+    }
+  }, [resumedNotice]);
+
   // Auto-save review session progress
   useEffect(() => {
     if (queue.length > 0 && !isLoading && activeProfile) {
@@ -788,19 +798,33 @@ export const FlashcardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Resumed Progress Notification Banner */}
-      {resumedNotice && (
-        <div className="flex items-center justify-between px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-600/50 text-emerald-200 text-xs shadow-md animate-in fade-in">
-          <span className="font-semibold">{resumedNotice}</span>
-          <button
-            type="button"
-            onClick={handleRestartReviewFromBeginning}
-            className="text-xs underline text-emerald-400 hover:text-emerald-300 font-bold ml-2 py-0.5"
+      {/* Resumed Progress Notification: Floating Micro-Toast (Zero layout shift) */}
+      <AnimatePresence>
+        {resumedNotice && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            className="fixed top-14 left-1/2 -translate-x-1/2 z-40 px-3.5 py-1.5 rounded-full bg-slate-900/95 border border-emerald-500/50 text-emerald-200 text-xs shadow-xl backdrop-blur-md flex items-center space-x-2 whitespace-nowrap"
           >
-            從頭開始
-          </button>
-        </div>
-      )}
+            <span className="font-semibold text-[11px]">{resumedNotice}</span>
+            <button
+              type="button"
+              onClick={handleRestartReviewFromBeginning}
+              className="px-2 py-0.5 rounded-md bg-emerald-600/80 hover:bg-emerald-500 text-white text-[10px] font-bold transition-colors shadow-sm"
+            >
+              從頭開始 ↺
+            </button>
+            <button
+              type="button"
+              onClick={() => setResumedNotice(null)}
+              className="text-slate-400 hover:text-slate-200 p-0.5"
+            >
+              <X size={12} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Swipeable 3D Flashcard */}
       <div className="flex-1 flex flex-col min-h-0 py-0.5">
@@ -820,18 +844,21 @@ export const FlashcardPage: React.FC = () => {
                 isStarred ? 'border-amber-500/50 shadow-amber-950/20' : 'border-slate-700/80'
               } rounded-3xl p-4 shadow-2xl flex flex-col justify-between [backface-visibility:hidden] overflow-hidden`}
             >
-              {/* Associative Scenario Image Banner */}
+              {/* Associative Scenario Image Banner (Enlarged & uncropped 1:1 view) */}
               {!imgFailed && (
-                <div className="relative -mx-4 -mt-4 mb-2.5 h-28 overflow-hidden rounded-t-3xl border-b border-slate-700/60">
+                <div className="relative -mx-4 -mt-4 mb-2.5 h-36 sm:h-40 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
                   <img
                     src={finalImageUrl}
                     alt={word.headword}
                     onError={() => setImgFailed(true)}
-                    className="w-full h-full object-cover brightness-85"
+                    className="w-full h-full object-cover object-center brightness-90 contrast-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                   <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
                     <Badge variant="emerald">{word.category}</Badge>
+                    <span className="text-[10px] text-slate-300 font-medium bg-slate-950/60 px-1.5 py-0.5 rounded-md border border-slate-800">
+                      🏢 商務情境
+                    </span>
                   </div>
                 </div>
               )}
@@ -846,9 +873,21 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 )}
 
-                <div className="text-center">
-                  <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight`}>
+                {/* Click Word Title to Pronounce */}
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    audioService.playWord({
+                      headword: word.headword,
+                      audioUrl: word.audioUSUrl || word.audioUKUrl
+                    });
+                  }}
+                  className="text-center cursor-pointer group active:scale-98 transition-transform select-none py-1"
+                  title="點擊單字直接發音"
+                >
+                  <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight group-hover:text-emerald-300 transition-colors flex items-center justify-center`}>
                     {word.headword}
+                    <Volume2 size={16} className="ml-2 text-emerald-400/60 group-hover:text-emerald-400 transition-all shrink-0" />
                   </h2>
                   {word.phoneticUS && (
                     <p className={`${supportingClass} font-mono text-emerald-400/90 mt-1`}>
@@ -916,25 +955,27 @@ export const FlashcardPage: React.FC = () => {
                 isStarred ? 'border-amber-500/50' : 'border-emerald-500/40'
               } rounded-3xl p-3.5 shadow-2xl flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden cursor-default`}
             >
-              {/* Scrollable Container Inside Card (Smooth vertical reading with zero drag interference) */}
+              {/* Scrollable Container Inside Card (Strict overflow-x-hidden to prevent horizontal shift) */}
               <div
                 ref={cardBackScrollRef}
                 style={{ WebkitOverflowScrolling: 'touch', willChange: 'scroll-position' }}
-                className="space-y-2.5 overflow-y-auto flex-1 min-h-0 overscroll-y-contain touch-pan-y pr-1"
+                className="space-y-3 overflow-y-auto overflow-x-hidden flex-1 min-h-0 overscroll-y-contain touch-pan-y pr-1"
               >
-                {/* 🌟 具象商務情境圖片橫幅 (背面常駐 · 建立視覺與釋義神經元連結) */}
+                {/* 🌟 具象商務情境圖片橫幅 (背面常駐 · 美感大圖 · 零溢出) */}
                 {!imgFailed && (
-                  <div className="relative -mx-3.5 -mt-3.5 mb-2.5 h-24 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
+                  <div className="relative w-full h-36 sm:h-40 overflow-hidden rounded-2xl border border-slate-700/60 shadow-lg shrink-0 mb-1">
                     <img
                       src={finalImageUrl}
                       alt={word.headword}
                       onError={() => setImgFailed(true)}
-                      className="w-full h-full object-cover object-center brightness-85"
+                      className="w-full h-full object-cover object-center brightness-90 contrast-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
-                    <div className="absolute bottom-1.5 left-3 flex items-center space-x-1.5">
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
+                    <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
                       <Badge variant="emerald">{word.category}</Badge>
-                      <span className="text-[10px] text-slate-300 font-medium">🏢 商務具象情境</span>
+                      <span className="text-[10px] text-slate-300 font-medium bg-slate-950/70 px-2 py-0.5 rounded-md border border-slate-800">
+                        🏢 商務具象場景
+                      </span>
                     </div>
                   </div>
                 )}
@@ -947,9 +988,24 @@ export const FlashcardPage: React.FC = () => {
                   <AudioButton headword={word.headword} audioUrl={word.audioUSUrl} size="sm" />
                 </div>
 
-                {/* Headword & Meaning */}
+                {/* Headword & Meaning (Click word to pronounce) */}
                 <div>
-                  <h3 className={`${headwordClass} text-slate-100`}>{word.headword}</h3>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      audioService.playWord({
+                        headword: word.headword,
+                        audioUrl: word.audioUSUrl || word.audioUKUrl
+                      });
+                    }}
+                    className="cursor-pointer group active:scale-98 transition-transform select-none"
+                    title="點擊單字直接發音"
+                  >
+                    <h3 className={`${headwordClass} text-slate-100 group-hover:text-emerald-300 transition-colors flex items-center`}>
+                      {word.headword}
+                      <Volume2 size={16} className="ml-2 text-emerald-400/60 group-hover:text-emerald-400 transition-all shrink-0" />
+                    </h3>
+                  </div>
                   <div className="mt-1 p-2 rounded-xl bg-slate-900/90 border border-slate-800">
                     <div className={`${definitionClass} text-emerald-300`}>
                       {word.definitionZh}
@@ -957,38 +1013,33 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 🌟 1. 專屬具象商務例句 (全量平鋪展開 · 零點擊沉浸閱讀) */}
+                {/* 🌟 1. 核心專屬具象商務例句 (第一記憶錨點) */}
                 {currentExamples.length > 0 && (
-                  <div className="p-3 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2.5 shadow-sm">
+                  <div className="p-3 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2 shadow-sm">
                     <div className="flex items-center justify-between">
                       <div className="text-[10px] text-emerald-400 font-bold tracking-wider flex items-center space-x-1">
                         <Sparkles size={11} className="text-amber-400 shrink-0" />
-                        <span>多益專屬商務例句 ({currentExamples.length} 階梯場景)</span>
+                        <span>核心商務例句</span>
                       </div>
                       <span className="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[9px] text-emerald-300 border border-emerald-800/50 font-semibold inline-block">
                         🏢 {currentExamples[0]?.scenario || word.category || '商務溝通'}
                       </span>
                     </div>
 
-                    <div className="space-y-2">
-                      {currentExamples.map((ex, exIdx) => (
-                        <div
-                          key={exIdx}
-                          onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
-                          className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
-                          title="點擊播放例句真人朗讀"
-                        >
-                          <div className="flex items-start justify-between gap-2">
-                            <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
-                              {ex.en || ex.english}
-                            </p>
-                            <Volume2 size={13} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
-                          </div>
-                          <p className={`text-emerald-400/90 ${exampleZhClass} mt-1`}>
-                            {ex.zh || ex.chinese}
-                          </p>
-                        </div>
-                      ))}
+                    <div
+                      onClick={() => audioService.speakSentence(currentExamples[0]?.en || currentExamples[0]?.english || '')}
+                      className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
+                      title="點擊播放例句真人朗讀"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
+                          {currentExamples[0]?.en || currentExamples[0]?.english}
+                        </p>
+                        <Volume2 size={13} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
+                      </div>
+                      <p className={`text-emerald-400/90 ${exampleZhClass} mt-1`}>
+                        {currentExamples[0]?.zh || currentExamples[0]?.chinese}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -1154,6 +1205,45 @@ export const FlashcardPage: React.FC = () => {
                         💡 <strong>考點微辨析</strong>：{word.synonymDiscrimination.discrimination}
                       </p>
                     )}
+                  </div>
+                )}
+
+                {/* 🏢 6. 進階延伸商務例句 (全量平鋪於最底部 · 營運與策略場景) */}
+                {currentExamples.length > 1 && (
+                  <div className="p-3 rounded-2xl bg-slate-900/90 border border-teal-800/40 text-xs space-y-2.5 shadow-sm">
+                    <div className="flex items-center justify-between text-teal-400 font-bold text-[11px]">
+                      <span className="flex items-center">
+                        <Sparkles size={12} className="mr-1.5 text-amber-400" />
+                        進階商務延伸例句（營運與策略拓展）
+                      </span>
+                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                        +{currentExamples.length - 1} 句
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 pt-1">
+                      {currentExamples.slice(1).map((ex, exIdx) => (
+                        <div
+                          key={exIdx}
+                          onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
+                          className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
+                          title="點擊播放例句真人朗讀"
+                        >
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <span className="px-1.5 py-0.5 rounded bg-teal-950/80 text-[9px] text-teal-300 border border-teal-800/50 font-semibold">
+                              🏢 {ex.scenario || (exIdx === 0 ? '營運管理' : '策略拓展')}
+                            </span>
+                            <Volume2 size={13} className="text-slate-500 group-hover:text-teal-400 shrink-0" />
+                          </div>
+                          <p className={`text-slate-100 ${exampleEnClass}`}>
+                            {ex.en || ex.english}
+                          </p>
+                          <p className={`text-teal-400/90 ${exampleZhClass} mt-1`}>
+                            {ex.zh || ex.chinese}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>

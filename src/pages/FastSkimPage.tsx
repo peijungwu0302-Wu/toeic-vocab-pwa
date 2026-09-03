@@ -16,7 +16,7 @@ import {
   Image as ImageIcon,
   ImageOff
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useProfile } from '../contexts/ProfileContext';
 import { useTypography } from '../contexts/TypographyContext';
 import { courseRepository } from '../repositories/courseRepository';
@@ -256,6 +256,15 @@ export const FastSkimPage: React.FC = () => {
     });
   }, [currentIndex]);
 
+  useEffect(() => {
+    if (resumedNotice) {
+      const t = setTimeout(() => {
+        setResumedNotice(null);
+      }, 4000);
+      return () => clearTimeout(t);
+    }
+  }, [resumedNotice]);
+
   const handleDurationChange = async (newSec: number) => {
     setDurationSec(newSec);
     setRemainingTime(newSec);
@@ -458,22 +467,36 @@ export const FastSkimPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Resumed Progress Notification Banner */}
-      {resumedNotice && (
-        <div className="flex items-center justify-between px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-600/50 text-emerald-200 text-xs shadow-md animate-in fade-in">
-          <span className="font-semibold">{resumedNotice}</span>
-          <button
-            type="button"
-            onClick={handleRestartFromBeginning}
-            className="text-xs underline text-emerald-400 hover:text-emerald-300 font-bold ml-2 py-0.5"
+      {/* Resumed Progress Notification: Floating Micro-Toast (Zero layout shift) */}
+      <AnimatePresence>
+        {resumedNotice && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            className="fixed top-14 left-1/2 -translate-x-1/2 z-40 px-3.5 py-1.5 rounded-full bg-slate-900/95 border border-emerald-500/50 text-emerald-200 text-xs shadow-xl backdrop-blur-md flex items-center space-x-2 whitespace-nowrap"
           >
-            從頭開始
-          </button>
-        </div>
-      )}
+            <span className="font-semibold text-[11px]">{resumedNotice}</span>
+            <button
+              type="button"
+              onClick={handleRestartFromBeginning}
+              className="px-2 py-0.5 rounded-md bg-emerald-600/80 hover:bg-emerald-500 text-white text-[10px] font-bold transition-colors shadow-sm"
+            >
+              從頭開始 ↺
+            </button>
+            <button
+              type="button"
+              onClick={() => setResumedNotice(null)}
+              className="text-slate-400 hover:text-slate-200 p-0.5"
+            >
+              <X size={12} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Main Flashcard View */}
-      <div className="flex-1 flex flex-col justify-center">
+      {/* Main Flashcard View with IG Story Gestures (Swipe & Tap Sides) */}
+      <div className="flex-1 flex flex-col justify-center relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentWord.id}
@@ -481,10 +504,32 @@ export const FastSkimPage: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
             transition={{ duration: 0.15 }}
-            className="bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700/80 rounded-3xl p-6 shadow-2xl flex flex-col justify-between min-h-[360px] relative overflow-hidden"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.4}
+            onDragEnd={(_: unknown, info: PanInfo) => {
+              if (info.offset.x < -40 || info.velocity.x < -200) {
+                goToNext();
+              } else if (info.offset.x > 40 || info.velocity.x > 200) {
+                goToPrev();
+              }
+            }}
+            onClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const clickX = e.clientX - rect.left;
+              const width = rect.width;
+              if (clickX < width * 0.28) {
+                goToPrev();
+              } else if (clickX > width * 0.72) {
+                goToNext();
+              } else {
+                setIsPaused(prev => !prev);
+              }
+            }}
+            className="bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700/80 rounded-3xl p-5 shadow-2xl flex flex-col justify-between min-h-[380px] relative overflow-hidden cursor-pointer select-none"
           >
             {/* Top Timer Bar */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-slate-900">
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-slate-900 z-10">
               <div
                 className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-100 ease-linear"
                 style={{ width: `${progressPercent}%` }}
@@ -493,16 +538,19 @@ export const FastSkimPage: React.FC = () => {
 
             {/* Associative Scenario Image Banner (Enlarged & uncropped 1:1 view) */}
             {showImage && !imgFailed && (
-              <div className="relative -mx-6 -mt-6 mb-3 h-32 sm:h-36 overflow-hidden rounded-t-3xl border-b border-slate-700/60">
+              <div className="relative -mx-5 -mt-5 mb-3 h-40 sm:h-44 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
                 <img
                   src={imageService.getImageForWord(currentWord.headword, currentWord.category).url}
                   alt={currentWord.headword}
                   onError={() => setImgFailed(true)}
-                  className="w-full h-full object-cover object-center brightness-90"
+                  className="w-full h-full object-cover object-center brightness-90 contrast-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                 <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">
                   <Badge variant="emerald">{currentWord.category}</Badge>
+                  <span className="text-[10px] text-slate-300 font-medium bg-slate-950/60 px-1.5 py-0.5 rounded-md border border-slate-800">
+                    🏢 商務情境
+                  </span>
                 </div>
               </div>
             )}
@@ -517,13 +565,27 @@ export const FastSkimPage: React.FC = () => {
                   {!showImage && <span className="text-xs text-slate-400">{currentWord.category}</span>}
                 </div>
 
-                <AudioButton headword={currentWord.headword} audioUrl={currentWord.audioUSUrl} />
+                <div onClick={(e) => e.stopPropagation()}>
+                  <AudioButton headword={currentWord.headword} audioUrl={currentWord.audioUSUrl} />
+                </div>
               </div>
 
-              <div className={showImage ? "mt-1.5" : "mt-3"}>
+              {/* Click Word to Pronounce */}
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  audioService.playWord({
+                    headword: currentWord.headword,
+                    audioUrl: currentWord.audioUSUrl
+                  });
+                }}
+                className={`cursor-pointer group active:scale-98 transition-transform select-none ${showImage ? "mt-1.5" : "mt-3"}`}
+                title="點擊單字直接發音"
+              >
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight`}>
+                  <h2 className={`${headwordClass} text-slate-100 tracking-tight leading-tight group-hover:text-emerald-300 transition-colors flex items-center`}>
                     {currentWord.headword}
+                    <Volume2 size={16} className="ml-2 text-emerald-400/60 group-hover:text-emerald-400 transition-all shrink-0" />
                   </h2>
                   {currentWord.partsOfSpeech && currentWord.partsOfSpeech.length > 0 && (
                     <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-emerald-950/70 border border-emerald-700/60 text-emerald-300">

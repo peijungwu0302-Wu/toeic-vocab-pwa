@@ -84,11 +84,18 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
 
         {/* Content Body (Scrollable) */}
         <div className="flex-1 overflow-y-auto p-5 space-y-4 text-slate-100">
-          {/* Headword & Pronunciation */}
+          {/* Headword & Pronunciation (Click anywhere on word to play audio) */}
           <div className="flex items-start justify-between">
-            <div>
+            <div
+              onClick={handlePlayAudio}
+              className="cursor-pointer group active:scale-98 transition-transform select-none flex-1"
+              title="點擊單字直接發音"
+            >
               <div className="flex items-baseline space-x-2.5 flex-wrap">
-                <h2 className="text-2xl font-black text-white tracking-tight">{word.headword}</h2>
+                <h2 className="text-2xl font-black text-white tracking-tight group-hover:text-emerald-300 transition-colors flex items-center">
+                  {word.headword}
+                  <Volume2 size={16} className="ml-2 text-emerald-400/70 group-hover:text-emerald-400 group-hover:scale-110 transition-all" />
+                </h2>
                 {word.partsOfSpeech && word.partsOfSpeech.length > 0 && (
                   <Badge variant="emerald">{word.partsOfSpeech.join(', ')}</Badge>
                 )}
