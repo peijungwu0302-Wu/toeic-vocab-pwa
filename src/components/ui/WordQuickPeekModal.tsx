@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, Star, Sparkles, X, BookOpen } from 'lucide-react';
+import { motion, PanInfo } from 'framer-motion';
 import { Word, Progress } from '../../types/db';
 import { audioService } from '../../services/audioService';
 import { progressRepository } from '../../repositories/progressRepository';
@@ -44,14 +45,25 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in select-none">
-      <div
-        className="w-full max-w-lg max-h-[82dvh] bg-slate-900 border border-slate-700/80 rounded-t-[32px] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-slide-up"
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in select-none cursor-pointer"
+    >
+      <motion.div
+        drag="y"
+        dragConstraints={{ top: 0, bottom: 0 }}
+        dragElastic={{ top: 0, bottom: 0.5 }}
+        onDragEnd={(_: unknown, info: PanInfo) => {
+          if (info.offset.y > 60 || info.velocity.y > 300) {
+            onClose();
+          }
+        }}
+        className="w-full max-w-lg max-h-[82dvh] bg-slate-900 border border-slate-700/80 rounded-t-[32px] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top iOS Grabber Bar */}
-        <div className="w-full flex flex-col items-center pt-2.5 pb-1">
-          <div className="w-10 h-1 rounded-full bg-slate-600/70" />
+        {/* Top iOS Grabber Bar with pull-down gesture affordance */}
+        <div className="w-full flex flex-col items-center pt-2.5 pb-1 cursor-grab active:cursor-grabbing">
+          <div className="w-10 h-1.5 rounded-full bg-slate-500/80" />
         </div>
 
         {/* Header */}
@@ -176,7 +188,7 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
             關閉
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

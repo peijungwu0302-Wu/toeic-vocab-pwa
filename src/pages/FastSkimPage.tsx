@@ -320,7 +320,7 @@ export const FastSkimPage: React.FC = () => {
   const progressPercent = Math.min(100, Math.max(0, ((durationSec - remainingTime) / durationSec) * 100));
 
   return (
-    <div className="flex flex-col min-h-[calc(100dvh-5.5rem)] justify-between max-w-md mx-auto space-y-2 pb-2 select-none">
+    <div className="flex flex-col min-h-[calc(100dvh-5.5rem)] justify-between max-w-md mx-auto space-y-2 pb-2 select-none touch-pan-y overscroll-y-contain">
       {/* Top Filter & Micro-session Bar */}
       <div className="space-y-2">
         <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/70 rounded-2xl px-3.5 py-2 shadow-sm">
@@ -491,14 +491,14 @@ export const FastSkimPage: React.FC = () => {
               />
             </div>
 
-            {/* Associative Scenario Image Banner */}
+            {/* Associative Scenario Image Banner (Enlarged & uncropped 1:1 view) */}
             {showImage && !imgFailed && (
-              <div className="relative -mx-6 -mt-6 mb-3 h-28 overflow-hidden rounded-t-3xl border-b border-slate-700/60">
+              <div className="relative -mx-6 -mt-6 mb-3 h-32 sm:h-36 overflow-hidden rounded-t-3xl border-b border-slate-700/60">
                 <img
                   src={imageService.getImageForWord(currentWord.headword, currentWord.category).url}
                   alt={currentWord.headword}
                   onError={() => setImgFailed(true)}
-                  className="w-full h-full object-cover brightness-85"
+                  className="w-full h-full object-cover object-center brightness-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent" />
                 <div className="absolute bottom-2 left-3 flex items-center space-x-1.5">

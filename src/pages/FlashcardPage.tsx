@@ -10,7 +10,6 @@ import {
   HelpCircle,
   Lightbulb,
   Volume2,
-  BookOpen,
   Bot,
   Send,
   Loader2,
@@ -73,7 +72,6 @@ export const FlashcardPage: React.FC = () => {
 
   // Morphology & Word Family
   const [morphology, setMorphology] = useState<MorphologyInfo | null>(null);
-  const [activeTabExample, setActiveTabExample] = useState<number>(0);
 
   // AI Tools Drawer States
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
@@ -321,7 +319,6 @@ export const FlashcardPage: React.FC = () => {
       setIsFlipped(false);
       setPreConfidence(null);
       setImgFailed(false);
-      setActiveTabExample(0);
       setAiMnemonicText(null);
       setAiQuizItem(null);
       setAiQuizSelectedOpt(null);
@@ -680,7 +677,7 @@ export const FlashcardPage: React.FC = () => {
   const finalImageUrl = imgInfo.url;
 
   return (
-    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-1.5 pb-2 select-none overscroll-none touch-none">
+    <div className="flex flex-col h-full justify-between max-w-md mx-auto space-y-1.5 pb-2 select-none overscroll-y-contain touch-pan-y">
       {/* Top Header & Micro-session Controls */}
       <div className="space-y-1 shrink-0">
         <div className="flex items-center justify-between bg-slate-800/80 border border-slate-700/70 rounded-2xl px-3 py-1.5 shadow-sm">
@@ -915,15 +912,33 @@ export const FlashcardPage: React.FC = () => {
             {/* Card BACK (Clicking inside will NEVER flip back to front!) */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className={`absolute inset-0 w-full h-full bg-gradient-to-b from-slate-850 to-slate-900 border ${
+              className={`absolute inset-0 w-full h-full bg-slate-900 border ${
                 isStarred ? 'border-amber-500/50' : 'border-emerald-500/40'
               } rounded-3xl p-3.5 shadow-2xl flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden cursor-default`}
             >
               {/* Scrollable Container Inside Card (Smooth vertical reading with zero drag interference) */}
               <div
                 ref={cardBackScrollRef}
-                className="space-y-2.5 overflow-y-auto flex-1 min-h-0 overscroll-contain touch-pan-y pr-1 scroll-smooth"
+                style={{ WebkitOverflowScrolling: 'touch', willChange: 'scroll-position' }}
+                className="space-y-2.5 overflow-y-auto flex-1 min-h-0 overscroll-y-contain touch-pan-y pr-1"
               >
+                {/* 🌟 具象商務情境圖片橫幅 (背面常駐 · 建立視覺與釋義神經元連結) */}
+                {!imgFailed && (
+                  <div className="relative -mx-3.5 -mt-3.5 mb-2.5 h-24 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
+                    <img
+                      src={finalImageUrl}
+                      alt={word.headword}
+                      onError={() => setImgFailed(true)}
+                      className="w-full h-full object-cover object-center brightness-85"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+                    <div className="absolute bottom-1.5 left-3 flex items-center space-x-1.5">
+                      <Badge variant="emerald">{word.category}</Badge>
+                      <span className="text-[10px] text-slate-300 font-medium">🏢 商務具象情境</span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-1.5">
                     <Badge variant="emerald">{word.partsOfSpeech.join(', ')}</Badge>
@@ -942,34 +957,38 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* 🌟 1. 情境視覺印記 ＋ 具象第一例句 (1:1 呼應配圖 · 記憶錨點) */}
+                {/* 🌟 1. 專屬具象商務例句 (全量平鋪展開 · 零點擊沉浸閱讀) */}
                 {currentExamples.length > 0 && (
-                  <div className="p-2.5 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2 shadow-sm">
+                  <div className="p-3 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-xs space-y-2.5 shadow-sm">
                     <div className="flex items-center justify-between">
                       <div className="text-[10px] text-emerald-400 font-bold tracking-wider flex items-center space-x-1">
                         <Sparkles size={11} className="text-amber-400 shrink-0" />
-                        <span>專屬具象商務例句</span>
+                        <span>多益專屬商務例句 ({currentExamples.length} 階梯場景)</span>
                       </div>
                       <span className="px-1.5 py-0.5 rounded bg-emerald-950/80 text-[9px] text-emerald-300 border border-emerald-800/50 font-semibold inline-block">
                         🏢 {currentExamples[0]?.scenario || word.category || '商務溝通'}
                       </span>
                     </div>
 
-                    {/* Hero Primary Example */}
-                    <div
-                      onClick={() => audioService.speakSentence(currentExamples[0]?.en || currentExamples[0]?.english || '')}
-                      className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
-                      title="點擊播放例句真人朗讀"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
-                          {currentExamples[0]?.en || currentExamples[0]?.english}
-                        </p>
-                        <Volume2 size={14} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
-                      </div>
-                      <p className={`text-emerald-400/90 ${exampleZhClass} mt-1.5`}>
-                        {currentExamples[0]?.zh || currentExamples[0]?.chinese}
-                      </p>
+                    <div className="space-y-2">
+                      {currentExamples.map((ex, exIdx) => (
+                        <div
+                          key={exIdx}
+                          onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
+                          className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group"
+                          title="點擊播放例句真人朗讀"
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
+                              {ex.en || ex.english}
+                            </p>
+                            <Volume2 size={13} className="text-slate-400 group-hover:text-emerald-400 shrink-0 mt-0.5" />
+                          </div>
+                          <p className={`text-emerald-400/90 ${exampleZhClass} mt-1`}>
+                            {ex.zh || ex.chinese}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -1134,51 +1153,6 @@ export const FlashcardPage: React.FC = () => {
                       <p className="text-slate-300 text-[10px] leading-relaxed pt-0.5">
                         💡 <strong>考點微辨析</strong>：{word.synonymDiscrimination.discrimination}
                       </p>
-                    )}
-                  </div>
-                )}
-
-                {/* 🏢 6. 進階延伸商務例句摺疊區 (可選展開 ex_2, ex_3) */}
-                {currentExamples.length > 1 && (
-                  <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs space-y-2 shadow-sm">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveTabExample(prev => prev === 0 ? 1 : 0);
-                      }}
-                      className="text-[11px] text-slate-300 hover:text-emerald-400 flex items-center justify-between w-full py-0.5 transition-colors font-bold"
-                    >
-                      <span className="flex items-center">
-                        <BookOpen size={12} className="mr-1.5 text-teal-400" />
-                        {activeTabExample > 0 ? '收起進階延伸例句' : '展開更多情境延伸例句（營運／策略）...'}
-                      </span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                        {activeTabExample > 0 ? '收起' : `+${currentExamples.length - 1} 句`}
-                      </span>
-                    </button>
-
-                    {activeTabExample > 0 && (
-                      <div className="space-y-1.5 pt-1 border-t border-slate-800">
-                        {currentExamples.slice(1).map((ex, idx) => (
-                          <div
-                            key={idx}
-                            onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
-                            className="p-2 rounded-lg bg-slate-950/70 border border-slate-800/80 hover:bg-slate-800/50 cursor-pointer group"
-                          >
-                            <div className="flex items-center justify-between text-[10px] text-teal-400 font-semibold mb-1">
-                              <span>🏢 {ex.scenario || (idx === 0 ? '營運管理' : '策略拓展')}</span>
-                              <Volume2 size={12} className="text-slate-500 group-hover:text-emerald-400 shrink-0" />
-                            </div>
-                            <p className="text-slate-200 text-[11px] leading-relaxed">
-                              {ex.en || ex.english}
-                            </p>
-                            <p className="text-slate-400 text-[10px] mt-0.5">
-                              {ex.zh || ex.chinese}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
                     )}
                   </div>
                 )}
