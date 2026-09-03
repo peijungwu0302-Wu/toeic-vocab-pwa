@@ -68,6 +68,12 @@ export interface WordEntry {
     en: string;
     zh: string;
   }>;
+  inflections?: {
+    s?: string;
+    ed?: string;
+    ing?: string;
+    [key: string]: string | undefined;
+  };
   frequencyTier?: FrequencyTier;
   quizzes?: any[];
 }

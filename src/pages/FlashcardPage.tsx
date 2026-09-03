@@ -14,7 +14,9 @@ import {
   Loader2,
   Layers,
   GitBranch,
-  Target
+  Target,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
@@ -103,6 +105,7 @@ export const FlashcardPage: React.FC = () => {
   // Word Quick Peek Modal State (Derivative & Synonym interactive flashcard)
   const [peekWord, setPeekWord] = useState<Word | null>(null);
   const [isPeekOpen, setIsPeekOpen] = useState(false);
+  const [showFullExamTips, setShowFullExamTips] = useState(false);
 
   const handleOpenPeekWord = useCallback(async (rawTerm: string) => {
     const clean = rawTerm.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
@@ -329,6 +332,7 @@ export const FlashcardPage: React.FC = () => {
     if (currentItem && activeProfile) {
       setIsStarred(Boolean(currentItem.progress.isStarred));
       setIsFlipped(false);
+      setShowFullExamTips(false);
       setPreConfidence(null);
       setImgFailed(false);
       setAiMnemonicText(null);
@@ -938,6 +942,20 @@ export const FlashcardPage: React.FC = () => {
                       /{word.phoneticUS}/
                     </p>
                   )}
+
+                  {/* Inflection / Tenses / Forms Capsule on Front */}
+                  {((word.inflections && (word.inflections.s || word.inflections.ed || word.inflections.ing)) || (word.wordForms && word.wordForms.length > 0)) && (
+                    <div className="mt-2 flex flex-wrap justify-center items-center gap-1 text-[10px]">
+                      <span className="px-2.5 py-0.5 rounded-full bg-slate-950/70 border border-emerald-500/40 text-emerald-300 font-mono flex items-center space-x-1 shadow-sm">
+                        <span className="text-[9px] text-slate-400 font-sans">形態:</span>
+                        <span>
+                          {word.inflections
+                            ? [word.inflections.s, word.inflections.ed, word.inflections.ing].filter(Boolean).join(' · ')
+                            : word.wordForms?.[0]?.forms?.slice(1).join(' · ')}
+                        </span>
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Roots Affixes preview on front */}
@@ -1112,8 +1130,20 @@ export const FlashcardPage: React.FC = () => {
                       </div>
                       <div className="grid grid-cols-1 gap-1.5">
                         {word.collocations.map((c: any, cIdx: number) => (
-                          <div key={cIdx} className="px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between touch-pan-y" style={{ touchAction: 'pan-y' }}>
-                            <span className="text-emerald-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>{c.en}</span>
+                          <div
+                            key={cIdx}
+                            style={{ touchAction: 'pan-y' }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              audioService.speakSentence(c.en);
+                            }}
+                            className="px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-850 border border-slate-800 hover:border-teal-700/60 cursor-pointer flex items-center justify-between touch-pan-y group transition-colors"
+                            title="點擊朗讀此搭配詞"
+                          >
+                            <span className="text-emerald-300 font-bold flex items-center" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
+                              {c.en}
+                              <Volume2 size={12} className="ml-1.5 text-slate-500 group-hover:text-emerald-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                            </span>
                             <span className="text-slate-300 font-medium" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>{c.zh}</span>
                           </div>
                         ))}
@@ -1294,6 +1324,39 @@ export const FlashcardPage: React.FC = () => {
                           </div>
                         ))}
                       </div>
+                    </div>
+                  )}
+
+                  {/* 📖 7. 多益名師 5 大官方出題分析與解題秘笈 (可折疊收納) */}
+                  {word.examTips && word.examTips.length > 0 && (
+                    <div className="rounded-2xl bg-slate-900/90 border border-slate-800 text-xs shadow-sm overflow-hidden touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <button
+                        type="button"
+                        style={{ touchAction: 'pan-y' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowFullExamTips(prev => !prev);
+                        }}
+                        className="w-full p-3 flex items-center justify-between text-slate-300 hover:text-emerald-300 transition-colors font-bold touch-pan-y"
+                      >
+                        <span className="flex items-center text-slate-200" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
+                          <HelpCircle size={14} className="mr-1.5 text-emerald-400" />
+                          多益官方考點深度拆解與解題秘笈 ({word.examTips.length} 條)
+                        </span>
+                        <span className="text-emerald-400 flex items-center space-x-0.5 text-[11px]">
+                          <span>{showFullExamTips ? '收起' : '展開秘笈'}</span>
+                          {showFullExamTips ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                        </span>
+                      </button>
+                      {showFullExamTips && (
+                        <div className="p-3 pt-0 border-t border-slate-800/80 space-y-2 text-slate-300">
+                          {word.examTips.map((tip: string, idx: number) => (
+                            <div key={idx} className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800/90 leading-relaxed text-slate-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx - 1)}px` }}>
+                              {tip}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

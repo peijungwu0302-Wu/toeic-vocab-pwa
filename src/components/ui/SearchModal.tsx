@@ -8,7 +8,11 @@ import {
   BookOpen,
   Check,
   Layers,
-  GitBranch
+  GitBranch,
+  AlertTriangle,
+  BookmarkCheck,
+  Compass,
+  HelpCircle
 } from 'lucide-react';
 import { courseRepository } from '../../repositories/courseRepository';
 import { progressRepository } from '../../repositories/progressRepository';
@@ -121,7 +125,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
           transform: pullOffset > 0 ? `translateY(${pullOffset}px)` : undefined,
           transition: touchStartY === null ? 'transform 0.2s ease-out' : 'none'
         }}
-        className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col h-[82dvh] sm:h-[80dvh] max-h-[90dvh] overflow-hidden select-none"
+        className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col h-[85dvh] sm:h-[82dvh] max-h-[92dvh] overflow-hidden select-none pb-[max(12px,env(safe-area-inset-bottom))]"
       >
         {/* iOS Pull Indicator / Grabber Handle Bar (藥丸導引條) */}
         <div
@@ -164,7 +168,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
         {/* Word Details Modal View or Word List */}
         {selectedWord ? (
-          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs">
+          <div className="flex-1 overflow-y-auto p-4 pb-20 space-y-3.5 text-xs">
             <div className="flex items-center justify-between">
               <button
                 onClick={() => setSelectedWord(null)}
@@ -236,6 +240,18 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 )}
               </div>
 
+              {/* Word Forms & Inflections */}
+              {((selectedWord.inflections && (selectedWord.inflections.s || selectedWord.inflections.ed || selectedWord.inflections.ing)) || (selectedWord.wordForms && selectedWord.wordForms.length > 0)) && (
+                <div className="flex flex-wrap items-center gap-1 text-[10px] pt-1">
+                  <span className="text-slate-400 font-medium">形態變化：</span>
+                  <span className="px-2 py-0.5 rounded-md bg-slate-950/80 border border-emerald-500/40 text-emerald-300 font-mono">
+                    {selectedWord.inflections
+                      ? [selectedWord.inflections.s, selectedWord.inflections.ed, selectedWord.inflections.ing].filter(Boolean).join(' · ')
+                      : selectedWord.wordForms?.[0]?.forms?.slice(1).join(' · ')}
+                  </span>
+                </div>
+              )}
+
               <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-sm font-bold text-emerald-300">
                 {selectedWord.definitionZh}
               </div>
@@ -277,7 +293,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             {selectedWord.examples && selectedWord.examples.length > 0 && (
               <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
                 <div className="text-[11px] font-bold text-slate-200 flex items-center">
-                  <BookOpen size={13} className="mr-1.5 text-emerald-400" /> 3 組商務例句
+                  <BookOpen size={13} className="mr-1.5 text-emerald-400" /> 商務情境例句
                 </div>
                 <div className="space-y-2">
                   {selectedWord.examples.slice(0, 3).map((ex, idx) => (
@@ -294,6 +310,97 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                       </div>
                       <p className="text-slate-200 text-xs font-medium">{ex.en || ex.english}</p>
                       <p className="text-slate-400 text-[10px] mt-0.5">{ex.zh || ex.chinese}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Golden Business Collocations */}
+            {selectedWord.collocations && selectedWord.collocations.length > 0 && (
+              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+                <div className="text-[11px] font-bold text-emerald-300 flex items-center justify-between">
+                  <span className="flex items-center">
+                    <BookmarkCheck size={13} className="mr-1.5 text-emerald-400" />
+                    黃金商務搭配詞
+                  </span>
+                  <span className="text-[9px] text-slate-400">點擊朗讀 🔊</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                  {selectedWord.collocations.map((c, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => audioService.speakSentence(c.en)}
+                      className="p-2 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-700/60 cursor-pointer transition-colors flex items-center justify-between group"
+                      title="點擊播放片語真人發音"
+                    >
+                      <div className="min-w-0 pr-1">
+                        <p className="text-emerald-300 text-[11px] font-bold truncate">{c.en}</p>
+                        <p className="text-slate-400 text-[10px] truncate">{c.zh}</p>
+                      </div>
+                      <Volume2 size={12} className="text-slate-500 group-hover:text-emerald-400 shrink-0" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Exam Focus & Trap Warning */}
+            {selectedWord.examFocus && (
+              <div className="p-3 rounded-2xl bg-amber-950/30 border border-amber-700/40 space-y-1.5">
+                <div className="text-amber-300 font-bold flex items-center text-[11px]">
+                  <AlertTriangle size={13} className="mr-1.5 text-amber-400" />
+                  多益考點與陷阱警示
+                </div>
+                {selectedWord.examFocus.primaryBusinessSense && (
+                  <p className="text-slate-300 text-[11px] leading-relaxed">
+                    🎯 <strong>商務核心情境</strong>：{selectedWord.examFocus.primaryBusinessSense}
+                  </p>
+                )}
+                {selectedWord.examFocus.trapWarning && (
+                  <p className="text-amber-200 text-[11px] leading-relaxed bg-amber-950/60 p-2 rounded-xl border border-amber-700/40">
+                    ⚠️ {selectedWord.examFocus.trapWarning}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Synonym Discrimination */}
+            {selectedWord.synonymDiscrimination && (
+              <div className="p-3 rounded-2xl bg-slate-800/80 border border-blue-800/40 space-y-2">
+                <div className="text-blue-300 font-bold flex items-center text-[11px]">
+                  <Compass size={13} className="mr-1.5 text-blue-400" />
+                  多益同反義詞與微辨析
+                </div>
+                {selectedWord.synonymDiscrimination.synonyms && selectedWord.synonymDiscrimination.synonyms.length > 0 && (
+                  <div className="flex flex-wrap gap-1 items-center">
+                    <span className="text-slate-400 text-[10px]">同義詞：</span>
+                    {selectedWord.synonymDiscrimination.synonyms.map((s, sIdx) => (
+                      <span key={sIdx} className="px-2 py-0.5 rounded-lg bg-blue-950/80 text-blue-300 border border-blue-700/50 text-[10px]">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {selectedWord.synonymDiscrimination.discrimination && (
+                  <p className="text-slate-300 text-[10px] leading-relaxed pt-0.5">
+                    💡 <strong>考點微辨析</strong>：{selectedWord.synonymDiscrimination.discrimination}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* ETS Master Exam Tips */}
+            {selectedWord.examTips && selectedWord.examTips.length > 0 && (
+              <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
+                <div className="text-[11px] font-bold text-slate-200 flex items-center">
+                  <HelpCircle size={13} className="mr-1.5 text-emerald-400" />
+                  ETS 多益解題關鍵秘笈
+                </div>
+                <div className="space-y-1.5 text-[11px] text-slate-300">
+                  {selectedWord.examTips.map((tip, idx) => (
+                    <div key={idx} className="p-2 rounded-xl bg-slate-900/60 border border-slate-800/80 leading-relaxed">
+                      {tip}
                     </div>
                   ))}
                 </div>

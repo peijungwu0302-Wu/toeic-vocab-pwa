@@ -1,7 +1,7 @@
 {
-  "version": 6,
-  "generatedAt": "2026-09-02T19:42:09.700Z",
-  "totalWords": 11154,
+  "version": 7,
+  "generatedAt": "2026-09-03T14:06:51.097Z",
+  "totalWords": 21011,
   "totalCourses": 35,
   "courses": [
     {
@@ -17,8 +17,8 @@
       "sizeBytes": 17338366,
       "version": 6,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "af2c4ed463f225427180b15eca49901a52b417ca6aae2c4c498051c2e2c2de18",
-      "checksumSha256": "edf3c27e2d2b0a1e7a1c8f346e4d03f07302113be1d5b40e390dc26fae910bb9"
+      "sha256": "8e29feee579b9bb1443d5f43d8d74f089d046386c646ef393427db9979c4a979",
+      "checksumSha256": "8e29feee579b9bb1443d5f43d8d74f089d046386c646ef393427db9979c4a979"
     },
     {
       "id": "course-advanced-2500",
@@ -27,14 +27,14 @@
       "toeicScoreRange": "750-860",
       "category": "進階實戰",
       "level": "金證衝刺",
-      "wordCount": 2500,
+      "wordCount": 2053,
       "fileName": "course-advanced-2500.json",
       "checksum": "a72f80b97f4d31b61914d0ac64913fa5ec75b5514bdc42f72d50795a336864ee",
-      "sizeBytes": 30030737,
-      "version": 6,
+      "sizeBytes": 24877368,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "ac36673b3a469c3dbfe53481413d8656fb0e2de44d4b6413dc953351adad5e89",
-      "checksumSha256": "e6a87e264cd5b3696f09b4f7e871acfc4d1f0fefc7bd703465efa540b9190e37"
+      "sha256": "e7bbe8cccb53ddfda1fa8549eceb921fa5cbd40433fae4d4d31678d57f285540",
+      "checksumSha256": "e7bbe8cccb53ddfda1fa8549eceb921fa5cbd40433fae4d4d31678d57f285540"
     },
     {
       "id": "course-foundation-550-part1",
@@ -43,14 +43,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 317,
       "fileName": "course-foundation-550-part1.json",
       "checksum": "fc4e0e059821ef3fbf3a39b9ff4e7087a32f65ec31ceabf538c19eed7d74cd3e",
-      "sizeBytes": 3849843,
-      "version": 6,
+      "sizeBytes": 3067532,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "64523811ec47bb1633effded68aed27eddad18dc15399e658e303ca4c3e54e28",
-      "checksumSha256": "7f9681160f47b60e81db689719b8fc92649520ff35cd0a513c2084cd20fd37a8"
+      "sha256": "2d122b5c760b0c0c5040e3655522d7a866b08da8f98b7062351e749e17396b72",
+      "checksumSha256": "2d122b5c760b0c0c5040e3655522d7a866b08da8f98b7062351e749e17396b72"
     },
     {
       "id": "course-foundation-550-part2",
@@ -59,14 +59,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 326,
       "fileName": "course-foundation-550-part2.json",
       "checksum": "b1266aa35c3e0abcf55246da77a1321a109135f1c6465ff9f98fc294787a4145",
-      "sizeBytes": 3919102,
-      "version": 6,
+      "sizeBytes": 3219584,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "b24f8fa6fa73c57be30c95cd61edc4b81a255ac0cc9a2d282d14eaa59e5e164a",
-      "checksumSha256": "1e89815d3a5148eec3698254d7ad256ddcfb34b4c4f288f1ce15bbaa3de2938e"
+      "sha256": "da6203ff1e2433239c1e340b360c1ff4d65ecf3b8dd1cdfce62353c030ff9fc3",
+      "checksumSha256": "da6203ff1e2433239c1e340b360c1ff4d65ecf3b8dd1cdfce62353c030ff9fc3"
     },
     {
       "id": "course-foundation-550-part3",
@@ -75,14 +75,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 313,
       "fileName": "course-foundation-550-part3.json",
       "checksum": "2d60b10094eb39b82042a69a46bc682aa5af1cbcb9325ba9631ae228a4e42670",
-      "sizeBytes": 4786200,
-      "version": 6,
+      "sizeBytes": 3781226,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "e1f75aa7f98ff09860238a823d84561a5c4bfecff604e955292437b72e4fa343",
-      "checksumSha256": "4263b8c3a3a5eb2349dc05156092a9173e141634aec87de5843b504e2b70c6cf"
+      "sha256": "a6e982660153673bdfe036fb42fc05d1b420d2e419fb2e3d7225e00a1ef60c15",
+      "checksumSha256": "a6e982660153673bdfe036fb42fc05d1b420d2e419fb2e3d7225e00a1ef60c15"
     },
     {
       "id": "course-foundation-550-part4",
@@ -91,14 +91,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 313,
       "fileName": "course-foundation-550-part4.json",
       "checksum": "e49e326f2efef47ab000550689f51a2aec822a50f85146a79bda1964b6174bdb",
-      "sizeBytes": 4786870,
-      "version": 6,
+      "sizeBytes": 3783791,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "8795530a547261904dcdfea000196eb220aca38256534528eb6f0753b30a04be",
-      "checksumSha256": "6fa10e77ee87e99038bff70a952250f663329a41290cb279bc0a86de484def6f"
+      "sha256": "fb5ad1a4d8bb2e82f9c5a4d13887f4dc5b1a0c3eaa179a90b6fba9e76c5e28c4",
+      "checksumSha256": "fb5ad1a4d8bb2e82f9c5a4d13887f4dc5b1a0c3eaa179a90b6fba9e76c5e28c4"
     },
     {
       "id": "course-foundation-550-part5",
@@ -107,14 +107,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 373,
       "fileName": "course-foundation-550-part5.json",
       "checksum": "2f3b55382372e94cca3d1a915c0f705d4077330c1bf13fc0976058d0c3c66ca7",
-      "sizeBytes": 4837413,
-      "version": 6,
+      "sizeBytes": 4522580,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "9ed7b697ee9b9e953f35c87ac00302073dff11b48d5642415b3ea6a4868a3741",
-      "checksumSha256": "d5d4ae7e407d88e3b24e5bf618d5762e53730e299202aa55b962db328e527010"
+      "sha256": "1d6d940ef3a14007c86df98754a258c8b27165e52d2692fdbf7145802475e299",
+      "checksumSha256": "1d6d940ef3a14007c86df98754a258c8b27165e52d2692fdbf7145802475e299"
     },
     {
       "id": "course-foundation-550-part6",
@@ -123,14 +123,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 373,
       "fileName": "course-foundation-550-part6.json",
       "checksum": "c3f6ba91ef1f2e35bd7292978c13e37260ca43d6ba0ffcafbdd5ca2453b97b59",
-      "sizeBytes": 4867877,
-      "version": 6,
+      "sizeBytes": 4553298,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "f195d0cb23477347f613adda25c8007ae503b8a0ac92c8ac59de9d6a0404c0f1",
-      "checksumSha256": "49ea6164292e1f0bc97e6e8d4ae1bc68cec224a6958373b9409b666bf1b62fa6"
+      "sha256": "2653dbdc5b399a8b8d86fcd40cd6838dc0fc75ade00509f59e5d6c591cc4ae1e",
+      "checksumSha256": "2653dbdc5b399a8b8d86fcd40cd6838dc0fc75ade00509f59e5d6c591cc4ae1e"
     },
     {
       "id": "course-foundation-550-part7",
@@ -139,14 +139,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 376,
       "fileName": "course-foundation-550-part7.json",
       "checksum": "98b22727c70a6293c099efc0a1afabccdf5447c181bbfc457ebbf3ebfe048f49",
-      "sizeBytes": 4851786,
-      "version": 6,
+      "sizeBytes": 4573133,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "208289824ea68015b1625a4a7ddaa8ee10702ad166f766345d6fda02583a14fe",
-      "checksumSha256": "e32c9852e3201e06c0307c85b693ec7ab0dc2e98f597f126fbe05383f6b5bf14"
+      "sha256": "337595ef9b1c85ada66106caab3dba157dd0e157fd44b4388c93e3fc05c764f3",
+      "checksumSha256": "337595ef9b1c85ada66106caab3dba157dd0e157fd44b4388c93e3fc05c764f3"
     },
     {
       "id": "course-foundation-550-part8",
@@ -155,14 +155,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 400,
+      "wordCount": 375,
       "fileName": "course-foundation-550-part8.json",
       "checksum": "c5cc9e1daa5b28eca10178586be9acb06a892869190ea85fad1d27c68af153dd",
-      "sizeBytes": 4856043,
-      "version": 6,
+      "sizeBytes": 4574661,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "dfba54fe42b69cdae8aef2467eff47b1b6595cef817f313f3b9a31667dd3672a",
-      "checksumSha256": "068cedcf2ff69fdc59a5fbef513e8400fefc4908ad45fb5972b45bb502a44dbc"
+      "sha256": "3c9064f202e4472c222e50cde1dd4b349d2869fdfb4130c401c47b625bc14583",
+      "checksumSha256": "3c9064f202e4472c222e50cde1dd4b349d2869fdfb4130c401c47b625bc14583"
     },
     {
       "id": "course-foundation-550-part9",
@@ -171,14 +171,14 @@
       "toeicScoreRange": "400-600",
       "category": "綜合商務",
       "level": "基礎",
-      "wordCount": 349,
+      "wordCount": 341,
       "fileName": "course-foundation-550-part9.json",
       "checksum": "a4b0b5aabecfa7bd60cd3502c918328a5e41c9eec968d5f35c1f6107bbf6d923",
-      "sizeBytes": 5367230,
-      "version": 6,
+      "sizeBytes": 3946862,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "89f2dcffd78fa9fb8d6cec2f4781bd8b4f543af5ad6c3e089db28fbb46604207",
-      "checksumSha256": "89f2dcffd78fa9fb8d6cec2f4781bd8b4f543af5ad6c3e089db28fbb46604207"
+      "sha256": "c61663c402c295b062e2902607b2df5a988b9d3effe513afcb109d4bfa9762a3",
+      "checksumSha256": "c61663c402c295b062e2902607b2df5a988b9d3effe513afcb109d4bfa9762a3"
     },
     {
       "id": "course-intermediate-750-part1",
@@ -187,14 +187,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 361,
       "fileName": "course-intermediate-750-part1.json",
       "checksum": "d11061b2e0d0bd0a4646d3fc25905092aa593715ee7d31978529474a1d37b60d",
-      "sizeBytes": 4874053,
-      "version": 6,
+      "sizeBytes": 4415766,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "c9610f4fac26004e58395a23cd4cc786a10d0f667ae490169fd6d762ff0fb9d4",
-      "checksumSha256": "bb9b91fc70d34ecf8173ffb5b39a6e089dc48aa597c76cffb24a51b75a04509e"
+      "sha256": "a2329cd255252bf4e19cb8bbc29e10099f3609c4b91d8a54a45ce2d86274c6d6",
+      "checksumSha256": "a2329cd255252bf4e19cb8bbc29e10099f3609c4b91d8a54a45ce2d86274c6d6"
     },
     {
       "id": "course-intermediate-750-part2",
@@ -203,14 +203,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 368,
       "fileName": "course-intermediate-750-part2.json",
       "checksum": "338a934a4160a3ac1e86950c80cc7e7a1c96cd55a641791b1d6268d4969b236e",
-      "sizeBytes": 4873714,
-      "version": 6,
+      "sizeBytes": 4497532,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "a860f1a6d0204515721d3264ad9074c853f10121008fd97c64501ac326f6bedf",
-      "checksumSha256": "4d9faf13906c6a5a071c655f6f304becabacba7d0716f9b8fac2a35ff19c41db"
+      "sha256": "3982939080679dde37017758bba0fec72e401c4364b597af0a6180fabb6519c4",
+      "checksumSha256": "3982939080679dde37017758bba0fec72e401c4364b597af0a6180fabb6519c4"
     },
     {
       "id": "course-intermediate-750-part3",
@@ -219,14 +219,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 378,
       "fileName": "course-intermediate-750-part3.json",
       "checksum": "bd7818a857c0a9caac43bfafa98903b71f58cf888b77c6c04cc2c382a61e3b61",
-      "sizeBytes": 4934070,
-      "version": 6,
+      "sizeBytes": 4677173,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "d3aeb40178494cd82b9e2901c1641d47c966af68c06ff5a32a91b3ffca541ea9",
-      "checksumSha256": "bc06570dd7636d57f54fb826df867ef729ac906f2313d1b1705dd708f4e83fdc"
+      "sha256": "4938c997e07f9b9bec23dab2a85103945ccc426ee90d41e6292f7bd0ff2cd62e",
+      "checksumSha256": "4938c997e07f9b9bec23dab2a85103945ccc426ee90d41e6292f7bd0ff2cd62e"
     },
     {
       "id": "course-intermediate-750-part4",
@@ -235,14 +235,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 357,
       "fileName": "course-intermediate-750-part4.json",
       "checksum": "15f51868177df6d0ff1bcf62925d8d1f4fe9f7f4f273366ada2190e36d10d24c",
-      "sizeBytes": 4881900,
-      "version": 6,
+      "sizeBytes": 4376948,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "b9ff2829f419786b603202c108bf8255179dc4abe19635112f8fab72069b35bb",
-      "checksumSha256": "3ad6b2a0e3a069ce76be361b07613567fe8f358df1563632fe39024729f5dd23"
+      "sha256": "aec6a6b795828e3ec0c5dac7b88486930a0cb60118e17f2636d9c3b6186dd5ca",
+      "checksumSha256": "aec6a6b795828e3ec0c5dac7b88486930a0cb60118e17f2636d9c3b6186dd5ca"
     },
     {
       "id": "course-intermediate-750-part5",
@@ -251,14 +251,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 371,
       "fileName": "course-intermediate-750-part5.json",
       "checksum": "71377983754e7aee0c77e3d8fc8a4263dc60dae59d6238b875a604f50b2708d3",
-      "sizeBytes": 4788614,
-      "version": 6,
+      "sizeBytes": 4572565,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "12be93242efebad0080573d865587c449638b3a61d98b7d0c1860ed5f2ee1770",
-      "checksumSha256": "7c225ec02d5a26d1e2ce8e885240aa32ae4bb02b1e9a14ac7ab069b71f62beff"
+      "sha256": "34625a02e0b2f270863b9ef872fe38991fabcc5833766527b72a81527c7dbf4d",
+      "checksumSha256": "34625a02e0b2f270863b9ef872fe38991fabcc5833766527b72a81527c7dbf4d"
     },
     {
       "id": "course-intermediate-750-part6",
@@ -267,14 +267,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 384,
       "fileName": "course-intermediate-750-part6.json",
       "checksum": "b50a16171f24ff21e44190f13d765022b6d33e29c777d742e93cd6532ef064d2",
-      "sizeBytes": 6233804,
-      "version": 6,
+      "sizeBytes": 4730683,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "7c6020949510f74cd6abb2f9eef354609dd03c1d07477f0895bb58ce4cfc2c06",
-      "checksumSha256": "7c6020949510f74cd6abb2f9eef354609dd03c1d07477f0895bb58ce4cfc2c06"
+      "sha256": "ac02cdf2087e1edcf82f074865f1d5d0e8eb1008928c4a0ed431d4464b66e11a",
+      "checksumSha256": "ac02cdf2087e1edcf82f074865f1d5d0e8eb1008928c4a0ed431d4464b66e11a"
     },
     {
       "id": "course-intermediate-750-part7",
@@ -283,14 +283,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 388,
       "fileName": "course-intermediate-750-part7.json",
       "checksum": "eb7a7f21436d64b8fc8e13f8e1c3372333bc9bdbad31c064f34b13de6eaef66f",
-      "sizeBytes": 6247607,
-      "version": 6,
+      "sizeBytes": 4795843,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "8c3d7b5794f89f92e1fa0f9968d524f6393f01b3aeac30ce4129e280dc942517",
-      "checksumSha256": "8c3d7b5794f89f92e1fa0f9968d524f6393f01b3aeac30ce4129e280dc942517"
+      "sha256": "f63b22943965c3efdb62c9811c006db1c913e1420e33564ee961a6313a67f450",
+      "checksumSha256": "f63b22943965c3efdb62c9811c006db1c913e1420e33564ee961a6313a67f450"
     },
     {
       "id": "course-intermediate-750-part8",
@@ -299,14 +299,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 400,
+      "wordCount": 381,
       "fileName": "course-intermediate-750-part8.json",
       "checksum": "82482e97c31e311b02f2a7d6bf27ab3af217a518bf7d306d333934992ab7af8d",
-      "sizeBytes": 6229713,
-      "version": 6,
+      "sizeBytes": 4630964,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "3f600fe317fc6ed40ddc2703b909b27be7efac99bc8642fbeb0d2973e4bbdb5d",
-      "checksumSha256": "3f600fe317fc6ed40ddc2703b909b27be7efac99bc8642fbeb0d2973e4bbdb5d"
+      "sha256": "46f41ba38359eaca32062eeb05b03041be774d9ef01cf3d23d009cff8d703259",
+      "checksumSha256": "46f41ba38359eaca32062eeb05b03041be774d9ef01cf3d23d009cff8d703259"
     },
     {
       "id": "course-intermediate-750-part9",
@@ -315,14 +315,14 @@
       "toeicScoreRange": "600-780",
       "category": "綜合商務",
       "level": "中階",
-      "wordCount": 295,
+      "wordCount": 291,
       "fileName": "course-intermediate-750-part9.json",
       "checksum": "47468507e5771f5b633fe7083a1ef7f65e5d8474445ddd85be5d755e25ef5c7c",
-      "sizeBytes": 4572023,
-      "version": 6,
+      "sizeBytes": 3190597,
+      "version": 10,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "126cdcdfa3a53b9af18bf4db5ac5888886b6135a886aecf01454c3b5bee6628c",
-      "checksumSha256": "126cdcdfa3a53b9af18bf4db5ac5888886b6135a886aecf01454c3b5bee6628c"
+      "sha256": "644a7295a6e200e601f49785310413f66fa860644a6e6986cfa9c1257c09086a",
+      "checksumSha256": "644a7295a6e200e601f49785310413f66fa860644a6e6986cfa9c1257c09086a"
     },
     {
       "id": "course-advanced-860-part1",
@@ -331,14 +331,14 @@
       "toeicScoreRange": "780-900",
       "category": "綜合商務",
       "level": "中高階",
-      "wordCount": 400,
+      "wordCount": 389,
       "fileName": "course-advanced-860-part1.json",
       "checksum": "0c8be217042c571166728b41343d97a79f817e1c9a2867abfe9fccac9499bcfd",
-      "sizeBytes": 4446602,
-      "version": 6,
+      "sizeBytes": 4792963,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "2571e64bd5958a0a3c69920c6dcae3c929a5882c2e04b12af1fef9ddbfe05f2d",
-      "checksumSha256": "0a1627a217b882a64eb11614127dca22b021be420d692ac32cb82b3a35cab736"
+      "sha256": "6dcafef68d70ddaa7b635bd29aff83cf860e112f94ac40b24d090b9ea626b344",
+      "checksumSha256": "6dcafef68d70ddaa7b635bd29aff83cf860e112f94ac40b24d090b9ea626b344"
     },
     {
       "id": "course-advanced-860-part2",
@@ -347,14 +347,14 @@
       "toeicScoreRange": "780-900",
       "category": "綜合商務",
       "level": "中高階",
-      "wordCount": 400,
+      "wordCount": 393,
       "fileName": "course-advanced-860-part2.json",
       "checksum": "fbccc472b9e020801ea9d31641301ba07510f6cf11f6c0f7d120f75915a05c25",
-      "sizeBytes": 6251121,
-      "version": 6,
+      "sizeBytes": 4857912,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "db8e70d0158185c5cf67774a9199f2faed397e9d4891ae75d09308f8d0b5e756",
-      "checksumSha256": "db8e70d0158185c5cf67774a9199f2faed397e9d4891ae75d09308f8d0b5e756"
+      "sha256": "1345b0c4d3367b26db01a445bea5bb972cd3a55669ab4a40ad2bcff639cfc237",
+      "checksumSha256": "1345b0c4d3367b26db01a445bea5bb972cd3a55669ab4a40ad2bcff639cfc237"
     },
     {
       "id": "course-advanced-860-part3",
@@ -363,14 +363,14 @@
       "toeicScoreRange": "780-900",
       "category": "綜合商務",
       "level": "中高階",
-      "wordCount": 400,
+      "wordCount": 398,
       "fileName": "course-advanced-860-part3.json",
       "checksum": "543932faf2709bf136857063058a274ba24cb8c64792de716d461a65853913c7",
-      "sizeBytes": 6233829,
-      "version": 6,
+      "sizeBytes": 4711174,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "09272ba98faee8fa35bb1f4947e20aa973ec6a7b49cb36d7deae4877b1161c9e",
-      "checksumSha256": "09272ba98faee8fa35bb1f4947e20aa973ec6a7b49cb36d7deae4877b1161c9e"
+      "sha256": "7170087f988283daf902d912ddf4ff1d32fca41001a04421b0db3a15d961e818",
+      "checksumSha256": "7170087f988283daf902d912ddf4ff1d32fca41001a04421b0db3a15d961e818"
     },
     {
       "id": "course-advanced-860-part4",
@@ -382,11 +382,11 @@
       "wordCount": 400,
       "fileName": "course-advanced-860-part4.json",
       "checksum": "58bf0b00b0ef408beee1d8d9896581d61386efe64165cceed6e9cf3df7e5a2e6",
-      "sizeBytes": 6228214,
-      "version": 6,
+      "sizeBytes": 4409017,
+      "version": 10,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "b85533113ce99a79d10a81e4281bf11983ca9743e9403c8d9a536344a3e01793",
-      "checksumSha256": "b85533113ce99a79d10a81e4281bf11983ca9743e9403c8d9a536344a3e01793"
+      "sha256": "5cf6026c1c122ddbcff11d566f01699d92197009c02068852c48b0357bcc9d6f",
+      "checksumSha256": "5cf6026c1c122ddbcff11d566f01699d92197009c02068852c48b0357bcc9d6f"
     },
     {
       "id": "course-advanced-860-part5",
@@ -395,14 +395,14 @@
       "toeicScoreRange": "780-900",
       "category": "綜合商務",
       "level": "中高階",
-      "wordCount": 400,
+      "wordCount": 399,
       "fileName": "course-advanced-860-part5.json",
       "checksum": "c346339d206742469236f0cd8e7179a2d0f6c6ccdbe785264c9abea6a5aa349c",
-      "sizeBytes": 6219104,
-      "version": 6,
+      "sizeBytes": 4390282,
+      "version": 10,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "b0a92beb8af5ddbc1a996eb48bd863ebf4c08057a7e9f57d4fa1d406db33ac53",
-      "checksumSha256": "b0a92beb8af5ddbc1a996eb48bd863ebf4c08057a7e9f57d4fa1d406db33ac53"
+      "sha256": "b2d0045780ddc74290498fa2f3aa94d3357788fce1bc5584753eba99054b71f0",
+      "checksumSha256": "b2d0045780ddc74290498fa2f3aa94d3357788fce1bc5584753eba99054b71f0"
     },
     {
       "id": "course-advanced-860-part6",
@@ -414,11 +414,11 @@
       "wordCount": 97,
       "fileName": "course-advanced-860-part6.json",
       "checksum": "db924df89c313a8e72906717a95309cc6cc75df4a6a1633dd0c27f65732dbba2",
-      "sizeBytes": 1504587,
-      "version": 6,
+      "sizeBytes": 1064389,
+      "version": 10,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "8262308d75a128d33d03565aa752bd6eea7961966e1ddc8feedd32112f9ddf7f",
-      "checksumSha256": "8262308d75a128d33d03565aa752bd6eea7961966e1ddc8feedd32112f9ddf7f"
+      "sha256": "21adb43c21e09127c576d9b0802542cca010a5485e7bde4222331671a685d6f5",
+      "checksumSha256": "21adb43c21e09127c576d9b0802542cca010a5485e7bde4222331671a685d6f5"
     },
     {
       "id": "course-master-990-part1",
@@ -427,14 +427,14 @@
       "toeicScoreRange": "900+",
       "category": "綜合商務",
       "level": "高階",
-      "wordCount": 400,
+      "wordCount": 399,
       "fileName": "course-master-990-part1.json",
       "checksum": "143c2c4be253aa1e259be6a8388094a5729b5ad5fc7d7a5f552cd031e54201ff",
-      "sizeBytes": 6219693,
-      "version": 6,
+      "sizeBytes": 4396597,
+      "version": 10,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "cda22ee62c65c04899e5d4631e3bcb88d7e60c33e520d25d8767d02c949bd386",
-      "checksumSha256": "cda22ee62c65c04899e5d4631e3bcb88d7e60c33e520d25d8767d02c949bd386"
+      "sha256": "8d2397beb2e832f8b53755006e91b53c09014a099ed242b8935c1ff3c3acdac0",
+      "checksumSha256": "8d2397beb2e832f8b53755006e91b53c09014a099ed242b8935c1ff3c3acdac0"
     },
     {
       "id": "course-master-990-part2",
@@ -443,14 +443,14 @@
       "toeicScoreRange": "900+",
       "category": "綜合商務",
       "level": "高階",
-      "wordCount": 278,
+      "wordCount": 277,
       "fileName": "course-master-990-part2.json",
       "checksum": "9e1c905b059df7f4e13d0f9d90bbcd885c0174ce04429a144d12d532088e521a",
-      "sizeBytes": 4322946,
-      "version": 6,
+      "sizeBytes": 3053369,
+      "version": 10,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "dc1e9554e89ad2f29ab40de0096f90a42a6d84dc79a127ebcec88df0cd146523",
-      "checksumSha256": "dc1e9554e89ad2f29ab40de0096f90a42a6d84dc79a127ebcec88df0cd146523"
+      "sha256": "7725e9f0b73e6a5e13c69ee3fa903b100d2cd25e6e6c1c45f686b0c386a06069",
+      "checksumSha256": "7725e9f0b73e6a5e13c69ee3fa903b100d2cd25e6e6c1c45f686b0c386a06069"
     },
     {
       "id": "course-phrases-patterns-p1",
@@ -463,10 +463,10 @@
       "fileName": "course-phrases-patterns-p1.json",
       "checksum": "a08fdc0d9d216cd1767ca7639731f1807933a8c6cf997fb1401054a6f9156d3a",
       "sizeBytes": 4610814,
-      "version": 6,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "f3842822423d22edd59cbf2355b58688383b47e0dfa613486d09f3eb3f0249bf",
-      "checksumSha256": "a0cea13729726be51e896bcb7faa4c06b903aa4da20021e76e7589cb567e5b21"
+      "sha256": "b0314db90b31a8154f7258dd85c88abf0caee692511cc7dce6530a8aa747b698",
+      "checksumSha256": "b0314db90b31a8154f7258dd85c88abf0caee692511cc7dce6530a8aa747b698"
     },
     {
       "id": "course-phrases-patterns-p2",
@@ -479,10 +479,10 @@
       "fileName": "course-phrases-patterns-p2.json",
       "checksum": "57086c0bd6cdb3e66fcf352b798b477cd2ae28b95823b6c39e6362cf38cd1b19",
       "sizeBytes": 4999019,
-      "version": 6,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "8dd0d5d52a4ec5a4b375b75e647f781c199c0b324c4049078296f98c668cc2ba",
-      "checksumSha256": "72dab37237dffe8ad751371e5e7f22cadde702a8ec2113fd5f7a123f8d60c74a"
+      "sha256": "dcfa2e63df3f2a31cdf2762df700b853427cc92e795998075e5ffe697f8d31da",
+      "checksumSha256": "dcfa2e63df3f2a31cdf2762df700b853427cc92e795998075e5ffe697f8d31da"
     },
     {
       "id": "course-phrases-patterns-p3",
@@ -491,14 +491,14 @@
       "toeicScoreRange": "600-900",
       "category": "片語句型",
       "level": "實戰",
-      "wordCount": 400,
+      "wordCount": 399,
       "fileName": "course-phrases-patterns-p3.json",
       "checksum": "74a83e414d67744f62710920658a9b7b5667c0303a913043b8382be9d7b59787",
-      "sizeBytes": 4793216,
-      "version": 6,
+      "sizeBytes": 4998060,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "192a5070f832972d4a0f52e9e23b38fba3522733c233e28953fcf25c793f98b8",
-      "checksumSha256": "889fbcb76647f43ab3893d1e65adcbe4431924ade862a51fd0356190a9910f49"
+      "sha256": "f2607ee643b115ea626257a926325b4f0d9d2cec977341aed15343d0354f4ff5",
+      "checksumSha256": "f2607ee643b115ea626257a926325b4f0d9d2cec977341aed15343d0354f4ff5"
     },
     {
       "id": "course-phrases-patterns-p4",
@@ -510,11 +510,11 @@
       "wordCount": 317,
       "fileName": "course-phrases-patterns-p4.json",
       "checksum": "9485f1d75fa2c5734f98dc57db89e2972cd81300619e2cb507aa061bca825b21",
-      "sizeBytes": 5044078,
-      "version": 6,
+      "sizeBytes": 3871468,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "1c3095dca9badb98ad5fd2bb13d637d9810eae76a089c144281d6eca1fe19906",
-      "checksumSha256": "1c3095dca9badb98ad5fd2bb13d637d9810eae76a089c144281d6eca1fe19906"
+      "sha256": "f0564e5708b91623c4261455974f1ddbf855d5ce03b6ca173417939f6f749ca3",
+      "checksumSha256": "f0564e5708b91623c4261455974f1ddbf855d5ce03b6ca173417939f6f749ca3"
     },
     {
       "id": "course-expert-high-part1",
@@ -523,13 +523,13 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2500,
+      "wordCount": 2284,
       "fileName": "course-expert-high-part1.json",
-      "version": 6,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "2bb561c2e9abd664401494f3c5ab67dca75689aa318d571514387ddca3f425ea",
-      "sizeBytes": 30525953,
-      "checksumSha256": "8913bfadcda59049a784a56db8d2d4eaa09545b295af0f11311d3d0e38b6ec20"
+      "sha256": "b2661bb3499f8d7cbea2b7cbaaab06986f63ea92c2c354224b4dd3c9ed9072fe",
+      "sizeBytes": 27989963,
+      "checksumSha256": "b2661bb3499f8d7cbea2b7cbaaab06986f63ea92c2c354224b4dd3c9ed9072fe"
     },
     {
       "id": "course-expert-high-part2",
@@ -538,13 +538,13 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2500,
+      "wordCount": 2411,
       "fileName": "course-expert-high-part2.json",
-      "version": 6,
+      "version": 7,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "b490b9869542e99dd0f6d0a418829982051d4da9e4c3481c42b195829c229fe4",
-      "sizeBytes": 38937508,
-      "checksumSha256": "b490b9869542e99dd0f6d0a418829982051d4da9e4c3481c42b195829c229fe4"
+      "sha256": "4a7a20f3ee2038eb7d13cb42caec62abe60bb6aa6e9045b57b7150cb855339fe",
+      "sizeBytes": 29675896,
+      "checksumSha256": "4a7a20f3ee2038eb7d13cb42caec62abe60bb6aa6e9045b57b7150cb855339fe"
     },
     {
       "id": "course-expert-high-part3",
@@ -553,13 +553,13 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2454,
+      "wordCount": 2409,
       "fileName": "course-expert-high-part3.json",
-      "version": 6,
+      "version": 10,
       "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "b399d4ca744a16f40dbcc93749516e3eefb4b799c8b310caaf215c370801ba3b",
-      "sizeBytes": 38084380,
-      "checksumSha256": "b399d4ca744a16f40dbcc93749516e3eefb4b799c8b310caaf215c370801ba3b"
+      "sha256": "94655980972d72e1239e2d9d5b6d3ee312a319f90780d74594aa18cdeedee589",
+      "sizeBytes": 26469824,
+      "checksumSha256": "94655980972d72e1239e2d9d5b6d3ee312a319f90780d74594aa18cdeedee589"
     }
   ],
   "tiers": {
