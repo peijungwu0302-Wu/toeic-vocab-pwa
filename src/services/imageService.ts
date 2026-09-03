@@ -3,10 +3,14 @@
  * 專為多益高頻核心 1200 單字全集設計的語意具象圖片映射庫（0 API 消耗，100% 離線秒開）
  */
 
+import localImageWords from '../data/localImageWords.json';
+
 export interface ImageInfo {
   url: string;
   tag: string;
 }
+
+const LOCAL_IMAGE_SET = new Set<string>(localImageWords);
 
 // Highly curated high-resolution associative business photos from Unsplash & Antigravity Bespoke Suite
 const KEYWORD_IMAGE_MAP: Record<string, { url: string; tag: string }> = {
@@ -183,6 +187,15 @@ export const imageService = {
    */
   getImageForWord(headword: string, category = '辦公日常'): { url: string; tag: string } {
     const cleanWord = headword.trim().toLowerCase();
+    const slugWord = cleanWord.replace(/[^a-z0-9_-]/g, '_');
+
+    // 0. Primary: 100% Offline Local WebP Image from Core 1,200 Suite
+    if (LOCAL_IMAGE_SET.has(cleanWord)) {
+      return { url: `/assets/images/words/${cleanWord}.webp`, tag: `${headword} 商務實景` };
+    }
+    if (LOCAL_IMAGE_SET.has(slugWord)) {
+      return { url: `/assets/images/words/${slugWord}.webp`, tag: `${headword} 商務實景` };
+    }
 
     // 1. Direct exact word match
     if (KEYWORD_IMAGE_MAP[cleanWord]) {

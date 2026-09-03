@@ -37,6 +37,8 @@ import { Badge } from '../components/ui/Badge';
 import { AudioButton } from '../components/ui/AudioButton';
 import { Modal } from '../components/ui/Modal';
 import { SwipeableCard } from '../components/ui/SwipeableCard';
+import { WordQuickPeekModal } from '../components/ui/WordQuickPeekModal';
+import { db } from '../db';
 
 interface StudyItem {
   word: Word;
@@ -99,6 +101,40 @@ export const FlashcardPage: React.FC = () => {
   const [nuanceCompareWord, setNuanceCompareWord] = useState('');
   const [evaluatingNuance, setEvaluatingNuance] = useState(false);
   const [nuanceResult, setNuanceResult] = useState<NuanceExplanationResult | null>(null);
+
+  // Word Quick Peek Modal State (Derivative & Synonym interactive flashcard)
+  const [peekWord, setPeekWord] = useState<Word | null>(null);
+  const [isPeekOpen, setIsPeekOpen] = useState(false);
+
+  const handleOpenPeekWord = useCallback(async (rawTerm: string) => {
+    const clean = rawTerm.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
+    if (!clean) return;
+    const found = await db.words.where('headword').equalsIgnoreCase(clean).first();
+    if (found) {
+      setPeekWord(found);
+      setIsPeekOpen(true);
+    } else {
+      setPeekWord({
+        id: `peek-${clean}`,
+        headword: clean,
+        normalizedHeadword: clean.toLowerCase(),
+        entryType: 'word',
+        definitionZh: rawTerm,
+        starRating: 3,
+        toeicScoreRange: '550-750',
+        category: '關聯延伸',
+        partsOfSpeech: ['關聯詞'],
+        wordForms: [],
+        phoneticUS: null,
+        phoneticUK: null,
+        examples: [],
+        examTips: [],
+        audioUSUrl: null,
+        audioUKUrl: null
+      });
+      setIsPeekOpen(true);
+    }
+  }, []);
 
   const [sessionResults, setSessionResults] = useState<{
     reviewedCount: number;
@@ -288,6 +324,11 @@ export const FlashcardPage: React.FC = () => {
       // Load curated morphology
       const morph = morphologyService.getMorphology(currentItem.word.headword, currentItem.word.category);
       setMorphology(morph);
+
+      // Instant scroll reset to top for new card
+      requestAnimationFrame(() => {
+        cardBackScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+      });
     }
   }, [currentIndex, queue, activeProfile, currentItem]);
 
@@ -298,12 +339,23 @@ export const FlashcardPage: React.FC = () => {
   };
 
   const handleFlipCard = useCallback(() => {
-    setIsFlipped(prev => !prev);
+    setIsFlipped(prev => {
+      if (!prev) {
+        // Flipping to back: ensure view starts at top
+        requestAnimationFrame(() => {
+          cardBackScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+        });
+      }
+      return !prev;
+    });
   }, []);
 
   const handlePreConfidenceSelect = (type: 'confident' | 'unsure') => {
     setPreConfidence(type);
     setIsFlipped(true);
+    requestAnimationFrame(() => {
+      cardBackScrollRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+    });
   };
 
   const handleRate = useCallback(async (rating: FSRSRating) => {
@@ -955,27 +1007,62 @@ export const FlashcardPage: React.FC = () => {
                       💡 <strong>構詞記憶</strong>：{word.etymology?.memoryHook || morphology?.mnemonic}
                     </p>
 
-                    {/* Word Family 派生詞 */}
+                    {/* Word Family 派生詞 (點擊直達關聯詞微型閃卡) */}
                     {(word.wordFamily || (morphology?.wordFamily && morphology.wordFamily.length > 1)) && (
                       <div className="pt-1.5 border-t border-slate-800/80 space-y-1">
-                        <div className="text-[10px] font-bold text-slate-400 flex items-center">
-                          <GitBranch size={11} className="mr-1 text-emerald-400" /> 派生詞與同根詞：
+                        <div className="text-[10px] font-bold text-slate-400 flex items-center justify-between">
+                          <span className="flex items-center">
+                            <GitBranch size={11} className="mr-1 text-emerald-400" /> 派生詞與同根詞：
+                          </span>
+                          <span className="text-[9px] text-slate-500">點擊速查閃卡 ↗</span>
                         </div>
-                        <div className="flex flex-wrap gap-1 text-[10px]">
+                        <div className="flex flex-wrap gap-1.5 text-[10px]">
                           {word.wordFamily?.noun?.map((n: string, idx: number) => (
-                            <span key={idx} className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-200">
-                              <span className="text-blue-400">n.</span> {n}
-                            </span>
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleOpenPeekWord(n);
+                              }}
+                              className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-blue-500/60 text-slate-200 cursor-pointer transition-all flex items-center space-x-1 shadow-sm"
+                              title="點擊速查此衍生詞"
+                            >
+                              <span className="text-blue-400 font-bold">n.</span>
+                              <span>{n}</span>
+                              <span className="text-[8px] text-blue-400 opacity-80">↗</span>
+                            </button>
                           ))}
                           {word.wordFamily?.adjective?.map((a: string, idx: number) => (
-                            <span key={idx} className="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-200">
-                              <span className="text-emerald-400">adj.</span> {a}
-                            </span>
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleOpenPeekWord(a);
+                              }}
+                              className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 active:scale-95 border border-slate-700 hover:border-emerald-500/60 text-slate-200 cursor-pointer transition-all flex items-center space-x-1 shadow-sm"
+                              title="點擊速查此衍生詞"
+                            >
+                              <span className="text-emerald-400 font-bold">adj.</span>
+                              <span>{a}</span>
+                              <span className="text-[8px] text-emerald-400 opacity-80">↗</span>
+                            </button>
                           ))}
                           {word.wordFamily?.cognates?.map((c: string, idx: number) => (
-                            <span key={idx} className="px-1.5 py-0.5 rounded bg-purple-950/40 border border-purple-800/50 text-purple-300">
-                              🔗 {c}
-                            </span>
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleOpenPeekWord(c);
+                              }}
+                              className="px-2 py-0.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/60 active:scale-95 border border-purple-800/60 hover:border-purple-500 text-purple-300 cursor-pointer transition-all flex items-center space-x-1 shadow-sm"
+                              title="點擊速查此衍生詞"
+                            >
+                              <span>🔗 {c}</span>
+                              <span className="text-[8px] text-purple-400 opacity-80">↗</span>
+                            </button>
                           ))}
                         </div>
                       </div>
@@ -983,19 +1070,30 @@ export const FlashcardPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* 🔄 5. 多益同反義詞微辨析 (synonymDiscrimination) */}
+                {/* 🔄 5. 多益同反義詞微辨析 (synonymDiscrimination - 點擊直達關聯詞微型閃卡) */}
                 {word.synonymDiscrimination && (
                   <div className="p-2.5 rounded-xl bg-slate-950/80 border border-blue-800/40 space-y-1 text-xs shadow-sm">
                     <div className="flex items-center justify-between text-blue-400 font-bold text-[11px]">
                       <span>🔄 多益同義替換與微辨析</span>
+                      <span className="text-[9px] text-blue-500/80">點擊速查 ↗</span>
                     </div>
                     {word.synonymDiscrimination.synonyms && word.synonymDiscrimination.synonyms.length > 0 && (
-                      <div className="flex flex-wrap gap-1 text-[10px]">
-                        <span className="text-slate-400">同義詞：</span>
+                      <div className="flex flex-wrap gap-1.5 text-[10px] items-center">
+                        <span className="text-slate-400 text-[10px]">同義詞：</span>
                         {word.synonymDiscrimination.synonyms.map((s: string, sIdx: number) => (
-                          <span key={sIdx} className="px-1.5 py-0.2 rounded bg-blue-950/60 text-blue-300 border border-blue-700/40">
-                            {s}
-                          </span>
+                          <button
+                            key={sIdx}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenPeekWord(s);
+                            }}
+                            className="px-2 py-0.5 rounded-lg bg-blue-950/80 hover:bg-blue-900/80 active:scale-95 text-blue-300 border border-blue-700/50 hover:border-blue-400 transition-all flex items-center space-x-1 cursor-pointer shadow-sm"
+                            title="點擊預覽此同義詞閃卡"
+                          >
+                            <span>{s}</span>
+                            <span className="text-[8px] text-blue-400 opacity-80">↗</span>
+                          </button>
                         ))}
                       </div>
                     )}
@@ -1457,6 +1555,13 @@ export const FlashcardPage: React.FC = () => {
           )}
         </div>
       </Modal>
+
+      {/* Word Quick Peek Modal (Bottom Sheet for Derivatives & Synonyms) */}
+      <WordQuickPeekModal
+        word={peekWord}
+        isOpen={isPeekOpen}
+        onClose={() => setIsPeekOpen(false)}
+      />
     </div>
   );
 };

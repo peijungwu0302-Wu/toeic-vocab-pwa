@@ -12,8 +12,7 @@ import {
   CloudOff,
   RefreshCw,
   User,
-  Search,
-  ChevronUp
+  Search
 } from 'lucide-react';
 import { useProfile } from '../../contexts/ProfileContext';
 import { useSync } from '../../contexts/SyncContext';
@@ -40,6 +39,7 @@ export const AppLayout: React.FC = () => {
   // Auto-hide bottom nav during study sessions; reveal on demand via edge handle or tap
   const [isNavRevealedInStudy, setIsNavRevealedInStudy] = useState(false);
   const hideTimerRef = React.useRef<number | null>(null);
+  const touchStartY = React.useRef<number | null>(null);
 
   // Auto collapse when entering or changing study routes
   React.useEffect(() => {
@@ -147,18 +147,27 @@ export const AppLayout: React.FC = () => {
       {/* iOS Safari Installation Banner */}
       <InstallPrompt />
 
-      {/* Floating Edge Handle to reveal bottom nav when in study screen */}
+      {/* 1B + 1C Fusion: 100% Pure Clean Screen with Invisible Edge Swipe-Up Sensor */}
       {isStudyScreen && !isNavRevealedInStudy && (
-        <button
-          type="button"
-          onClick={handleRevealNav}
-          onTouchStart={handleRevealNav}
-          className="fixed bottom-1.5 left-1/2 -translate-x-1/2 z-50 flex items-center space-x-1 px-3 py-0.5 rounded-full bg-slate-850/90 hover:bg-slate-750 text-slate-400 hover:text-slate-200 border border-slate-700/80 shadow-lg backdrop-blur-md transition-all active:scale-95 animate-fade-in"
-          title="點擊或上滑展開導覽底欄"
-        >
-          <ChevronUp size={11} className="text-emerald-400" />
-          <span className="text-[9px] font-medium tracking-tight">底欄選單</span>
-        </button>
+        <div
+          onTouchStart={(e) => {
+            touchStartY.current = e.touches[0].clientY;
+          }}
+          onTouchMove={(e) => {
+            if (touchStartY.current !== null) {
+              const deltaY = touchStartY.current - e.touches[0].clientY;
+              if (deltaY > 18) {
+                handleRevealNav();
+                touchStartY.current = null;
+              }
+            }
+          }}
+          onTouchEnd={() => {
+            touchStartY.current = null;
+          }}
+          className="fixed bottom-0 left-0 right-0 h-6 z-40 pointer-events-auto"
+          aria-label="向上滑動呼出底欄"
+        />
       )}
 
       {/* Bottom Navigation Bar - Auto collapses during study screen, accessible via edge handle */}
