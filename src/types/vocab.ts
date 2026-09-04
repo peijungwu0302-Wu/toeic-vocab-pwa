@@ -51,13 +51,17 @@ export interface WordEntry {
     root?: string;
     suffix?: string | null;
     memoryHook?: string;
+    formula?: string;
+    mnemonic?: string;
   };
   wordFamily?: {
-    noun?: string[];
-    verb?: string[];
-    adjective?: string[];
-    adverb?: string[];
-    cognates?: string[];
+    noun?: Array<string | { word: string; zh?: string; pos?: string; examTip?: string }>;
+    verb?: Array<string | { word: string; zh?: string; pos?: string; examTip?: string }>;
+    adjective?: Array<string | { word: string; zh?: string; pos?: string; examTip?: string }>;
+    adj?: Array<string | { word: string; zh?: string; pos?: string; examTip?: string }>;
+    adverb?: Array<string | { word: string; zh?: string; pos?: string; examTip?: string }>;
+    adv?: Array<string | { word: string; zh?: string; pos?: string; examTip?: string }>;
+    cognates?: Array<string | { word: string; zh?: string; pos?: string; examTip?: string }>;
   };
   synonymDiscrimination?: {
     synonyms?: string[];

@@ -38,6 +38,7 @@ import { AudioButton } from '../components/ui/AudioButton';
 import { Modal } from '../components/ui/Modal';
 import { SwipeableCard } from '../components/ui/SwipeableCard';
 import { WordQuickPeekModal } from '../components/ui/WordQuickPeekModal';
+import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { db } from '../db';
 
 interface StudyItem {
@@ -79,7 +80,18 @@ const ClickableSentence: React.FC<ClickableSentenceProps> = ({ text, className =
   );
 };
 
-const formatWordFamilyItem = (raw: string) => {
+const formatWordFamilyItem = (raw: any): { head: string; zh: string; examTip?: string } => {
+  if (!raw) return { head: '', zh: '' };
+  if (typeof raw === 'object') {
+    return {
+      head: raw.word || raw.head || '',
+      zh: raw.zh || raw.meaning || '',
+      examTip: raw.examTip || ''
+    };
+  }
+  if (typeof raw !== 'string') {
+    return { head: String(raw), zh: '' };
+  }
   const head = raw.trim().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
   let zh = '';
   if (raw.includes('(') || raw.includes('（')) {
@@ -156,8 +168,10 @@ export const FlashcardPage: React.FC = () => {
   const [isPeekOpen, setIsPeekOpen] = useState(false);
   const [showFullExamTips, setShowFullExamTips] = useState(false);
 
-  const handleOpenPeekWord = useCallback(async (rawTerm: string) => {
-    const clean = rawTerm.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
+  const handleOpenPeekWord = useCallback(async (rawTerm: any) => {
+    if (!rawTerm) return;
+    const termStr = typeof rawTerm === 'string' ? rawTerm : (rawTerm.word || rawTerm.head || String(rawTerm));
+    const clean = termStr.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
     if (!clean) return;
 
     try {
@@ -939,10 +953,23 @@ export const FlashcardPage: React.FC = () => {
 
       {/* Swipeable 3D Flashcard */}
       <div className="relative z-10 flex-1 flex flex-col min-h-0 py-0.5">
-        <SwipeableCard
-          onSwipeLeft={handleSwipeLeft}
-          onSwipeRight={handleSwipeRight}
+        <ErrorBoundary
+          key={word.id || currentIndex}
+          fallback={(_err, reset) => (
+            <div className="w-full h-full min-h-[350px] flex flex-col items-center justify-center p-6 text-center bg-slate-900 border border-slate-700 rounded-3xl text-slate-200 shadow-2xl">
+              <p className="text-sm font-bold text-amber-300 mb-2">單字卡渲染遇到防護處理</p>
+              <p className="text-xs text-slate-400 mb-4">您可以跳過此卡或繼續下一個單字。</p>
+              <div className="flex gap-2">
+                <Button size="sm" variant="secondary" onClick={reset}>重新嘗試</Button>
+                <Button size="sm" variant="primary" onClick={() => handleRate(3)}>下一單字 ➔</Button>
+              </div>
+            </div>
+          )}
         >
+          <SwipeableCard
+            onSwipeLeft={handleSwipeLeft}
+            onSwipeRight={handleSwipeRight}
+          >
           <motion.div
             animate={{ rotateY: isFlipped ? 180 : 0 }}
             transition={{ duration: 0.22, ease: 'easeInOut' }}
@@ -1286,6 +1313,11 @@ export const FlashcardPage: React.FC = () => {
                       </div>
 
                       <div className="flex flex-wrap gap-1.5">
+                        {word.etymology?.formula && (
+                          <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
+                            <strong className="text-amber-300">構詞公式</strong>：{word.etymology.formula}
+                          </span>
+                        )}
                         {word.etymology?.prefix && (
                           <span className="px-2.5 py-1 rounded-lg bg-amber-950/40 border border-amber-700/50 text-amber-200" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx)}px` }}>
                             <strong className="text-amber-300">前綴</strong>：{word.etymology.prefix}
@@ -1308,9 +1340,11 @@ export const FlashcardPage: React.FC = () => {
                         ))}
                       </div>
 
-                      <p className="text-slate-200 leading-relaxed pt-1" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
-                        💡 <strong>構詞記憶</strong>：{word.etymology?.memoryHook || morphology?.mnemonic}
-                      </p>
+                      {(word.etymology?.memoryHook || word.etymology?.mnemonic || morphology?.mnemonic) && (
+                        <p className="text-slate-200 leading-relaxed pt-1" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
+                          💡 <strong>構詞記憶</strong>：{word.etymology?.memoryHook || word.etymology?.mnemonic || morphology?.mnemonic}
+                        </p>
+                      )}
 
                       {/* Word Family 派生詞 (點擊直達關聯詞微型閃卡) */}
                       {(word.wordFamily || (morphology?.wordFamily && morphology.wordFamily.length > 1)) && (
@@ -1322,19 +1356,44 @@ export const FlashcardPage: React.FC = () => {
                             <span className="text-[9px] text-slate-500">點擊速查閃卡 ↗</span>
                           </div>
                           <div className="flex flex-wrap gap-1.5 text-[10px]">
-                            {word.wordFamily?.noun?.map((n: string, idx: number) => {
-                              const item = formatWordFamilyItem(n);
+                            {/* Verbs */}
+                            {word.wordFamily?.verb?.map((v: any, idx: number) => {
+                              const item = formatWordFamilyItem(v);
+                              if (!item.head) return null;
                               return (
                                 <button
-                                  key={idx}
+                                  key={`v-${idx}`}
                                   type="button"
                                   style={{ touchAction: 'pan-y' }}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleOpenPeekWord(n);
+                                    handleOpenPeekWord(item.head);
+                                  }}
+                                  className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-amber-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                  title={item.examTip ? `${item.head} (${item.zh}) - ${item.examTip}` : '點擊速查此衍生詞'}
+                                >
+                                  <span className="text-amber-400 font-bold">v.</span>
+                                  <span>{item.head}</span>
+                                  {item.zh && <span className="text-slate-400 text-[9px]">({item.zh})</span>}
+                                  <span className="text-[8px] text-amber-400 opacity-80">↗</span>
+                                </button>
+                              );
+                            })}
+                            {/* Nouns */}
+                            {word.wordFamily?.noun?.map((n: any, idx: number) => {
+                              const item = formatWordFamilyItem(n);
+                              if (!item.head) return null;
+                              return (
+                                <button
+                                  key={`n-${idx}`}
+                                  type="button"
+                                  style={{ touchAction: 'pan-y' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenPeekWord(item.head);
                                   }}
                                   className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-blue-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
-                                  title="點擊速查此衍生詞"
+                                  title={item.examTip ? `${item.head} (${item.zh}) - ${item.examTip}` : '點擊速查此衍生詞'}
                                 >
                                   <span className="text-blue-400 font-bold">n.</span>
                                   <span>{item.head}</span>
@@ -1343,19 +1402,21 @@ export const FlashcardPage: React.FC = () => {
                                 </button>
                               );
                             })}
-                            {word.wordFamily?.adjective?.map((a: string, idx: number) => {
+                            {/* Adjectives (handles both adjective and adj) */}
+                            {(word.wordFamily?.adjective || word.wordFamily?.adj)?.map((a: any, idx: number) => {
                               const item = formatWordFamilyItem(a);
+                              if (!item.head) return null;
                               return (
                                 <button
-                                  key={idx}
+                                  key={`a-${idx}`}
                                   type="button"
                                   style={{ touchAction: 'pan-y' }}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleOpenPeekWord(a);
+                                    handleOpenPeekWord(item.head);
                                   }}
                                   className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
-                                  title="點擊速查此衍生詞"
+                                  title={item.examTip ? `${item.head} (${item.zh}) - ${item.examTip}` : '點擊速查此衍生詞'}
                                 >
                                   <span className="text-emerald-400 font-bold">adj.</span>
                                   <span>{item.head}</span>
@@ -1364,19 +1425,44 @@ export const FlashcardPage: React.FC = () => {
                                 </button>
                               );
                             })}
-                            {word.wordFamily?.cognates?.map((c: string, idx: number) => {
-                              const item = formatWordFamilyItem(c);
+                            {/* Adverbs (handles both adverb and adv) */}
+                            {(word.wordFamily?.adverb || word.wordFamily?.adv)?.map((adv: any, idx: number) => {
+                              const item = formatWordFamilyItem(adv);
+                              if (!item.head) return null;
                               return (
                                 <button
-                                  key={idx}
+                                  key={`adv-${idx}`}
                                   type="button"
                                   style={{ touchAction: 'pan-y' }}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleOpenPeekWord(c);
+                                    handleOpenPeekWord(item.head);
+                                  }}
+                                  className="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-pink-500/60 text-slate-200 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
+                                  title={item.examTip ? `${item.head} (${item.zh}) - ${item.examTip}` : '點擊速查此衍生詞'}
+                                >
+                                  <span className="text-pink-400 font-bold">adv.</span>
+                                  <span>{item.head}</span>
+                                  {item.zh && <span className="text-slate-400 text-[9px]">({item.zh})</span>}
+                                  <span className="text-[8px] text-pink-400 opacity-80">↗</span>
+                                </button>
+                              );
+                            })}
+                            {/* Cognates */}
+                            {word.wordFamily?.cognates?.map((c: any, idx: number) => {
+                              const item = formatWordFamilyItem(c);
+                              if (!item.head) return null;
+                              return (
+                                <button
+                                  key={`c-${idx}`}
+                                  type="button"
+                                  style={{ touchAction: 'pan-y' }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleOpenPeekWord(item.head);
                                   }}
                                   className="px-2 py-0.5 rounded-lg bg-purple-950/50 hover:bg-purple-900/60 border border-purple-800/60 hover:border-purple-500 text-purple-300 cursor-pointer transition-colors flex items-center space-x-1 shadow-sm touch-pan-y"
-                                  title="點擊速查此衍生詞"
+                                  title={item.examTip ? `${item.head} (${item.zh}) - ${item.examTip}` : '點擊速查此衍生詞'}
                                 >
                                   <span>🔗 {item.head}</span>
                                   {item.zh && <span className="text-purple-300/80 text-[9px]">({item.zh})</span>}
@@ -1523,6 +1609,7 @@ export const FlashcardPage: React.FC = () => {
             </div>
           </motion.div>
         </SwipeableCard>
+      </ErrorBoundary>
       </div>
 
       {/* Slide-Up FSRS Rating Bar (Visible ONLY when flipped, docked cleanly at bottom) */}

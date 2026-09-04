@@ -18,6 +18,7 @@ import { StatsPage } from './pages/StatsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AttributionPage } from './pages/AttributionPage';
 import { db } from './db';
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { datasetMigrationService } from './services/datasetMigrationService';
 
 const AppRoutes: React.FC = () => {
@@ -78,7 +79,9 @@ export const App: React.FC = () => {
         <SyncProvider>
           <TypographyProvider>
             <NavigationStyleProvider>
-              <AppRoutes />
+              <ErrorBoundary>
+                <AppRoutes />
+              </ErrorBoundary>
             </NavigationStyleProvider>
           </TypographyProvider>
         </SyncProvider>
