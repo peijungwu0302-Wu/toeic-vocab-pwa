@@ -194,6 +194,18 @@ export const quizService = {
             }
 
             const optionAnalyses = shuffledOptions.map((opt: string) => {
+              const bespoke = Array.isArray(matchingQuiz.optionAnalyses)
+                ? matchingQuiz.optionAnalyses.find((a: any) => a.option?.toLowerCase() === opt.toLowerCase())
+                : null;
+
+              if (bespoke && (bespoke.reason || bespoke.explanation)) {
+                return {
+                  option: opt,
+                  isCorrect: bespoke.isCorrect ?? (opt === matchingQuiz.answer),
+                  explanation: bespoke.reason || bespoke.explanation
+                };
+              }
+
               const isCorrect = opt === matchingQuiz.answer;
               if (isCorrect) {
                 return {

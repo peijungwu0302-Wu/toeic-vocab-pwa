@@ -232486,9 +232486,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding couple.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於一對的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "I will need a couple of days to review the contract and provide you with my final feedback.",
+          "zh": "我需要幾天的時間來審閱合約，並提供您我最終的回饋意見。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -234120,9 +234120,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding cousin.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於表的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "My cousin, who works as a consultant for a global firm, will be joining our networking event this evening.",
+          "zh": "我的一位在跨國公司擔任顧問的表親，今晚將會參加我們的社交活動。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -234541,9 +234541,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding cover.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於覆蓋的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The insurance policy is designed to cover all potential damages incurred during the international shipping process.",
+          "zh": "該保險單旨在涵蓋國際運輸過程中可能發生的所有損壞。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -244023,9 +244023,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding damage.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於損害的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The severe storm caused extensive damage to the warehouse roof, forcing the company to temporarily halt all logistics operations.",
+          "zh": "強烈的暴風雨對倉庫屋頂造成了嚴重損害，迫使公司暫時停止所有物流作業。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -255443,9 +255443,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding decision.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於決策的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "Making a data-driven decision is crucial for maintaining a competitive edge in today's rapidly changing retail environment.",
+          "zh": "做出數據驅動的決策對於在當今瞬息萬變的零售環境中保持競爭優勢至關重要。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -269847,9 +269847,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding designs.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於設計方案的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The architect presented several innovative designs for the new corporate headquarters.",
+          "zh": "建築師為新的公司總部展示了幾種創新的設計方案。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -274811,9 +274811,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding dictionary.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於字典的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The translator consulted a technical dictionary to ensure the accuracy of the legal terminology.",
+          "zh": "譯者查閱了專業字典，以確保法律術語的準確性。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -275227,9 +275227,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding difference.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於差異的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The difference in quarterly revenue is primarily due to the recent expansion into international markets.",
+          "zh": "季度營收的差異主要是由於近期向國際市場的擴張所致。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -296796,9 +296796,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding drawing.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於繪圖的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The final drawing of the mechanical component was approved by the engineering department yesterday.",
+          "zh": "機械零件的最終設計圖已於昨日獲得工程部門批准。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -297218,9 +297218,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding dress.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於服裝的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "Employees are expected to dress in business professional attire for the annual shareholder meeting.",
+          "zh": "員工在年度股東大會上應穿著商務正式服裝。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -298466,9 +298466,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding drinks.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於飲料的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The catering service will provide a variety of hot and cold drinks for the networking event.",
+          "zh": "外燴服務將為交流活動提供各式冷熱飲品。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -315775,9 +315775,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding elevator.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於電梯的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The service elevator is currently out of order for routine maintenance.",
+          "zh": "貨梯目前因例行維護而暫停使用。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -319435,9 +319435,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding employment.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於就業的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The candidate signed the employment contract after negotiating the salary package.",
+          "zh": "候選人在協商薪資方案後簽署了僱用合約。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -336855,9 +336855,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding example.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於範例的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The manager set a great example by arriving early and staying late to support the team during the project deadline.",
+          "zh": "經理以身作則，提早到班並留到很晚，在專案截止日期前支持團隊。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -337262,9 +337262,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding examples.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於範例的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The training manual provides several examples of how to handle difficult customer inquiries professionally.",
+          "zh": "培訓手冊提供了幾個如何專業處理困難客戶諮詢的範例。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -345936,9 +345936,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding experiences.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於經歷的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "Sharing diverse professional experiences during team meetings fosters a culture of continuous learning.",
+          "zh": "在團隊會議中分享多元的專業經歷，能培養持續學習的文化。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -346338,9 +346338,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding experts.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於專家的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "Industry experts were invited to speak at the annual summit regarding future technological trends.",
+          "zh": "產業專家受邀在年度高峰會上針對未來科技趨勢發表演說。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -354233,9 +354233,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding failure.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於未能達到預期目標或標準的結果的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The project's failure was attributed to poor communication between the cross-functional teams during the initial planning stage.",
+          "zh": "該專案的失敗歸因於跨職能團隊在初始規劃階段溝通不良。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -356309,9 +356309,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding families.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於家庭的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The company offers flexible working hours to support employees who need to balance their professional responsibilities with the needs of their families.",
+          "zh": "公司提供彈性工時，以支持需要平衡職業責任與家庭需求的員工。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -368680,9 +368680,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding file.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於檔案的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "Make sure to file the tax documents before the deadline to avoid any penalties.",
+          "zh": "請務必在截止日期前歸檔稅務文件，以避免任何罰款。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -375278,9 +375278,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding fire.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於（1）火；（2）解雇；（3）開火；（4）（槍械）射擊的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The HR manager had to fire the employee for repeated violations of the company's code of conduct.",
+          "zh": "人力資源經理因該員工多次違反公司行為準則而將其解僱。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -380337,9 +380337,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding flower.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於鮮花的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The receptionist placed a single fresh flower in a vase on the lobby desk to welcome our VIP guests.",
+          "zh": "接待員在大廳櫃檯的花瓶裡放了一朵鮮花，以歡迎我們的貴賓。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -392135,9 +392135,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding freedom.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於自由的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The new remote work policy grants employees the freedom to manage their own schedules effectively.",
+          "zh": "新的遠端工作政策賦予員工有效管理個人時間的自由。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -413048,9 +413048,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding gifts.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於禮物的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "We have prepared several corporate gifts for our long-term partners to show our appreciation.",
+          "zh": "我們為長期合作夥伴準備了幾份企業贈品，以表達我們的感謝。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -413449,9 +413449,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding girl.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於少女的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The young girl was hired as a summer intern to assist the administrative team with filing documents.",
+          "zh": "那位年輕女孩被聘為暑期實習生，協助行政團隊歸檔文件。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -422555,9 +422555,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding gram.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於公克的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "Each package must be weighed to the nearest gram to comply with international shipping regulations.",
+          "zh": "每個包裹必須精確秤重至公克，以符合國際運輸規範。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -422967,9 +422967,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding graph.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於圖表的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The sales director presented a graph showing a significant increase in revenue over the last quarter.",
+          "zh": "業務總監展示了一張圖表，顯示上季營收有顯著成長。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -423386,9 +423386,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding grass.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於草的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The corporate headquarters features a well-maintained grass courtyard for employee relaxation.",
+          "zh": "公司總部設有一個維護良好的草地庭院，供員工休憩使用。",
+          "scenario": "真實商務具象"
         },
         {
           "id": "ex_2",
@@ -432218,9 +432218,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding guy.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於（非正式用詞）人；傢伙；（通常指男性）的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The guy from the IT department is coming over this afternoon to fix the server connectivity issues.",
+          "zh": "資訊部門的那位同事今天下午會過來修復伺服器的連線問題。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -442488,9 +442488,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding head.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於頭部的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "She was recently appointed as the head of the international marketing department.",
+          "zh": "她最近被任命為國際行銷部門的負責人。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -456178,9 +456178,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding hope.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於期望的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "We hope to establish a long-term partnership with your firm to explore new business opportunities in the region.",
+          "zh": "我們希望能與貴公司建立長期合作夥伴關係，以探索該地區的新商業機會。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "溝通互動",
@@ -456598,9 +456598,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding hopes.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於期望的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "The management team has high hopes that the new product launch will significantly increase our market share.",
+          "zh": "管理團隊對新產品發布寄予厚望，希望能顯著提升我們的市場佔有率。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "溝通互動",
@@ -457827,9 +457827,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding hospitals.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於醫院的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "Our medical supply division provides specialized equipment to major hospitals across the country.",
+          "zh": "我們的醫療用品部門為全國各大醫院提供專業設備。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -470618,9 +470618,9 @@
       "examples": [
         {
           "id": "ex_1",
-          "en": "During the annual strategic summit, senior leadership discussed key initiatives regarding improvement.",
-          "zh": "在年度策略高峰會上，高層領導團隊討論了關於進步、改善的關鍵方針。",
-          "scenario": "日常商務"
+          "en": "There has been a noticeable improvement in overall productivity since the office moved to a hybrid work model.",
+          "zh": "自從辦公室改為混合辦公模式以來，整體生產力有了顯著的改善。",
+          "scenario": "真實商務具象"
         },
         {
           "scenario": "營運管理",
@@ -476700,5 +476700,5 @@
   ],
   "wordCount": 1200,
   "datasetVersion": "v6.0.0-bbword-vip-lexicon",
-  "buildTimestamp": "2026-09-02T18:33:54.400Z"
+  "buildTimestamp": "2026-09-04T11:11:16.066Z"
 }

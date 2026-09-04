@@ -1,0 +1,320 @@
+[
+  {
+    "headword": "e-book",
+    "domainTheme": "Digital Publishing & Media Tech",
+    "concreteEn": "The publishing company will release the interactive e-book version of the quarterly market report tomorrow.",
+    "concreteZh": "出版公司將於明天發行該季度市場報告的互動式電子書版本。",
+    "hasTextOnImage": false,
+    "imagePrompt": "Stylized high-detail digital concept art illustration of 'e-book'. A modern publishing editor reviewing an interactive digital market report displayed on a sleek tablet device in a sunlit architectural office. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
+    "quizzes": [
+      {
+        "subType": "vocab_choice",
+        "stem": "The publishing company will release the interactive _____ version of the quarterly market report tomorrow.",
+        "stemTranslation": "出版公司將於明天發行該季度市場報告的互動式【電子書】版本。",
+        "options": [
+          "e-book",
+          "manual",
+          "pamphlet",
+          "flyer"
+        ],
+        "answer": "e-book",
+        "strategy": "句中提及發行數位與互動式（interactive）的內容版本，名詞 e-book（電子書）在此作為名詞修飾語，完美符合 context。",
+        "examTrapTip": "注意 manual（說明書）、pamphlet（小冊子）與 flyer（傳單）皆指特定類型的紙本印刷品，無法與 interactive（互動式的）及數位發行情境順暢搭配。",
+        "collocations": [
+          "e-book version (電子書版本)",
+          "interactive e-book (互動式電子書)"
+        ],
+        "optionAnalyses": [
+          {
+            "option": "e-book",
+            "isCorrect": true,
+            "pos": "n.",
+            "meaning": "電子書",
+            "reason": "【🟢 正解 · n.】符合句意「互動式電子書版本」，指透過電子裝置閱讀的數位書籍格式。"
+          },
+          {
+            "option": "manual",
+            "isCorrect": false,
+            "pos": "n.",
+            "meaning": "使用手冊",
+            "reason": "【❌ 干擾 · n.】指操作說明的印刷手冊，不符合季度市場報告的數位出版情境。"
+          },
+          {
+            "option": "pamphlet",
+            "isCorrect": false,
+            "pos": "n.",
+            "meaning": "小冊子",
+            "reason": "【❌ 干擾 · n.】通常指簡短宣傳用的薄紙冊，與大規模商業市場報告的規格不符。"
+          },
+          {
+            "option": "flyer",
+            "isCorrect": false,
+            "pos": "n.",
+            "meaning": "傳單",
+            "reason": "【❌ 干擾 · n.】指單頁廣告傳單，無法用於承載完整的季度市場分析。"
+          }
+        ]
+      },
+      {
+        "subType": "collocation_choice",
+        "stem": "The publishing company will _____ the interactive e-book version of the quarterly market report tomorrow.",
+        "stemTranslation": "出版公司將於明天【發行】該季度市場報告的互動式電子書版本。",
+        "options": [
+          "release",
+          "discard",
+          "suppress",
+          "expire"
+        ],
+        "answer": "release",
+        "strategy": "動詞 release 與產品、書籍或軟體版本（version/e-book）搭配，表示「發行、公開發布」，為多益高頻商務搭配詞。",
+        "examTrapTip": "切勿混淆 expire（過期），expire 為不及物動詞，不可直接接賓語；suppress 為「壓制/隱瞞」，語意相反。",
+        "collocations": [
+          "release a version (發行版本)",
+          "release a report (發布報告)"
+        ],
+        "optionAnalyses": [
+          {
+            "option": "release",
+            "isCorrect": true,
+            "pos": "v.",
+            "meaning": "發行；發布",
+            "reason": "【🟢 正解 · v.】正確搭配「發行電子書版本 (release the e-book version)」。"
+          },
+          {
+            "option": "discard",
+            "isCorrect": false,
+            "pos": "v.",
+            "meaning": "拋棄；丟棄",
+            "reason": "【❌ 干擾 · v.】語意為丟棄，與明天公開出版報告的文意衝突。"
+          },
+          {
+            "option": "suppress",
+            "isCorrect": false,
+            "pos": "v.",
+            "meaning": "壓制；封鎖",
+            "reason": "【❌ 干擾 · v.】指壓制或隱瞞訊息，與商業公開發行無關。"
+          },
+          {
+            "option": "expire",
+            "isCorrect": false,
+            "pos": "v.",
+            "meaning": "到期；失效",
+            "reason": "【❌ 干擾 · v.】為不及物動詞，文法上無法直接受受詞 the e-book version。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "headword": "eager",
+    "domainTheme": "Venture Capital & Tech Investment",
+    "concreteEn": "Venture capitalists are eager to invest in renewable energy startups demonstrating scalable carbon reduction technologies.",
+    "concreteZh": "創投家們熱切渴望投資那些展示出可擴展減碳技術的再生能源初創企業。",
+    "hasTextOnImage": false,
+    "imagePrompt": "Stylized high-detail digital concept art illustration of 'eager'. Investors standing in a high-tech glass boardroom attentively watching a presentation slide showing green energy statistics on a large projection screen. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
+    "quizzes": [
+      {
+        "subType": "vocab_choice",
+        "stem": "Venture capitalists are _____ to invest in renewable energy startups demonstrating scalable carbon reduction technologies.",
+        "stemTranslation": "創投家們【熱切渴望】投資那些展示出可擴展減碳技術的再生能源初創企業。",
+        "options": [
+          "eager",
+          "reluctant",
+          "hesitant",
+          "passive"
+        ],
+        "answer": "eager",
+        "strategy": "句型 be eager to + V. 表示「熱切渴望做某事」。上下文強調投資者對高潛力減碳技術的積極態度，形容詞 eager 為最佳選擇。",
+        "examTrapTip": "注意反義干擾字 reluctant（不情願的）與 hesitant（猶豫的），ETS 常以正負態度詞比較來測驗閱讀理解能力。",
+        "collocations": [
+          "be eager to invest (熱切渴望投資)",
+          "eager investors (熱切的投資者)"
+        ],
+        "optionAnalyses": [
+          {
+            "option": "eager",
+            "isCorrect": true,
+            "pos": "adj.",
+            "meaning": "熱切的；渴望的",
+            "reason": "【🟢 正解 · adj.】正確接續「be eager to invest（熱切渴望投資）」，符合積極尋求投資標的的商務語境。"
+          },
+          {
+            "option": "reluctant",
+            "isCorrect": false,
+            "pos": "adj.",
+            "meaning": "不情願的",
+            "reason": "【❌ 干擾 · adj.】反義詞，指勉強或不願意做某事，不符合積極投資的情境。"
+          },
+          {
+            "option": "hesitant",
+            "isCorrect": false,
+            "pos": "adj.",
+            "meaning": "猶豫不決的",
+            "reason": "【❌ 干擾 · adj.】反義詞，指猶豫停滯，與句中展現創新技術所誘發的投資熱情不符。"
+          },
+          {
+            "option": "passive",
+            "isCorrect": false,
+            "pos": "adj.",
+            "meaning": "被動的",
+            "reason": "【❌ 干擾 · adj.】指被動不具主動性的，無法搭配想要積極投入資金的情意。"
+          }
+        ]
+      },
+      {
+        "subType": "collocation_choice",
+        "stem": "Venture capitalists are eager to _____ in renewable energy startups demonstrating scalable carbon reduction technologies.",
+        "stemTranslation": "創投家們熱切渴望【投資】那些展示出可擴展減碳技術的再生能源初創企業。",
+        "options": [
+          "invest",
+          "speculate",
+          "gamble",
+          "withdraw"
+        ],
+        "answer": "invest",
+        "strategy": "動詞搭配 invest in + [資產/公司] 為極高頻商業用語，指「投資於...」。",
+        "examTrapTip": "注意 speculate（投機）通常搭配 on 或 in，但帶有不確定之賭博性質，不及商務情境中 invest 的正式與正向感。",
+        "collocations": [
+          "invest in startups (投資初創企業)",
+          "eager to invest (熱切渴望投資)"
+        ],
+        "optionAnalyses": [
+          {
+            "option": "invest",
+            "isCorrect": true,
+            "pos": "v.",
+            "meaning": "投資",
+            "reason": "【🟢 正解 · v.】符合高頻商務搭配「invest in + 企業/產業（投資於...）」。"
+          },
+          {
+            "option": "speculate",
+            "isCorrect": false,
+            "pos": "v.",
+            "meaning": "投機；推測",
+            "reason": "【❌ 干擾 · v.】通常指高風險投機或推測，非創投家進行產業資金注入的標準正向用語。"
+          },
+          {
+            "option": "gamble",
+            "isCorrect": false,
+            "pos": "v.",
+            "meaning": "賭博",
+            "reason": "【❌ 干擾 · v.】帶有非理性賭博意涵，不適用於嚴肅的正向商業投資說明。"
+          },
+          {
+            "option": "withdraw",
+            "isCorrect": false,
+            "pos": "v.",
+            "meaning": "撤資；撤回",
+            "reason": "【❌ 干擾 · v.】withdraw 搭配 from，且意思為撤回資金，與渴望（eager）矛盾。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "headword": "eagerly await",
+    "domainTheme": "Global Aviation & Transport Systems",
+    "concreteEn": "Global aviation industry leaders eagerly await the announcement of new international sustainability standards today.",
+    "concreteZh": "全球航空業領袖今日殷切期盼著新型國際永續發展標準的宣布。",
+    "hasTextOnImage": false,
+    "imagePrompt": "Stylized high-detail digital concept art illustration of 'eagerly await'. Delegates in tailored suits seated in a modern convention hall looking toward a main stage screen in anticipation. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
+    "quizzes": [
+      {
+        "subType": "vocab_choice",
+        "stem": "Global aviation industry leaders _____ the announcement of new international sustainability standards today.",
+        "stemTranslation": "全球航空業領袖今日【殷切期盼】著新型國際永續發展標準的宣布。",
+        "options": [
+          "eagerly await",
+          "casually ignore",
+          "reluctantly delay",
+          "strictly forbid"
+        ],
+        "answer": "eagerly await",
+        "strategy": "片語動詞 eagerly await 意為「殷切期盼」，後接重要名詞受詞 the announcement（宣布）。",
+        "examTrapTip": "注意 await 是及物動詞（await sth），不加 for；而 wait 為不及物動詞（wait for sth）。選項中千萬別選搭配錯的形態。",
+        "collocations": [
+          "eagerly await the announcement (殷切期盼宣布)",
+          "eagerly await approval (熱切等待批准)"
+        ],
+        "optionAnalyses": [
+          {
+            "option": "eagerly await",
+            "isCorrect": true,
+            "pos": "vp.",
+            "meaning": "殷切期盼；熱切等待",
+            "reason": "【🟢 正解 · vp.】符合句意「殷切期盼新標準的宣布」，且 await 為及物動詞直接接名詞賓語。"
+          },
+          {
+            "option": "casually ignore",
+            "isCorrect": false,
+            "pos": "vp.",
+            "meaning": "隨意忽視",
+            "reason": "【❌ 干擾 · vp.】與行業領袖關注重大國際永續標準的常理相反。"
+          },
+          {
+            "option": "reluctantly delay",
+            "isCorrect": false,
+            "pos": "vp.",
+            "meaning": "不情願地延後",
+            "reason": "【❌ 干擾 · vp.】行業領袖作為等待宣布的受眾，無權「延後」大會的宣布。"
+          },
+          {
+            "option": "strictly forbid",
+            "isCorrect": false,
+            "pos": "vp.",
+            "meaning": "嚴格禁止",
+            "reason": "【❌ 干擾 · vp.】語意不通，領袖無法禁止即將進行的公開宣布。"
+          }
+        ]
+      },
+      {
+        "subType": "collocation_choice",
+        "stem": "Global aviation industry leaders eagerly await the _____ of new international sustainability standards today.",
+        "stemTranslation": "全球航空業領袖今日殷切期盼著新型國際永續發展標準的【宣布】。",
+        "options": [
+          "announcement",
+          "termination",
+          "rejection",
+          "concealment"
+        ],
+        "answer": "announcement",
+        "strategy": "動名詞搭配 eagerly await the announcement of... 表示「熱切等待...的宣布/公布」，是高階商務會議與政策公布的常用語彙組合。",
+        "examTrapTip": "區分相近動作名詞：termination（終止）、rejection（拒絕）、concealment（隱藏），此處只有正式公布（announcement）符合殷切期待的主題。",
+        "collocations": [
+          "announcement of standards (標準的宣布)",
+          "eagerly await the announcement (熱切等待宣布)"
+        ],
+        "optionAnalyses": [
+          {
+            "option": "announcement",
+            "isCorrect": true,
+            "pos": "n.",
+            "meaning": "宣布；公告",
+            "reason": "【🟢 正解 · n.】與 eagerly await 形成標準商務搭配，指等待新規範的公布。"
+          },
+          {
+            "option": "termination",
+            "isCorrect": false,
+            "pos": "n.",
+            "meaning": "終止；結束",
+            "reason": "【❌ 干擾 · n.】指契約或項目的終止，不適用於新標準的推出。"
+          },
+          {
+            "option": "rejection",
+            "isCorrect": false,
+            "pos": "n.",
+            "meaning": "拒絕；駁回",
+            "reason": "【❌ 干擾 · n.】指否決，不符合業界領導人期盼新方針發布的情境。"
+          },
+          {
+            "option": "concealment",
+            "isCorrect": false,
+            "pos": "n.",
+            "meaning": "隱瞞；掩蓋",
+            "reason": "【❌ 干擾 · n.】指隱藏資訊，與公開討論與永續標準大會精神矛盾。"
+          }
+        ]
+      }
+    ]
+  }
+]
