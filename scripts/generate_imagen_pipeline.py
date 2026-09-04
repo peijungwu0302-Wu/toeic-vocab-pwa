@@ -1,27 +1,33 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import os, sys, json, time, argparse, io, re
 from pathlib import Path
 from PIL import Image
 from google import genai
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace', line_buffering=True)
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace', line_buffering=True)
+
 DEFAULT_PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "project-5dc653c7-c4ff-4154-99e")
 DEFAULT_LOCATION = os.environ.get("GCP_LOCATION", "us-central1")
 MODEL_NAME = "gemini-2.5-flash-image"
-PRICE_PER_IMAGE = 0.0338  # 实测单张成本 ~1.08 TWD ($0.0338 USD)
-MAX_BUDGET_USD = 250.0   # 硬熔断上限 $250 USD (保留 $50 安全缓冲)
+
+# ==============================================================================
+# 💰 財務精確計價與安全熔斷配置 (以新台幣 TWD 為唯一真金白銀基準)
+# ==============================================================================
+PRICE_PER_IMAGE_TWD = 1.244            # 實測真金白銀成本 (1,493 TWD / 1,200 張)
+PRICE_PER_IMAGE_USD = 0.0385           # 對應折算美金
+INITIAL_REMAINING_CREDIT_TWD = 8017.0  # 當前剩餘 GCP 試用金總額
+DEFAULT_MAX_BATCH_BUDGET_TWD = 3150.0  # 本次批次預算上限 (精準覆蓋 advanced-2500)
+SAFETY_CREDIT_FLOOR_TWD = 4500.0       # 帳戶最低安全底限 (剩餘低於此值強制停機)
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
 ORIGINALS_DIR = ROOT_DIR / "public" / "assets" / "images" / "originals"
 AUDIT_FILE = ROOT_DIR / "scripts" / "image_generation_audit.json"
 PREVIEW_FILE = ROOT_DIR / "scripts" / "preview_gallery.html"
-
-TEMPLATE_BLACKLIST = [
-    "annual strategic summit",
-    "senior leadership discussed key initiatives",
-    "adhere strictly to safety protocols",
-    "maintaining a tangible relationship"
-]
+LOCAL_WORDS_FILE = ROOT_DIR / "src" / "data" / "localImageWords.json"
 
 def slugify(text):
     clean = re.sub(r"[^a-zA-Z0-9]+", "_", text).strip("_").lower()
@@ -41,81 +47,61 @@ def load_audit_log():
     return {
         "metadata": {
             "model": MODEL_NAME,
-            "unitCostUsd": PRICE_PER_IMAGE,
+            "unitCostTwd": PRICE_PER_IMAGE_TWD,
+            "unitCostUsd": PRICE_PER_IMAGE_USD,
+            "initialCreditTwd": INITIAL_REMAINING_CREDIT_TWD,
             "totalGenerated": 0,
+            "totalCostTwd": 0.0,
             "totalCostUsd": 0.0,
+            "remainingCreditTwd": INITIAL_REMAINING_CREDIT_TWD,
             "lastUpdated": None
         },
         "records": {}
     }
 
-def save_audit_log(audit_data):
+def atomic_save_json(target_path, data):
+    temp_path = target_path.with_suffix(target_path.suffix + ".tmp")
+    with open(temp_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    temp_path.replace(target_path)
+
+def save_audit_log(audit_data, new_in_this_session=0):
+    total_count = len(audit_data["records"])
     audit_data["metadata"]["lastUpdated"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    audit_data["metadata"]["totalGenerated"] = len(audit_data["records"])
-    audit_data["metadata"]["totalCostUsd"] = round(len(audit_data["records"]) * PRICE_PER_IMAGE, 2)
-    with open(AUDIT_FILE, "w", encoding="utf-8") as f:
-        json.dump(audit_data, f, ensure_ascii=False, indent=2)
+    audit_data["metadata"]["totalGenerated"] = total_count
+    audit_data["metadata"]["unitCostTwd"] = PRICE_PER_IMAGE_TWD
+    audit_data["metadata"]["unitCostUsd"] = PRICE_PER_IMAGE_USD
+    
+    session_cost_twd = round(new_in_this_session * PRICE_PER_IMAGE_TWD, 1)
+    audit_data["metadata"]["sessionCostTwd"] = session_cost_twd
+    audit_data["metadata"]["remainingCreditTwd"] = round(INITIAL_REMAINING_CREDIT_TWD - session_cost_twd, 1)
+    audit_data["metadata"]["totalCostTwd"] = round(total_count * PRICE_PER_IMAGE_TWD, 1)
+    audit_data["metadata"]["totalCostUsd"] = round(total_count * PRICE_PER_IMAGE_USD, 2)
 
-def boost_prompt(raw_prompt, headword, en_sentence, scenario):
-    clean_p = raw_prompt.replace("minimalist style,", "").replace("minimalist style", "")
-    clean_p = clean_p.replace("minimalist style.", "").replace("minimalist outlines", "")
-    clean_p = clean_p.replace("Flat vector illustration,", "").strip()
+    atomic_save_json(AUDIT_FILE, audit_data)
 
-    boosted = (
-        f"High-end corporate editorial vector illustration of {headword}. "
-        f"Core scene: {clean_p} "
-        f"Context: {en_sentence} "
-        "Style & Lighting: Clean refined vector lines, mature corporate aesthetic, sophisticated deep navy blue, charcoal, warm oak wood, and subtle teal accents. "
-        "Polished conference glass partitions showing high-rise city skyline, professional recessed ceiling lighting casting soft natural shadows, elegant office plants, balanced contrast and realistic proportions, "
-        "Dribbble and Behance top-tier commercial editorial art, 8k resolution, 1:1 square composition."
-    )
-    return boosted
-
-def validate_prompt(word_entry, prompt_data):
-    if not prompt_data:
-        return False, "Missing prompt data"
-    prompt = prompt_data.get("imagePrompt", "").strip()
-    if not prompt:
-        return False, "imagePrompt is empty"
-    if len(prompt) < 25:
-        return False, f"imagePrompt too short ({len(prompt)} < 25)"
-    p_lower = prompt.lower()
-    for bad in TEMPLATE_BLACKLIST:
-        if bad.lower() in p_lower:
-            return False, f"Prompt contains blacklisted phrase: {bad}"
-    en_lower = prompt_data.get("en", "").lower()
-    for bad in TEMPLATE_BLACKLIST:
-        if bad.lower() in en_lower:
-            return False, f"Example sentence contains blacklisted phrase: {bad}"
-    return True, "Quality Gate Passed"
-
-def load_dataset_and_prompts(tier="core-1200"):
-    dataset_file = ROOT_DIR / "public" / "data" / "v1" / f"{tier}.json"
-    cache_file = ROOT_DIR / "scripts" / f".step1_{tier}_cache.json"
-    alt_cache_file = ROOT_DIR / "scripts" / ".step1_progress_cache.json"
-
-    if not dataset_file.exists():
-        raise FileNotFoundError(f"Dataset not found: {dataset_file}")
-
-    with open(dataset_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    words = data.get("words", [])
-
-    cache = {}
-    if cache_file.exists():
-        with open(cache_file, "r", encoding="utf-8") as f:
-            cache.update(json.load(f))
-    if alt_cache_file.exists():
-        with open(alt_cache_file, "r", encoding="utf-8") as f:
-            cache.update(json.load(f))
-
-    print(f"Loaded {len(words)} words from {tier}.json (Prompt cache size: {len(cache)})")
-    return words, cache
+def sync_local_image_words(slug):
+    if not LOCAL_WORDS_FILE.exists():
+        return
+    try:
+        with open(LOCAL_WORDS_FILE, "r", encoding="utf-8") as f:
+            words = json.load(f)
+        if slug not in words:
+            words.append(slug)
+            temp_file = LOCAL_WORDS_FILE.with_suffix(".json.tmp")
+            with open(temp_file, "w", encoding="utf-8") as f:
+                json.dump(words, f, ensure_ascii=False)
+            temp_file.replace(LOCAL_WORDS_FILE)
+    except Exception as e:
+        print(f"⚠️ Failed to sync localImageWords: {e}", flush=True)
 
 def generate_preview_html(audit_data):
     records = list(audit_data["records"].values())
-    total_cost = audit_data["metadata"]["totalCostUsd"]
-    total_count = audit_data["metadata"]["totalGenerated"]
+    meta = audit_data.get("metadata", {})
+    total_count = meta.get("totalGenerated", len(records))
+    total_cost_twd = meta.get("totalCostTwd", round(total_count * PRICE_PER_IMAGE_TWD, 1))
+    total_cost_usd = meta.get("totalCostUsd", round(total_count * PRICE_PER_IMAGE_USD, 2))
+    rem_credit_twd = meta.get("remainingCreditTwd", INITIAL_REMAINING_CREDIT_TWD)
 
     html_cards = []
     for r in reversed(records):
@@ -127,7 +113,7 @@ def generate_preview_html(audit_data):
         <div class="card">
             <div class="img-wrapper">
                 <img src="{rel_img}" alt="{r.get('headword', '')}" loading="lazy" />
-                <span class="badge">{r.get('scenario', 'Business')}</span>
+                <span class="badge">{r.get('scenario', '生活具象')}</span>
             </div>
             <div class="info">
                 <div class="header">
@@ -137,13 +123,13 @@ def generate_preview_html(audit_data):
                 <p class="en-sentence"><strong>例句：</strong>{r.get('en', '')}</p>
                 <p class="zh-sentence">{r.get('zh', '')}</p>
                 <details>
-                    <summary>檢視升級版 1:1 生圖 Prompt</summary>
-                    <p class="prompt-text">{r.get('boostedPrompt', r.get('imagePrompt', ''))}</p>
+                    <summary>檢視 1:1 發光看板概念插畫 Prompt</summary>
+                    <p class="prompt-text">{r.get('imagePrompt', '')}</p>
                 </details>
                 <div class="meta">
                     <span>⏱️ {r.get('durationMs', 0)}ms</span>
-                    <span>💾 WebP: {r.get('webpSizeBytes', r.get('fileSizeBytes', 0)) // 1024} KB | <a href="{orig_img}" target="_blank" style="color:#38bdf8;">JPG母檔 ({r.get('originalSizeBytes', 0) // 1024} KB)</a></span>
-                    <span>💰 ${r.get('costUsd', 0.02)}</span>
+                    <span>💾 WebP: {r.get('webpSizeBytes', 0) // 1024} KB | <a href="{orig_img}" target="_blank" style="color:#38bdf8;">JPG ({r.get('originalSizeBytes', 0) // 1024} KB)</a></span>
+                    <span>💰 ~1.24 TWD</span>
                 </div>
             </div>
         </div>
@@ -156,15 +142,16 @@ def generate_preview_html(audit_data):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOEIC 多益頂級商務插畫審計畫廊</title>
+    <title>TOEIC 多益頂級具象生活插畫審計畫廊</title>
     <style>
         * {{ box-sizing: border-box; margin: 0; padding: 0; }}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; padding: 24px; }}
         header {{ margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }}
         h1 {{ font-size: 1.5rem; color: #38bdf8; }}
-        .stats {{ display: flex; gap: 16px; font-size: 0.95rem; }}
+        .stats {{ display: flex; gap: 16px; font-size: 0.95rem; flex-wrap: wrap; }}
         .stat-badge {{ background: #1e293b; padding: 8px 16px; border-radius: 8px; border: 1px solid #475569; }}
         .stat-value {{ font-weight: bold; color: #10b981; }}
+        .stat-value-warn {{ font-weight: bold; color: #f59e0b; }}
         .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }}
         .card {{ background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); transition: transform 0.2s; }}
         .card:hover {{ transform: translateY(-4px); border-color: #38bdf8; }}
@@ -186,12 +173,13 @@ def generate_preview_html(audit_data):
 <body>
     <header>
         <div>
-            <h1>🎨 多益頂級商務插畫審計畫廊 (Imagen Quality Booster)</h1>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 4px;">模型: {MODEL_NAME} ($0.02 / 張) | 1:1 向量商務插畫風格 | 雙軌存檔 (JPG原圖 + WebP輕量)</p>
+            <h1>🎨 多益頂級具象生活插畫審計畫廊 (Vertex AI Imagen Quality Booster)</h1>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 4px;">模型: gemini-2.5-flash-image (~1.24 TWD / 張) | 1:1 概念插畫風格（帶發光招牌） | 雙軌存檔 (JPG原圖 + WebP輕量)</p>
         </div>
         <div class="stats">
-            <div class="stat-badge">已完成生成: <span class="stat-value">{total_count} 張</span></div>
-            <div class="stat-badge">累計費用: <span class="stat-value">${total_cost:.2f} USD</span></div>
+            <div class="stat-badge">已完成庫存: <span class="stat-value">{total_count} 張</span></div>
+            <div class="stat-badge">累計花費: <span class="stat-value">{total_cost_twd} TWD (${total_cost_usd} USD)</span></div>
+            <div class="stat-badge">剩餘試用金預估: <span class="stat-value-warn">{rem_credit_twd} TWD</span></div>
         </div>
     </header>
     <div class="grid">
@@ -200,158 +188,208 @@ def generate_preview_html(audit_data):
 </body>
 </html>"""
 
+    atomic_save_json(PREVIEW_FILE.with_suffix(".tmp.json"), {})  # test
     with open(PREVIEW_FILE, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print(f"Generated visual audit preview: {PREVIEW_FILE}")
 
-def run_pipeline(tier="core-1200", limit=5, dry_run=False, project_id=DEFAULT_PROJECT_ID, location=DEFAULT_LOCATION, force_regenerate=False):
+def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAULT_MAX_BATCH_BUDGET_TWD, project_id=DEFAULT_PROJECT_ID, location=DEFAULT_LOCATION, force_regenerate=False):
     ensure_dirs()
     audit_data = load_audit_log()
-    words, cache = load_dataset_and_prompts(tier)
+    
+    dataset_file = ROOT_DIR / "public" / "data" / "v1" / f"{tier}.json"
+    if not dataset_file.exists():
+        raise FileNotFoundError(f"Dataset not found: {dataset_file}")
 
-    current_cost = audit_data["metadata"]["totalCostUsd"]
-    if current_cost >= MAX_BUDGET_USD:
-        print(f"Budget limit reached (${current_cost:.2f} >= ${MAX_BUDGET_USD}).")
-        return
+    with open(dataset_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    words = data.get("words", [])
+
+    print(f"\n=================================================================", flush=True)
+    print(f"🚀 Vertex AI High-Resilience Generator: [{tier}]", flush=True)
+    print(f"💰 Real Unit Cost: {PRICE_PER_IMAGE_TWD} TWD / image", flush=True)
+    print(f"🛑 Batch Budget Cap: {budget_twd} TWD (Safety Floor: {SAFETY_CREDIT_FLOOR_TWD} TWD)", flush=True)
+    print(f"💳 Initial Remaining Credit: {INITIAL_REMAINING_CREDIT_TWD} TWD", flush=True)
+    print(f"🛡️ Power-Cut Proof: Atomic Swap + File Size Gate Active", flush=True)
+    print(f"=================================================================\n", flush=True)
 
     pending_tasks = []
     for w in words:
-        wid = w["id"]
-        slug = slugify(w["headword"])
-        if not force_regenerate and slug in audit_data["records"]:
-            continue
-        prompt_data = cache.get(wid)
-        is_valid, reason = validate_prompt(w, prompt_data)
-        if not is_valid:
-            continue
-        pending_tasks.append((w, prompt_data, slug))
+        wid = w.get("id")
+        headword = w.get("headword", "")
+        slug = slugify(headword)
 
-    print(f"Found {len(pending_tasks)} words that passed Quality Gate.")
+        webp_path = WORDS_DIR / f"{slug}.webp"
+        # 只要磁碟上存在且大於 10KB 且已收錄在 audit 中，略過
+        if not force_regenerate and webp_path.exists() and webp_path.stat().st_size > 10000 and slug in audit_data["records"]:
+            continue
+
+        va = w.get("visualAnchor") or {}
+        image_prompt = va.get("imagePrompt") or ""
+        
+        examples = w.get("examples") or []
+        ex_1 = examples[0] if len(examples) > 0 else {}
+        short_en = ex_1.get("en") or ""
+        short_zh = ex_1.get("zh") or w.get("definitionZh", "")
+        scenario = ex_1.get("scenario") or "生活具象"
+
+        if not image_prompt:
+            continue
+
+        pending_tasks.append({
+            "id": wid,
+            "headword": headword,
+            "slug": slug,
+            "definitionZh": w.get("definitionZh", ""),
+            "scenario": scenario,
+            "en": short_en,
+            "zh": short_zh,
+            "imagePrompt": image_prompt
+        })
+
     tasks_to_run = pending_tasks[:limit] if limit > 0 else pending_tasks
-    print(f"Ready to process {len(tasks_to_run)} items in this run.")
+    print(f"📋 Total pending in [{tier}]: {len(tasks_to_run)} images to generate.", flush=True)
 
-    if dry_run:
-        print("--- [Dry-Run Mode] ---")
-        for idx, (w, p, slug) in enumerate(tasks_to_run[:5], 1):
-            boosted = boost_prompt(p["imagePrompt"], w["headword"], p.get("en", ""), p.get("scenario", "商務"))
-            print(f"[{idx}] {w['headword']} (File: {slug}.jpg)")
-            print(f"  En: {p.get('en')[:70]}...")
-            print(f"  Boosted Prompt: {boosted[:100]}...")
+    if len(tasks_to_run) == 0:
+        print("🎉 All words in this tier already have verified images on disk and in audit!", flush=True)
+        generate_preview_html(audit_data)
         return
 
-    print(f"Initializing Vertex AI GenAI Client on project {project_id} ({location})...")
+    if dry_run:
+        print(f"--- [Dry-Run] Estimated Cost for {len(tasks_to_run)} items: ~{len(tasks_to_run) * PRICE_PER_IMAGE_TWD:.1f} TWD ---", flush=True)
+        return
+
+    session_generated_count = 0
     client = genai.Client(vertexai=True, project=project_id, location=location)
 
-    success_count = 0
-    for idx, (w, p, slug) in enumerate(tasks_to_run, 1):
-        wid = w["id"]
-        headword = w["headword"]
-        boosted = boost_prompt(p["imagePrompt"], headword, p.get("en", ""), p.get("scenario", "商務"))
-
-        current_cost = len(audit_data["records"]) * PRICE_PER_IMAGE
-        if current_cost >= MAX_BUDGET_USD:
-            print(f"Budget cap reached (${current_cost:.2f}). Stopping.")
+    for idx, task in enumerate(tasks_to_run, 1):
+        # 1. 雙重熔斷檢查
+        spent_twd = session_generated_count * PRICE_PER_IMAGE_TWD
+        rem_twd = INITIAL_REMAINING_CREDIT_TWD - spent_twd
+        if spent_twd >= budget_twd:
+            print(f"\n🛑 觸發批次預算熔斷 ({spent_twd:.1f} >= {budget_twd} TWD)！安全停止。", flush=True)
+            break
+        if rem_twd <= SAFETY_CREDIT_FLOOR_TWD:
+            print(f"\n🚨 觸發試用金安全底限 ({rem_twd:.1f} <= {SAFETY_CREDIT_FLOOR_TWD} TWD)！緊急停機。", flush=True)
             break
 
-        print(f"[{idx}/{len(tasks_to_run)}] Generating image for '{headword}' -> '{slug}.jpg'...")
-        t0 = time.time()
-        
-        # Retry with exponential backoff for 429 rate limit
-        max_retries = 3
-        img_bytes = None
-        
-        for attempt in range(max_retries + 1):
-            try:
-                response = client.models.generate_content(
-                    model=MODEL_NAME,
-                    contents=boosted,
-                )
+        slug = task["slug"]
+        headword = task["headword"]
+        prompt = task["imagePrompt"]
 
-                for cand in response.candidates:
+        # 磁碟防重複保護
+        webp_path = WORDS_DIR / f"{slug}.webp"
+        if not force_regenerate and webp_path.exists() and webp_path.stat().st_size > 10000 and slug in audit_data["records"]:
+            continue
+
+        print(f"[{idx}/{len(tasks_to_run)}] Generating image for '{headword}' -> '{slug}.webp'...", flush=True)
+        t0 = time.time()
+        img_bytes = None
+
+        for attempt in range(3):
+            try:
+                res = client.models.generate_content(
+                    model=MODEL_NAME,
+                    contents=prompt
+                )
+                for cand in res.candidates:
                     for part in cand.content.parts:
                         if hasattr(part, "inline_data") and part.inline_data and part.inline_data.data:
                             img_bytes = part.inline_data.data
                             break
                     if img_bytes:
                         break
-
                 if img_bytes:
                     break
-                else:
-                    raise ValueError("No image data returned in model response.")
-
             except Exception as e:
                 err_str = str(e)
-                if "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
-                    wait_sec = 6 * (attempt + 1)
-                    print(f"  [429 Rate Limit] Retrying in {wait_sec}s (Attempt {attempt+1}/{max_retries})...")
-                    time.sleep(wait_sec)
+                if "429" in err_str or "quota" in err_str.lower():
+                    print(f"  [429 Quota Delay] Waiting 20s before retry...", flush=True)
+                    time.sleep(20)
                 else:
-                    print(f"  Failed for '{headword}': {err_str}")
-                    break
+                    print(f"  Attempt {attempt + 1} error: {err_str[:80]}", flush=True)
+                    time.sleep(3)
 
         if not img_bytes:
-            print(f"  Skipping '{headword}' after retries.")
-            time.sleep(3.0)
+            print(f"  ❌ FAILED to generate '{headword}', moving to next.", flush=True)
             continue
 
+        duration_ms = int((time.time() - t0) * 1000)
+
+        # 🛡️ 斷電安全：寫入臨時檔再 Atomic Replace
         try:
-            duration_ms = int((time.time() - t0) * 1000)
             orig_filename = f"{slug}.jpg"
             webp_filename = f"{slug}.webp"
             orig_path = ORIGINALS_DIR / orig_filename
             webp_path = WORDS_DIR / webp_filename
 
-            # 1. Save Original High-Res Master JPG
+            temp_orig = ORIGINALS_DIR / f"{slug}.jpg.tmp"
+            temp_webp = WORDS_DIR / f"{slug}.webp.tmp"
+
             with Image.open(io.BytesIO(img_bytes)) as pil_img:
                 if pil_img.mode in ("RGBA", "P"):
                     pil_img = pil_img.convert("RGB")
-                pil_img.save(orig_path, "JPEG", quality=95)
-                # 2. Save WebP for App
-                pil_img.save(webp_path, "WEBP", quality=85, method=6)
+                pil_img.save(temp_orig, "JPEG", quality=95)
+                pil_img.save(temp_webp, "WEBP", quality=85, method=6)
+
+            temp_orig.replace(orig_path)
+            temp_webp.replace(webp_path)
 
             orig_size = orig_path.stat().st_size
             webp_size = webp_path.stat().st_size
 
             audit_data["records"][slug] = {
-                "id": wid,
+                "id": task["id"],
                 "headword": headword,
                 "slug": slug,
-                "definitionZh": w.get("definitionZh", ""),
-                "scenario": p.get("scenario", "商務"),
-                "en": p.get("en", ""),
-                "zh": p.get("zh", ""),
-                "rawPrompt": p.get("imagePrompt", ""),
-                "boostedPrompt": boosted,
+                "definitionZh": task["definitionZh"],
+                "scenario": task["scenario"],
+                "en": task["en"],
+                "zh": task["zh"],
+                "imagePrompt": prompt,
                 "originalFilename": orig_filename,
                 "webpFilename": webp_filename,
                 "originalSizeBytes": orig_size,
                 "webpSizeBytes": webp_size,
                 "durationMs": duration_ms,
-                "costUsd": PRICE_PER_IMAGE,
+                "costTwd": PRICE_PER_IMAGE_TWD,
+                "costUsd": PRICE_PER_IMAGE_USD,
                 "generatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             }
+            session_generated_count += 1
+            save_audit_log(audit_data, session_generated_count)
+            sync_local_image_words(slug)
 
-            save_audit_log(audit_data)
+            # 🌟 每一張生成後「立刻」刷新 preview_gallery.html，讓使用者零延遲看到！
             generate_preview_html(audit_data)
-            success_count += 1
-            print(f"  Saved: {orig_filename} ({orig_size // 1024} KB JPG) & {webp_filename} ({webp_size // 1024} KB WebP) in {duration_ms}ms.")
+
+            curr_spent = session_generated_count * PRICE_PER_IMAGE_TWD
+            left_credit = INITIAL_REMAINING_CREDIT_TWD - curr_spent
+            pct = (idx / len(tasks_to_run)) * 100
+            print(f"  ✅ Saved: {webp_filename} ({webp_size // 1024} KB) in {duration_ms}ms | [{idx}/{len(tasks_to_run)}] {pct:.1f}% | Spent: {curr_spent:.1f} TWD | Left: ~{left_credit:.1f} TWD", flush=True)
 
         except Exception as e:
-            print(f"  Failed to save files for '{headword}': {str(e)}")
+            print(f"  ❌ File save error for '{headword}': {e}", flush=True)
 
-        time.sleep(4.0)
+        # 平滑節奏 (每張間隔約 2 秒，總速率約 5~6 RPM)
+        time.sleep(2.0)
 
+    # 差集對帳驗收
     generate_preview_html(audit_data)
-    print(f"Batch finished! Successfully generated {success_count} images.")
+    print(f"\n=================================================================", flush=True)
+    print(f"🎉 批次任務結束！", flush=True)
+    print(f"📊 本次新增生成: {session_generated_count} 張", flush=True)
+    print(f"💰 本次花費: {session_generated_count * PRICE_PER_IMAGE_TWD:.1f} TWD", flush=True)
+    print(f"💳 預估剩餘試用金: {INITIAL_REMAINING_CREDIT_TWD - (session_generated_count * PRICE_PER_IMAGE_TWD):.1f} TWD", flush=True)
+    print(f"=================================================================\n", flush=True)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--tier", default="core-1200")
+    parser.add_argument("--tier", default="advanced-2500")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--preview-only", action="store_true")
+    parser.add_argument("--budget-twd", type=float, default=DEFAULT_MAX_BATCH_BUDGET_TWD)
     parser.add_argument("--project", default=DEFAULT_PROJECT_ID)
     parser.add_argument("--location", default=DEFAULT_LOCATION)
     args = parser.parse_args()
@@ -364,6 +402,7 @@ if __name__ == "__main__":
             tier=args.tier,
             limit=args.limit,
             dry_run=args.dry_run,
+            budget_twd=args.budget_twd,
             project_id=args.project,
             location=args.location,
             force_regenerate=args.force

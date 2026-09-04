@@ -213,6 +213,23 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
               <p className="text-amber-200/90 leading-relaxed">{word.examFocus.trapWarning}</p>
             </div>
           )}
+
+          {/* Part 7 Paraphrase Matrix in Quick Peek */}
+          {word.paraphrase?.passageEn && (
+            <div className="p-3 rounded-2xl bg-emerald-950/40 border border-emerald-700/50 text-xs space-y-1.5">
+              <div className="text-[10px] text-emerald-400 font-bold flex items-center justify-between">
+                <span>🔄 Part 7 雙語換句話說</span>
+                <span className="text-[9px] text-emerald-500 font-semibold">ETS 990 核心</span>
+              </div>
+              <div className="space-y-1 text-[11px]">
+                <p className="text-slate-200"><strong className="text-slate-400">原文：</strong>{word.paraphrase.passageEn}</p>
+                <p className="text-emerald-300 font-bold"><strong className="text-emerald-500">選項：</strong>{word.paraphrase.choiceEn}</p>
+                {word.paraphrase.note && (
+                  <p className="text-amber-300/90 pt-0.5"><strong className="text-amber-400">秘笈：</strong>{word.paraphrase.note}</p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer actions */}

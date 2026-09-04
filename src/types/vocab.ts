@@ -75,6 +75,16 @@ export interface WordEntry {
     [key: string]: string | undefined;
   };
   frequencyTier?: FrequencyTier;
+  paraphrase?: {
+    passageEn: string;
+    passageZh: string;
+    choiceEn: string;
+    choiceZh: string;
+    note?: string;
+  };
+  prepAnchor?: string | null;
+  listeningTrap?: string | null;
+  confusedWith?: string | null;
   quizzes?: any[];
 }
 
@@ -136,6 +146,10 @@ export const WordEntrySchema = z.object({
   synonymDiscrimination: z.any().optional(),
   collocations: z.any().optional(),
   frequencyTier: z.enum(['core_1200', 'advanced_2500', 'expert_high']).optional(),
+  paraphrase: z.any().optional(),
+  prepAnchor: z.any().optional(),
+  listeningTrap: z.any().optional(),
+  confusedWith: z.any().optional(),
   quizzes: z.array(z.any()).optional().default([])
 }).transform((val) => {
   const ratingNum = Math.max(1, Math.min(5, Math.round(val.starRating || 3))) as 1 | 2 | 3 | 4 | 5;
@@ -166,6 +180,10 @@ export const WordEntrySchema = z.object({
     synonymDiscrimination: val.synonymDiscrimination,
     collocations: val.collocations,
     frequencyTier: val.frequencyTier,
+    paraphrase: val.paraphrase,
+    prepAnchor: val.prepAnchor,
+    listeningTrap: val.listeningTrap,
+    confusedWith: val.confusedWith,
     quizzes: val.quizzes || []
   };
 });

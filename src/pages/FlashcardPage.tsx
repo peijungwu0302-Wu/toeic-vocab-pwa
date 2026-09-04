@@ -1166,7 +1166,7 @@ export const FlashcardPage: React.FC = () => {
 
                   {/* 🎯 2. 多益考點與避坑提醒 (examFocus) */}
                   {word.examFocus && (
-                    <div className="p-3 rounded-2xl bg-indigo-950/40 border border-indigo-700/50 space-y-1.5 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                    <div className="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-700/50 space-y-2 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
                       <div className="text-indigo-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
                         <span>🎯 多益核心考點：{word.examFocus.primaryBusinessSense}</span>
                       </div>
@@ -1175,6 +1175,76 @@ export const FlashcardPage: React.FC = () => {
                           ⚠️ <strong>考場避坑</strong>：{word.examFocus.trapWarning}
                         </p>
                       )}
+                      {word.prepAnchor && (
+                        <div className="pt-1.5 border-t border-indigo-800/40 flex items-start space-x-1.5 text-cyan-300 font-medium" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx - 1)}px` }}>
+                          <span className="shrink-0 px-1.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-700/50 text-cyan-300 font-bold text-[10px]">⚓ 必考固定介係詞</span>
+                          <span>{word.prepAnchor}</span>
+                        </div>
+                      )}
+                      {(word.listeningTrap || word.confusedWith) && (
+                        <div className="pt-1.5 border-t border-indigo-800/40 flex flex-wrap gap-2">
+                          {word.listeningTrap && (
+                            <span className="px-2 py-0.5 rounded-lg bg-rose-950/40 border border-rose-700/50 text-rose-300 text-[11px]">
+                              👂 <strong>聽力陷阱</strong>：{word.listeningTrap}
+                            </span>
+                          )}
+                          {word.confusedWith && (
+                            <span className="px-2 py-0.5 rounded-lg bg-purple-950/40 border border-purple-700/50 text-purple-300 text-[11px]">
+                              🤔 <strong>易混淆字</strong>：{word.confusedWith}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* 🔄 Part 7 雙語換句話說矩陣 (Paraphrase Matrix) */}
+                  {word.paraphrase && word.paraphrase.passageEn && (
+                    <div className="p-3.5 rounded-2xl bg-slate-950/90 border border-emerald-600/40 space-y-2.5 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
+                      <div className="text-emerald-400 font-bold flex items-center justify-between" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
+                        <span className="flex items-center">
+                          <Sparkles size={14} className="mr-1.5 text-amber-400" />
+                          Part 7 閱讀雙語換句話說 (Paraphrase Matrix)
+                        </span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 font-bold">ETS 990 命題核心</span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        {/* 原文對照 */}
+                        <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1">
+                          <div className="text-[10px] text-slate-400 font-bold flex items-center">
+                            <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5" />
+                            閱讀文章原文 (Passage)：
+                          </div>
+                          <p className="text-slate-100 font-medium leading-relaxed" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
+                            {word.paraphrase.passageEn}
+                          </p>
+                          <p className="text-slate-400 leading-relaxed" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx - 1)}px` }}>
+                            {word.paraphrase.passageZh}
+                          </p>
+                        </div>
+
+                        {/* 正解選項對照 */}
+                        <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-700/50 space-y-1">
+                          <div className="text-[10px] text-emerald-400 font-bold flex items-center">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5" />
+                            考題正解選項 (Answer Choice)：
+                          </div>
+                          <p className="text-emerald-200 font-bold leading-relaxed" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
+                            {word.paraphrase.choiceEn}
+                          </p>
+                          <p className="text-emerald-400/90 leading-relaxed" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx - 1)}px` }}>
+                            {word.paraphrase.choiceZh}
+                          </p>
+                        </div>
+
+                        {/* 替換秘笈 */}
+                        {word.paraphrase.note && (
+                          <div className="px-2.5 py-1.5 rounded-lg bg-amber-950/30 border border-amber-800/40 text-amber-200/90 leading-relaxed" style={{ fontSize: `${Math.max(12, pixelMetrics.supportingPx - 1)}px` }}>
+                            💡 <strong>換言之秘笈</strong>：{word.paraphrase.note}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
 

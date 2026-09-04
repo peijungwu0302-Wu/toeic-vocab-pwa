@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎨 TOEIC 多益專屬配圖工作台 (Image Studio Companion)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulse-border {
+      0%, 100% { border-color: #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+      50% { border-color: #818cf8; box-shadow: 0 0 25px rgba(129, 140, 248, 0.5); }
+    }
+    .paste-zone-active {
+      animation: pulse-border 2s infinite ease-in-out;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col">
+
+  <!-- Top Navbar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50 px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-xl">
+        🎨
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-lg font-bold tracking-tight text-white">TOEIC 專屬配圖伴侶工作台</h1>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 font-medium">v5.0.0</span>
+        </div>
+        <p class="text-xs text-slate-400">Gemini 網頁版 ＋ Antigravity 背景無縫聯動</p>
+      </div>
+    </div>
+
+    <!-- Status & Tier Switcher -->
+    <div class="flex items-center gap-4 flex-wrap">
+      <!-- Tier Selector -->
+      <div class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+        <label for="tierSelect" class="text-xs text-slate-400">當前分卷：</label>
+        <select id="tierSelect" class="bg-transparent text-xs font-semibold text-sky-400 focus:outline-none cursor-pointer">
+          <option value="advanced-2500" selected>商務進階 (advanced-2500)</option>
+          <option value="core-1200">核心高頻 (core-1200)</option>
+          <option value="expert-high-part1">滿分巔峰 Part 1</option>
+          <option value="expert-high-part2">滿分巔峰 Part 2</option>
+          <option value="expert-high-part3">滿分巔峰 Part 3</option>
+        </select>
+      </div>
+
+      <!-- Live Sync Pill -->
+      <div id="syncPill" class="flex items-center gap-2 bg-emerald-950/40 text-emerald-400 text-xs px-3 py-1.5 rounded-lg border border-emerald-800/50">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span id="syncText">雙向即時同步中</span>
+      </div>
+
+      <!-- Total Stat Pill -->
+      <div class="bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
+        全庫已入庫：<strong id="statTotalDisk" class="text-sky-400">--</strong> / 11,154 張
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="bg-slate-900 border-b border-slate-800 px-6 flex gap-6">
+    <button id="tabWorkbenchBtn" class="py-3 text-sm font-semibold border-b-2 border-sky-400 text-sky-400 flex items-center gap-2 transition">
+      <span>🎯 待生單字作業台</span>
+      <span id="badgePendingCount" class="px-2 py-0.5 text-xs rounded-full bg-sky-500/20 text-sky-300 font-mono">0</span>
+    </button>
+    <button id="tabGalleryBtn" class="py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition">
+      <span>🖼️ 成果審查畫廊 (Live Feed)</span>
+      <span id="badgeRecentCount" class="px-2 py-0.5 text-xs rounded-full bg-slate-800 text-slate-400 font-mono">即時</span>
+    </button>
+  </div>
+
+  <!-- Main Body Content -->
+  <main class="flex-1 p-6 max-w-6xl w-full mx-auto">
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: WORKBENCH (待生單字作業台) -->
+    <!-- ========================================================================= -->
+    <section id="tabWorkbench" class="space-y-6">
+      
+      <!-- Progress Bar -->
+      <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+        <div class="flex justify-between text-xs text-slate-400">
+          <span id="tierProgressLabel">商務進階 (advanced-2500) 推進進度</span>
+          <span id="tierProgressPercent" class="font-mono text-sky-400 font-bold">0%</span>
+        </div>
+        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div id="tierProgressBar" class="bg-gradient-to-r from-sky-500 to-indigo-500 h-full w-0 transition-all duration-500"></div>
+        </div>
+      </div>
+
+      <!-- Current Word Card -->
+      <div id="cardContainer" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+        
+        <!-- Top Bar: Headword & Definition -->
+        <div class="flex flex-wrap items-baseline justify-between gap-4 pb-4 border-b border-slate-800">
+          <div>
+            <div class="flex items-center gap-3">
+              <span id="currentWordHeadword" class="text-3xl font-extrabold text-white tracking-tight">載入中...</span>
+              <span id="currentWordPos" class="text-xs px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 font-mono">--</span>
+              <span class="text-xs text-slate-500 font-mono" id="currentWordSlug">#</span>
+            </div>
+            <p id="currentWordZh" class="text-base text-slate-300 mt-1 font-medium">--</p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button id="btnSkip" class="px-3.5 py-1.5 text-xs text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-lg transition">
+              ⏭️ 跳過此詞 (Skip)
+            </button>
+            <a href="https://gemini.google.com/app" target="_blank" class="px-4 py-1.5 text-xs font-semibold text-sky-400 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 rounded-lg flex items-center gap-1.5 transition">
+              🚀 開啟 Gemini 網頁 ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- 🌟 1. 英文生圖提示詞 (Prompt Box) -->
+        <div class="space-y-3 bg-slate-900 border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold text-sky-400 flex items-center gap-1.5">
+                <span>🎨 專屬生圖指令 (Prompt - 發送給 Gemini 網頁)</span>
+              </span>
+            </div>
+            <button id="btnCopyPrompt" class="px-4 py-1.5 text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white rounded-lg shadow-md flex items-center gap-1.5 transition active:scale-95">
+              <span id="copyIcon">📋</span>
+              <span id="copyText">一鍵複製英文 Prompt</span>
+            </button>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-xl font-mono text-xs text-sky-200/90 leading-relaxed max-h-28 overflow-y-auto custom-scrollbar">
+            <p id="currentWordPrompt">--</p>
+          </div>
+        </div>
+
+        <!-- 🌟 2. 具象例句 ＆ 中文翻譯 (Concrete Example Sentence & Translation) -->
+        <div class="space-y-4 bg-slate-900 border border-emerald-900/40 rounded-2xl p-5 shadow-xl">
+          <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
+                <span>📖 生活具象例句 ＆ 中譯對照（畫面記憶錨點）</span>
+              </span>
+            </div>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono font-medium">
+              ⚡ 零延遲本地解析
+            </span>
+          </div>
+
+          <!-- Concrete English Example -->
+          <div class="space-y-1">
+            <div class="text-[11px] font-bold text-slate-400">🇺🇸 生活具象英文例句：</div>
+            <div class="bg-slate-950/80 border border-slate-800 p-3.5 rounded-xl">
+              <p id="currentWordExampleEn" class="text-base font-semibold text-sky-100 leading-relaxed">--</p>
+            </div>
+          </div>
+
+          <!-- Concrete Chinese Translation -->
+          <div class="space-y-1">
+            <div class="text-[11px] font-bold text-emerald-400/90">🇹🇼 繁體中文例句翻譯：</div>
+            <div class="bg-emerald-950/20 border border-emerald-500/30 p-3 rounded-xl">
+              <p id="currentWordExampleZh" class="text-sm text-emerald-200 font-medium leading-relaxed">--</p>
+            </div>
+          </div>
+
+          <!-- Business TOEIC Example (Optional Subcard) -->
+          <div id="boxBusinessExample" class="pt-3 border-t border-slate-800/80 space-y-2 hidden">
+            <div class="text-[11px] font-bold text-amber-400/90 flex items-center gap-1.5">
+              <span>💼 多益職場情境例句：</span>
+              <span id="currentWordBusinessScenario" class="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 font-medium">多益真題</span>
+            </div>
+            <div class="bg-slate-950/60 border border-slate-800/80 p-3 rounded-xl space-y-1">
+              <p id="currentWordBusinessEn" class="text-xs font-mono text-slate-200 leading-relaxed">--</p>
+              <p id="currentWordBusinessZh" class="text-xs text-slate-400 leading-relaxed">--</p>
+            </div>
+          </div>
+
+          <!-- Collapsible Prompt Details (Folded by default) -->
+          <details class="pt-1 text-xs text-slate-400 border-t border-slate-800/50">
+            <summary class="cursor-pointer text-slate-400 hover:text-slate-200 py-1 select-none font-medium flex items-center gap-1">
+              <span>🔍 點此展開提示詞中文意境與生圖單字拆解</span>
+            </summary>
+            <div class="mt-3 space-y-2.5 bg-slate-950/50 p-3 rounded-xl border border-slate-800">
+              <p id="currentWordPromptZh" class="text-slate-300 whitespace-pre-line text-xs leading-relaxed">--</p>
+              <div id="currentWordKeywords" class="flex flex-wrap gap-1.5 pt-1"></div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Paste Dropzone Area -->
+        <div id="pasteZone" class="paste-zone-active bg-slate-950/80 border-2 border-dashed border-sky-500/50 hover:border-sky-400 rounded-2xl p-8 text-center cursor-pointer transition flex flex-col items-center justify-center gap-3">
+          <div id="pasteStateNormal" class="space-y-2">
+            <div class="w-12 h-12 rounded-full bg-sky-500/10 text-sky-400 flex items-center justify-center mx-auto text-2xl">
+              📥
+            </div>
+            <p class="text-sm font-semibold text-slate-200">
+              在 Gemini 複製好圖片後，直接在畫面任一處按 <kbd class="px-2 py-0.5 bg-slate-800 border border-slate-700 rounded text-sky-300 font-mono text-xs">Ctrl + V</kbd>
+            </p>
+            <p class="text-xs text-slate-400">
+              系統將自動抓取剪貼簿圖片 ➔ 轉換為輕量 WebP ➔ 自動存檔並跳下一詞
+            </p>
+          </div>
+
+          <!-- Preview State inside dropzone (Hidden until pasted) -->
+          <div id="pasteStateUploading" class="hidden flex-col items-center gap-3">
+            <div class="w-8 h-8 border-4 border-sky-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-sm text-sky-300 font-semibold">正在轉檔 WebP 並存入圖庫...</p>
+          </div>
+
+          <div id="pasteStateSuccess" class="hidden flex-col items-center gap-3">
+            <img id="pastedPreviewImg" class="w-48 h-48 object-cover rounded-xl border border-emerald-500/50 shadow-lg shadow-emerald-500/10" src="" alt="preview" />
+            <p class="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
+              <span>✅ 成功入庫！準備推進下一個單字...</span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Empty State (When all finished) -->
+      <div id="emptyContainer" class="hidden bg-slate-900 border border-emerald-500/30 rounded-2xl p-12 text-center space-y-4">
+        <div class="text-5xl">🎉</div>
+        <h3 class="text-xl font-bold text-emerald-400">太棒了！當前分卷的所有單字配圖已全部完成！</h3>
+        <p class="text-sm text-slate-400">您可以從上方下拉選單切換至其他分卷繼續作業，或點擊「成果審查畫廊」檢視所有生圖。</p>
+      </div>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: LIVE GALLERY (即時成果審查畫廊) -->
+    <!-- ========================================================================= -->
+    <section id="tabGallery" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white">最新生成圖庫動態流 (Live Stream)</h2>
+          <p class="text-xs text-slate-400">實時監聽磁碟與審計紀錄，包含背景與人工產生的所有成果</p>
+        </div>
+        <button id="btnRefreshGallery" class="px-3.5 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg flex items-center gap-1.5 transition">
+          🔄 重新整理
+        </button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Cards injected dynamically -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Image Modal for Full Preview -->
+  <div id="imageModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 space-y-4 relative">
+      <button id="modalCloseBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">✕</button>
+      <div class="aspect-square w-full rounded-xl overflow-hidden bg-black">
+        <img id="modalImg" class="w-full h-full object-contain" src="" alt="" />
+      </div>
+      <div>
+        <h3 id="modalWord" class="text-xl font-bold text-white"></h3>
+        <p id="modalZh" class="text-sm text-slate-400"></p>
+        <p id="modalPrompt" class="text-xs text-slate-400 font-mono mt-2 bg-slate-950 p-3 rounded-lg max-h-32 overflow-y-auto"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    const API_BASE = window.location.origin;
+    let currentTier = localStorage.getItem('toeic_image_studio_tier') || 'expert-high-part1';
+    let pendingQueue = [];
+    let currentIndex = 0;
+    let isUploading = false;
+    let lastKnownCompletedSlugs = new Set();
+
+    // DOM Elements
+    const tierSelect = document.getElementById('tierSelect');
+    const syncPill = document.getElementById('syncPill');
+    const syncText = document.getElementById('syncText');
+    const statTotalDisk = document.getElementById('statTotalDisk');
+    const tabWorkbenchBtn = document.getElementById('tabWorkbenchBtn');
+    const tabGalleryBtn = document.getElementById('tabGalleryBtn');
+    const tabWorkbench = document.getElementById('tabWorkbench');
+    const tabGallery = document.getElementById('tabGallery');
+
+    const cardContainer = document.getElementById('cardContainer');
+    const emptyContainer = document.getElementById('emptyContainer');
+    const currentWordHeadword = document.getElementById('currentWordHeadword');
+    const currentWordPos = document.getElementById('currentWordPos');
+    const currentWordSlug = document.getElementById('currentWordSlug');
+    const currentWordZh = document.getElementById('currentWordZh');
+    const currentWordExampleEn = document.getElementById('currentWordExampleEn');
+    const currentWordExampleZh = document.getElementById('currentWordExampleZh');
+    const currentWordPrompt = document.getElementById('currentWordPrompt');
+    const btnCopyPrompt = document.getElementById('btnCopyPrompt');
+    const copyIcon = document.getElementById('copyIcon');
+    const copyText = document.getElementById('copyText');
+    const btnSkip = document.getElementById('btnSkip');
+    const pasteZone = document.getElementById('pasteZone');
+    const pasteStateNormal = document.getElementById('pasteStateNormal');
+    const pasteStateUploading = document.getElementById('pasteStateUploading');
+    const pasteStateSuccess = document.getElementById('pasteStateSuccess');
+    const pastedPreviewImg = document.getElementById('pastedPreviewImg');
+
+    const tierProgressBar = document.getElementById('tierProgressBar');
+    const tierProgressPercent = document.getElementById('tierProgressPercent');
+    const tierProgressLabel = document.getElementById('tierProgressLabel');
+    const badgePendingCount = document.getElementById('badgePendingCount');
+    const galleryGrid = document.getElementById('galleryGrid');
+    const btnRefreshGallery = document.getElementById('btnRefreshGallery');
+
+    // Modal
+    const imageModal = document.getElementById('imageModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalImg = document.getElementById('modalImg');
+    const modalWord = document.getElementById('modalWord');
+    const modalZh = document.getElementById('modalZh');
+    const modalPrompt = document.getElementById('modalPrompt');
+
+    function showToast(msg, type = 'info') {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      const bg = type === 'success' ? 'bg-emerald-900/90 border-emerald-500 text-emerald-100' :
+                 type === 'warn' ? 'bg-amber-900/90 border-amber-500 text-amber-100' :
+                 'bg-slate-800/90 border-sky-500 text-sky-100';
+      t.className = `${bg} border px-4 py-2.5 rounded-xl shadow-2xl backdrop-blur text-xs flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0`;
+      t.innerHTML = `<span>🔔</span><span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => {
+        t.classList.remove('translate-y-2', 'opacity-0');
+      }, 20);
+      setTimeout(() => {
+        t.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => t.remove(), 300);
+      }, 3500);
+    }
+
+    // Tab Switching
+    tabWorkbenchBtn.onclick = () => {
+      tabWorkbenchBtn.className = 'py-3 text-sm font-semibold border-b-2 border-sky-400 text-sky-400 flex items-center gap-2 transition';
+      tabGalleryBtn.className = 'py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition';
+      tabWorkbench.classList.remove('hidden');
+      tabGallery.classList.add('hidden');
+    };
+
+    tabGalleryBtn.onclick = () => {
+      tabGalleryBtn.className = 'py-3 text-sm font-semibold border-b-2 border-sky-400 text-sky-400 flex items-center gap-2 transition';
+      tabWorkbenchBtn.className = 'py-3 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition';
+      tabGallery.classList.remove('hidden');
+      tabWorkbench.classList.add('hidden');
+      fetchRecentGallery();
+    };
+
+    modalCloseBtn.onclick = () => imageModal.classList.add('hidden');
+    imageModal.onclick = (e) => { if (e.target === imageModal) imageModal.classList.add('hidden'); };
+
+    // Fetch Status
+    async function fetchStatus() {
+      try {
+        const res = await fetch(`${API_BASE}/api/status`);
+        if (!res.ok) throw new Error('Status fetch failed');
+        const data = await res.json();
+        statTotalDisk.textContent = data.totalOnDisk.toLocaleString();
+
+        const tInfo = data.tiers[currentTier];
+        if (tInfo) {
+          const pct = Math.round((tInfo.completed / tInfo.total) * 100);
+          tierProgressBar.style.width = `${pct}%`;
+          tierProgressPercent.textContent = `${pct}% (${tInfo.completed} / ${tInfo.total})`;
+          tierProgressLabel.textContent = `${tInfo.name} 推進進度`;
+          badgePendingCount.textContent = tInfo.pending;
+        }
+
+        syncPill.className = 'flex items-center gap-2 bg-emerald-950/40 text-emerald-400 text-xs px-3 py-1.5 rounded-lg border border-emerald-800/50';
+        syncText.textContent = '雙向即時同步中';
+      } catch (e) {
+        syncPill.className = 'flex items-center gap-2 bg-rose-950/40 text-rose-400 text-xs px-3 py-1.5 rounded-lg border border-rose-800/50';
+        syncText.textContent = '伺服器未連線';
+      }
+    }
+
+    // Fetch Pending Words for Queue
+    async function fetchPendingWords() {
+      try {
+        const res = await fetch(`${API_BASE}/api/pending?tier=${currentTier}&limit=50`);
+        const data = await res.json();
+        pendingQueue = data.items || [];
+        currentIndex = 0;
+        renderCurrentWord();
+      } catch (e) {
+        console.error('Failed to load pending words:', e);
+      }
+    }
+
+    function renderCurrentWord() {
+      if (pendingQueue.length === 0 || currentIndex >= pendingQueue.length) {
+        cardContainer.classList.add('hidden');
+        emptyContainer.classList.remove('hidden');
+        return;
+      }
+
+      cardContainer.classList.remove('hidden');
+      emptyContainer.classList.add('hidden');
+
+      const word = pendingQueue[currentIndex];
+      currentWordHeadword.textContent = word.headword;
+      currentWordPos.textContent = (word.partsOfSpeech || []).join(', ') || 'n.';
+      currentWordSlug.textContent = `#${word.slug}`;
+      currentWordZh.textContent = word.definitionZh || '暫無中文釋義';
+      currentWordPrompt.textContent = word.imagePrompt || 'Stylized high-detail concept art...';
+
+      // 📖 生活具象例句與中譯
+      const exEn = word.concreteEn || '';
+      const exZh = word.concreteZh || word.scene || word.definitionZh || '';
+      currentWordExampleEn.textContent = exEn || '（具象例句將自動匹配生圖場景）';
+      currentWordExampleZh.textContent = exZh;
+
+      // 💼 多益職場情境例句
+      const bizBox = document.getElementById('boxBusinessExample');
+      if (word.businessEn) {
+        bizBox.classList.remove('hidden');
+        document.getElementById('currentWordBusinessEn').textContent = word.businessEn;
+        document.getElementById('currentWordBusinessZh').textContent = word.businessZh || '';
+        document.getElementById('currentWordBusinessScenario').textContent = word.businessScenario || '多益真題';
+      } else {
+        bizBox.classList.add('hidden');
+      }
+
+      // Reset Paste Zone UI
+      pasteStateNormal.classList.remove('hidden');
+      pasteStateUploading.classList.add('hidden');
+      pasteStateSuccess.classList.add('hidden');
+      copyIcon.textContent = '📋';
+      copyText.textContent = '一鍵複製英文 Prompt';
+
+      // 📖 100% 純本機前端同步解析（摺疊區備用，0 算力消耗）
+      renderPromptTranslationAndKeywords(word);
+    }
+
+    // 100% 本地同步解析提示詞與單字拆解
+    function renderPromptTranslationAndKeywords(word) {
+      const promptZhElem = document.getElementById('currentWordPromptZh');
+      const keywordsElem = document.getElementById('currentWordKeywords');
+      const badgeElem = document.getElementById('transStatusBadge');
+      const prompt = word.imagePrompt || '';
+
+      if (!prompt) {
+        promptZhElem.textContent = '暫無提示詞';
+        keywordsElem.innerHTML = '';
+        return;
+      }
+
+      // 提取招牌文字錨點
+      const m = prompt.match(/clearly displays ['"]([^'"]+)['"]/i);
+      const signText = m ? m[1] : '';
+      let signPart = '';
+      if (signText) {
+        if (prompt.toLowerCase().includes('neon')) signPart = `發光霓虹招牌清晰顯示「${signText}」`;
+        else if (prompt.toLowerCase().includes('plaque') || prompt.toLowerCase().includes('storefront')) signPart = `精緻店面門牌清晰顯示「${signText}」`;
+        else signPart = `發光文字看板清晰顯示「${signText}」`;
+      }
+
+      // 組合繁體中文提示詞對照
+      const translationText = `一幅關於「${word.headword}（${word.definitionZh || ''}）」的高細節數位概念藝術插畫（Concept Art）。\n` +
+        `【場景畫面】${word.scene ? word.scene : '商務生活場景'}，人物身著現代精緻服飾，表情自信且放鬆。\n` +
+        (signPart ? `【招牌文字】在醒目處，${signPart}。\n` : '') +
+        `【光影與美學】陽光穿透玻璃灑落、溫暖的環境氛圍光影（Ambient lighting）、和諧典雅的色彩調配；俐落乾淨的線稿輪廓（Crisp linework）、充滿活力的日間採光、帶有平滑反光的賽璐璐上色（Cel-shading）、豐富的建築空間透視感，1:1 正方形構圖。`;
+
+      promptZhElem.textContent = translationText;
+      badgeElem.textContent = '⚡ 本地即時對照（0 雲端消耗）';
+
+      // 提煉英文高頻單字拆解
+      const keywords = [
+        { en: "Concept art", zh: "概念插畫" },
+        { en: "Crisp linework", zh: "俐落線條" },
+        { en: "Cel-shading", zh: "賽璐璐著色" },
+        { en: "Ambient lighting", zh: "氛圍光影" },
+        { en: "Architectural perspective", zh: "建築透視" }
+      ];
+      if (signText) {
+        keywords.unshift({ en: signText, zh: "招牌文字錨點" });
+      }
+
+      keywordsElem.innerHTML = '';
+      for (const kw of keywords) {
+        const chip = document.createElement('span');
+        chip.className = 'px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-mono transition text-xs flex items-center gap-1.5 shadow-sm';
+        chip.innerHTML = `<strong class="text-white font-semibold">${kw.en}</strong><span class="text-slate-500">·</span><span class="text-amber-200/90">${kw.zh}</span>`;
+        keywordsElem.appendChild(chip);
+      }
+    }
+
+    // Copy Prompt Action
+    btnCopyPrompt.onclick = () => {
+      const text = currentWordPrompt.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        copyIcon.textContent = '✅';
+        copyText.textContent = '已複製到剪貼簿！';
+        showToast(`已複製 "${currentWordHeadword.textContent}" 的 Prompt，請切換至 Gemini 貼上`, 'success');
+        setTimeout(() => {
+          copyIcon.textContent = '📋';
+          copyText.textContent = '一鍵複製生圖 Prompt';
+        }, 2500);
+      });
+    };
+
+    // Skip Word
+    btnSkip.onclick = () => {
+      currentIndex++;
+      if (currentIndex >= pendingQueue.length) {
+        fetchPendingWords();
+      } else {
+        renderCurrentWord();
+      }
+    };
+
+    // Global Clipboard Paste Handler
+    window.addEventListener('paste', async (e) => {
+      if (tabWorkbench.classList.contains('hidden')) return;
+      if (isUploading) return;
+
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      let imageItem = null;
+
+      for (const item of items) {
+        if (item.type.indexOf('image') !== -1) {
+          imageItem = item;
+          break;
+        }
+      }
+
+      if (!imageItem) {
+        showToast('剪貼簿中未偵測到圖片，請在 Gemini 的圖片上按右鍵「複製圖片」', 'warn');
+        return;
+      }
+
+      const file = imageItem.getAsFile();
+      processAndUploadImage(file);
+    });
+
+    // Drag & Drop
+    pasteZone.ondragover = (e) => { e.preventDefault(); pasteZone.classList.add('border-sky-300'); };
+    pasteZone.ondragleave = () => { pasteZone.classList.remove('border-sky-300'); };
+    pasteZone.ondrop = (e) => {
+      e.preventDefault();
+      pasteZone.classList.remove('border-sky-300');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        processAndUploadImage(e.dataTransfer.files[0]);
+      }
+    };
+
+    // Process & Convert Image to WebP using HTML Canvas
+    async function processAndUploadImage(file) {
+      if (!pendingQueue[currentIndex]) return;
+      const targetWord = pendingQueue[currentIndex];
+      isUploading = true;
+
+      pasteStateNormal.classList.add('hidden');
+      pasteStateUploading.classList.remove('hidden');
+      pasteStateSuccess.classList.add('hidden');
+
+      try {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+
+        img.onload = async () => {
+          // Draw to canvas and compress to WebP (quality: 0.85)
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth || img.width;
+          canvas.height = img.naturalHeight || img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          // 1. 輕量化 WebP (品質 85) -> 供 PWA 離線快速加載 (~50-80KB)
+          const webpDataUrl = canvas.toDataURL('image/webp', 0.85);
+
+          // 2. 原始高畫質 Master JPG (品質 95) -> 留底備查與高解析度典藏 (~300-800KB)
+          const jpgDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+          // Upload to Companion Server (雙軌存檔)
+          const response = await fetch(`${API_BASE}/api/save-image`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              headword: targetWord.headword,
+              slug: targetWord.slug,
+              webpBase64: webpDataUrl,
+              originalBase64: jpgDataUrl,
+              tier: currentTier,
+              prompt: targetWord.imagePrompt,
+              source: 'web_companion'
+            })
+          });
+
+          const resData = await response.json();
+          if (!response.ok) throw new Error(resData.error || '儲存失敗');
+
+          // Show Success Preview
+          pasteStateUploading.classList.add('hidden');
+          pasteStateSuccess.classList.remove('hidden');
+          pastedPreviewImg.src = webpDataUrl;
+
+          showToast(`🎉 "${targetWord.headword}" 已自動存為 ${resData.webpFilename}！`, 'success');
+
+          // Advance to next after 800ms
+          setTimeout(() => {
+            isUploading = false;
+            currentIndex++;
+            if (currentIndex >= pendingQueue.length) {
+              fetchPendingWords();
+            } else {
+              renderCurrentWord();
+            }
+            fetchStatus();
+          }, 800);
+        };
+
+        img.src = objectUrl;
+      } catch (err) {
+        console.error('Image upload failed:', err);
+        showToast(`儲存失敗: ${err.message}`, 'warn');
+        pasteStateNormal.classList.remove('hidden');
+        pasteStateUploading.classList.add('hidden');
+        isUploading = false;
+      }
+    }
+
+    // Fetch Recent Gallery
+    async function fetchRecentGallery() {
+      try {
+        const res = await fetch(`${API_BASE}/api/recent`);
+        const data = await res.json();
+        const items = data.recent || [];
+        galleryGrid.innerHTML = '';
+
+        if (items.length === 0) {
+          galleryGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 text-sm">尚無生成紀錄</div>`;
+          return;
+        }
+
+        for (const item of items) {
+          const card = document.createElement('div');
+          card.className = 'bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-sky-500/50 transition group flex flex-col';
+          const sourceBadge = item.source === 'web_companion' ?
+            `<span class="px-2 py-0.5 text-[10px] rounded bg-emerald-500/20 text-emerald-300 font-semibold">👤 網頁伴侶</span>` :
+            item.source === 'antigravity' ?
+            `<span class="px-2 py-0.5 text-[10px] rounded bg-purple-500/20 text-purple-300 font-semibold">🤖 Antigravity</span>` :
+            `<span class="px-2 py-0.5 text-[10px] rounded bg-sky-500/20 text-sky-300 font-semibold">🚀 Vertex AI</span>`;
+
+          card.innerHTML = `
+            <div class="aspect-square relative overflow-hidden bg-black cursor-pointer">
+              <img src="${item.imageUrl}" alt="${item.headword}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+              <div class="absolute top-2 right-2">${sourceBadge}</div>
+            </div>
+            <div class="p-3 flex-1 flex flex-col justify-between space-y-2">
+              <div>
+                <div class="flex items-baseline justify-between">
+                  <h4 class="font-bold text-white text-sm truncate">${item.headword}</h4>
+                  <span class="text-[10px] font-mono text-slate-500">${item.sizeKb} KB</span>
+                </div>
+                <p class="text-xs text-slate-400 line-clamp-1 mt-0.5 font-mono">#${item.slug}</p>
+              </div>
+              <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-[10px] text-slate-500">
+                <span>${new Date(item.generatedAt).toLocaleTimeString()}</span>
+                <button class="text-sky-400 hover:text-sky-300 font-medium btn-view-modal">檢視大圖 ↗</button>
+              </div>
+            </div>
+          `;
+
+          card.querySelector('.btn-view-modal').onclick = () => {
+            modalImg.src = item.imageUrl;
+            modalWord.textContent = item.headword;
+            modalZh.textContent = `#${item.slug} (${item.sizeKb} KB)`;
+            modalPrompt.textContent = item.prompt || '無提示詞紀錄';
+            imageModal.classList.remove('hidden');
+          };
+
+          galleryGrid.appendChild(card);
+        }
+      } catch (e) {
+        console.error('Gallery fetch failed:', e);
+      }
+    }
+
+    btnRefreshGallery.onclick = fetchRecentGallery;
+
+    // Tier Change
+    tierSelect.onchange = (e) => {
+      currentTier = e.target.value;
+      localStorage.setItem('toeic_image_studio_tier', currentTier);
+      fetchStatus();
+      fetchPendingWords();
+    };
+
+    // ⚡ Real-time SSE Push (Sub-100ms Instant Sync)
+    function setupSSE() {
+      try {
+        const evtSource = new EventSource(`${API_BASE}/api/events`);
+        evtSource.addEventListener('image_added', (e) => {
+          try {
+            const data = JSON.parse(e.data);
+            const addedSlug = data.slug.toLowerCase();
+            const sourceBadge = data.source === 'web_companion' ? '👤 伴侶' : '🤖 背景';
+            showToast(`${sourceBadge} 入庫: "${data.headword || addedSlug}.webp"`, 'info');
+
+            // 1. Instantly remove from pending queue if present
+            pendingQueue = pendingQueue.filter(w => w.slug.toLowerCase() !== addedSlug);
+
+            // 2. If current word was the one completed, advance!
+            if (pendingQueue[currentIndex] && pendingQueue[currentIndex].slug.toLowerCase() === addedSlug) {
+              renderCurrentWord();
+            } else if (currentIndex >= pendingQueue.length && pendingQueue.length > 0) {
+              currentIndex = 0;
+              renderCurrentWord();
+            } else if (pendingQueue.length === 0) {
+              fetchPendingWords();
+            }
+
+            // 3. Update status and gallery
+            fetchStatus();
+            if (!tabGallery.classList.contains('hidden')) {
+              fetchRecentGallery();
+            }
+          } catch (err) {
+            console.error('SSE parse error:', err);
+          }
+        });
+
+        evtSource.onerror = () => {
+          // Will automatically reconnect
+        };
+      } catch (err) {
+        console.warn('SSE not supported, falling back to polling:', err);
+      }
+    }
+
+    // Polling Sync (Fallback every 5 seconds)
+    setInterval(async () => {
+      await fetchStatus();
+    }, 5000);
+
+    // Initial Load
+    tierSelect.value = currentTier;
+    setupSSE();
+    fetchStatus();
+    fetchPendingWords();
+  </script>
+</body>
+</html>
