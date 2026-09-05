@@ -98,6 +98,9 @@ const htmlContent = `<!DOCTYPE html>
 
     <!-- Actions & Stats -->
     <div class="flex items-center gap-3 flex-wrap">
+      <button id="btnSyncCloud" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-400 text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
+        🔄 刷新雲端進度
+      </button>
       <button id="btnDownloadZip" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition disabled:opacity-40 disabled:cursor-not-allowed">
         📦 打包下載全部已貼圖片 ZIP (<span id="zipCount">0</span>)
       </button>
@@ -109,11 +112,16 @@ const htmlContent = `<!DOCTYPE html>
 
   <!-- Controls Bar -->
   <section class="bg-slate-900/50 border-b border-slate-800/80 px-4 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
-    <!-- Tier Selector -->
+    <!-- Tier Selector & Sorting -->
     <div class="flex items-center gap-2 flex-wrap">
       <label class="text-xs font-medium text-slate-400">選擇題庫：</label>
       <select id="tierSelect" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 focus:outline-none">
         ${tiers.map(t => `<option value="${t.id}">${t.name}</option>`).join('\n        ')}
+      </select>
+
+      <select id="sortSelect" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl px-2.5 py-2 focus:ring-2 focus:ring-sky-500 focus:outline-none ml-1">
+        <option value="asc">正序 (A ➔ Z)</option>
+        <option value="desc">逆序 (Z ➔ A 錯開衝刺)</option>
       </select>
       
       <div class="flex items-center gap-1.5 ml-2">
@@ -269,8 +277,9 @@ const htmlContent = `<!DOCTYPE html>
       const all = DATASET[currentTier] || [];
       const pendingOnly = chkPendingOnly.checked;
       const query = searchInput.value.trim().toLowerCase();
+      const sortOrder = sortSelect ? sortSelect.value : 'asc';
 
-      currentWords = all.filter(w => {
+      let filtered = all.filter(w => {
         if (pendingOnly && w.hasImage && !stagedImages.has(w.slug)) return false;
         if (query) {
           return w.headword.toLowerCase().includes(query) || w.zh.toLowerCase().includes(query);
@@ -278,6 +287,11 @@ const htmlContent = `<!DOCTYPE html>
         return true;
       });
 
+      if (sortOrder === 'desc') {
+        filtered = filtered.slice().reverse();
+      }
+
+      currentWords = filtered;
       listTotal.textContent = currentWords.length;
       wordsList.innerHTML = '';
 
@@ -433,6 +447,37 @@ const htmlContent = `<!DOCTYPE html>
       showToast('📦 ZIP 下載完成！回家丟進 incoming_images 資料夾即可一秒入庫！', true);
     };
 
+    const sortSelect = document.getElementById('sortSelect');
+    const btnSyncCloud = document.getElementById('btnSyncCloud');
+
+    async function syncFromCloud(showFeedback = true) {
+      try {
+        if (showFeedback) showToast('⏳ 正在同步最新雲端出圖進度...', false);
+        const res = await fetch('./data/v1/completed_images.json?t=' + Date.now());
+        if (res.ok) {
+          const cloudSlugs = new Set(await res.json());
+          let updated = 0;
+          Object.keys(DATASET).forEach(tier => {
+            DATASET[tier].forEach(w => {
+              if (cloudSlugs.has(w.slug) && !w.hasImage) {
+                w.hasImage = true;
+                updated++;
+              }
+            });
+          });
+          renderList();
+          if (showFeedback) showToast(\`🔄 雲端進度同步完成！已標記 \${updated} 筆新入庫單字！\`, true);
+        } else if (showFeedback) {
+          showToast('ℹ️ 離線模式：使用預載單字庫', false);
+        }
+      } catch (e) {
+        if (showFeedback) showToast('ℹ️ 離線模式：使用預載單字庫', false);
+      }
+    }
+
+    btnSyncCloud.onclick = () => syncFromCloud(true);
+    sortSelect.onchange = () => renderList();
+
     tierSelect.onchange = () => {
       currentTier = tierSelect.value;
       selectedWord = null;
@@ -446,6 +491,7 @@ const htmlContent = `<!DOCTYPE html>
     // Initial
     renderList();
     if (currentWords.length > 0) selectWord(currentWords[0]);
+    syncFromCloud(false); // Silent check on load
   </script>
 </body>
 </html>`;
