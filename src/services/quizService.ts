@@ -199,10 +199,16 @@ export const quizService = {
                 : null;
 
               if (bespoke && (bespoke.reason || bespoke.explanation)) {
+                const rawExpl = bespoke.reason || bespoke.explanation;
+                let finalExpl = rawExpl;
+                if (bespoke.meaning && !rawExpl.includes(bespoke.meaning)) {
+                  const tag = bespoke.pos ? `【${bespoke.pos} ${bespoke.meaning}】` : `【${bespoke.meaning}】`;
+                  finalExpl = `${tag} ${rawExpl}`;
+                }
                 return {
                   option: opt,
                   isCorrect: bespoke.isCorrect ?? (opt === matchingQuiz.answer),
-                  explanation: bespoke.reason || bespoke.explanation
+                  explanation: finalExpl
                 };
               }
 

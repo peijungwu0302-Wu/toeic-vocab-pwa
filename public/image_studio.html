@@ -114,6 +114,7 @@
               <span id="currentWordHeadword" class="text-3xl font-extrabold text-white tracking-tight">載入中...</span>
               <span id="currentWordPos" class="text-xs px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 font-mono">--</span>
               <span class="text-xs text-slate-500 font-mono" id="currentWordSlug">#</span>
+              <span id="currentWordDomain" class="hidden text-xs px-2.5 py-1 rounded-md bg-indigo-950/80 text-indigo-300 border border-indigo-700/50 font-medium">--</span>
             </div>
             <p id="currentWordZh" class="text-base text-slate-300 mt-1 font-medium">--</p>
           </div>
@@ -198,6 +199,24 @@
               <div id="currentWordKeywords" class="flex flex-wrap gap-1.5 pt-1"></div>
             </div>
           </details>
+        </div>
+
+        <!-- 🌟 3. 4D 真題命題 ＆ 考點詳解（物盡其用考題庫） -->
+        <div id="boxQuizzes" class="space-y-4 bg-slate-900 border border-indigo-900/50 rounded-2xl p-5 shadow-xl hidden">
+          <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-bold text-indigo-400 flex items-center gap-1.5">
+                <span>🎯 4D 真題命題 ＆ 考點詳解（物盡其用考題庫）</span>
+              </span>
+              <span id="quizBadgeCount" class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono">2 題</span>
+            </div>
+            <span id="quizDomainBadge" class="text-[10px] px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-medium">
+              🏢 商務情境
+            </span>
+          </div>
+          <div id="quizContainer" class="space-y-4">
+            <!-- Dynamically injected quizzes -->
+          </div>
         </div>
 
         <!-- Paste Dropzone Area -->
@@ -436,6 +455,72 @@
         document.getElementById('currentWordBusinessScenario').textContent = word.businessScenario || '多益真題';
       } else {
         bizBox.classList.add('hidden');
+      }
+
+      // 🏢 領域標籤 (24大真實現代商務情境)
+      const domainElem = document.getElementById('currentWordDomain');
+      if (word.domainTheme) {
+        domainElem.textContent = `🏢 ${word.domainTheme}`;
+        domainElem.classList.remove('hidden');
+      } else {
+        domainElem.classList.add('hidden');
+      }
+
+      // 🎯 4D 真題命題 ＆ 考點詳解（物盡其用考題庫）
+      const boxQuizzes = document.getElementById('boxQuizzes');
+      const quizContainer = document.getElementById('quizContainer');
+      const quizDomainBadge = document.getElementById('quizDomainBadge');
+      const quizBadgeCount = document.getElementById('quizBadgeCount');
+      if (word.quizzes && word.quizzes.length > 0) {
+        boxQuizzes.classList.remove('hidden');
+        quizBadgeCount.textContent = `${word.quizzes.length} 題`;
+        if (word.domainTheme) {
+          quizDomainBadge.textContent = `🏢 ${word.domainTheme}`;
+        }
+        quizContainer.innerHTML = word.quizzes.map((q, qIdx) => {
+          const stemFormatted = (q.stem || '').replace(/_{3,}/g, '<span class="text-amber-400 font-bold underline decoration-wavy decoration-amber-400 px-1">_____</span>');
+          const optionsHtml = (q.options || []).map(opt => {
+            const isAns = opt.toLowerCase() === (q.answer || '').toLowerCase();
+            const analysis = (q.optionAnalyses || []).find(oa => (oa.option || '').toLowerCase() === opt.toLowerCase());
+            return `
+              <div class="p-2.5 rounded-lg border text-xs ${isAns ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-200' : 'bg-slate-950/40 border-slate-800 text-slate-300'}">
+                <div class="flex items-center justify-between font-mono font-semibold">
+                  <span class="${isAns ? 'text-emerald-400 font-bold' : 'text-slate-200'}">
+                    ${isAns ? '🟢' : '⚪'} ${opt}
+                    ${analysis?.meaning ? `<span class="ml-1.5 font-sans font-normal text-[11px] text-amber-300">（${analysis.meaning}）</span>` : ''}
+                  </span>
+                  ${analysis?.pos ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">${analysis.pos}</span>` : ''}
+                </div>
+                ${analysis?.reason ? `<p class="mt-1 text-[11px] ${isAns ? 'text-emerald-300/90' : 'text-slate-400'}">${analysis.reason}</p>` : ''}
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-4 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-sky-300">第 ${qIdx + 1} 題：${q.subType === 'collocation_choice' ? '商業搭配詞題' : '商務單字辨析題'}</span>
+                <span class="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">正解: ${q.answer}</span>
+              </div>
+              <div class="space-y-1">
+                <p class="text-xs font-mono text-slate-100 leading-relaxed">${stemFormatted}</p>
+                <p class="text-[11px] text-slate-400">${q.stemTranslation || ''}</p>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                ${optionsHtml}
+              </div>
+              ${q.strategy ? `
+                <div class="pt-2 border-t border-slate-800/80 text-[11px] space-y-1">
+                  <div class="text-amber-300/90 font-semibold flex items-center gap-1"><span>💡 破題關鍵策略：</span><span class="text-slate-300 font-normal">${q.strategy}</span></div>
+                  ${q.examTrapTip ? `<div class="text-rose-300/90 font-semibold flex items-center gap-1"><span>⚠️ 陷阱排除：</span><span class="text-slate-400 font-normal">${q.examTrapTip}</span></div>` : ''}
+                  ${q.collocations && q.collocations.length > 0 ? `<div class="text-sky-300/90 font-semibold flex items-center gap-1"><span>🔗 必考搭配：</span><span class="text-slate-300 font-mono font-normal">${q.collocations.join('、')}</span></div>` : ''}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+      } else {
+        boxQuizzes.classList.add('hidden');
       }
 
       // Reset Paste Zone UI
