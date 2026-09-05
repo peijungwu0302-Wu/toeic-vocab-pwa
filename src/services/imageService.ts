@@ -204,6 +204,39 @@ export const imageService = {
       return { url: resolveImageUrl(`/assets/images/words/${slugWord}.webp`), tag: `${headword} 商務實景` };
     }
 
+    // 0.5 🌟 Visual Sharing: 屈折變體無縫繼承原型 WebP 實景圖（0 API 耗損、100% 視覺共享）
+    const findRootLemma = (word: string): string | null => {
+      if (word.length > 3 && word.endsWith('s') && !['ss', 'us', 'is', 'as'].some(x => word.endsWith(x))) {
+        if (LOCAL_IMAGE_SET.has(word.slice(0, -1))) return word.slice(0, -1);
+        if (word.endsWith('es') && LOCAL_IMAGE_SET.has(word.slice(0, -2))) return word.slice(0, -2);
+        if (word.endsWith('ies') && LOCAL_IMAGE_SET.has(word.slice(0, -3) + 'y')) return word.slice(0, -3) + 'y';
+      }
+      if (word.length > 4 && word.endsWith('ed')) {
+        if (LOCAL_IMAGE_SET.has(word.slice(0, -1))) return word.slice(0, -1);
+        if (LOCAL_IMAGE_SET.has(word.slice(0, -2))) return word.slice(0, -2);
+        if (word.endsWith('ied') && LOCAL_IMAGE_SET.has(word.slice(0, -3) + 'y')) return word.slice(0, -3) + 'y';
+        if (word.length > 5 && word[word.length - 3] === word[word.length - 4] && LOCAL_IMAGE_SET.has(word.slice(0, -3))) {
+          return word.slice(0, -3);
+        }
+      }
+      if (word.length > 5 && word.endsWith('ing')) {
+        if (LOCAL_IMAGE_SET.has(word.slice(0, -3))) return word.slice(0, -3);
+        if (LOCAL_IMAGE_SET.has(word.slice(0, -3) + 'e')) return word.slice(0, -3) + 'e';
+        if (word.length > 6 && word[word.length - 4] === word[word.length - 5] && LOCAL_IMAGE_SET.has(word.slice(0, -4))) {
+          return word.slice(0, -4);
+        }
+      }
+      return null;
+    };
+
+    const sharedRoot = findRootLemma(cleanWord);
+    if (sharedRoot) {
+      return {
+        url: resolveImageUrl(`/assets/images/words/${sharedRoot}.webp`),
+        tag: `${headword} 商務實景（視覺共享自 ${sharedRoot}）`
+      };
+    }
+
     // 1. Direct exact word match
     if (KEYWORD_IMAGE_MAP[cleanWord]) {
       const item = KEYWORD_IMAGE_MAP[cleanWord];

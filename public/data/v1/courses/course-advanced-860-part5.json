@@ -5,7 +5,7 @@
   "toeicScoreRange": "780-900",
   "category": "綜合商務",
   "level": "中高階",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_63fc1ef5b46e",
@@ -3917,6 +3917,18 @@
           "en": "Please ensure the 【lectern】 is moved to the center of the stage.",
           "zh": "請確保【講台】被移至舞台中央。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Multiple interactive lecterns were installed across the summit venue for speakers presenting decarbonization solutions.",
+          "zh": "峰會場地各處安裝了多個互動式講台，供發表去碳化解決方案的講者使用。",
+          "scenario": "Renewable Energy & ESG Decarbonization"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The conference center provides two 【lecterns】 for the simultaneous sessions.",
+          "zh": "會議中心為同步進行的會議提供了兩座【講台】。",
+          "scenario": "會議與簡報"
         }
       ],
       "examTips": [
@@ -4028,6 +4040,104 @@
               "reason": "【❌ 干擾 · v.】指放棄權利或職位，與啟動計畫不搭配。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Modern digital _____ equipped with touchscreen displays were placed on stage for the ESG panel panelists.",
+          "stemTranslation": "舞台上配備了帶有觸控螢幕的現代數位【講台】，供 ESG 論壇座談小組成員使用。",
+          "options": [
+            "lecterns",
+            "turbines",
+            "subsidies",
+            "emissions"
+          ],
+          "answer": "lecterns",
+          "strategy": "🎯 破題關鍵策略: 由「placed on stage」（放置於舞台上）以及「equipped with touchscreen displays」（配備觸控螢幕供講者使用），可知此處應選複數名詞 lecterns（講台）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 不要被主題中的能源詞彙（如 turbines 風力渦輪機）干擾，需專注於舞台擺設的文意條件。",
+          "collocations": [
+            "digital lecterns",
+            "interactive lecterns"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "lecterns",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "講台（複數）",
+              "reason": "【🟢 正解 · n.】放置於舞台上供與會貴賓發言使用的演講台。"
+            },
+            {
+              "option": "turbines",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "渦輪機",
+              "reason": "【❌ 干擾 · n.】大型發電設備，不可能擺在會議舞台供發言者使用。"
+            },
+            {
+              "option": "subsidies",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "補助金",
+              "reason": "【❌ 干擾 · n.】抽象金錢補貼，無法實體擺放在舞台上。"
+            },
+            {
+              "option": "emissions",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "排放物",
+              "reason": "【❌ 干擾 · n.】如碳排放，非舞台設施。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Organizers decided to _____ wooden lecterns behind the main stage to prepare for back-to-back renewable energy workshops.",
+          "stemTranslation": "主辦單位決定在主舞台後方【擺放】木製講台，為接連舉辦的可再生能源工作坊做準備。",
+          "options": [
+            "position",
+            "evacuate",
+            "decommission",
+            "dilute"
+          ],
+          "answer": "position",
+          "strategy": "🎯 破題關鍵策略: 選擇能與家具或舞台設施（wooden lecterns）搭配的動詞，表示「擺設；安置」，應選 position。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: position 可作為動詞使用，表示「把……放在特定位置」，在多益聽力與閱讀的場地佈置說明中極高頻。",
+          "collocations": [
+            "position lecterns",
+            "arrange lecterns"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "position",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "安置；放置",
+              "reason": "【🟢 正解 · v.】表示將講台擺設在特定區域。"
+            },
+            {
+              "option": "evacuate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "撤離",
+              "reason": "【❌ 干擾 · v.】通常對對象為人員，非講台設備。"
+            },
+            {
+              "option": "decommission",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "退役；報廢",
+              "reason": "【❌ 干擾 · v.】常用於大型設備或核電廠退役，不適用於活動暫存家具。"
+            },
+            {
+              "option": "dilute",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "稀釋",
+              "reason": "【❌ 干擾 · v.】指液體稀釋或權利削弱，不合語意。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=80",
@@ -4085,7 +4195,10 @@
           "en": "approach the lectern",
           "zh": "走向講台"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "lecterns"
+      }
     },
     {
       "id": "tw_w_46b6c44be357",
@@ -6077,6 +6190,18 @@
           "en": "We must overcome the 【linguistic】 differences to effectively market our products in Europe.",
           "zh": "我們必須克服【語言】差異，才能有效地在歐洲推銷我們的產品。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The Agri-Tech team applied computational linguistics to enhance voice-controlled automated harvesting equipment.",
+          "zh": "農業科技團隊應用計算語言學，來提升語音控制自動化收割設備的效能。",
+          "scenario": "Sustainable Agriculture & Agri-Tech Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Their 【linguistics】 department improves AI communication.",
+          "zh": "他們的【語言學】部門改善了人工智慧溝通。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -6188,6 +6313,104 @@
               "reason": "【❌ 干擾 · v.】搭配介詞通常為 from，意為從…浮現。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Engineers utilized computational _____ to develop advanced voice-command interfaces for agricultural equipment.",
+          "stemTranslation": "工程師利用計算【語言學】來為農業設備開發先進的語音指令介面。",
+          "options": [
+            "linguistics",
+            "mechanics",
+            "physics",
+            "genetics"
+          ],
+          "answer": "linguistics",
+          "strategy": "🎯 破題關鍵策略: 前有修飾語 computational（計算的），後文提及 voice-command interfaces（語音指令介面），應選擇「語言學」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意題目上下文涉及語音識別（voice-command），應鎖定與語言相關的學科名詞。",
+          "collocations": [
+            "computational linguistics (計算語言學)",
+            "voice-command interface (語音指令介面)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "linguistics",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "語言學",
+              "reason": "【🟢 正解 · n.】computational linguistics 指計算語言學，與語音控制技術直接相關。"
+            },
+            {
+              "option": "mechanics",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "力學；機械學",
+              "reason": "【❌ 干擾 · n.】雖然與機器有關，但無法與語音指令介面直接連結。"
+            },
+            {
+              "option": "physics",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "物理學",
+              "reason": "【❌ 干擾 · n.】指自然界物理規律，非語音處理學科。"
+            },
+            {
+              "option": "genetics",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "基因學",
+              "reason": "【❌ 干擾 · n.】與軟體語音識別開發無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The research lab aims to _____ voice recognition accuracy in noisy farm field conditions.",
+          "stemTranslation": "該研究實驗室旨在【提升】在吵雜農田環境下的語音識別準確度。",
+          "options": [
+            "enhance",
+            "enlarge",
+            "broaden",
+            "extend"
+          ],
+          "answer": "enhance",
+          "strategy": "🎯 破題關鍵策略: 動詞搭配 accuracy（準確度）或 performance（性能）時，習慣使用 enhance。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: enlarge 指尺寸放大；broaden 指擴寬視野；extend 指延長時間或延伸空間。",
+          "collocations": [
+            "enhance accuracy (提升準確度)",
+            "voice recognition (語音辨識)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "enhance",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "提升；增強",
+              "reason": "【🟢 正解 · v.】與 accuracy 形成黃金搭配，表示提升品質或精確度。"
+            },
+            {
+              "option": "enlarge",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "擴大；放大（尺寸）",
+              "reason": "【❌ 干擾 · v.】指實體尺寸變大，不修飾抽象的準確度。"
+            },
+            {
+              "option": "broaden",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "變寬；拓展",
+              "reason": "【❌ 干擾 · v.】常用於 broaden horizons（開闊視野）或範圍。"
+            },
+            {
+              "option": "extend",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延長；延伸",
+              "reason": "【❌ 干擾 · v.】用於延長期限或長度（如 extend the deadline）。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -6245,7 +6468,10 @@
           "en": "linguistic competence",
           "zh": "語言能力"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "linguistics"
+      }
     },
     {
       "id": "tw_w_ce5d67bf980b",
@@ -8469,6 +8695,18 @@
           "en": "Macroeconomic instability forced the company to delay its expansion plan.",
           "zh": "【總體經濟】的不穩定性迫使公司推遲擴展計畫。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Executives studied macroeconomics to anticipate global silicon wafer demand during market cycles.",
+          "zh": "高階主管研究巨觀經濟學，以預測市場週期期間全球矽晶圓的需求。",
+          "scenario": "Semiconductor Fabrication & Chip Supply Chains"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The analyst holds a PhD in macroeconomics.",
+          "zh": "該分析師擁有【總體經濟學】博士學位。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -8580,6 +8818,104 @@
               "reason": "【❌ 干擾 · n.】指議會或法庭休會期，不符合監測數據之句意。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Understanding global semiconductor supply chain dynamics requires a firm grasp of fundamental _____.",
+          "stemTranslation": "理解全球半導體供應鏈動態需要牢固掌握基本的【巨觀經濟學】。",
+          "options": [
+            "macroeconomics",
+            "biotechnology",
+            "geology",
+            "thermodynamics"
+          ],
+          "answer": "macroeconomics",
+          "strategy": "🎯 破題關鍵策略: 句子討論全球供應鏈與總體市場動態，空格應填入研究總體經濟運作的學術領域名詞「macroeconomics」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: macroeconomics 字尾雖然有 -s，但它是不可數的學門名詞，作主詞時應視為單數。",
+          "collocations": [
+            "principles of macroeconomics (巨觀經濟學原理)",
+            "applied macroeconomics (應用巨觀經濟學)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "macroeconomics",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "巨觀經濟學",
+              "reason": "【🟢 正解 · n.】完美切合研究全球市場與供應鏈動態的學科領域。"
+            },
+            {
+              "option": "biotechnology",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "生物科技",
+              "reason": "【❌ 干擾 · n.】屬於生醫領域，與半導體供應鏈總體市場無直接相關。"
+            },
+            {
+              "option": "geology",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "地質學",
+              "reason": "【❌ 干擾 · n.】研究地球結構的學問，與經濟供應鏈動態不符。"
+            },
+            {
+              "option": "thermodynamics",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "熱力學",
+              "reason": "【❌ 干擾 · n.】屬於物理學分支，無法解釋全球商業供應鏈與市場運作。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The chip manufacturing firm decided to _____ its economic forecast to reflect current market volatility.",
+          "stemTranslation": "晶片製造公司決定【修訂】其經濟預測，以反映當前的市場波動。",
+          "options": [
+            "revise",
+            "collapse",
+            "dismantle",
+            "disrupt"
+          ],
+          "answer": "revise",
+          "strategy": "🎯 破題關鍵策略: 尋找能與賓語「forecast（預測）」形成邏輯搭配的動詞，「revise a forecast（修訂預測）」為多益高頻商務組合。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: disrupt 是「打亂；破壞」，通常指供應鏈中斷，而非修改數據資料；修改預測數據應使用 revise。",
+          "collocations": [
+            "revise a forecast (修訂預測)",
+            "economic forecast (經濟預測)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "revise",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "修改；修訂",
+              "reason": "【🟢 正解 · v.】與 forecast 搭配為「修訂預測」，完全符合商業數據調整之語境。"
+            },
+            {
+              "option": "collapse",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "倒塌；崩潰",
+              "reason": "【❌ 干擾 · v.】不及物動詞居多，無法直接加 forecast 作為受詞並表示主動修訂。"
+            },
+            {
+              "option": "dismantle",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆卸；廢除",
+              "reason": "【❌ 干擾 · v.】指實體設備的拆除或體制的廢除，不修飾預測報告。"
+            },
+            {
+              "option": "disrupt",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "打亂；中斷",
+              "reason": "【❌ 干擾 · v.】通常修飾 supply chain 或 operations，而非預測數據。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80",
@@ -8637,7 +8973,10 @@
           "en": "macroeconomic indicators",
           "zh": "總體經濟指標"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "macroeconomics"
+      }
     },
     {
       "id": "tw_w_05a501032c34",
@@ -42328,6 +42667,18 @@
           "en": "Investors were warned against the illegal financial 【pyramid】.",
           "zh": "投資人收到警告，切勿參與非法的金融【金字塔傳銷】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Corporate pyramids must restructure their management hierarchies to achieve carbon neutrality goals faster.",
+          "zh": "企業層級體系必須重組其管理架構，以更快實現碳中和目標。",
+          "scenario": "Renewable Energy & ESG Decarbonization"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The tour package includes a guided visit to the historic 【pyramids】.",
+          "zh": "該旅遊套裝行程包含歷史性的【金字塔】導覽。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -42439,6 +42790,104 @@
               "reason": "【❌ 干擾 · v.】不合商業改善目標語意。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Traditional organizational _____ are being flattened in clean-tech companies to streamline ESG decision-making.",
+          "stemTranslation": "潔淨科技公司正在扁平化傳統的組織【層級結構】，以簡化 ESG 決策流程。",
+          "options": [
+            "pyramids",
+            "protocols",
+            "proposals",
+            "paradigms"
+          ],
+          "answer": "pyramids",
+          "strategy": "🎯 破題關鍵策略: 句中討論『being flattened』（被扁平化），對應商業管理中指的是金字塔型的「組織層級體系」（organizational pyramids）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: organizational pyramids 常用於指代「層級分明且官僚的金字塔型組織」，搭配動詞 flatten（使……扁平化）。",
+          "collocations": [
+            "organizational pyramids (組織層級體系)",
+            "flatten the hierarchy/pyramid (扁平化組織結構)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "pyramids",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "層級體系；金字塔",
+              "reason": "【🟢 正解 · n.】符合「傳統官僚層級組織」比喻，且能被 flattened。"
+            },
+            {
+              "option": "protocols",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "協定、草案",
+              "reason": "【❌ 干擾 · n.】協定無法進行物理/管理結構上的 flattened 操作。"
+            },
+            {
+              "option": "proposals",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "提案",
+              "reason": "【❌ 干擾 · n.】提案不符被扁平化的語意。"
+            },
+            {
+              "option": "paradigms",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "範例、典範",
+              "reason": "【❌ 干擾 · n.】常指 paradigm shift（典範轉移），不與 flattened 搭配。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "ESG consultants help multinational corporations _____ their corporate pyramids into sustainable management models.",
+          "stemTranslation": "ESG 顧問協助跨國企業將其公司【層級體系】轉型為永續管理模式。",
+          "options": [
+            "transform",
+            "collapse",
+            "withhold",
+            "terminate"
+          ],
+          "answer": "transform",
+          "strategy": "🎯 破題關鍵策略: 後方有介系詞『into』，組成『transform A into B』（將 A 轉型/改造為 B），符合顧問協助企業改組的題旨。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: transform ... into ... 是多益考題中企業轉型、組織改革題型的核心搭配動詞。",
+          "collocations": [
+            "transform into (轉型為/改造為)",
+            "corporate pyramids (企業金字塔層級)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "transform",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "轉變、改造",
+              "reason": "【🟢 正解 · v.】與 into 完美搭配，表達將舊有層級結構轉型為永續模式。"
+            },
+            {
+              "option": "collapse",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "倒塌、崩潰",
+              "reason": "【❌ 干擾 · v.】不直接搭配 into 表示積極轉型。"
+            },
+            {
+              "option": "withhold",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "保留、扣留",
+              "reason": "【❌ 干擾 · v.】與 into 不搭配。"
+            },
+            {
+              "option": "terminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止",
+              "reason": "【❌ 干擾 · v.】終止組織不符合顧問協助管理升級的上下文。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -42499,7 +42948,10 @@
           "en": "inverted pyramid",
           "zh": "倒金字塔結構"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "pyramids"
+      }
     },
     {
       "id": "tw_w_1a6528096673",
@@ -85785,6 +86237,18 @@
           "en": "The startup identified a niche 【tribe】 that was previously ignored by the industry leaders.",
           "zh": "這家新創公司鎖定了一個此前被產業領頭羊忽略的小眾【族群】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Executives reorganized compliance specialists into cross-functional tribes to streamline regulatory audits across global subsidiaries.",
+          "zh": "主管們將合規專家重組為跨功能的專案社群團隊（tribes），以簡化全球子公司的監管審計。",
+          "scenario": "Corporate Governance & Securities Compliance"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Management needs to break down the silos between different tribes.",
+          "zh": "管理層需要打破不同【族群】之間的溝通障礙。",
+          "scenario": "人力資源"
         }
       ],
       "examTips": [
@@ -85896,6 +86360,104 @@
               "reason": "【❌ 干擾 · v.】通常搭配 meeting 或 event，不搭配人組成的族群。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Under the new agile governance framework, employees are divided into specialized autonomous _____ to solve compliance issues.",
+          "stemTranslation": "在新敏捷治理架構下，員工被劃分為專業的自主【敏捷社群/專案團隊 (tribes)】以解決合規問題。",
+          "options": [
+            "tribes",
+            "tributes",
+            "trials",
+            "tridents"
+          ],
+          "answer": "tribes",
+          "strategy": "🎯 破題關鍵策略: 在現代企業治理與敏捷管理（Agile Governance）中，tribes 泛指由跨領域專家組成的「敏捷專案部落/社群團隊」（如 Spotify Model 中的 Squads & Tribes 組織架構）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: tribes 在傳統語意為「原住民部落」，但在現代商業與企業組織管理中，已成為「跨部門敏捷專案團隊（Agile Tribes）」的高頻專有名詞。",
+          "collocations": [
+            "agile tribes (敏捷部落/專案小組)",
+            "cross-functional tribes (跨功能團隊社群)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "tribes",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "（企業敏捷架構中的）專案社群團隊；部族",
+              "reason": "【🟢 正解 · n.】符合現代企業敏捷治理中的「專案小組/社群團隊」用語。"
+            },
+            {
+              "option": "tributes",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "悼詞；致敬",
+              "reason": "【❌ 干擾 · n.】無法形容組織成員分組。"
+            },
+            {
+              "option": "trials",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "審判；試驗",
+              "reason": "【❌ 干擾 · n.】指法律審判或測試，非組織單位。"
+            },
+            {
+              "option": "tridents",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "三叉戟",
+              "reason": "【❌ 干擾 · n.】具體武器，不合商業治理語境。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The chief governance officer emphasized the need to _____ compliance procedures across all corporate branches.",
+          "stemTranslation": "公司治理長強調有必要【簡化/合理化】所有企業分機構的合規流程。",
+          "options": [
+            "streamline",
+            "complicate",
+            "terminate",
+            "fabricate"
+          ],
+          "answer": "streamline",
+          "strategy": "🎯 破題關鍵策略: 觀察受詞 procedures (流程/程序)，在公司治理情境中，streamline procedures（簡化/精簡流程）是最經典且極高頻的多益動詞搭配。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: streamline 意為「使合理化、簡化以提升效率」，多益常考 streamline operations / streamline procedures / streamline workflows。",
+          "collocations": [
+            "streamline procedures (簡化程序)",
+            "streamline compliance (精簡合規流程)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "streamline",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "簡化；使效率化",
+              "reason": "【🟢 正解 · v.】streamline procedures 為企業管理極高頻的標竿搭配。"
+            },
+            {
+              "option": "complicate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "使複雜化",
+              "reason": "【❌ 干擾 · v.】企業治理不會刻意將合規程序複雜化。"
+            },
+            {
+              "option": "terminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止；解雇",
+              "reason": "【❌ 干擾 · v.】合規流程不能被直接「終止」，而是需要優化。"
+            },
+            {
+              "option": "fabricate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "捏造；偽造",
+              "reason": "【❌ 干擾 · v.】負面違法動詞，不符治理長的職責。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -85953,7 +86515,10 @@
           "en": "brand tribe",
           "zh": "品牌忠誠者群體"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "tribes"
+      }
     },
     {
       "id": "tw_w_a6ae81a6d246",
@@ -86164,6 +86729,6 @@
     }
   ],
   "wordCount": 399,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

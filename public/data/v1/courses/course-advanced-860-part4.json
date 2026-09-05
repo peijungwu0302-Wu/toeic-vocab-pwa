@@ -5,7 +5,7 @@
   "toeicScoreRange": "780-900",
   "category": "綜合商務",
   "level": "中高階",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_d0870a1582bc",
@@ -11495,6 +11495,18 @@
           "en": "Investors are looking into purchasing bungalows for tourism development.",
           "zh": "投資者正計畫購買【度假小屋】以進行觀光開發。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Wealth managers recommend allocating equity into luxury beachfront bungalows for stable rental returns.",
+          "zh": "財富管理師建議將股權資金配置於奢華海濱度假小屋，以獲取穩定的租金收益。",
+          "scenario": "Fintech, Wealth Management & Equity Trading"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The renovation of the beach bungalows is scheduled for next month.",
+          "zh": "海邊【度假小屋】的裝修計畫於下個月執行。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -11606,6 +11618,104 @@
               "reason": "【❌ 干擾 · n.】指藥物劑量，不能配合 safety 作為被遵守的規則。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "High-net-worth investors often include luxury beachfront _____ in their real estate asset portfolios.",
+          "stemTranslation": "高淨值投資人經常將奢華海濱【度假小屋】納入其房地產資產組合中。",
+          "options": [
+            "bungalows",
+            "surpluses",
+            "liabilities",
+            "dividends"
+          ],
+          "answer": "bungalows",
+          "strategy": "🎯 破題關鍵策略: 觀察句意『將奢華海濱_____納入房地產資產組合』，空格處需填入代表房地產建築種類的名詞。bungalows（獨棟度假小屋）最符合文意。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 區分金融名詞與不動產名詞。surpluses（盈餘）、liabilities（負債）、dividends（股利）皆為純財務會計術語，無法修飾 beachfront（海濱）。",
+          "collocations": [
+            "beachfront bungalows (海濱度假小屋)",
+            "luxury bungalows (奢華獨棟小屋)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "bungalows",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "獨棟小屋；度假小屋",
+              "reason": "【🟢 正解 · n.】符合句意，指可納入投資組合的海濱獨棟物業。"
+            },
+            {
+              "option": "surpluses",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "盈餘；過剩",
+              "reason": "【❌ 干擾 · n.】財務名詞，與 beachfront（海濱）搭配不合邏輯。"
+            },
+            {
+              "option": "liabilities",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "負債；債務",
+              "reason": "【❌ 干擾 · n.】指會計負債，非建築或房地產標的。"
+            },
+            {
+              "option": "dividends",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "股利；紅利",
+              "reason": "【❌ 干擾 · n.】指股票分紅，無法用形容詞 beachfront 修飾。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The private equity firm decided to _____ several luxury holiday bungalows to diversify its portfolio.",
+          "stemTranslation": "該私募股權公司決定【收購】數棟奢華度假小屋，以實現投資組合多元化。",
+          "options": [
+            "acquire",
+            "expire",
+            "fulfill",
+            "comply"
+          ],
+          "answer": "acquire",
+          "strategy": "🎯 破題關鍵策略: 搭配詞語幹動詞＋資產（luxury bungalows），acquire assets / properties 為商業投資常見高頻搭配，表示『收購資產/物業』。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: expire（到期）為不及物動詞；fulfill（履行）多搭配 contract/order；comply 需接 with（遵守）。僅 acquire 可直接接實體資產做受詞。",
+          "collocations": [
+            "acquire properties (收購物業)",
+            "diversify a portfolio (使投資組合多元化)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "acquire",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "收購；取得",
+              "reason": "【🟢 正解 · v.】與物業/資產搭配，表達私募公司收購度假小屋。"
+            },
+            {
+              "option": "expire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "到期；終止",
+              "reason": "【❌ 干擾 · v.】不及物動詞，無法直接加受詞 bungalows。"
+            },
+            {
+              "option": "fulfill",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "履行；實現",
+              "reason": "【❌ 干擾 · v.】常用於 fulfill an obligation / order，不搭配物業。"
+            },
+            {
+              "option": "comply",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "遵守；順從",
+              "reason": "【❌ 干擾 · v.】不及物動詞，需搭配介系詞 with（comply with regulations）。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -11660,7 +11770,10 @@
           "en": "rent a bungalow",
           "zh": "租一間平房"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "bungalows"
+      }
     },
     {
       "id": "tw_w_c157bd75cc7f",
@@ -41992,6 +42105,18 @@
           "en": "Consumers expressed disgust at the company's unethical environmental practices.",
           "zh": "消費者對於該公司不道德的環境行為感到【反感】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The chief architect was disgusted by the low quality of construction materials delivered.",
+          "zh": "總建築師對送到現場的劣質建築材料感到非常反感。",
+          "scenario": "Commercial Architecture & High-Rise Engineering"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Many employees were disgusted by the lack of transparency in the new policy.",
+          "zh": "許多員工對於新政策缺乏透明度感到【厭惡】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -42103,6 +42228,202 @@
               "reason": "【❌ 干擾 · v.】意為計算數字。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The lead engineer felt thoroughly _____ with the contractor's failure to meet basic safety standards.",
+          "stemTranslation": "首席工程師對於承包商未能達到基本安全標準感到非常【反感與不滿】。",
+          "options": [
+            "disgusted",
+            "delighted",
+            "fascinated",
+            "qualified"
+          ],
+          "answer": "disgusted",
+          "strategy": "🎯 破題關鍵策略: 文中描述承包商未能符合標準（failure to meet standards），形容「人」的心理感受應選擇形容詞 disgusted（感到極度不滿/厭惡的）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: be disgusted with/at 指『對...感到厭惡不滿』。人感到厭惡用 -ed (disgusted)；事物令人厭惡用 -ing (disgusting)。",
+          "collocations": [
+            "be disgusted with",
+            "thoroughly disgusted"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "disgusted",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "感到厭惡不滿的",
+              "reason": "【🟢 正解 · adj.】形容人對劣質表現或違規感到極度失望反感。"
+            },
+            {
+              "option": "delighted",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "高興的",
+              "reason": "【❌ 干擾 · adj.】語意極度不符。"
+            },
+            {
+              "option": "fascinated",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "入迷的",
+              "reason": "【❌ 干擾 · adj.】形容對事物著迷。"
+            },
+            {
+              "option": "qualified",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "有資格的",
+              "reason": "【❌ 干擾 · adj.】形容具備資格的。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The project manager refused to _____ sub-standard concrete for the foundation of the skyscraper.",
+          "stemTranslation": "專案經理拒絕【接受】用於摩天大樓地基的不合格混凝土。",
+          "options": [
+            "accept",
+            "demolish",
+            "overcharge",
+            "renovate"
+          ],
+          "answer": "accept",
+          "strategy": "🎯 破題關鍵策略: 搭配 sub-standard materials（不合格材料），表示拒絕採納或接收，動詞用 accept。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: refuse to accept... (拒絕接受...) 是工程質檢與商業合約審查中極常見的句型。",
+          "collocations": [
+            "refuse to accept",
+            "sub-standard materials"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "accept",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "接受/採納",
+              "reason": "【🟢 正解 · v.】符合工程品管中『拒絕接收劣質材料』的意涵。"
+            },
+            {
+              "option": "demolish",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆毀",
+              "reason": "【❌ 干擾 · v.】此處為地基材料尚未施工，非拆除結構。"
+            },
+            {
+              "option": "overcharge",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "多收費",
+              "reason": "【❌ 干擾 · v.】意為索價過高。"
+            },
+            {
+              "option": "renovate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "翻修",
+              "reason": "【❌ 干擾 · v.】用於舊屋裝修或翻新。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The third-party audit revealed that the legacy server facility was kept in a _____ condition, covered in dirt and unmanaged cables.",
+          "stemTranslation": "第三方稽核揭露，舊型伺服器設施維持在【極度糟糕】的狀況，佈滿灰塵與未整理的電線。",
+          "options": [
+            "disgusting",
+            "appealing",
+            "convincing",
+            "promising"
+          ],
+          "answer": "disgusting",
+          "strategy": "🎯 破題關鍵策略: 觀察句義 context，後面提到 covered in dirt and unmanaged cables（佈滿灰塵與雜亂電線），應選擇表示「極度令人厭惡的、糟糕的」形容詞 disgusting。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意常考正面與負面形容詞的搭配；appealing（吸引人的）、promising（有前途的）與 context 語氣矛盾。",
+          "collocations": [
+            "disgusting condition",
+            "disgusting state"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "disgusting",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "令人厭惡的；極度糟糕的",
+              "reason": "【🟢 正解 · adj.】切合文意，形容伺服器機房衛生與管理狀況極度糟糕。"
+            },
+            {
+              "option": "appealing",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "吸引人的",
+              "reason": "【❌ 干擾 · adj.】語意與後文的「髒亂」完全相反。"
+            },
+            {
+              "option": "convincing",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "具説服力的",
+              "reason": "【❌ 干擾 · adj.】常用於形容觀點或證據，非形容硬體設施環境。"
+            },
+            {
+              "option": "promising",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "有前景的",
+              "reason": "【❌ 干擾 · adj.】正面詞彙，不符合負面上下文。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The IT director instructed the maintenance team to immediately _____ the severe safety risks found in the primary server room.",
+          "stemTranslation": "資訊部門主管指示維護團隊立即【處理】主伺服器房中發現的嚴重安全風險。",
+          "options": [
+            "address",
+            "postpone",
+            "admire",
+            "disregard"
+          ],
+          "answer": "address",
+          "strategy": "🎯 破題關鍵策略: 動詞與名詞 safety risks 的搭配。「處理/解決風險」在商業英文中首選 address。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: address 廣泛用於商務多益中表示「處理、應對（問題或風險）」，切勿僅記「地址」之意。",
+          "collocations": [
+            "address risks",
+            "address concerns"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "address",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "處理；應對",
+              "reason": "【🟢 正解 · v.】與 safety risks 構成高頻商業搭配 address risks（處理風險）。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期",
+              "reason": "【❌ 干擾 · v.】與 immediately（立即）語意衝突。"
+            },
+            {
+              "option": "admire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "欽佩；欣賞",
+              "reason": "【❌ 干擾 · v.】無法與安全風險搭配。"
+            },
+            {
+              "option": "disregard",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "忽視",
+              "reason": "【❌ 干擾 · v.】邏輯不符，管理階層不可能指示維護團隊忽視安全風險。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -42167,7 +42488,11 @@
           "en": "utter disgust",
           "zh": "完全的厭惡"
         }
-      ]
+      ],
+      "inflections": {
+        "ed": "disgusted",
+        "ing": "disgusting"
+      }
     },
     {
       "id": "tw_w_a5e536b1d38d",
@@ -65186,6 +65511,18 @@
           "en": "Our company focus is 【genetic】 to our long-term strategy.",
           "zh": "我們公司的核心重點是我們長期策略中【與生俱來/不可或缺的】一部分。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Engineers applied principles of genetics to optimize algorithmic learning in autonomous robotic assembly.",
+          "zh": "工程師將遺傳學原理應用於優化自主機器人組裝中的演算法學習。",
+          "scenario": "Autonomous Robotics & Smart Manufacturing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The biotech firm specializes in advanced genetics.",
+          "zh": "這家生技公司專精於先進的【遺傳學】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -65297,6 +65634,104 @@
               "reason": "【❌ 干擾 · v.】不及物動詞，不可直接加賓語。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Advanced manufacturing researchers utilize computer algorithms modeled on _____ to optimize complex robotic assembly lines.",
+          "stemTranslation": "先進製造研究人員利用模仿【遺傳學】原理的電腦演算法來優化複雜的機器人組裝線。",
+          "options": [
+            "genetics",
+            "logistics",
+            "acoustics",
+            "statistics"
+          ],
+          "answer": "genetics",
+          "strategy": "🎯 破題關鍵策略: 句中提到演算法（algorithms）受某學科模組化啟發（如「Genetic Algorithms / 基因演算法」），選項中只有 (A) genetics（遺傳學）符合生物啟發計算與自動化機器人優化的科技背景。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意以 -ics 結尾的名詞代表學科領域（如 genetics 遺傳學、logistics 物流學、statistics 統計學），作主詞時通常接單數動詞。",
+          "collocations": [
+            "genetic algorithm",
+            "robotic assembly"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "genetics",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "遺傳學",
+              "reason": "【🟢 正解 · n.】符合智慧製造中演算法研發靈感來源的上下文。"
+            },
+            {
+              "option": "logistics",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "物流學、後勤",
+              "reason": "【❌ 干擾 · n.】雖然是商業高頻詞，但無法對應「演算法模仿的生物遺傳機制」。"
+            },
+            {
+              "option": "acoustics",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "聲學",
+              "reason": "【❌ 干擾 · n.】與遺傳演算法無關。"
+            },
+            {
+              "option": "statistics",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "統計學",
+              "reason": "【❌ 干擾 · n.】雖常與演算法並用，但非特指遺傳演算法（genetic algorithms）的學科來源。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The automation division managed to _____ operational efficiency through evolutionary computing methods.",
+          "stemTranslation": "自動化部門成功透過演化計算方法【提升】了營運效率。",
+          "options": [
+            "enhance",
+            "collapse",
+            "forfeit",
+            "terminate"
+          ],
+          "answer": "enhance",
+          "strategy": "🎯 破題關鍵策略: 搭配詞辨析。受詞為「efficiency（效率）」，最常見的正向商業搭配動詞為 enhance / improve / increase efficiency。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: enhance + efficiency / productivity 是多益 Part 5 極高的正向動賓搭配，務必熟記。",
+          "collocations": [
+            "enhance efficiency",
+            "operational efficiency"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "enhance",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "提升、增強",
+              "reason": "【🟢 正解 · v.】與 efficiency 完美搭配成「enhance efficiency（提升效率）」組合。"
+            },
+            {
+              "option": "collapse",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "瓦解、倒塌",
+              "reason": "【❌ 干擾 · v.】通常作不及物動詞，且語意負面。"
+            },
+            {
+              "option": "forfeit",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "喪失、被沒收",
+              "reason": "【❌ 干擾 · v.】語意負面，不合邏輯。"
+            },
+            {
+              "option": "terminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止、結束",
+              "reason": "【❌ 干擾 · v.】與提升效率的目標相反。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -65358,7 +65793,10 @@
           "en": "genetic makeup",
           "zh": "基因組成"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "genetics"
+      }
     },
     {
       "id": "tw_p_fcbf9aeb51a7",
@@ -72476,6 +72914,18 @@
           "en": "According to the 【historian】, the market collapse mirrors the 1929 crisis.",
           "zh": "根據這位【歷史學家】的說法，市場崩盤與 1929 年危機如出一轍。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Prominent local historians conduct guided heritage tours for guests staying at the historic hotel.",
+          "zh": "著名的在地歷史學家為入住這家歷史悠久飯店的賓客提供導覽文化遺產之旅。",
+          "scenario": "Luxury Hospitality Management & Tourism Logistics"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The report cites several 【historians】 who studied past economic cycles.",
+          "zh": "這份報告引用了幾位研究過過去經濟週期的【歷史學家】。",
+          "scenario": "辦公日常"
         }
       ],
       "examTips": [
@@ -72587,6 +73037,104 @@
               "reason": "【❌ 干擾 · v.】指債務違約（default on a loan），語意不符。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Several renowned local _____ were invited to curate the cultural heritage exhibit in the resort's grand lobby.",
+          "stemTranslation": "幾位著名的在地【歷史學家】受邀前來策劃該度假村大廳的文化遺產展覽。",
+          "options": [
+            "historians",
+            "investors",
+            "concierges",
+            "inspectors"
+          ],
+          "answer": "historians",
+          "strategy": "🎯 破題關鍵策略: 主詞後面接有 curate the cultural heritage exhibit（策劃文化遺產展覽），且前面的形容詞為 local（在地的），需要填入複數名詞 historians（歷史學家們）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意主詞與後續動詞/受詞的邏輯關聯。策劃『文化遺產（heritage）』展覽的最佳人選為『歷史學家（historians）』。",
+          "collocations": [
+            "local historians (在地歷史學家)",
+            "consult historians (諮詢歷史學者)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "historians",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "歷史學家們（複數）",
+              "reason": "【🟢 正解 · n.】符合文化遺產展覽策展人的身份需求。"
+            },
+            {
+              "option": "investors",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "投資者們",
+              "reason": "【❌ 干擾 · n.】指資金提供者，非文化遺產展覽策展人。"
+            },
+            {
+              "option": "concierges",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "飯店禮賓人員們",
+              "reason": "【❌ 干擾 · n.】指協助顧客安排行程的飯店人員，非歷史展覽專家。"
+            },
+            {
+              "option": "inspectors",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "檢查員們",
+              "reason": "【❌ 干擾 · n.】指安全或品質稽核人員，語意不符。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The luxury hotel resort management decided to _____ experienced historians to design exclusive cultural itineraries for VIP guests.",
+          "stemTranslation": "這家奢華度假飯店管理層決定【聘請】經驗豐富的歷史學家，為 VIP 賓客設計專屬文化行程。",
+          "options": [
+            "retain",
+            "discard",
+            "postpone",
+            "relinquish"
+          ],
+          "answer": "retain",
+          "strategy": "🎯 破題關鍵策略: 考查高階商務動詞。retain an expert / advisor 意為『聘請/長期僱用顧問或專家』，符合飯店邀請歷史學家設計行程的情境。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: retain 除了『保留、保持』外，在商務與法律情境中表示『付費聘用（專業人士/顧問）』，如 retain a lawyer / historian。",
+          "collocations": [
+            "retain an expert (聘請專家)",
+            "retain services (聘用服務)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "retain",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "聘請（專家/顧問）、保留",
+              "reason": "【🟢 正解 · v.】retain historians 表示付費聘請歷史學家提供專業服務。"
+            },
+            {
+              "option": "discard",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拋棄、丟棄",
+              "reason": "【❌ 干擾 · v.】指扔掉廢棄物，不可用於聘用專家。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期、推遲",
+              "reason": "【❌ 干擾 · v.】受詞通常為會議或事件，如 postpone a meeting。"
+            },
+            {
+              "option": "relinquish",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "放棄、讓出（權利/職位）",
+              "reason": "【❌ 干擾 · v.】指放棄資產或權力，不符語意。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
@@ -72646,7 +73194,10 @@
           "en": "academic historian",
           "zh": "學術界歷史學家"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "historians"
+      }
     },
     {
       "id": "tw_w_4ed166255009",
@@ -86838,6 +87389,6 @@
     }
   ],
   "wordCount": 400,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

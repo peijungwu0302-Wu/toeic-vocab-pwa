@@ -1,7 +1,7 @@
 {
-  "version": 15,
-  "generatedAt": "2026-09-05T13:47:32.695Z",
-  "totalWords": 21808,
+  "version": 16,
+  "generatedAt": "2026-09-05T14:06:24.160Z",
+  "totalWords": 21004,
   "totalCourses": 35,
   "courses": [
     {
@@ -13,12 +13,12 @@
       "level": "核心必考",
       "wordCount": 1200,
       "fileName": "course-core-1200.json",
-      "checksum": "f7fbcdab4d301613e476351b2fe35921666a845dfa7e8eb5ffaebee9207fe2e9",
-      "sizeBytes": 11390171,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "f7fbcdab4d301613e476351b2fe35921666a845dfa7e8eb5ffaebee9207fe2e9",
-      "checksumSha256": "f7fbcdab4d301613e476351b2fe35921666a845dfa7e8eb5ffaebee9207fe2e9"
+      "checksum": "04d5e06be0ec505884f9687c80d11890f83f0977c6ecc606266658facbc796fb",
+      "sizeBytes": 11390188,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "04d5e06be0ec505884f9687c80d11890f83f0977c6ecc606266658facbc796fb",
+      "checksumSha256": "04d5e06be0ec505884f9687c80d11890f83f0977c6ecc606266658facbc796fb"
     },
     {
       "id": "course-advanced-2500",
@@ -27,14 +27,14 @@
       "toeicScoreRange": "750-860",
       "category": "進階實戰",
       "level": "金證衝刺",
-      "wordCount": 2500,
+      "wordCount": 2040,
       "fileName": "course-advanced-2500.json",
-      "checksum": "e1700080932d5a1beefab3d5174dcdda6dc70cbba5b9743c51bbf041c3816bdc",
-      "sizeBytes": 25891423,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "e1700080932d5a1beefab3d5174dcdda6dc70cbba5b9743c51bbf041c3816bdc",
-      "checksumSha256": "e1700080932d5a1beefab3d5174dcdda6dc70cbba5b9743c51bbf041c3816bdc"
+      "checksum": "1555b457aeeebafe6172bf2cef007d96a2af5a92bf852626fa7b2aadba7a5591",
+      "sizeBytes": 23357565,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "1555b457aeeebafe6172bf2cef007d96a2af5a92bf852626fa7b2aadba7a5591",
+      "checksumSha256": "1555b457aeeebafe6172bf2cef007d96a2af5a92bf852626fa7b2aadba7a5591"
     },
     {
       "id": "course-foundation-550-part1",
@@ -45,12 +45,12 @@
       "level": "基礎",
       "wordCount": 317,
       "fileName": "course-foundation-550-part1.json",
-      "checksum": "4d8685c7bcd178c8f1ae429cd8c337d1ecb5ee19eed08d2ad3d6e5112927763a",
-      "sizeBytes": 3024795,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "4d8685c7bcd178c8f1ae429cd8c337d1ecb5ee19eed08d2ad3d6e5112927763a",
-      "checksumSha256": "4d8685c7bcd178c8f1ae429cd8c337d1ecb5ee19eed08d2ad3d6e5112927763a"
+      "checksum": "bdf074ac160686ca39fdddeaeb11fc9541dcc06c416c56a8b03975dd596d7735",
+      "sizeBytes": 3024806,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "bdf074ac160686ca39fdddeaeb11fc9541dcc06c416c56a8b03975dd596d7735",
+      "checksumSha256": "bdf074ac160686ca39fdddeaeb11fc9541dcc06c416c56a8b03975dd596d7735"
     },
     {
       "id": "course-foundation-550-part2",
@@ -61,12 +61,12 @@
       "level": "基礎",
       "wordCount": 326,
       "fileName": "course-foundation-550-part2.json",
-      "checksum": "f0081ba743de8c60353a03cd937d220686b3e88afa0b27412af35182ed85231f",
-      "sizeBytes": 3189689,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "f0081ba743de8c60353a03cd937d220686b3e88afa0b27412af35182ed85231f",
-      "checksumSha256": "f0081ba743de8c60353a03cd937d220686b3e88afa0b27412af35182ed85231f"
+      "checksum": "6e1f1e539d2cd84750ee5694c4bdff9703963f95efde5fc548bfcfbee91a509b",
+      "sizeBytes": 3256089,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "6e1f1e539d2cd84750ee5694c4bdff9703963f95efde5fc548bfcfbee91a509b",
+      "checksumSha256": "6e1f1e539d2cd84750ee5694c4bdff9703963f95efde5fc548bfcfbee91a509b"
     },
     {
       "id": "course-foundation-550-part3",
@@ -77,12 +77,12 @@
       "level": "基礎",
       "wordCount": 313,
       "fileName": "course-foundation-550-part3.json",
-      "checksum": "3b688c46b5960d5326c17bdc2fa394b61e9f4b15d623b068b13e1de957819bd5",
-      "sizeBytes": 3240285,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "3b688c46b5960d5326c17bdc2fa394b61e9f4b15d623b068b13e1de957819bd5",
-      "checksumSha256": "3b688c46b5960d5326c17bdc2fa394b61e9f4b15d623b068b13e1de957819bd5"
+      "checksum": "68b84dd4af2a89139e83e7494595013aa85bf68c21009914c871c69d8a772405",
+      "sizeBytes": 3683791,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "68b84dd4af2a89139e83e7494595013aa85bf68c21009914c871c69d8a772405",
+      "checksumSha256": "68b84dd4af2a89139e83e7494595013aa85bf68c21009914c871c69d8a772405"
     },
     {
       "id": "course-foundation-550-part4",
@@ -93,12 +93,12 @@
       "level": "基礎",
       "wordCount": 313,
       "fileName": "course-foundation-550-part4.json",
-      "checksum": "37b34adc6da73aa1be8068d151862d1fe72d119904d78972d473886c9eb6f252",
-      "sizeBytes": 3226489,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "37b34adc6da73aa1be8068d151862d1fe72d119904d78972d473886c9eb6f252",
-      "checksumSha256": "37b34adc6da73aa1be8068d151862d1fe72d119904d78972d473886c9eb6f252"
+      "checksum": "fb63994d0750631a18989f657be259cddb1886c477218c58de320ad12a1cd05b",
+      "sizeBytes": 3666678,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "fb63994d0750631a18989f657be259cddb1886c477218c58de320ad12a1cd05b",
+      "checksumSha256": "fb63994d0750631a18989f657be259cddb1886c477218c58de320ad12a1cd05b"
     },
     {
       "id": "course-foundation-550-part5",
@@ -109,12 +109,12 @@
       "level": "基礎",
       "wordCount": 373,
       "fileName": "course-foundation-550-part5.json",
-      "checksum": "e530c71c3ebe366ad2c224f4c9132db7cab4c1faead756e17202e32bc9da9d3f",
-      "sizeBytes": 3862231,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "e530c71c3ebe366ad2c224f4c9132db7cab4c1faead756e17202e32bc9da9d3f",
-      "checksumSha256": "e530c71c3ebe366ad2c224f4c9132db7cab4c1faead756e17202e32bc9da9d3f"
+      "checksum": "04a56e811dbae7629d92ad4ae4892bbe4ee03a1b0cb7bb24ab12149c5f9d399e",
+      "sizeBytes": 4083329,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "04a56e811dbae7629d92ad4ae4892bbe4ee03a1b0cb7bb24ab12149c5f9d399e",
+      "checksumSha256": "04a56e811dbae7629d92ad4ae4892bbe4ee03a1b0cb7bb24ab12149c5f9d399e"
     },
     {
       "id": "course-foundation-550-part6",
@@ -125,12 +125,12 @@
       "level": "基礎",
       "wordCount": 373,
       "fileName": "course-foundation-550-part6.json",
-      "checksum": "b3466b15fa4c793e5914f36b93b3603d0e3d579ed52a34c40a74c044bcc9f597",
-      "sizeBytes": 3518423,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "b3466b15fa4c793e5914f36b93b3603d0e3d579ed52a34c40a74c044bcc9f597",
-      "checksumSha256": "b3466b15fa4c793e5914f36b93b3603d0e3d579ed52a34c40a74c044bcc9f597"
+      "checksum": "7cc0e4bf7a5e40106405543fd544149b41d1115e4917528848f3d2b29b2b6d75",
+      "sizeBytes": 3682337,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "7cc0e4bf7a5e40106405543fd544149b41d1115e4917528848f3d2b29b2b6d75",
+      "checksumSha256": "7cc0e4bf7a5e40106405543fd544149b41d1115e4917528848f3d2b29b2b6d75"
     },
     {
       "id": "course-foundation-550-part7",
@@ -141,12 +141,12 @@
       "level": "基礎",
       "wordCount": 376,
       "fileName": "course-foundation-550-part7.json",
-      "checksum": "37c240209e449674e22acf2fb67f5390d473c6cf26617c31a4ee69e743648f19",
-      "sizeBytes": 3475941,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "37c240209e449674e22acf2fb67f5390d473c6cf26617c31a4ee69e743648f19",
-      "checksumSha256": "37c240209e449674e22acf2fb67f5390d473c6cf26617c31a4ee69e743648f19"
+      "checksum": "a507331180e57efa79408ce77423a0e848e78ccb6c8ade9c2fd2b71102340740",
+      "sizeBytes": 3647844,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "a507331180e57efa79408ce77423a0e848e78ccb6c8ade9c2fd2b71102340740",
+      "checksumSha256": "a507331180e57efa79408ce77423a0e848e78ccb6c8ade9c2fd2b71102340740"
     },
     {
       "id": "course-foundation-550-part8",
@@ -157,12 +157,12 @@
       "level": "基礎",
       "wordCount": 375,
       "fileName": "course-foundation-550-part8.json",
-      "checksum": "36a3bf98f484e2235cecb2669b80f5947c7e0f8c83df63d407544696f56cc551",
-      "sizeBytes": 3478641,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "36a3bf98f484e2235cecb2669b80f5947c7e0f8c83df63d407544696f56cc551",
-      "checksumSha256": "36a3bf98f484e2235cecb2669b80f5947c7e0f8c83df63d407544696f56cc551"
+      "checksum": "a97236822332a734ecc86222ec722e691ca31be13dc41c1919e06e66c0fc52ed",
+      "sizeBytes": 3626449,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "a97236822332a734ecc86222ec722e691ca31be13dc41c1919e06e66c0fc52ed",
+      "checksumSha256": "a97236822332a734ecc86222ec722e691ca31be13dc41c1919e06e66c0fc52ed"
     },
     {
       "id": "course-foundation-550-part9",
@@ -173,12 +173,12 @@
       "level": "基礎",
       "wordCount": 341,
       "fileName": "course-foundation-550-part9.json",
-      "checksum": "a74ac081f42848762d28f3207f65dc70cecefd63843af6a9769201c6019bf830",
-      "sizeBytes": 3148669,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "a74ac081f42848762d28f3207f65dc70cecefd63843af6a9769201c6019bf830",
-      "checksumSha256": "a74ac081f42848762d28f3207f65dc70cecefd63843af6a9769201c6019bf830"
+      "checksum": "0fac049abb341b1e3e1a15fe9af5aedf61d0a90d50ed316a42891728fd223113",
+      "sizeBytes": 3212938,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "0fac049abb341b1e3e1a15fe9af5aedf61d0a90d50ed316a42891728fd223113",
+      "checksumSha256": "0fac049abb341b1e3e1a15fe9af5aedf61d0a90d50ed316a42891728fd223113"
     },
     {
       "id": "course-intermediate-750-part1",
@@ -189,12 +189,12 @@
       "level": "中階",
       "wordCount": 361,
       "fileName": "course-intermediate-750-part1.json",
-      "checksum": "b8bde09ded6b27a3e5c80ccef0bc5a21bb37d1ad2eb2e0511ab532b894fdccd9",
-      "sizeBytes": 3787474,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "b8bde09ded6b27a3e5c80ccef0bc5a21bb37d1ad2eb2e0511ab532b894fdccd9",
-      "checksumSha256": "b8bde09ded6b27a3e5c80ccef0bc5a21bb37d1ad2eb2e0511ab532b894fdccd9"
+      "checksum": "72661e7c992762d758214a7de8cf55a1f29ed5afa3e5a08e97f1ece7a9635bcb",
+      "sizeBytes": 4004216,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "72661e7c992762d758214a7de8cf55a1f29ed5afa3e5a08e97f1ece7a9635bcb",
+      "checksumSha256": "72661e7c992762d758214a7de8cf55a1f29ed5afa3e5a08e97f1ece7a9635bcb"
     },
     {
       "id": "course-intermediate-750-part2",
@@ -205,12 +205,12 @@
       "level": "中階",
       "wordCount": 368,
       "fileName": "course-intermediate-750-part2.json",
-      "checksum": "0843eea5d92649b26379a25b78b6431e777390bb648c0c032d96262bb2f9e22b",
-      "sizeBytes": 3664240,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "0843eea5d92649b26379a25b78b6431e777390bb648c0c032d96262bb2f9e22b",
-      "checksumSha256": "0843eea5d92649b26379a25b78b6431e777390bb648c0c032d96262bb2f9e22b"
+      "checksum": "e8f5ac8c1f933046de1c201cb2ec92b9ec31099418c8bb0feff6cd71d8066081",
+      "sizeBytes": 3841566,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "e8f5ac8c1f933046de1c201cb2ec92b9ec31099418c8bb0feff6cd71d8066081",
+      "checksumSha256": "e8f5ac8c1f933046de1c201cb2ec92b9ec31099418c8bb0feff6cd71d8066081"
     },
     {
       "id": "course-intermediate-750-part3",
@@ -221,12 +221,12 @@
       "level": "中階",
       "wordCount": 378,
       "fileName": "course-intermediate-750-part3.json",
-      "checksum": "7dd748c0b3c85d30b30917283c6cc08cbd883d0366ea63a7346ca047e849ed3a",
-      "sizeBytes": 3528470,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "7dd748c0b3c85d30b30917283c6cc08cbd883d0366ea63a7346ca047e849ed3a",
-      "checksumSha256": "7dd748c0b3c85d30b30917283c6cc08cbd883d0366ea63a7346ca047e849ed3a"
+      "checksum": "51ca1b94baa40f88466d5cb77ff8d2bde83b78d14920206018e1c4d63923c03c",
+      "sizeBytes": 3661084,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "51ca1b94baa40f88466d5cb77ff8d2bde83b78d14920206018e1c4d63923c03c",
+      "checksumSha256": "51ca1b94baa40f88466d5cb77ff8d2bde83b78d14920206018e1c4d63923c03c"
     },
     {
       "id": "course-intermediate-750-part4",
@@ -237,12 +237,12 @@
       "level": "中階",
       "wordCount": 357,
       "fileName": "course-intermediate-750-part4.json",
-      "checksum": "a0ebc654c17a7987962eb58707a27b3a619725255ed53576b849a6beb3bd9627",
-      "sizeBytes": 3338391,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "a0ebc654c17a7987962eb58707a27b3a619725255ed53576b849a6beb3bd9627",
-      "checksumSha256": "a0ebc654c17a7987962eb58707a27b3a619725255ed53576b849a6beb3bd9627"
+      "checksum": "26aec51166cdde754d52312f05274161094e1949216c4cb1218f63fba6ad3dd6",
+      "sizeBytes": 3579995,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "26aec51166cdde754d52312f05274161094e1949216c4cb1218f63fba6ad3dd6",
+      "checksumSha256": "26aec51166cdde754d52312f05274161094e1949216c4cb1218f63fba6ad3dd6"
     },
     {
       "id": "course-intermediate-750-part5",
@@ -253,12 +253,12 @@
       "level": "中階",
       "wordCount": 371,
       "fileName": "course-intermediate-750-part5.json",
-      "checksum": "1a7114da18eaed086a702d780e52bf686638861ae37a9fc0a1360fbd4a677e9e",
-      "sizeBytes": 3474854,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "1a7114da18eaed086a702d780e52bf686638861ae37a9fc0a1360fbd4a677e9e",
-      "checksumSha256": "1a7114da18eaed086a702d780e52bf686638861ae37a9fc0a1360fbd4a677e9e"
+      "checksum": "9f0beca4890cf6f833849b00a5d4a4ca549186df85924086907a213086975894",
+      "sizeBytes": 3656994,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "9f0beca4890cf6f833849b00a5d4a4ca549186df85924086907a213086975894",
+      "checksumSha256": "9f0beca4890cf6f833849b00a5d4a4ca549186df85924086907a213086975894"
     },
     {
       "id": "course-intermediate-750-part6",
@@ -269,12 +269,12 @@
       "level": "中階",
       "wordCount": 384,
       "fileName": "course-intermediate-750-part6.json",
-      "checksum": "09daedcc7d4341ac9f84e537096abcfd1393ff7f06a280493f0c97a1bc0b28c1",
-      "sizeBytes": 3603386,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "09daedcc7d4341ac9f84e537096abcfd1393ff7f06a280493f0c97a1bc0b28c1",
-      "checksumSha256": "09daedcc7d4341ac9f84e537096abcfd1393ff7f06a280493f0c97a1bc0b28c1"
+      "checksum": "bca2ab5b379ad77c04086f44b932dfc1964c539cb82749cca7436f4e6eb89efd",
+      "sizeBytes": 3681935,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "bca2ab5b379ad77c04086f44b932dfc1964c539cb82749cca7436f4e6eb89efd",
+      "checksumSha256": "bca2ab5b379ad77c04086f44b932dfc1964c539cb82749cca7436f4e6eb89efd"
     },
     {
       "id": "course-intermediate-750-part7",
@@ -285,12 +285,12 @@
       "level": "中階",
       "wordCount": 388,
       "fileName": "course-intermediate-750-part7.json",
-      "checksum": "71bbb9a8636b57fb9967c11c2c521832ad6c073626dc958fb37709b7301c9ed4",
-      "sizeBytes": 3653840,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "71bbb9a8636b57fb9967c11c2c521832ad6c073626dc958fb37709b7301c9ed4",
-      "checksumSha256": "71bbb9a8636b57fb9967c11c2c521832ad6c073626dc958fb37709b7301c9ed4"
+      "checksum": "5de7ce47e13e3f61e85600c9ea827220ae6b3f8fd80793723a685c2a63b7cb6b",
+      "sizeBytes": 3719491,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "5de7ce47e13e3f61e85600c9ea827220ae6b3f8fd80793723a685c2a63b7cb6b",
+      "checksumSha256": "5de7ce47e13e3f61e85600c9ea827220ae6b3f8fd80793723a685c2a63b7cb6b"
     },
     {
       "id": "course-intermediate-750-part8",
@@ -301,12 +301,12 @@
       "level": "中階",
       "wordCount": 381,
       "fileName": "course-intermediate-750-part8.json",
-      "checksum": "558f3eae9e1a8c86eacb5c40ca1d1b185832672a773de497628eaf9039d5228b",
-      "sizeBytes": 3568281,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "558f3eae9e1a8c86eacb5c40ca1d1b185832672a773de497628eaf9039d5228b",
-      "checksumSha256": "558f3eae9e1a8c86eacb5c40ca1d1b185832672a773de497628eaf9039d5228b"
+      "checksum": "1e2cc430b054d03d69b9542bbb1bd9369b39491c3f90ef216f89aab017676e4a",
+      "sizeBytes": 3671833,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "1e2cc430b054d03d69b9542bbb1bd9369b39491c3f90ef216f89aab017676e4a",
+      "checksumSha256": "1e2cc430b054d03d69b9542bbb1bd9369b39491c3f90ef216f89aab017676e4a"
     },
     {
       "id": "course-intermediate-750-part9",
@@ -317,12 +317,12 @@
       "level": "中階",
       "wordCount": 291,
       "fileName": "course-intermediate-750-part9.json",
-      "checksum": "14af13f783eab751da91b4a655d7eeba36dd3883cf5508f1d69fae07c872d809",
-      "sizeBytes": 2719814,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "14af13f783eab751da91b4a655d7eeba36dd3883cf5508f1d69fae07c872d809",
-      "checksumSha256": "14af13f783eab751da91b4a655d7eeba36dd3883cf5508f1d69fae07c872d809"
+      "checksum": "a7eb9ba333d6ac965dd5d91f4186575ab578c37dc49d56d74b82b526ea972b2d",
+      "sizeBytes": 2745112,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "a7eb9ba333d6ac965dd5d91f4186575ab578c37dc49d56d74b82b526ea972b2d",
+      "checksumSha256": "a7eb9ba333d6ac965dd5d91f4186575ab578c37dc49d56d74b82b526ea972b2d"
     },
     {
       "id": "course-advanced-860-part1",
@@ -333,12 +333,12 @@
       "level": "中高階",
       "wordCount": 389,
       "fileName": "course-advanced-860-part1.json",
-      "checksum": "b202c2ca99871a17e1b9a1e55f31e8a31eb76f37fe043b280bc340692b4abace",
-      "sizeBytes": 3691623,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "b202c2ca99871a17e1b9a1e55f31e8a31eb76f37fe043b280bc340692b4abace",
-      "checksumSha256": "b202c2ca99871a17e1b9a1e55f31e8a31eb76f37fe043b280bc340692b4abace"
+      "checksum": "c76151c22cc79039d59911febaa5558ea426c21eff8db186761f417705a5f65d",
+      "sizeBytes": 3757692,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "c76151c22cc79039d59911febaa5558ea426c21eff8db186761f417705a5f65d",
+      "checksumSha256": "c76151c22cc79039d59911febaa5558ea426c21eff8db186761f417705a5f65d"
     },
     {
       "id": "course-advanced-860-part2",
@@ -349,12 +349,12 @@
       "level": "中高階",
       "wordCount": 393,
       "fileName": "course-advanced-860-part2.json",
-      "checksum": "b11d788adaef6e7990bd1168208c73737dc34ebe47eaaa63dffb3ca872c8dbb2",
-      "sizeBytes": 3724827,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "b11d788adaef6e7990bd1168208c73737dc34ebe47eaaa63dffb3ca872c8dbb2",
-      "checksumSha256": "b11d788adaef6e7990bd1168208c73737dc34ebe47eaaa63dffb3ca872c8dbb2"
+      "checksum": "3eca8f6e3fd4730b8c574a55c388784328470b9291d493a07ad84caac5504118",
+      "sizeBytes": 3779863,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "3eca8f6e3fd4730b8c574a55c388784328470b9291d493a07ad84caac5504118",
+      "checksumSha256": "3eca8f6e3fd4730b8c574a55c388784328470b9291d493a07ad84caac5504118"
     },
     {
       "id": "course-advanced-860-part3",
@@ -365,12 +365,12 @@
       "level": "中高階",
       "wordCount": 398,
       "fileName": "course-advanced-860-part3.json",
-      "checksum": "c704acade9dbf44c1ec93e5536824465039adeae2df0c1a70123f4a72b333a46",
-      "sizeBytes": 3768189,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "c704acade9dbf44c1ec93e5536824465039adeae2df0c1a70123f4a72b333a46",
-      "checksumSha256": "c704acade9dbf44c1ec93e5536824465039adeae2df0c1a70123f4a72b333a46"
+      "checksum": "106ac6d820bf73f2fc515709e81cdde5da52aa6ff9d6bc6f26a63c17459321e2",
+      "sizeBytes": 3778413,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "106ac6d820bf73f2fc515709e81cdde5da52aa6ff9d6bc6f26a63c17459321e2",
+      "checksumSha256": "106ac6d820bf73f2fc515709e81cdde5da52aa6ff9d6bc6f26a63c17459321e2"
     },
     {
       "id": "course-advanced-860-part4",
@@ -381,12 +381,12 @@
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part4.json",
-      "checksum": "4eddd45e375d5fa79fa083982d83082a102f8bf35454c29341bead1508709467",
-      "sizeBytes": 3792989,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "4eddd45e375d5fa79fa083982d83082a102f8bf35454c29341bead1508709467",
-      "checksumSha256": "4eddd45e375d5fa79fa083982d83082a102f8bf35454c29341bead1508709467"
+      "checksum": "6b6fab46d2feaab42fd0ea57a94f5be72540511f4ef94349a6bc2288ce70d2cc",
+      "sizeBytes": 3817721,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "6b6fab46d2feaab42fd0ea57a94f5be72540511f4ef94349a6bc2288ce70d2cc",
+      "checksumSha256": "6b6fab46d2feaab42fd0ea57a94f5be72540511f4ef94349a6bc2288ce70d2cc"
     },
     {
       "id": "course-advanced-860-part5",
@@ -397,12 +397,12 @@
       "level": "中高階",
       "wordCount": 399,
       "fileName": "course-advanced-860-part5.json",
-      "checksum": "cbe2e2972efda2287fce941ab26d352c826ba178ab952a55e2180e1a91de79ee",
-      "sizeBytes": 3756637,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "cbe2e2972efda2287fce941ab26d352c826ba178ab952a55e2180e1a91de79ee",
-      "checksumSha256": "cbe2e2972efda2287fce941ab26d352c826ba178ab952a55e2180e1a91de79ee"
+      "checksum": "1a485fc3197c511764cc39d2e1199cd6f3527b50b2e8bce5cdd6e21a2a65fbb5",
+      "sizeBytes": 3782129,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "1a485fc3197c511764cc39d2e1199cd6f3527b50b2e8bce5cdd6e21a2a65fbb5",
+      "checksumSha256": "1a485fc3197c511764cc39d2e1199cd6f3527b50b2e8bce5cdd6e21a2a65fbb5"
     },
     {
       "id": "course-advanced-860-part6",
@@ -413,12 +413,12 @@
       "level": "中高階",
       "wordCount": 97,
       "fileName": "course-advanced-860-part6.json",
-      "checksum": "a18a2ae22de853d7b8546409ad2f78724c7e6dadc6389ddba14df6b21a4b6a4f",
-      "sizeBytes": 905631,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "a18a2ae22de853d7b8546409ad2f78724c7e6dadc6389ddba14df6b21a4b6a4f",
-      "checksumSha256": "a18a2ae22de853d7b8546409ad2f78724c7e6dadc6389ddba14df6b21a4b6a4f"
+      "checksum": "198841f1b387b9812eaaf0cc0139fbe0a7cb7d88f6aef8869cb238411b1165a4",
+      "sizeBytes": 905642,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "198841f1b387b9812eaaf0cc0139fbe0a7cb7d88f6aef8869cb238411b1165a4",
+      "checksumSha256": "198841f1b387b9812eaaf0cc0139fbe0a7cb7d88f6aef8869cb238411b1165a4"
     },
     {
       "id": "course-master-990-part1",
@@ -429,12 +429,12 @@
       "level": "高階",
       "wordCount": 399,
       "fileName": "course-master-990-part1.json",
-      "checksum": "9747b5f25f5f134dd1aec2da6ccda739a22dacacd39fb21d2080a167e6c31811",
-      "sizeBytes": 3718479,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "9747b5f25f5f134dd1aec2da6ccda739a22dacacd39fb21d2080a167e6c31811",
-      "checksumSha256": "9747b5f25f5f134dd1aec2da6ccda739a22dacacd39fb21d2080a167e6c31811"
+      "checksum": "06cf50a3080727bd235aa1fbebbdd470b30065466b70da5c0dee8662ca319d12",
+      "sizeBytes": 3723770,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "06cf50a3080727bd235aa1fbebbdd470b30065466b70da5c0dee8662ca319d12",
+      "checksumSha256": "06cf50a3080727bd235aa1fbebbdd470b30065466b70da5c0dee8662ca319d12"
     },
     {
       "id": "course-master-990-part2",
@@ -445,12 +445,12 @@
       "level": "高階",
       "wordCount": 277,
       "fileName": "course-master-990-part2.json",
-      "checksum": "1f3fe4c0499caee4a4dfb7c92fee3e377a0c42d20230cbc9cfbf21ef3f1fe8b9",
-      "sizeBytes": 2588249,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "1f3fe4c0499caee4a4dfb7c92fee3e377a0c42d20230cbc9cfbf21ef3f1fe8b9",
-      "checksumSha256": "1f3fe4c0499caee4a4dfb7c92fee3e377a0c42d20230cbc9cfbf21ef3f1fe8b9"
+      "checksum": "b7bb4e2fa9970056a4cfee6d53381a2265b0611a4b4b22d0603019010d95eb9c",
+      "sizeBytes": 2598232,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "b7bb4e2fa9970056a4cfee6d53381a2265b0611a4b4b22d0603019010d95eb9c",
+      "checksumSha256": "b7bb4e2fa9970056a4cfee6d53381a2265b0611a4b4b22d0603019010d95eb9c"
     },
     {
       "id": "course-phrases-patterns-p1",
@@ -461,12 +461,12 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p1.json",
-      "checksum": "f6c2db88becc5033357cee57cdcb3f1b47ced4aaa062626f4e11c5c443819736",
-      "sizeBytes": 4032104,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "f6c2db88becc5033357cee57cdcb3f1b47ced4aaa062626f4e11c5c443819736",
-      "checksumSha256": "f6c2db88becc5033357cee57cdcb3f1b47ced4aaa062626f4e11c5c443819736"
+      "checksum": "dc554463ab8cfc1b88074438ad17b3d6b96c11683d730ce727e8b2d5e54fe348",
+      "sizeBytes": 4032115,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "dc554463ab8cfc1b88074438ad17b3d6b96c11683d730ce727e8b2d5e54fe348",
+      "checksumSha256": "dc554463ab8cfc1b88074438ad17b3d6b96c11683d730ce727e8b2d5e54fe348"
     },
     {
       "id": "course-phrases-patterns-p2",
@@ -477,12 +477,12 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p2.json",
-      "checksum": "5b4fa170d4ccacf0c247cb31f70b31239acaed44fd317eabff4e3fa8fd8b0b3d",
-      "sizeBytes": 3793991,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "5b4fa170d4ccacf0c247cb31f70b31239acaed44fd317eabff4e3fa8fd8b0b3d",
-      "checksumSha256": "5b4fa170d4ccacf0c247cb31f70b31239acaed44fd317eabff4e3fa8fd8b0b3d"
+      "checksum": "997c4b91e32675d4d4e47770fee510af95d5cf5b54be2ae1ec83759322ff320d",
+      "sizeBytes": 3794002,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "997c4b91e32675d4d4e47770fee510af95d5cf5b54be2ae1ec83759322ff320d",
+      "checksumSha256": "997c4b91e32675d4d4e47770fee510af95d5cf5b54be2ae1ec83759322ff320d"
     },
     {
       "id": "course-phrases-patterns-p3",
@@ -493,12 +493,12 @@
       "level": "實戰",
       "wordCount": 399,
       "fileName": "course-phrases-patterns-p3.json",
-      "checksum": "c69c24f52c037a8de83139ede1faa07f65ea09b74a6ae2ab31ce19d2e50363bb",
-      "sizeBytes": 3762935,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "c69c24f52c037a8de83139ede1faa07f65ea09b74a6ae2ab31ce19d2e50363bb",
-      "checksumSha256": "c69c24f52c037a8de83139ede1faa07f65ea09b74a6ae2ab31ce19d2e50363bb"
+      "checksum": "84ade84fa30a736b163e1b222b540a48e5072f6a065d4e1cdcd7f0766d8a77ce",
+      "sizeBytes": 3767698,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "84ade84fa30a736b163e1b222b540a48e5072f6a065d4e1cdcd7f0766d8a77ce",
+      "checksumSha256": "84ade84fa30a736b163e1b222b540a48e5072f6a065d4e1cdcd7f0766d8a77ce"
     },
     {
       "id": "course-phrases-patterns-p4",
@@ -509,12 +509,12 @@
       "level": "實戰",
       "wordCount": 317,
       "fileName": "course-phrases-patterns-p4.json",
-      "checksum": "c36be3e3744caa9a8d4bda942f67f66c8713552a458c5f62ed7a5410ba791f6d",
-      "sizeBytes": 3009766,
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "c36be3e3744caa9a8d4bda942f67f66c8713552a458c5f62ed7a5410ba791f6d",
-      "checksumSha256": "c36be3e3744caa9a8d4bda942f67f66c8713552a458c5f62ed7a5410ba791f6d"
+      "checksum": "4bcef0ac9a51dc74fb70f4a82e397b1c01375ccdddbd756b9887e598ef20400e",
+      "sizeBytes": 3009777,
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "4bcef0ac9a51dc74fb70f4a82e397b1c01375ccdddbd756b9887e598ef20400e",
+      "checksumSha256": "4bcef0ac9a51dc74fb70f4a82e397b1c01375ccdddbd756b9887e598ef20400e"
     },
     {
       "id": "course-expert-high-part1",
@@ -523,14 +523,14 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2500,
+      "wordCount": 2285,
       "fileName": "course-expert-high-part1.json",
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "7e0d0cc6fef4c629790713fe5a4931e121e75a3be36f019716d0c3db8ec62e38",
-      "sizeBytes": 23304560,
-      "checksumSha256": "7e0d0cc6fef4c629790713fe5a4931e121e75a3be36f019716d0c3db8ec62e38",
-      "checksum": "7e0d0cc6fef4c629790713fe5a4931e121e75a3be36f019716d0c3db8ec62e38"
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "0940534e435be36a9ad67569883115ebb8a1a25a440030d6c4bc574d54925184",
+      "sizeBytes": 22361131,
+      "checksumSha256": "0940534e435be36a9ad67569883115ebb8a1a25a440030d6c4bc574d54925184",
+      "checksum": "0940534e435be36a9ad67569883115ebb8a1a25a440030d6c4bc574d54925184"
     },
     {
       "id": "course-expert-high-part2",
@@ -539,14 +539,14 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2500,
+      "wordCount": 2414,
       "fileName": "course-expert-high-part2.json",
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "d86ce4356216a9b5dd2502e3b04d1cafaeb4b3359432cf952527d35652e57e01",
-      "sizeBytes": 23519697,
-      "checksumSha256": "d86ce4356216a9b5dd2502e3b04d1cafaeb4b3359432cf952527d35652e57e01",
-      "checksum": "d86ce4356216a9b5dd2502e3b04d1cafaeb4b3359432cf952527d35652e57e01"
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "da60f2922c91f4519be1bd888b4b304e7fc287ce02fb45783df239972f6dfa79",
+      "sizeBytes": 23140656,
+      "checksumSha256": "da60f2922c91f4519be1bd888b4b304e7fc287ce02fb45783df239972f6dfa79",
+      "checksum": "da60f2922c91f4519be1bd888b4b304e7fc287ce02fb45783df239972f6dfa79"
     },
     {
       "id": "course-expert-high-part3",
@@ -555,14 +555,14 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2454,
+      "wordCount": 2411,
       "fileName": "course-expert-high-part3.json",
-      "version": 15,
-      "datasetVersion": "v7.1.0-flagship-full-sync",
-      "sha256": "125ed36e8c83e0acc5e04ce1555fd02ab78be14c76f7b6c302d48f0425d3947a",
-      "sizeBytes": 22944811,
-      "checksumSha256": "125ed36e8c83e0acc5e04ce1555fd02ab78be14c76f7b6c302d48f0425d3947a",
-      "checksum": "125ed36e8c83e0acc5e04ce1555fd02ab78be14c76f7b6c302d48f0425d3947a"
+      "version": 16,
+      "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+      "sha256": "72a15343615edbdf0775045a3c1b849e58e77f27f442451ed4fc4bf54987cb3b",
+      "sizeBytes": 22760517,
+      "checksumSha256": "72a15343615edbdf0775045a3c1b849e58e77f27f442451ed4fc4bf54987cb3b",
+      "checksum": "72a15343615edbdf0775045a3c1b849e58e77f27f442451ed4fc4bf54987cb3b"
     }
   ],
   "tiers": {
@@ -617,7 +617,7 @@
       "count": 22362
     }
   },
-  "datasetVersion": "v7.1.0-flagship-full-sync",
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
   "buildTimestamp": "2026-09-02T15:45:52.625Z",
   "totalQuizzes": 66924
 }

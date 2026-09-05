@@ -1,9 +1,9 @@
 import { db } from '../db';
 import { courseRepository } from '../repositories/courseRepository';
 
-export const CURRENT_DATASET_VERSION = 15;
-export const DATASET_RELEASE_TAG = 'v7.1.0-flagship-full-sync-courses';
-export const APP_RELEASE_VERSION = 'v1.2.1 (Full Course Sync Release)';
+export const CURRENT_DATASET_VERSION = 16;
+export const DATASET_RELEASE_TAG = 'v7.2.0-flagship-consolidated-option2';
+export const APP_RELEASE_VERSION = 'v1.3.0 (Flagship Consolidated Release)';
 
 export interface DatasetDiagnostics {
   appVersion: string;

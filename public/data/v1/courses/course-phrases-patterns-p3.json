@@ -5,7 +5,7 @@
   "toeicScoreRange": "600-900",
   "category": "片語句型",
   "level": "實戰",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_p_74a1767db0a0",
@@ -33947,6 +33947,18 @@
           "en": "Investors should take note of the market fluctuations before finalizing the deal.",
           "zh": "投資者在定案前應【留意】市場波動。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Quality inspectors carefully take notes during the automated assembly of novel lithium battery packs.",
+          "zh": "品質檢查員在新型鋰電池組的自動化組裝過程中仔細記錄筆記。",
+          "scenario": "Automotive Electronics & EV Battery Manufacturing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The secretary was responsible for taking notes during the annual budget meeting.",
+          "zh": "秘書負責在年度預算會議中【記錄筆記】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -34058,6 +34070,104 @@
               "reason": "[❌ 干擾] 污染系統文法與邏輯皆錯。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Quality inspectors carefully _____ during the automated assembly of novel lithium battery packs.",
+          "stemTranslation": "品質檢查員在新型鋰電池組的自動化組裝過程中仔細【記錄筆記】。",
+          "options": [
+            "take notes",
+            "take shortcuts",
+            "make excuses",
+            "raise doubts"
+          ],
+          "answer": "take notes",
+          "strategy": "🎯 5 秒秒殺破題法: 描述品管人員 (inspectors) 在檢查過程中的標準作業動作「做記錄/寫筆記」，選 take notes。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: take notes 代表做筆記/紀錄；與 take note of (留意) 在用法上有複數形 S 與受詞結構的微小差異。",
+          "collocations": [
+            "take notes (做筆記/紀錄)",
+            "automated assembly (自動化組裝)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "take notes",
+              "isCorrect": true,
+              "pos": "phr.",
+              "meaning": "記錄筆記/做紀錄",
+              "reason": "[🟢 正解] 符合品管人員記錄製程細節的語境。"
+            },
+            {
+              "option": "take shortcuts",
+              "isCorrect": false,
+              "pos": "phr.",
+              "meaning": "走捷徑",
+              "reason": "[❌ 干擾] 走捷徑與品管專業要求的 carefully (仔細地) 相矛盾。"
+            },
+            {
+              "option": "make excuses",
+              "isCorrect": false,
+              "pos": "phr.",
+              "meaning": "找藉口",
+              "reason": "[❌ 干擾] 不符專業品管職場情境。"
+            },
+            {
+              "option": "raise doubts",
+              "isCorrect": false,
+              "pos": "phr.",
+              "meaning": "提出疑問",
+              "reason": "[❌ 干擾] 不符日常標準檢驗作業的常規寫照。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Quality inspectors carefully take notes during the automated _____ of novel lithium battery packs.",
+          "stemTranslation": "品質檢查員在新型鋰電池組的自動化【組裝】過程中仔細記錄筆記。",
+          "options": [
+            "assembly",
+            "evacuation",
+            "demolition",
+            "negotiation"
+          ],
+          "answer": "assembly",
+          "strategy": "🎯 5 秒秒殺破題法: automated _____ of battery packs，產線製造電池組過程應為 automated assembly (自動化組裝)。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: assembly line (裝配線) / automated assembly (自動化組裝) 是製造業必考詞彙。",
+          "collocations": [
+            "automated assembly (自動化組裝)",
+            "battery pack (電池組)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "assembly",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "組裝/裝配",
+              "reason": "[🟢 正解] 符合工廠製造電池組的語意。"
+            },
+            {
+              "option": "evacuation",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "疏散/撤離",
+              "reason": "[❌ 干擾] 電池組疏散不合邏輯。"
+            },
+            {
+              "option": "demolition",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "拆除/毀壞",
+              "reason": "[❌ 干擾] 拆除不適用於生產新產品。"
+            },
+            {
+              "option": "negotiation",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "談判",
+              "reason": "[❌ 干擾] 自動化談判詞意不搭配。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
@@ -34122,7 +34232,10 @@
           "en": "take careful note",
           "zh": "仔細留意"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "take notes"
+      }
     },
     {
       "id": "tw_p_946464916e29",
@@ -85231,6 +85344,6 @@
     }
   ],
   "wordCount": 399,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

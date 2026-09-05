@@ -1,13 +1,13 @@
 {
   "id": "course-core-1200",
   "title": "🔥 多益必考高頻核心 1,200 字全集",
-  "description": "涵蓋 600~750 分多益核心考點，含 2,400 題 4D 考點測驗、24領域商務例句與情境圖片。",
+  "description": "涵蓋 600~750 分多益核心考點，含 2,400 題 4D 考點測驗、24領域商務例句與視覺共享技術。",
   "toeicScoreRange": "400-750",
   "category": "高頻核心",
   "level": "核心必考",
-  "version": 15,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z",
+  "version": 16,
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z",
   "wordCount": 1200,
   "words": [
     {

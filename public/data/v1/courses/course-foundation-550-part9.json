@@ -5,7 +5,7 @@
   "toeicScoreRange": "400-600",
   "category": "綜合商務",
   "level": "基礎",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_p_26038a54d78d",
@@ -3472,6 +3472,18 @@
           "en": "We view this training as a mental 【workout】 to sharpen our strategic thinking.",
           "zh": "我們將這項訓練視為一種心智【訓練】，以磨練我們的策略思考。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The fitness platform streams interactive live workouts daily to millions of international subscribers worldwide.",
+          "zh": "該健身平台每天向全球數百萬國際訂戶直播互動式健身訓練課程。",
+          "scenario": "Digital Media Production & Streaming Tech"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The wellness center offers various group 【workout】s for staff members.",
+          "zh": "健康中心為員工提供多樣化的團體【訓練】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -3583,6 +3595,104 @@
               "reason": "【❌ 干擾 · v.】退還款項。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The streaming platform released a new series of interactive video _____ designed for home fitness enthusiasts.",
+          "stemTranslation": "該影音串流平台推出了一系列專為居家健身愛好者設計的互動影片【訓練課程】。",
+          "options": [
+            "workouts",
+            "appliances",
+            "inventories",
+            "creditors"
+          ],
+          "answer": "workouts",
+          "strategy": "🎯 破題關鍵策略: 由關鍵字 interactive video（互動影片）與 fitness enthusiasts（健身愛好者）判斷，此處需填入代表健身運動/訓練項目的複數名詞 workouts。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: appliances（家電）、inventories（存貨清單）、creditors（債權人）均與健身影音內容無關。",
+          "collocations": [
+            "live workouts (直播健身訓練課程)",
+            "daily workouts (每日鍛鍊)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "workouts",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "鍛鍊項目、訓練課程（複數）",
+              "reason": "【🟢 正解 · n.】符合健身影音平台發布的「訓練影片課程」。"
+            },
+            {
+              "option": "appliances",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "家電產品",
+              "reason": "【❌ 干擾 · n.】與健身訓練無關。"
+            },
+            {
+              "option": "inventories",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "庫存清冊",
+              "reason": "【❌ 干擾 · n.】倉儲管理術語。"
+            },
+            {
+              "option": "creditors",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "債權人",
+              "reason": "【❌ 干擾 · n.】金融會計術語。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Subscribers can easily _____ custom daily workouts according to their individual health goals.",
+          "stemTranslation": "訂戶可以根據個人健康目標輕鬆【安排】自訂的每日訓練課程。",
+          "options": [
+            "schedule",
+            "overcharge",
+            "corrode",
+            "demote"
+          ],
+          "answer": "schedule",
+          "strategy": "🎯 破題關鍵策略: 動詞後方接 custom daily workouts（自訂每日訓練），選 schedule 表示「排定/安排時間」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: overcharge（超收費用）、corrode（腐蝕）、demote（降職）均不符合使用者操作串流平台的行為語境。",
+          "collocations": [
+            "schedule workouts (排定訓練時間)",
+            "customize workouts (自訂訓練內容)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "schedule",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "排定、安排時間",
+              "reason": "【🟢 正解 · v.】schedule workouts 意為排定運動/訓練的時間時程。"
+            },
+            {
+              "option": "overcharge",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "多收錢、索價過高",
+              "reason": "【❌ 干擾 · v.】商業收費術語。"
+            },
+            {
+              "option": "corrode",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "侵蝕、腐蝕",
+              "reason": "【❌ 干擾 · v.】化學或金屬用語。"
+            },
+            {
+              "option": "demote",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "使降級、降職",
+              "reason": "【❌ 干擾 · v.】人力資源職位調動。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -3638,7 +3748,10 @@
           "en": "intense workout",
           "zh": "高強度訓練"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "workouts"
+      }
     },
     {
       "id": "tw_w_ea0c5836c467",
@@ -4964,6 +5077,18 @@
           "en": "The team will 【wrap】 the files after the meeting concludes.",
           "zh": "會議結束後，團隊將會把文件【整理歸檔】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Specialized software wrapping protects sensitive neural network models when deployed to cloud servers.",
+          "zh": "專用的軟體包覆技術可在將敏感的神經網路模型部署至雲端伺服器時提供保護。",
+          "scenario": "Artificial Intelligence & Cloud Computing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The 【wrapping】 of the goods was damaged during transit.",
+          "zh": "貨物的【包裝】在運輸過程中受損了。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -5075,6 +5200,104 @@
               "reason": "【❌ 干擾 · adv.】物流安全要求嚴格，不能隨意包覆。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Cloud security protocols require protective software _____ around legacy APIs before integrating them into the AI ecosystem.",
+          "stemTranslation": "雲端安全協定要求在將舊版 API 整合至人工智慧生態系統之前，對其進行保護性軟體【包覆/外殼封裝】。",
+          "options": [
+            "wrapping",
+            "vacancy",
+            "admission",
+            "refund"
+          ],
+          "answer": "wrapping",
+          "strategy": "🎯 破題關鍵策略: 句意指對舊版 API 外層加上軟體封裝/包覆（software wrapping），以符合雲端安全規範，故選名詞 wrapping。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: wrapping 作不可數名詞，指外層包裝、封裝物；在科技領域亦可指「封裝/層外包裝」。",
+          "collocations": [
+            "protective wrapping",
+            "software wrapping"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "wrapping",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "包覆；外殼；封裝",
+              "reason": "【🟢 正解 · n.】指軟體外層封裝與保護層。"
+            },
+            {
+              "option": "vacancy",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "空缺；空房",
+              "reason": "【❌ 干擾 · n.】用於求職或飯店情境。"
+            },
+            {
+              "option": "admission",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "准許進入；入場費",
+              "reason": "【❌ 干擾 · n.】語意不符。"
+            },
+            {
+              "option": "refund",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "退款",
+              "reason": "【❌ 干擾 · n.】屬於財務消費用語。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Engineers must inspect the protective wrapping to ensure there is no damage _____ the hardware components.",
+          "stemTranslation": "工程師必須檢查保護性外層，以確保硬體組件沒有【收到】任何損壞。",
+          "options": [
+            "to",
+            "from",
+            "with",
+            "about"
+          ],
+          "answer": "to",
+          "strategy": "🎯 破題關鍵策略: 介系詞搭配題，damage 常與介系詞 to 搭配，表示「對…的損害」（damage to sth）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 名詞 damage 後方接受詞時，必定搭配介系詞 to。",
+          "collocations": [
+            "damage to components",
+            "protective wrapping"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "to",
+              "isCorrect": true,
+              "pos": "prep.",
+              "meaning": "對…；向…",
+              "reason": "【🟢 正解 · prep.】構成固定搭配「damage to...」。"
+            },
+            {
+              "option": "from",
+              "isCorrect": false,
+              "pos": "prep.",
+              "meaning": "來自",
+              "reason": "【❌ 干擾 · prep.】無法與 damage 搭配表達受損對象。"
+            },
+            {
+              "option": "with",
+              "isCorrect": false,
+              "pos": "prep.",
+              "meaning": "和…一起",
+              "reason": "【❌ 干擾 · prep.】文法搭配錯誤。"
+            },
+            {
+              "option": "about",
+              "isCorrect": false,
+              "pos": "prep.",
+              "meaning": "關於",
+              "reason": "【❌ 干擾 · prep.】語意不通。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80",
@@ -5136,7 +5359,10 @@
           "en": "bubble wrap",
           "zh": "氣泡紙"
         }
-      ]
+      ],
+      "inflections": {
+        "ed": "wrapping"
+      }
     },
     {
       "id": "tw_w_839640454dba",
@@ -12267,6 +12493,18 @@
           "en": "The committee approved strategic guidelines concerning calorie.",
           "zh": "委員會核准了關於【卡路里；熱量單位】之策略方針。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Architects designed active staircases to encourage corporate employees to burn calories during workday breaks.",
+          "zh": "建築師設計了鼓勵運動的樓梯間，以促進企業員工在工作休息期間消耗熱量。",
+          "scenario": "Commercial Architecture & High-Rise Engineering"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Management confirmed updated protocols for calories.",
+          "zh": "管理層確認了關於【卡路里，食物所含的熱量單位，常用於衡量飲食的能量含量。】之最新規範。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -12378,6 +12616,104 @@
               "reason": "【❌ 干擾 · n.】指財務利潤空間或頁邊，與飲食熱量無關。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The corporate wellness facility includes fitness tracking systems that monitor how many _____ employees burn daily.",
+          "stemTranslation": "企業健身設施包含健康追蹤系統，可監控員工每天消耗了多少【卡路里】。",
+          "options": [
+            "calories",
+            "currencies",
+            "vouchers",
+            "tenants"
+          ],
+          "answer": "calories",
+          "strategy": "🎯 破題關鍵策略: 動詞為 burn（消耗/燃燒），賓語應為表示熱量的名詞 calories。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: burn calories 為高頻健康管理片語。注意複數形式 calories 常指整體累積熱量。",
+          "collocations": [
+            "burn calories",
+            "consume calories"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "calories",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "卡路里（複數）",
+              "reason": "【🟢 正解 · n.】與 burn 搭配，burn calories 意為消耗卡路里。"
+            },
+            {
+              "option": "currencies",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "貨幣",
+              "reason": "【❌ 干擾 · n.】與動詞 burn 搭配語意不符。"
+            },
+            {
+              "option": "vouchers",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "禮券；憑證",
+              "reason": "【❌ 干擾 · n.】無法與 burn 搭配表達健康追蹤。"
+            },
+            {
+              "option": "tenants",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "房客；租戶",
+              "reason": "【❌ 干擾 · n.】建築工程用語中的租戶，無法被『燃燒/消耗』。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Designing walking paths inside high-rise office buildings encourages workers to _____ calories throughout the day.",
+          "stemTranslation": "在高層辦公大樓內設計步道，可鼓勵員工全天【消耗】熱量。",
+          "options": [
+            "burn",
+            "earn",
+            "cast",
+            "lease"
+          ],
+          "answer": "burn",
+          "strategy": "🎯 破題關鍵策略: 名詞為 calories，搭配表示『消耗熱量』的標準動詞為 burn。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 勿誤選 earn（賺取）或 lease（租賃，雖為建築業常客但動詞對象不對）。",
+          "collocations": [
+            "burn calories",
+            "burn energy"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "burn",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "消耗；燃燒",
+              "reason": "【🟢 正解 · v.】burn calories 為固定動名搭配，意為消耗熱量。"
+            },
+            {
+              "option": "earn",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "賺取",
+              "reason": "【❌ 干擾 · v.】賺取熱量不合語意邏輯。"
+            },
+            {
+              "option": "cast",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "投射；鑄造",
+              "reason": "【❌ 干擾 · v.】與 calories 無此搭配。"
+            },
+            {
+              "option": "lease",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "出租",
+              "reason": "【❌ 干擾 · v.】商業地產動詞（出租），不能搭配 calories。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -12432,7 +12768,10 @@
           "en": "high in calories",
           "zh": "高熱量"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "calories"
+      }
     },
     {
       "id": "tw_w_26e711f55cb0",
@@ -13104,6 +13443,18 @@
           "en": "The committee approved strategic guidelines concerning chop.",
           "zh": "委員會核准了關於【切斷；將...切碎（通常指食物或材料）】之策略方針。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Traders adjusted their strategies after the firm released its chopped quarterly budget for equity acquisitions.",
+          "zh": "交易員在公司發布大幅削減的股票收購季度預算後調整了策略。",
+          "scenario": "Fintech, Wealth Management & Equity Trading"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Management confirmed updated protocols for chopped.",
+          "zh": "管理層確認了關於【切碎的；已切碎的】之最新規範。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -13215,6 +13566,104 @@
               "reason": "【❌ 干擾 · v.】若為延後，一般搭配 by two months 語意為推遲，但結合成功 managed to 通常指效率提升縮短時間。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Despite operating on a _____ marketing budget, the wealth management team still surpassed their annual performance targets.",
+          "stemTranslation": "儘管在行銷預算【大幅削減】的情況下營運，財富管理團隊仍超越了其年度績效目標。",
+          "options": [
+            "chopped",
+            "prolonged",
+            "inflated",
+            "elevated"
+          ],
+          "answer": "chopped",
+          "strategy": "🎯 破題關鍵策略: 句首由 Despite（儘管）引導逆接關係，後文提及「仍超越目標」，表示前文預算應是被「削減／砍半的」，選分詞形容詞 chopped。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: chopped 做形容詞除料理中的「切碎的」，金融商業領域中用作「被大幅削減的（預算、規模）」。",
+          "collocations": [
+            "chopped budget",
+            "chopped estimate"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "chopped",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "被大幅削減的",
+              "reason": "【🟢 正解 · adj.】修飾 budget，呈現預算被砍但仍達成目標的轉折。"
+            },
+            {
+              "option": "prolonged",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "延長的；持久的",
+              "reason": "【❌ 干擾 · adj.】常用於形容時間（如 prolonged delay），不宜修飾預算。"
+            },
+            {
+              "option": "inflated",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "膨脹的；充氣的",
+              "reason": "【❌ 干擾 · adj.】與 Despite 形成的轉折邏輯不符（預算充裕就不需要用儘管）。"
+            },
+            {
+              "option": "elevated",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "提高的",
+              "reason": "【❌ 干擾 · adj.】語意邏輯不符。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Investment advisors strongly recommend that clients _____ their portfolios during periods of market uncertainty.",
+          "stemTranslation": "投資顧問強烈建議客戶在市場不確定期間進行投資組合【多元化配置】。",
+          "options": [
+            "diversify",
+            "abandon",
+            "collapse",
+            "withdraw"
+          ],
+          "answer": "diversify",
+          "strategy": "🎯 破題關鍵策略: 空格後為 portfolios（投資組合），財富管理中最常見的經典動賓搭配即為 diversify one's portfolio（使投資組合多元化／分散風險）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意語法點 recommend + that 條件句中子句動詞用原形（虛擬語氣省略 should），且 diversify portfolio 為高頻搭配。",
+          "collocations": [
+            "diversify portfolios",
+            "market uncertainty"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "diversify",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "使多元化；分散（投資）",
+              "reason": "【🟢 正解 · v.】與 portfolios 為金融投資領域最高頻搭配之一。"
+            },
+            {
+              "option": "abandon",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "放棄",
+              "reason": "【❌ 干擾 · v.】顧問不會建議客戶直接放棄投資組合。"
+            },
+            {
+              "option": "collapse",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "崩潰",
+              "reason": "【❌ 干擾 · v.】不及物動詞，無法直接帶 portfolios。"
+            },
+            {
+              "option": "withdraw",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "提款；撤回",
+              "reason": "【❌ 干擾 · v.】一般搭配 money 或 funds，而非 portfolio。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -13276,7 +13725,10 @@
           "en": "chop staff",
           "zh": "裁員"
         }
-      ]
+      ],
+      "inflections": {
+        "ed": "chopped"
+      }
     },
     {
       "id": "tw_w_116a6287206f",
@@ -32121,6 +32573,18 @@
           "en": "Management vowed to eliminate office gossip, which they described as poison.",
           "zh": "管理階層承諾消除辦公室流言，稱其為破壞團隊的【毒藥】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Engineers discovered data poisoning within the 6G signal routing model, forcing an immediate security patch.",
+          "zh": "工程師在 6G 信號路由模型中發現數據毒害行為，被迫立即進行安全補丁更新。",
+          "scenario": "Modern Telecommunications & 6G Infrastructure"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The restaurant was closed for failing to prevent a food poisoning incident.",
+          "zh": "該餐廳因未能預防【食物中毒】事件而被勒令停業。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -32232,6 +32696,104 @@
               "reason": "【❌ 干擾 · n.】food plating 指菜餚擺盤藝術，與衛安衛生違規無關。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The cybersecurity unit swiftly responded to the data _____ attempt that corrupted the machine learning algorithms.",
+          "stemTranslation": "資安小組迅速對破壞機器學習演算法的資料【毒害】企圖作出了回應。",
+          "options": [
+            "poisoning",
+            "pollution",
+            "strictly",
+            "calculation"
+          ],
+          "answer": "poisoning",
+          "strategy": "🎯 破題關鍵策略: 搭配詞「data poisoning」（資料毒害/數據污染）為資安與 AI 領域高頻術語，指的是故意以偽造數據污染模型訓練集。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: pollution 指「環境污染」，不適用於人工智慧數據攻擊；strictly 為副詞，語意與詞性均不符。",
+          "collocations": [
+            "data poisoning",
+            "cache poisoning"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "poisoning",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "毒害；中毒",
+              "reason": "【🟢 正解 · n.】符合句意「資料毒害企圖」，與 data 形成專有資安術語。"
+            },
+            {
+              "option": "pollution",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "（自然環境）污染",
+              "reason": "【❌ 干擾 · n.】主要指空氣或水源等物理環境污染，不符網路資安語境。"
+            },
+            {
+              "option": "strictly",
+              "isCorrect": false,
+              "pos": "adv.",
+              "meaning": "嚴格地",
+              "reason": "【❌ 干擾 · adv.】詞性不符，此處名詞修飾名詞（data _____ attempt）需要填入名詞。"
+            },
+            {
+              "option": "calculation",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "計算",
+              "reason": "【❌ 干擾 · n.】雖然是名詞，但「資料計算」無法表達破壞演算法的攻擊行為。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "To mitigate the risk of network poisoning, the telecom team must _____ strict authentication protocols.",
+          "stemTranslation": "為了降低網路毒害的風險，電信團隊必須【實施】嚴格的身份驗證協定。",
+          "options": [
+            "implement",
+            "dismiss",
+            "compensate",
+            "iterate"
+          ],
+          "answer": "implement",
+          "strategy": "🎯 破題關鍵策略: 尋找能與「strict authentication protocols」（嚴格的驗證協定）搭配動詞，實施/執行協定應用 implement。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: dismiss 代表解雇或駁回，與政策/協定無法搭配；compensate 需要搭配 for 表示補償。",
+          "collocations": [
+            "implement protocols",
+            "mitigate the risk"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "implement",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "實施；執行",
+              "reason": "【🟢 正解 · v.】與 protocols 構成常用商業搭配語，意為「實施安全協定」。"
+            },
+            {
+              "option": "dismiss",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "解雇；駁回",
+              "reason": "【❌ 干擾 · v.】語意為解散或忽視，不符合管理防範的邏輯。"
+            },
+            {
+              "option": "compensate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "補償",
+              "reason": "【❌ 干擾 · v.】通常接人或 compensate for sth.，與此處直導名詞受詞不符。"
+            },
+            {
+              "option": "iterate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "重複；迭代",
+              "reason": "【❌ 干擾 · v.】主要指開發過程的疊代更新，不及 implement 適合搭配執行「協定」。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?auto=format&fit=crop&w=600&q=80",
@@ -32292,7 +32854,10 @@
           "en": "poison the working environment",
           "zh": "破壞工作氛圍"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "poisoning"
+      }
     },
     {
       "id": "tw_w_26d90b213ee3",
@@ -45215,6 +45780,18 @@
           "en": "It takes time to learn the tricks of the trade in this industry.",
           "zh": "在這行習得【竅門】需要時間。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Compliance auditors were trained to detect deceptive accounting tricks during annual financial examinations.",
+          "zh": "合規審計師接受訓練，以便在年度財務檢查期間偵測欺詐性的會計花招。",
+          "scenario": "Corporate Governance & Securities Compliance"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Our competitors are using new pricing tricks to steal our clients.",
+          "zh": "競爭對手正使用新的定價【花招】來搶走我們的客戶。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -45326,6 +45903,104 @@
               "reason": "【❌ 干擾 · v.】表示資產價值下降，非人為主觀操作動作。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The regulatory audit identified several accounting _____ intended to artificially inflate the firm's quarterly revenue.",
+          "stemTranslation": "監管審計發現了數個意圖虛增公司季度營收的會計【花招】。",
+          "options": [
+            "tricks",
+            "mandates",
+            "statutes",
+            "sanctions"
+          ],
+          "answer": "tricks",
+          "strategy": "🎯 破題關鍵策略: 句中提及 intended to artificially inflate revenue（意圖虛報營收），可推知前面是指不合規的會計「花招/手段 (tricks)」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 複數名詞 tricks 常與 accounting / financial 搭配，代表企業規避審查的不當技巧或假帳手法。",
+          "collocations": [
+            "accounting tricks",
+            "deceptive tricks"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "tricks",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "花招；詭計",
+              "reason": "【🟢 正解 · n.】指用以掩飾財務真相、虛增營收的不當審計手段。"
+            },
+            {
+              "option": "mandates",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "授權；指令",
+              "reason": "【❌ 干擾 · n.】指官方命令，不可能用來虛報營收。"
+            },
+            {
+              "option": "statutes",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "法令；條例",
+              "reason": "【❌ 干擾 · n.】指成文法律條文，與不當欺騙手段無關。"
+            },
+            {
+              "option": "sanctions",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "制裁；處罰",
+              "reason": "【❌ 干擾 · n.】指主管機關施加的懲罰措施，非欺詐行為本身。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Securities agencies strictly _____ corporate governance laws to protect retail investors from fraudulent reporting.",
+          "stemTranslation": "證券監理機構嚴格【執行】公司治理法律，以保護散戶免於欺詐性報告的侵害。",
+          "options": [
+            "enforce",
+            "conceal",
+            "evade",
+            "falsify"
+          ],
+          "answer": "enforce",
+          "strategy": "🎯 破題關鍵策略: 搭配受詞 corporate governance laws（公司治理法律），最適切的動詞為 enforce（執行/實施法律）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: enforce laws / enforce regulations（執行法律/法規）為合規（Compliance）單元的超高頻搭配。",
+          "collocations": [
+            "enforce laws",
+            "corporate governance"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "enforce",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "執行；貫徹（法律等）",
+              "reason": "【🟢 正解 · v.】與 corporate governance laws 形成嚴謹之法律執行搭配。"
+            },
+            {
+              "option": "conceal",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "隱瞞；掩蓋",
+              "reason": "【❌ 干擾 · v.】意為隱瞞，與監理機構保護投資人的目的相反。"
+            },
+            {
+              "option": "evade",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "規避；逃避",
+              "reason": "【❌ 干擾 · v.】如 evade taxes (逃稅)，非監理機構之行為。"
+            },
+            {
+              "option": "falsify",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "偽造",
+              "reason": "【❌ 干擾 · v.】指竄改文件（falsify documents），屬違法行為而非監理職責。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -45383,7 +46058,10 @@
           "en": "trick someone into",
           "zh": "哄騙某人做..."
         }
-      ]
+      ],
+      "inflections": {
+        "s": "tricks"
+      }
     },
     {
       "id": "tw_w_a4b4e6274dda",
@@ -48647,6 +49325,18 @@
           "en": "There is no need to 【yell】 during the board meeting.",
           "zh": "董事會期間完全沒必要【大聲咆哮】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The supervisor addressed the customer service team without yelling despite the intense pressure of Black Friday orders.",
+          "zh": "儘管面臨黑色星期五訂單的巨大壓力，主管依然心平氣和地對客服團隊說話，沒有咆哮。",
+          "scenario": "E-Commerce Omnichannel Fulfillment & Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The 【yelling】 in the office made it difficult for others to concentrate.",
+          "zh": "辦公室裡的【咆哮聲】讓其他人難以專注。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -48758,6 +49448,104 @@
               "reason": "【❌ 干擾 · prep.】表示空間位置，無法表達音量壓過的語意。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Management reminded team leaders that _____ at staff during high-stress fulfillment operations is strictly prohibited.",
+          "stemTranslation": "管理層提醒團隊領導，在高壓的訂單履約作業期間，對員工【咆哮大喊】是嚴格禁止的。",
+          "options": [
+            "yelling",
+            "shipping",
+            "allocating",
+            "processing"
+          ],
+          "answer": "yelling",
+          "strategy": "🎯 破題關鍵策略: 句末出現 'is strictly prohibited'（嚴格禁止），搭配介系詞 at 加上 staff（對員工），只有表示負面情緒行為的動名詞 yelling 符合句意。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: shipping、processing 均為電商物流常見動詞，容易誘使考生憑領域印象誤選，須仔細體會文意。",
+          "collocations": [
+            "yelling match (大聲爭吵)",
+            "stop yelling (停止吼叫)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "yelling",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "咆哮；大聲喊叫",
+              "reason": "【🟢 正解 · n.】動名詞作主詞，表達『對員工咆哮被嚴格禁止』。"
+            },
+            {
+              "option": "shipping",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "運輸；出貨",
+              "reason": "【❌ 干擾 · n.】物流正常業務，不可能被『嚴格禁止』。"
+            },
+            {
+              "option": "allocating",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "分配；配置",
+              "reason": "【❌ 干擾 · n.】資源分配為常規管理，非禁止事項。"
+            },
+            {
+              "option": "processing",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "處理；加工",
+              "reason": "【❌ 干擾 · n.】訂單處理為合理業務，非禁止行為。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Customer representatives are trained to handle upset callers calmly without _____ their voices.",
+          "stemTranslation": "客服代表接受過專業訓練，能冷靜處理不滿顧客的來電而無需【提高】嗓門。",
+          "options": [
+            "raising",
+            "lifting",
+            "shouting",
+            "speaking"
+          ],
+          "answer": "raising",
+          "strategy": "🎯 破題關鍵策略: 考查固定動詞搭配 'raise one's voice'（提高音量/說話提高嗓門）。受詞為 their voices，應選擇 raise。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 許多考生易選 shouting，但 shout 已含喊叫之意，不可接 'their voices' 作受詞（不說 shout voice）。",
+          "collocations": [
+            "raise one's voice (提高嗓門)",
+            "speak calmly (冷靜交談)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "raising",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "提高（音量）",
+              "reason": "【🟢 正解 · v.】raise one's voice 是表示『提高聲音說話/大聲吼』的標準搭配。"
+            },
+            {
+              "option": "lifting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "舉起；抬起",
+              "reason": "【❌ 干擾 · v.】lift 通常指物理上抬起重物，不與 voice 搭配。"
+            },
+            {
+              "option": "shouting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "喊叫",
+              "reason": "【❌ 干擾 · v.】shout 為不及物/及物動詞直接加話語，不搭配 voice。"
+            },
+            {
+              "option": "speaking",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "說話",
+              "reason": "【❌ 干擾 · v.】speak 不與 voice 直接搭配形成此情境特有片語。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -48815,7 +49603,10 @@
           "en": "yell for help",
           "zh": "大聲呼救"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "yelling"
+      }
     },
     {
       "id": "tw_w_0a5cea785258",
@@ -53493,6 +54284,18 @@
           "en": "The brand is positioned as a diamond in the luxury sector.",
           "zh": "該品牌被定位為奢侈品產業中的【鑽石】（極高價值之物）。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The incident response team protected the client's high-value digital assets and physical diamonds.",
+          "zh": "應變小組保護了客戶的高價值數位資產與實體鑽石。",
+          "scenario": "Enterprise Cyber Security & Incident Response"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Our core software is considered one of our marketing 【diamonds】 in the domestic market.",
+          "zh": "我們的核心軟體被視為國內市場中的一項【王牌商品】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -53604,6 +54407,104 @@
               "reason": "【❌ 干擾 · v.】意為扣留（如 withhold payment），與建設推廣語境不合。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "During the cyber incident, security protocols protected both sensitive records and high-value _____ stored in the facility.",
+          "stemTranslation": "在網路安全事件期間，安全協定保護了儲存於設施內的心敏記錄與高價值【鑽石】。",
+          "options": [
+            "diamonds",
+            "investors",
+            "expenses",
+            "revenues"
+          ],
+          "answer": "diamonds",
+          "strategy": "🎯 破題關鍵策略: 名詞語意判斷。根據句意「保護敏感記錄與高價值的…」，選填表示實體高價值資產的鑽石最合適。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 請勿將表示資產物品的 diamonds 與表示財務狀況的 expenses（費用）或 revenues（營收）混淆。",
+          "collocations": [
+            "high-value diamonds",
+            "valuable assets"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "diamonds",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "鑽石",
+              "reason": "【🟢 正解 · n.】符合句意，指設施內儲存的高價值貴重物品。"
+            },
+            {
+              "option": "investors",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "投資人",
+              "reason": "【❌ 干擾 · n.】投資人非保險庫內儲存之實體物品。"
+            },
+            {
+              "option": "expenses",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "費用；開銷",
+              "reason": "【❌ 干擾 · n.】費用不可作為保險庫安全防護標的物。"
+            },
+            {
+              "option": "revenues",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "營收",
+              "reason": "【❌ 干擾 · n.】營收為財務數據，非實體安全防護物品。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The chief security officer instructed the team to _____ high-value digital and physical assets immediately.",
+          "stemTranslation": "資訊安全長指示團隊立即【保護】高價值的數位與實體資產。",
+          "options": [
+            "safeguard",
+            "expire",
+            "borrow",
+            "hesitate"
+          ],
+          "answer": "safeguard",
+          "strategy": "🎯 破題關鍵策略: 動詞搭配名詞「assets」。安全團隊的主要職責為保護資產，應選 safeguard。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: expire 為不及物動詞（到期），無法接受詞 assets。",
+          "collocations": [
+            "safeguard assets",
+            "protect information"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "safeguard",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "保護；捍衛",
+              "reason": "【🟢 正解 · v.】與 assets 形成高頻職涯搭配語 safeguard assets（保護資產）。"
+            },
+            {
+              "option": "expire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "到期",
+              "reason": "【❌ 干擾 · v.】不及物動詞，語意與文法均不符。"
+            },
+            {
+              "option": "borrow",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "借用",
+              "reason": "【❌ 干擾 · v.】不合資安團隊處置情境。"
+            },
+            {
+              "option": "hesitate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "猶豫",
+              "reason": "【❌ 干擾 · v.】不合緊急處置的文意要求。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80",
@@ -53659,7 +54560,10 @@
           "en": "diamond cutting",
           "zh": "鑽石切割"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "diamonds"
+      }
     },
     {
       "id": "tw_w_731b3be66346",
@@ -62843,6 +63747,18 @@
           "en": "We are expanding our luxury 【ski】 packages for the winter season.",
           "zh": "我們正在擴大冬季的豪華【滑雪】套裝行程。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The cybersecurity firm provided round-the-clock threat monitoring during the annual corporate executive skiing summit.",
+          "zh": "在年度企業高管滑雪峰會期間，該網路安全公司提供全天候的威脅監控服務。",
+          "scenario": "Enterprise Cyber Security & Incident Response"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The 【skiing】 instructor ensures safety on the slopes.",
+          "zh": "【滑雪】教練確保斜坡上的安全。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -62954,6 +63870,104 @@
               "reason": "【❌ 干擾 · v.】指地點變更，無法受詞為抽象的安全規範。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The company sponsored an executive retreat centered around _____, during which confidential cybersecurity strategy sessions were held.",
+          "stemTranslation": "公司贊助了一次以【滑雪】為主題的高管員工研習會，期間舉行了機密網路安全策略會議。",
+          "options": [
+            "skiing",
+            "auditing",
+            "splicing",
+            "wholesaling"
+          ],
+          "answer": "skiing",
+          "strategy": "🎯 破題關鍵策略: 句子描述山區休閒與高管研習會（executive retreat）活動，結合極地/高山渡假背景，動名詞 skiing（滑雪運動）最適切。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 多益聽力與閱讀常出現商務研習會（corporate retreat）的休閒活動背景詞彙，需掌握 skiing、golfing 等複合活動名詞。",
+          "collocations": [
+            "skiing resort",
+            "skiing trip"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "skiing",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "滑雪運動",
+              "reason": "【🟢 正解 · n.】符合高管渡假研習會的戶外休閒主題。"
+            },
+            {
+              "option": "auditing",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "審計；稽核",
+              "reason": "【❌ 干擾 · n.】指財務查帳，不符合「休閒研習會（retreat）」活動戶外休閒主題。"
+            },
+            {
+              "option": "splicing",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "接合；拼接",
+              "reason": "【❌ 干擾 · n.】指電線或影片接合工程，語意不相符。"
+            },
+            {
+              "option": "wholesaling",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "批發業務",
+              "reason": "【❌ 干擾 · n.】指商業批發，與研習會休閒活動無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Cybersecurity teams were deployed to _____ continuous network protection throughout the high-profile winter event.",
+          "stemTranslation": "網路安全團隊被派駐以【確保】在整個高調的冬季盛會期間提供持續的網路防護。",
+          "options": [
+            "ensure",
+            "dismantle",
+            "forfeit",
+            "expire"
+          ],
+          "answer": "ensure",
+          "strategy": "🎯 破題關鍵策略: 觀察受詞 continuous network protection（持續的網路防護），合適的動詞為 ensure（確保）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: ensure 通篇常用於商務合約與資訊安全，表示「確保/保證」，常接品質、安全或防禦作為受詞。",
+          "collocations": [
+            "ensure protection",
+            "ensure compliance"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "ensure",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "確保；保證",
+              "reason": "【🟢 正解 · v.】完美搭配「確保網路防護（ensure network protection）」。"
+            },
+            {
+              "option": "dismantle",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆卸；廢除",
+              "reason": "【❌ 干擾 · v.】指拆除設備，與資安團隊維護安全防護的目的相反。"
+            },
+            {
+              "option": "forfeit",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "喪失；放棄",
+              "reason": "【❌ 干擾 · v.】指因違規而被罰沒或放棄權利，不合語意。"
+            },
+            {
+              "option": "expire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "到期；終止",
+              "reason": "【❌ 干擾 · v.】為不及物動詞，無法直接加受詞 protection。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
@@ -63010,7 +64024,10 @@
           "en": "go skiing",
           "zh": "去滑雪"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "skiing"
+      }
     },
     {
       "id": "tw_w_a6f25deb9bca",
@@ -65792,6 +66809,18 @@
           "en": "The firm frequently uses high-end wine and dine events to secure new clients.",
           "zh": "該公司經常利用高級【款待 (wine and dine)】活動來獲取新客戶。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The annual pharmaceutical gala featured a curated selection of organic wines for international delegates.",
+          "zh": "這場年度製藥晚宴為國際代表提供了精心挑選的有機葡萄酒。",
+          "scenario": "Biotechnology & Clinical Pharmaceuticals"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "We offer a diverse selection of local and imported wines.",
+          "zh": "我們提供多種當地與進口的【葡萄酒】供選擇。",
+          "scenario": "住宿與餐飲"
         }
       ],
       "examTips": [
@@ -65903,6 +66932,104 @@
               "reason": "【❌ 干擾 · v.】無法以客戶為直接賓語表示款待。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Delegates attending the biotechnology symposium praised the extraordinary selection of regional _____ offered at the dinner.",
+          "stemTranslation": "出席生物科技研討會的代表們盛讚晚宴上所提供的各式地區性【葡萄酒】。",
+          "options": [
+            "wines",
+            "vaccines",
+            "formulas",
+            "patents"
+          ],
+          "answer": "wines",
+          "strategy": "🎯 破題關鍵策略: 依據句意「在晚宴上提供（offered at the dinner）」且可進行「品嘗/讚賞（praised the selection of）」，這裡的複數名詞應選指的是不同種類/款式的 wines（多款葡萄酒）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 當 wine 為可數名詞複數型（wines）時，代表「多種不同種類或產區的葡萄酒（a selection of wines）」。",
+          "collocations": [
+            "selection of wines",
+            "regional wines"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "wines",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "多款葡萄酒",
+              "reason": "【🟢 正解 · n.】指晚宴上提供的多種產區/風味葡萄酒品項。"
+            },
+            {
+              "option": "vaccines",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "疫苗",
+              "reason": "【❌ 干擾 · n.】生技主題字，但不可能在晚宴上供賓客品嘗提供。"
+            },
+            {
+              "option": "formulas",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "配方；公式",
+              "reason": "【❌ 干擾 · n.】不符合晚宴餐飲食用的情境。"
+            },
+            {
+              "option": "patents",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "專利",
+              "reason": "【❌ 干擾 · n.】智慧財產權，非餐飲選項。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The conference committee decided to _____ a certified sommelier to present the vintage pairings for the evening.",
+          "stemTranslation": "會議委員會決定【聘請】一位認證侍酒師，來介紹今晚的年份酒搭配。",
+          "options": [
+            "hire",
+            "spill",
+            "cancel",
+            "leak"
+          ],
+          "answer": "hire",
+          "strategy": "🎯 破題關鍵策略: 搭配職務名詞 certified sommelier（認證侍酒師），合理動詞為 hire（聘請、僱用）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意人力資源相關動詞搭配：hire/appoint/engage a specialist（聘請專業人士）。",
+          "collocations": [
+            "hire a specialist",
+            "present the selection"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "hire",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "聘請；僱用",
+              "reason": "【🟢 正解 · v.】正確搭配專業人員 sommelier（侍酒師）。"
+            },
+            {
+              "option": "spill",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "溢出；潑灑",
+              "reason": "【❌ 干擾 · v.】常用於液體，無法以人為直接賓語。"
+            },
+            {
+              "option": "cancel",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "取消",
+              "reason": "【❌ 干擾 · v.】若取消侍酒師，則後半句介紹餐酒搭配無法延續。"
+            },
+            {
+              "option": "leak",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "洩漏",
+              "reason": "【❌ 干擾 · v.】多用於資訊（leak information）或液體漏出。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -65960,7 +67087,10 @@
           "en": "wine and dine",
           "zh": "宴請/款待"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "wines"
+      }
     },
     {
       "id": "tw_w_f8af3382c0af",
@@ -66011,6 +67141,18 @@
           "en": "Our partnership with the sports brand includes a new line of high-performance 【bat】 equipment.",
           "zh": "我們與該運動品牌的合作案包含了一系列高性能的【球棒】設備。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The logistics manager stamped each cold-chain manifest with a unique bates identifier for compliance.",
+          "zh": "物流經理在每份冷鏈貨單上蓋上獨特的 BATES 編號以符合規範。",
+          "scenario": "Supply Chain Cold-Chain Storage & Distribution"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Please ensure all scanned evidence is sorted and applied with sequential 【Bates】 labels.",
+          "zh": "請確保所有掃描的證據皆已整理並加上連續的【編號】標籤。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -66122,6 +67264,104 @@
               "reason": "【❌ 干擾 · v.】搭配不精準。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The legal compliance department requested that all cold-chain storage manifests include standard _____ numbering for auditing.",
+          "stemTranslation": "法律合規部門要求所有冷鏈倉儲貨單必須包含標準的【BATES編號／批註】以供審計。",
+          "options": [
+            "bates",
+            "thermal",
+            "modular",
+            "dynamic"
+          ],
+          "answer": "bates",
+          "strategy": "🎯 破題關鍵策略: 名詞修飾名詞形成專有名詞「bates numbering」（Bates頁碼/批註編號），為法律與供應鏈合規審計中的常見用語。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: Bates numbering 指法律或供應鏈文件上的連續編號/批註，常在合規性題目中出現。",
+          "collocations": [
+            "bates numbering",
+            "bates stamp"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "bates",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "Bates編號；文件的批註編號",
+              "reason": "【🟢 正解 · n.】正確構成「bates numbering」（合規文件連續編號/批註）。"
+            },
+            {
+              "option": "thermal",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "熱能的",
+              "reason": "【❌ 干擾 · adj.】雖然冷鏈相關，但 thermal numbering 非標準文件審計專有名詞。"
+            },
+            {
+              "option": "modular",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "模組化的",
+              "reason": "【❌ 干擾 · adj.】與文件審計編號無關。"
+            },
+            {
+              "option": "dynamic",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "動態的",
+              "reason": "【❌ 干擾 · adj.】非規範審計文件編號名稱。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The auditor requested that the logistics facility _____ clear compliance records for all refrigerated shipments.",
+          "stemTranslation": "審計員要求物流設施【維持】所有冷凍運輸的清晰合規記錄。",
+          "options": [
+            "maintain",
+            "replace",
+            "simulate",
+            "dismiss"
+          ],
+          "answer": "maintain",
+          "strategy": "🎯 破題關鍵策略: 搭配「records」（記錄），使用「maintain records」（維持/保持記錄）最符合供應鏈規範要求。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: maintain records 為商業及審計領域的高頻動名詞組合。",
+          "collocations": [
+            "maintain records",
+            "compliance records"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "maintain",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "維持；保持",
+              "reason": "【🟢 正解 · v.】與 records 完美搭配，意為保持完整記錄。"
+            },
+            {
+              "option": "replace",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "替代",
+              "reason": "【❌ 干擾 · v.】替代記錄不符合審計邏輯。"
+            },
+            {
+              "option": "simulate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "模擬",
+              "reason": "【❌ 干擾 · v.】語意不符。"
+            },
+            {
+              "option": "dismiss",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "駁回",
+              "reason": "【❌ 干擾 · v.】與上下文衝突。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -66177,7 +67417,10 @@
           "en": "batting practice",
           "zh": "打擊練習"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "bates"
+      }
     },
     {
       "id": "tw_w_66a67a7bb5da",
@@ -69015,6 +70258,18 @@
           "en": "Our marketing campaign for the new 【peanut】 spread emphasizes its high protein content.",
           "zh": "我們針對新款【花生】醬的行銷活動強調其高蛋白質含量。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The dilapidated warehouse property was purchased for peanuts before the downtown commercial redevelopment.",
+          "zh": "這座破舊的倉庫物業在市中心商業重新開發前以極低的價格被購入。",
+          "scenario": "Commercial Real Estate & Asset Valuation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "It is hard to find skilled staff when you pay them 【peanuts】.",
+          "zh": "當你只給予【極低報酬】時，很難找到專業人才。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -69125,6 +70380,104 @@
               "reason": "【❌ 干擾 · v.】估價師不負責價格談判。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Because the commercial property was severely damaged by flooding, the real estate investor bought it for _____.",
+          "stemTranslation": "因為這宗商業地產遭洪水嚴重破壞，不動產投資人以【極微小的金額/極便宜地】買下了它。",
+          "options": [
+            "peanuts",
+            "pensions",
+            "premiums",
+            "portfolios"
+          ],
+          "answer": "peanuts",
+          "strategy": "🎯 破題關鍵策略: 片語「buy ... for peanuts」為商業領域習慣用語，表示「以微不足道的金額/極低價購買」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 形近字干擾！pensions（養老金）、premiums（保險費/溢價）、portfolios（投資組合）均為高頻金融字彙，但無法與介詞 for 形成「極便宜購買」的口語俗語搭配。",
+          "collocations": [
+            "for peanuts",
+            "bought for peanuts"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "peanuts",
+              "isCorrect": true,
+              "pos": "n. (plural)",
+              "meaning": "極少許的金錢，微不足道的金額",
+              "reason": "【🟢 正解 · n.】buy something for peanuts 表示用極低的價格購買某物。"
+            },
+            {
+              "option": "pensions",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "養老金，退休金",
+              "reason": "【❌ 干擾 · n.】指給予退休人員的金錢，不合買賣價格語意。"
+            },
+            {
+              "option": "premiums",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "保費，溢價",
+              "reason": "【❌ 干擾 · n.】指保費或附加費用，與低價無關。"
+            },
+            {
+              "option": "portfolios",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "投資組合，作品集",
+              "reason": "【❌ 干擾 · n.】指金融資產組合，不符此處金額極微小之意。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Investors hope to _____ substantial profits after renovating the distressed commercial assets in the city center.",
+          "stemTranslation": "投資人希望在翻修市中心受損的商業資產後，【產生/獲得】豐厚的利潤。",
+          "options": [
+            "generate",
+            "relinquish",
+            "dismantle",
+            "deteriorate"
+          ],
+          "answer": "generate",
+          "strategy": "🎯 破題關鍵策略: 搭配「substantial profits」（豐厚的利潤），應選擇常與 profit 搭配的動詞 generate（產生/創造）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: generate profits / generate revenue / generate interest 為多益核心商業搭配，務必熟記。",
+          "collocations": [
+            "generate profits",
+            "generate revenue"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "generate",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "產生，創造",
+              "reason": "【🟢 正解 · v.】generate substantial profits（產生豐厚利潤）為標準商業搭配。"
+            },
+            {
+              "option": "relinquish",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "放棄，交出",
+              "reason": "【❌ 干擾 · v.】常用於 relinquish control/rights（放棄控制權/權利），不合獲利語意。"
+            },
+            {
+              "option": "dismantle",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆卸，廢除",
+              "reason": "【❌ 干擾 · v.】指拆卸機械或廢除制度，無法接 profits。"
+            },
+            {
+              "option": "deteriorate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "惡化，退化",
+              "reason": "【❌ 干擾 · v.】不及物動詞，指狀況變差，不能接賓語 profits。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -69177,7 +70530,10 @@
           "en": "contains peanuts",
           "zh": "含有花生"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "peanuts"
+      }
     },
     {
       "id": "tw_w_6d49b59c22f4",
@@ -71134,6 +72490,18 @@
           "en": "The catering manual specifies the use of a standard tablespoon.",
           "zh": "餐飲手冊明確規定要使用標準的【湯匙】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The automated irrigation system precisely dispenses three tablespoons of organic nutrient liquid per crop.",
+          "zh": "自動化灌溉系統精確地為每作物分配三湯匙的有機營養液。",
+          "scenario": "Sustainable Agriculture & Agri-Tech Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Add three tablespoons of olive oil to the salad dressing.",
+          "zh": "在沙拉醬中加入三【湯匙】的橄欖油。",
+          "scenario": "住宿與餐飲"
         }
       ],
       "examTips": [
@@ -71245,6 +72613,104 @@
               "reason": "【❌ 干擾 · v.】常用於人員疏散（evacuate the building），不能接 records。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The smart farming drone delivers several _____ of concentrated fertilizer directly to individual plant roots.",
+          "stemTranslation": "智慧農業無人機將數【湯匙】的濃縮肥料直接遞送到個別植物根部。",
+          "options": [
+            "tablespoons",
+            "tablecloths",
+            "tableaus",
+            "tablewares"
+          ],
+          "answer": "tablespoons",
+          "strategy": "🎯 破題關鍵策略: quantifier「several」後面需要複數可數名詞，且 context 是微量精準施肥，應選擇量詞複數 tablespoons。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意單複數名詞與數詞（several）的搭配。tablespoons 代表複數的大匙容量。",
+          "collocations": [
+            "several tablespoons",
+            "tablespoons of liquid"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "tablespoons",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "湯匙；大匙（複數）",
+              "reason": "【🟢 正解 · n.】several tablespoons of... 表示「數湯匙的…」，用於精準液體/粉末計量。"
+            },
+            {
+              "option": "tablecloths",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "桌布（複數）",
+              "reason": "【❌ 干擾 · n.】桌布的複數形，無法作為肥料劑量單位。"
+            },
+            {
+              "option": "tableaus",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "戲劇性場面（複數）",
+              "reason": "【❌ 干擾 · n.】無關商業農業科技語意。"
+            },
+            {
+              "option": "tablewares",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "餐具類（非常用複數形式）",
+              "reason": "【❌ 干擾 · n.】tableware 為不可數/集合名詞，非度量衡單位。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Agritech specialists must _____ liquid measurements carefully to avoid over-fertilizing sensitive vertical crops.",
+          "stemTranslation": "農業科技專家必須仔細【校準】液體測量值，以避免對敏感的垂直作物過度施肥。",
+          "options": [
+            "calibrate",
+            "harvest",
+            "plow",
+            "cultivate"
+          ],
+          "answer": "calibrate",
+          "strategy": "🎯 破題關鍵策略: 根據句意「避免過度施肥」，動詞與「measurements / equipment」搭配應使用 calibrate（校準、調整）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: harvest（收穫）、plow（耕地）、cultivate（栽培）皆為農業高頻字，但只有 calibrate 能接 measurements（測量值）。",
+          "collocations": [
+            "calibrate measurements",
+            "liquid measurements"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "calibrate",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "校準；調校",
+              "reason": "【🟢 正解 · v.】calibrate measurements 意為校準測量數據，完全符合高科技農業的精確操作。"
+            },
+            {
+              "option": "harvest",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "收割；收穫",
+              "reason": "【❌ 干擾 · v.】收割的是 crops（作物），而非 measurements。"
+            },
+            {
+              "option": "plow",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "犁（地）；耕（田）",
+              "reason": "【❌ 干擾 · v.】耕耘土地，不能搭配測量值。"
+            },
+            {
+              "option": "cultivate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "栽培；培育",
+              "reason": "【❌ 干擾 · v.】培育的是植物或關係，無法接「測量數值」。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -71299,7 +72765,10 @@
           "en": "tablespoon measure",
           "zh": "湯匙容量"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "tablespoons"
+      }
     },
     {
       "id": "tw_w_8e79c282877c",
@@ -72768,6 +74237,6 @@
     }
   ],
   "wordCount": 341,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

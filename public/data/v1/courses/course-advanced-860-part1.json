@@ -5,7 +5,7 @@
   "toeicScoreRange": "780-900",
   "category": "綜合商務",
   "level": "中高階",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_91f2d9e34e04",
@@ -50,6 +50,18 @@
           "en": "The committee approved strategic guidelines concerning allocate.",
           "zh": "委員會核准了關於【分配；指派；撥款】之策略方針。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The refrigerated truck was allocated to transport temperature-sensitive vaccines to rural distribution hubs.",
+          "zh": "這輛冷凍貨車被指派用來將對溫度敏感的疫苗運送到偏遠的分銷中心。",
+          "scenario": "Supply Chain Cold-Chain Storage & Distribution"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Additional funds were allocated to the project to cover unexpected costs.",
+          "zh": "為了應對意外開支，額外資金被【撥給】了該專案。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -161,6 +173,104 @@
               "reason": "【❌ 干擾 · n.】名詞語意與分配硬體升級資源無關。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The manager confirmed that additional funds were _____ to upgrade the temperature monitoring systems in the cold-chain warehouse.",
+          "stemTranslation": "經理確認已【撥給】額外資金，用以升級冷鏈倉庫中的溫度監控系統。",
+          "options": [
+            "allocated",
+            "postponed",
+            "demolished",
+            "reconciled"
+          ],
+          "answer": "allocated",
+          "strategy": "🎯 破題關鍵策略: 句子提到『資金（funds）』用於升級系統，空格處需要填入表示『撥給、分配』之被動語態動詞，故選 allocated。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: allocate 常與介詞 to 搭配（allocate funds to sth），切勿混淆為 allocate with 或 allocate for。",
+          "collocations": [
+            "allocated funds",
+            "allocated budget"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "allocated",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "撥給、分配",
+              "reason": "【🟢 正解 · v.】符合『撥給資金升級設備』的文意。"
+            },
+            {
+              "option": "postponed",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期",
+              "reason": "【❌ 干擾 · v.】『延期資金』語意不合邏輯。"
+            },
+            {
+              "option": "demolished",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆除",
+              "reason": "【❌ 干擾 · v.】『拆除資金』不符合商業語境。"
+            },
+            {
+              "option": "reconciled",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "對帳、調和",
+              "reason": "【❌ 干擾 · v.】雖與財務相關，但與升級系統的資金撥放情境不符。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The logistics division decided to _____ resources to the most critical cold-storage facilities.",
+          "stemTranslation": "物流部門決定將資源【分配】給最關鍵的冷凍儲藏設施。",
+          "options": [
+            "allocate",
+            "conduct",
+            "generate",
+            "inspect"
+          ],
+          "answer": "allocate",
+          "strategy": "🎯 破題關鍵策略: 搭配詞『_____ resources to』表示『將資源分配給…』，適當的動詞為 allocate。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: allocate 常與 resources, funds, time 搭配，並接介詞 to 引導接受對象。",
+          "collocations": [
+            "allocate resources",
+            "allocate time"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "allocate",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "分配、撥給",
+              "reason": "【🟢 正解 · v.】allocate resources to... 為商業高頻固定搭配。"
+            },
+            {
+              "option": "conduct",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "執行、進行",
+              "reason": "【❌ 干擾 · v.】conduct 一般搭配 research, survey, inspection，不接 resources to。"
+            },
+            {
+              "option": "generate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "產生、引起",
+              "reason": "【❌ 干擾 · v.】generate 常搭配 revenue 或 interest，後不接 to 物件。"
+            },
+            {
+              "option": "inspect",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "檢查、視察",
+              "reason": "【❌ 干擾 · v.】inspect 直接接被檢查物（如 facilities），不搭配 to。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -240,7 +350,10 @@
       },
       "prepAnchor": "allocate [resources] to (+ 對象) —— 見 to 秒殺！",
       "listeningTrap": "advocate (倡導) —— 聽力常考相似音干擾",
-      "confusedWith": "locate (定位/位於)"
+      "confusedWith": "locate (定位/位於)",
+      "inflections": {
+        "ed": "allocated"
+      }
     },
     {
       "id": "tw_p_8703554fb36b",
@@ -15292,6 +15405,18 @@
           "en": "Despite the serious 【allegation】 against the CEO, the company's stock remained stable.",
           "zh": "儘管執行長面臨嚴重【指控】，公司股價依然保持平穩。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Auditors reviewed defense procurement records to evaluate allegations of bid rigging and tender improprieties.",
+          "zh": "審計人員審查國防採購記錄，以評估圍標及投標不當行為的指控。",
+          "scenario": "Aerospace & Defense Procurement"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The board has received multiple 【allegations】 regarding the misuse of company funds.",
+          "zh": "董事會已收到多項關於濫用公司資金的【指控】。",
+          "scenario": "法務合規與安全"
         }
       ],
       "examTips": [
@@ -15403,6 +15528,104 @@
               "reason": "【❌ 干擾 · v.】多用於累積資本或經驗，不修飾單次決定（approval）。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Defense procurement officials released a detailed report refuting all _____ regarding improper vendor selection.",
+          "stemTranslation": "國防採購官員發表了一份詳細報告，反駁了所有關於不當廠商選擇的【指控】。",
+          "options": [
+            "allegations",
+            "delegations",
+            "obligations",
+            "navigations"
+          ],
+          "answer": "allegations",
+          "strategy": "🎯 破題關鍵策略: 前方動詞為 refuting（反駁、否認），空格應填入可被反駁的事物，即「指控（allegations）」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 字尾 -gations 家族辨析：allegations（指控）、delegations（代表團）、obligations（義務/責任）、navigations（導航）。搭配 refute（反駁）只能選擇 allegations。",
+          "collocations": [
+            "refute allegations",
+            "allegations of corruption"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "allegations",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "指控（複數）",
+              "reason": "【🟢 正解 · n.】與 refute 形成核心動名搭配：refute allegations（反駁指控）。"
+            },
+            {
+              "option": "delegations",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "代表團",
+              "reason": "【❌ 干擾 · n.】指參與會議代表團體，無法被官方報告「反駁」。"
+            },
+            {
+              "option": "obligations",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "義務、責任",
+              "reason": "【❌ 干擾 · n.】常用於 fulfill obligations（履行義務），不與 refute 搭配。"
+            },
+            {
+              "option": "navigations",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "航行、導航",
+              "reason": "【❌ 干擾 · n.】指航海或飛行的導航操作，與採購風波語境完全無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The agency published a statement strictly _____ any wrongdoing during the vendor selection process.",
+          "stemTranslation": "該機構發表聲明，嚴正【否認】在廠商選擇過程中有任何不當行為。",
+          "options": [
+            "denying",
+            "admitting",
+            "requesting",
+            "demanding"
+          ],
+          "answer": "denying",
+          "strategy": "🎯 破題關鍵策略: 搭配名詞 any wrongdoing（任何不法行為），公私立機構發表聲明澄清爭議時，慣用 deny any wrongdoing（否認有任何不當行為）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: deny wrongdoing 為企業公關與法律聲明中最常見的高頻搭配片語，切勿選擇語意相反的 admitting（承認）。",
+          "collocations": [
+            "deny any wrongdoing",
+            "vendor selection process"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "denying",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "否認",
+              "reason": "【🟢 正解 · v.】與 wrongdoing 組成固定公關與法律片語 deny any wrongdoing。"
+            },
+            {
+              "option": "admitting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "承認",
+              "reason": "【❌ 干擾 · v.】通常若承認錯誤會使用 apologize，此處澄清聲明旨在否定指控。"
+            },
+            {
+              "option": "requesting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "請求、要求",
+              "reason": "【❌ 干擾 · v.】無法與 wrongdoing（不當行為）搭配成合理文意。"
+            },
+            {
+              "option": "demanding",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "強烈要求",
+              "reason": "【❌ 干擾 · v.】要求通常接對象或物品，不直接接自己單位的不當行為。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?auto=format&fit=crop&w=600&q=80",
@@ -15467,7 +15690,10 @@
           "en": "deny the allegation",
           "zh": "否認指控"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "allegations"
+      }
     },
     {
       "id": "tw_w_cb27c9d7869b",
@@ -21172,6 +21398,18 @@
           "en": "The CEO continued to 【assert】 that the merger would benefit both companies.",
           "zh": "執行長持續【堅持主張】該合併案對兩家公司都有利。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The lead structural engineer asserts that the skyscraper's reinforced steel core exceeds local seismic safety standards.",
+          "zh": "主導結構工程師斷言，該摩天大樓的加強鋼筋核心超越了當地的防震安全標準。",
+          "scenario": "Commercial Architecture & High-Rise Engineering"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The manager asserts that the project will be finished on time.",
+          "zh": "經理【聲稱】該項目將如期完成。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -21283,6 +21521,104 @@
               "reason": "【❌ 干擾 · n.】意為同情心，與物流業務無關。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The lead architect firmly _____ that the proposed skyscraper design complies fully with municipal safety regulations.",
+          "stemTranslation": "主導建築師堅稱【主張】擬議的摩天大樓設計完全符合市府安全法規。",
+          "options": [
+            "asserts",
+            "postpones",
+            "relinquishes",
+            "demolishes"
+          ],
+          "answer": "asserts",
+          "strategy": "🎯 破題關鍵策略: 句中動詞修飾語為 'firmly'（堅定地），後接句型表示主張某事符合法規，應選擇表示「自信主張、聲稱」的動詞 asserts。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: assert 在商業與工程合約情境中常後接 that 子句，表示「堅定地斷言/主張」。切勿誤選意為「延期」的 postpone 或「放棄」的 relinquish。",
+          "collocations": [
+            "firmly asserts",
+            "assert authority"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "asserts",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "主張；斷言",
+              "reason": "【🟢 正解 · v.】符合句意「堅稱/主張設計符合法規」，與 firmly 搭配極為道地。"
+            },
+            {
+              "option": "postpones",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期；延遲",
+              "reason": "【❌ 干擾 · v.】意為延後，與後續「符合法規」的陳述語意不符。"
+            },
+            {
+              "option": "relinquishes",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "放棄；讓出",
+              "reason": "【❌ 干擾 · v.】表示放棄權利或職務，在此情境中語意不通。"
+            },
+            {
+              "option": "demolishes",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆除；毀壞",
+              "reason": "【❌ 干擾 · v.】指拆除建築物，不符合主張設計合規的上下文。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "During the project dispute, the engineering director had to assert his _____ to restore order among the contractors.",
+          "stemTranslation": "在工程爭議期間，工程總監必須貫徹他的【權威】，以恢復承包商之間的秩序。",
+          "options": [
+            "authority",
+            "vacancy",
+            "insurance",
+            "inventory"
+          ],
+          "answer": "authority",
+          "strategy": "🎯 破題關鍵策略: 辨識高頻搭配詞組 'assert one's authority'（行使/貫徹某人的權威/權力）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: assert 常與 authority, rights, dominance 等名詞搭配。不可誤選 vacancy（空缺）或 inventory（庫存）。",
+          "collocations": [
+            "assert one's authority",
+            "assert statutory rights"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "authority",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "權威；職權",
+              "reason": "【🟢 正解 · n.】組成固定搭配 assert one's authority（樹立/貫徹權威）。"
+            },
+            {
+              "option": "vacancy",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "職缺；空缺",
+              "reason": "【❌ 干擾 · n.】無法與 assert 形成管理語境下合理的搭配。"
+            },
+            {
+              "option": "insurance",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "保險",
+              "reason": "【❌ 干擾 · n.】語意與恢復現場秩序無關。"
+            },
+            {
+              "option": "inventory",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "存貨；清單",
+              "reason": "【❌ 干擾 · n.】指庫存貨品，不符上下文。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -21347,7 +21683,10 @@
           "en": "assert confidence",
           "zh": "展現自信"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "asserts"
+      }
     },
     {
       "id": "tw_w_8d42cf3a90ea",
@@ -22698,6 +23037,18 @@
           "en": "A key attribute of a good manager is flexibility.",
           "zh": "優秀經理人的一個關鍵【特質】就是靈活性。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Key product attributes, such as dimensions and weight, are automatically updated across all sales channels.",
+          "zh": "主要的產品屬性（如尺寸與重量）會自動在所有銷售管道同步更新。",
+          "scenario": "E-Commerce Omnichannel Fulfillment & Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "These software attributes allow for faster processing.",
+          "zh": "這些軟體【特性】能加速處理效率。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -22809,6 +23160,104 @@
               "reason": "【❌ 干擾 · prep.】文法錯誤。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The automated fulfillment system filters items based on essential product _____, such as dimensions, weight, and fragility.",
+          "stemTranslation": "自動化履約系統根據關鍵的產品【屬性】（例如尺寸、重量和易碎性）來篩選商品。",
+          "options": [
+            "attributes",
+            "attachments",
+            "allowances",
+            "appliances"
+          ],
+          "answer": "attributes",
+          "strategy": "🎯 破題關鍵策略: 句中此名詞由 essential product 修飾，後面列舉 dimensions, weight（尺寸、重量），可知填入表示「特徵；屬性」的名詞複數 attributes。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 形似字幹擾。attachments（附件）、allowances（津貼/限額）、appliances（家電）。",
+          "collocations": [
+            "product attributes",
+            "key attributes"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "attributes",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "屬性；特徵",
+              "reason": "【🟢 正解 · n.】指產品的規格特點，符合作者列舉的尺寸與重量。"
+            },
+            {
+              "option": "attachments",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "附件",
+              "reason": "【❌ 干擾 · n.】指信件或機械附加零件，語意不符。"
+            },
+            {
+              "option": "allowances",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "津貼；限額",
+              "reason": "【❌ 干擾 · n.】指財務津貼或行李額度，不符語境。"
+            },
+            {
+              "option": "appliances",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "器具；家電",
+              "reason": "【❌ 干擾 · n.】指家用電器，非指產品規格屬性。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Reliability and speed are key _____ that modern consumers expect from an e-commerce delivery service.",
+          "stemTranslation": "可靠性與速度是現代消費者對電子商務配送服務所期待的關鍵【特質】。",
+          "options": [
+            "attributes",
+            "agendas",
+            "announcements",
+            "authorities"
+          ],
+          "answer": "attributes",
+          "strategy": "🎯 破題關鍵策略: 分析句意，「可靠性與速度」屬於服務品質的「特質/屬性」，故搭配 key attributes (關鍵特質)。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: agendas（議程）、announcements（公告）、authorities（官方/權威機構）皆不可用來形容 reliability and speed。",
+          "collocations": [
+            "key attributes",
+            "essential attributes"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "attributes",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "特質；屬性",
+              "reason": "【🟢 正解 · n.】正確對應 reliability and speed 等服務特性。"
+            },
+            {
+              "option": "agendas",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "議程",
+              "reason": "【❌ 干擾 · n.】指會議討論事項，不符語意。"
+            },
+            {
+              "option": "announcements",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "聲明；公告",
+              "reason": "【❌ 干擾 · n.】指官方發布之訊息。"
+            },
+            {
+              "option": "authorities",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "當局；權威",
+              "reason": "【❌ 干擾 · n.】指政府機構或專家。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
@@ -22868,7 +23317,10 @@
           "en": "attribute success to teamwork",
           "zh": "將成功歸功於團隊合作"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "attributes"
+      }
     },
     {
       "id": "tw_w_b375b689bca9",
@@ -22921,6 +23373,18 @@
           "en": "External auditors are coming to review our financial records.",
           "zh": "外部查帳員即將來【審查】我們的財務紀錄。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Rigorous auditing of battery component suppliers ensures maximum safety and quality in electric vehicle production.",
+          "zh": "對電池零件供應商進行嚴格的審計稽核，可確保電動車生產的最大安全性與品質。",
+          "scenario": "Automotive Electronics & EV Battery Manufacturing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The auditing process will take two weeks.",
+          "zh": "【審計】流程將耗時兩週。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -23032,6 +23496,104 @@
               "reason": "【❌ 干擾 · v.】語意為拆解實物，不合上下文。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Regular _____ of component suppliers helps the electric vehicle manufacturer maintain stringent quality control standards.",
+          "stemTranslation": "對零件供應商進行定期【審計稽核】，有助於該電動車製造商保持嚴格的品質管制標準。",
+          "options": [
+            "auditing",
+            "advertisement",
+            "adjournment",
+            "allocation"
+          ],
+          "answer": "auditing",
+          "strategy": "🎯 破題關鍵策略: 空格填入作主詞的名詞/動名詞，表示對供應商進行的「查核/審計工作」，故選 auditing。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 區分名詞詞義：auditing (審計/稽核行為)，adjournment (休會)，allocation (分配)。",
+          "collocations": [
+            "supplier auditing (供應商稽核)",
+            "internal auditing (內部審計)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "auditing",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "審計；稽核過程",
+              "reason": "【🟢 正解 · n.】正確表示對供應商進行品質與財務稽核。"
+            },
+            {
+              "option": "advertisement",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "廣告",
+              "reason": "【❌ 干擾 · n.】對供應商做廣告不合品質控管邏輯。"
+            },
+            {
+              "option": "adjournment",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "休會；延期",
+              "reason": "【❌ 干擾 · n.】通常指會議延期，不合語意。"
+            },
+            {
+              "option": "allocation",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "分配；撥款",
+              "reason": "【❌ 干擾 · n.】語意為資源分配，非品質檢查。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The quality management team established a continuous monitoring system to _____ compliance with ISO safety standards.",
+          "stemTranslation": "品質管理團隊建立了一個持續監控系統，以【確保】符合 ISO 安全標準。",
+          "options": [
+            "ensure",
+            "postpone",
+            "contradict",
+            "terminate"
+          ],
+          "answer": "ensure",
+          "strategy": "🎯 破題關鍵策略: 搭配「compliance with standards (符合標準)」，合適的動詞為 ensure (確保/保證)。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: ensure 後常直接接名詞賓語，如 ensure compliance / ensure quality。",
+          "collocations": [
+            "ensure compliance (確保合規)",
+            "ensure safety (確保安全)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "ensure",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "確保；保證",
+              "reason": "【🟢 正解 · v.】完美搭配 compliance，表達確保合規。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延後",
+              "reason": "【❌ 干擾 · v.】語意不符邏輯。"
+            },
+            {
+              "option": "contradict",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "反駁；與……矛盾",
+              "reason": "【❌ 干擾 · v.】與監控系統的目的相反。"
+            },
+            {
+              "option": "terminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止",
+              "reason": "【❌ 干擾 · v.】語意不符。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
@@ -23091,7 +23653,10 @@
           "en": "internal audit",
           "zh": "內部稽核"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "auditing"
+      }
     },
     {
       "id": "tw_w_558461637f02",
@@ -28322,6 +28887,18 @@
           "en": "The committee approved strategic guidelines concerning bias.",
           "zh": "委員會核准了關於【偏見；偏袒；傾向；斜線】之策略方針。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Researchers rejected the agricultural study because the data selection method produced severely biased results.",
+          "zh": "研究人員拒絕了這項農業研究，因為數據選擇方法產生了嚴重帶有偏見的結果。",
+          "scenario": "Sustainable Agriculture & Agri-Tech Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Management confirmed updated protocols for biased.",
+          "zh": "管理層確認了關於【帶有偏見的；不客觀的；傾向於某一方的】之最新規範。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -28433,6 +29010,104 @@
               "reason": "【❌ 干擾 · v.】語意相反，安全審計應減少非增加偏見。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The report on automated irrigation efficiency was criticized for relying on highly _____ sampling methods.",
+          "stemTranslation": "關於自動灌溉效率的報告受到批評，原因是該報告依賴高度【有偏見的】抽樣方法。",
+          "options": [
+            "biased",
+            "durable",
+            "spacious",
+            "cordial"
+          ],
+          "answer": "biased",
+          "strategy": "🎯 破題關鍵策略: 前文提及被批評（criticized），表示抽樣方法是不客觀的，填入形容詞 biased（有偏見的/不客觀的）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: durable（耐用的）常修飾設備；spacious（寬敞的）修飾空間；cordial（熱誠的）修飾態度，均不符學術研究受批評的原因。",
+          "collocations": [
+            "biased sample / sampling (有偏見的樣本/抽樣)",
+            "heavily biased (嚴重偏頗的)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "biased",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "有偏見的；不客觀的",
+              "reason": "【🟢 正解 · adj.】修飾 sampling methods，說明報告遭受批評的原因。"
+            },
+            {
+              "option": "durable",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "耐用的",
+              "reason": "【❌ 干擾 · adj.】常用於產品品質描述，不適合形容抽樣方法。"
+            },
+            {
+              "option": "spacious",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "寬敞的",
+              "reason": "【❌ 干擾 · adj.】形容辦公室或設施空間，語意無關。"
+            },
+            {
+              "option": "cordial",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "熱誠的；友好的",
+              "reason": "【❌ 干擾 · adj.】形容商務招待或關係，與研究抽樣無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Independent reviewers found that the evaluation was heavily _____ toward the manufacturer's proprietary soil sensors.",
+          "stemTranslation": "獨立審查人員發現，該評估嚴重【偏向】製造商的專利土壤感測器。",
+          "options": [
+            "biased",
+            "invested",
+            "transferred",
+            "located"
+          ],
+          "answer": "biased",
+          "strategy": "🎯 破題關鍵策略: 辨識固定介詞搭配 'be biased toward/towards sb/sth'，表示「偏心/偏向於某一方」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: be invested in（投資於）；be located in/at（部位於）；be transferred to（被調職/轉移至）。唯有 biased 搭配 toward 表示偏袒偏向。",
+          "collocations": [
+            "be biased toward(s) (偏向/偏袒...)",
+            "be biased against (對...有偏見)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "biased",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "偏向的；偏袒的",
+              "reason": "【🟢 正解 · adj.】與 heavily ... toward 構成正確文法與商業語意。"
+            },
+            {
+              "option": "invested",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "投資的",
+              "reason": "【❌ 干擾 · adj.】通常搭配介系詞 in，而非 toward。"
+            },
+            {
+              "option": "transferred",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "調動的；轉移的",
+              "reason": "【❌ 干擾 · adj.】通常搭配介系詞 to。"
+            },
+            {
+              "option": "located",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "位於的",
+              "reason": "【❌ 干擾 · adj.】通常搭配介系詞 in, at, 或 on。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -28491,7 +29166,10 @@
           "en": "show bias toward",
           "zh": "對...表現出偏袒"
         }
-      ]
+      ],
+      "inflections": {
+        "ed": "biased"
+      }
     },
     {
       "id": "tw_w_2b2cc852adcb",
@@ -30308,6 +30986,18 @@
           "en": "Our company strictly forbids any form of bribery in international contracts.",
           "zh": "本公司嚴格禁止在國際合約中進行任何形式的【行賄】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Regulatory auditors discovered that local inspectors accepted bribes to bypass cold-chain compliance checks.",
+          "zh": "監管審計人員發現當地檢查員收取賄賂，以規避冷鏈合規性檢查。",
+          "scenario": "Supply Chain Cold-Chain Storage & Distribution"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The audit report uncovered a series of bribes paid to contractors.",
+          "zh": "審計報告揭露了一系列支付給承包商的【賄款】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -30419,6 +31109,104 @@
               "reason": "【❌ 干擾 · v.】指合法資金投入，不可直接動賓搭配 a bribe。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The distribution manager was fired after evidence showed he offered illegal _____ to customs officials.",
+          "stemTranslation": "在證據顯示該分銷經理向海關官員提供非法【賄賂】後，他被解雇了。",
+          "options": [
+            "bribes",
+            "tariffs",
+            "vouchers",
+            "invoices"
+          ],
+          "answer": "bribes",
+          "strategy": "🎯 破題關鍵策略: 前有修飾詞「illegal」（非法的）以及解僱原因「fired after...」，空格填入複數名詞 bribes（賄款/賄賂）最符合語境。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: tariffs（關稅）與 invoices（發票）皆為海關合規的正常財務文件，不具「illegal」非法屬性。",
+          "collocations": [
+            "illegal bribes (非法賄賂)",
+            "customs officials (海關官員)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "bribes",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "賄賂；賄款（複數）",
+              "reason": "【🟢 正解 · n.】符合「提供非法賄款給海關」導致解僱的語境。"
+            },
+            {
+              "option": "tariffs",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "關稅",
+              "reason": "【❌ 干擾 · n.】關稅為合法政府稅捐，非非法給予物。"
+            },
+            {
+              "option": "vouchers",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "代金券；憑證",
+              "reason": "【❌ 干擾 · n.】商業優惠憑證，不符合給海關官員的非法行為。"
+            },
+            {
+              "option": "invoices",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "請款單；發票",
+              "reason": "【❌ 干擾 · n.】正常交易單據，無非法含義。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Inspectors were accused of accepting corrupt payments to _____ standard safety checks at the cold storage facility.",
+          "stemTranslation": "檢查員被指控收受腐敗款項以【規避/繞過】冷凍倉儲設施的標準安全檢查。",
+          "options": [
+            "bypass",
+            "postpone",
+            "overhaul",
+            "prohibit"
+          ],
+          "answer": "bypass",
+          "strategy": "🎯 破題關鍵策略: 收受不當款項（accepting corrupt payments）的目的通常是為了規避/跳過檢查，故選 bypass（規避；繞過）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: postpone（延後）與 overhaul（徹底檢修）雖為多益高頻詞，但無法表達「不進行檢查/私下繞過」的違規情節。",
+          "collocations": [
+            "bypass safety checks (規避安全檢查)",
+            "cold storage facility (冷凍倉儲設施)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "bypass",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "規避；繞過",
+              "reason": "【🟢 正解 · v.】bypass safety checks 意為規避安全檢查，與收賄語境完美契合。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期",
+              "reason": "【❌ 干擾 · v.】指時間上的推遲，非行賄買通以逃避檢查。"
+            },
+            {
+              "option": "overhaul",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "徹底檢修；改造",
+              "reason": "【❌ 干擾 · v.】指改善或翻修，與逃避安全檢查語意相反。"
+            },
+            {
+              "option": "prohibit",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "禁止",
+              "reason": "【❌ 干擾 · v.】檢查員無權以私收賄款來「禁止」檢查，而是「規避」檢查。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?auto=format&fit=crop&w=600&q=80",
@@ -30474,7 +31262,10 @@
           "en": "combat bribery",
           "zh": "打擊賄賂"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "bribes"
+      }
     },
     {
       "id": "tw_w_73aec5a6d1eb",
@@ -36589,6 +37380,18 @@
           "en": "A large chunk of the budget was allocated to R&D for next year.",
           "zh": "預算中很大【一部分】被分配給明年的研發項目。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Engineers divided the raw silicon wafers into smaller chunks before starting the chemical etching process.",
+          "zh": "工程師在開始化學蝕刻工序之前，將原生矽晶圓分割成較小的區塊。",
+          "scenario": "Semiconductor Fabrication & Chip Supply Chains"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The system processes the uploaded files in chunks to avoid overloading memory.",
+          "zh": "系統將上傳的檔案分【批次/區塊】處理，以避免記憶體超載。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -36700,6 +37503,104 @@
               "reason": "【❌ 干擾 · prep.】表示整體中的一部分時固定用 of，而非 from。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The data transmitted from the semiconductor testing facility was processed in discrete _____ to optimize server bandwidth.",
+          "stemTranslation": "從半導體測試設施傳輸的數據被分成獨立的【區塊】進行處理，以優化伺服器頻寬。",
+          "options": [
+            "chunks",
+            "circuits",
+            "margins",
+            "statutes"
+          ],
+          "answer": "chunks",
+          "strategy": "🎯 破題關鍵策略: 句中提及數據處理（processed in discrete _____），在科技與數據領域，資訊常以 chunks（分段/區塊）形式進行批次處理。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 雖然 circuit 是半導體相關詞彙，但 in chunks 是數據/材料處理的固定表達法，指「分塊地」。",
+          "collocations": [
+            "processed in chunks",
+            "manageable chunks"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "chunks",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "分段內容、區塊",
+              "reason": "【🟢 正解 · n.】in chunks 表示「分區塊地、分段地」，常用於描述數據封包或材料分割處理。"
+            },
+            {
+              "option": "circuits",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "電路",
+              "reason": "【❌ 干擾 · n.】指電子線路，無法置於 in discrete _____ 結構中表示處理單位。"
+            },
+            {
+              "option": "margins",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "利潤、邊緣",
+              "reason": "【❌ 干擾 · n.】商業利潤或頁面邊緣，不符數據傳輸語意。"
+            },
+            {
+              "option": "statutes",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "法令、法規",
+              "reason": "【❌ 干擾 · n.】法律條文，與半導體數據處理無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "To make the complex chip design specs easier to understand, the manager broke them _____ into smaller sections.",
+          "stemTranslation": "為了讓複雜的晶片設計規格更易理解，經理將其【分解】成較小的章節。",
+          "options": [
+            "down",
+            "off",
+            "out",
+            "away"
+          ],
+          "answer": "down",
+          "strategy": "🎯 破題關鍵策略: 片語動詞搭配。break down (something) into... 意為「將……分解/拆分成……」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: break off 意為「折斷/中斷」，break out 意為「爆發」，只有 break down into 能表示細分結構。",
+          "collocations": [
+            "break down into",
+            "divide into chunks"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "down",
+              "isCorrect": true,
+              "pos": "adv.",
+              "meaning": "向下、分解",
+              "reason": "【🟢 正解 · adv.】break down into 意為「細分、分解成」，為商務簡報與技術說明高頻片語。"
+            },
+            {
+              "option": "off",
+              "isCorrect": false,
+              "pos": "adv.",
+              "meaning": "離開、中斷",
+              "reason": "【❌ 干擾 · adv.】break off 表示中斷談話或折斷物品。"
+            },
+            {
+              "option": "out",
+              "isCorrect": false,
+              "pos": "adv.",
+              "meaning": "向外",
+              "reason": "【❌ 干擾 · adv.】break out 表示戰爭、火災等爆發。"
+            },
+            {
+              "option": "away",
+              "isCorrect": false,
+              "pos": "adv.",
+              "meaning": "離去",
+              "reason": "【❌ 干擾 · adv.】break away 表示脫離或逃跑。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -36762,7 +37663,10 @@
           "en": "a significant chunk of",
           "zh": "很大一部分的"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "chunks"
+      }
     },
     {
       "id": "tw_w_def407aacd7b",
@@ -42411,6 +43315,18 @@
           "en": "Electricity has become a tradable commodity in the deregulated energy market.",
           "zh": "電力在自由化的能源市場中已成為可交易的【商品】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "High-speed rail construction relies heavily on raw commodities like steel and copper for infrastructure development.",
+          "zh": "高速鐵路建設高度依賴鋼鐵和銅等原始商品，用於基礎設施開發。",
+          "scenario": "High-Speed Rail & Public Transit Engineering"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The company relies on stable prices for agricultural commodities.",
+          "zh": "該公司仰賴農業【原物料】價格的穩定。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -42522,6 +43438,104 @@
               "reason": "【❌ 干擾 · v.】常用於 curtail expenditure（縮減開支），不符合語境。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Price fluctuations in raw _____ such as steel directly affect total construction budgets for public transit projects.",
+          "stemTranslation": "諸如鋼鐵等大宗原【原物料/商品】的價格波動，會直接影響大眾運輸工程的總建設預算。",
+          "options": [
+            "commodities",
+            "credentials",
+            "obligations",
+            "turnouts"
+          ],
+          "answer": "commodities",
+          "strategy": "🎯 破題關鍵策略: 空格後舉例 such as steel（例如鋼鐵），指大宗買賣的原物料，應選 commodities。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: raw commodities 是常見商務與工程用語，意指「原物料/大宗商品」。credentials（憑證/資歷）、obligations（義務）、turnouts（出席人數/鐵軌轉轍器）皆不合語意。",
+          "collocations": [
+            "raw commodities",
+            "bulk commodities"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "commodities",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "大宗商品；原物料",
+              "reason": "【🟢 正解 · n.】raw commodities 代表鋼鐵、石油等大宗原物料，符合後文 steel 舉例。"
+            },
+            {
+              "option": "credentials",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "資歷；證件",
+              "reason": "【❌ 干擾 · n.】指資格或證件，無法與 raw 搭配且不包含鋼鐵等物料。"
+            },
+            {
+              "option": "obligations",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "法律或道義上的義務",
+              "reason": "【❌ 干擾 · n.】指責任或債務，與鋼鐵等實物材料無關。"
+            },
+            {
+              "option": "turnouts",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "出席人數；（鐵路）轉轍器",
+              "reason": "【❌ 干擾 · n.】在此處語境下不符合「鋼鐵等物料」的語意。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Transit project managers must closely _____ commodity prices to prevent budget overruns during rail construction.",
+          "stemTranslation": "運輸專案經理必須密切【追蹤】大宗商品價格，以防止鐵路建設期間的預算超支。",
+          "options": [
+            "track",
+            "dismiss",
+            "assemble",
+            "allocate"
+          ],
+          "answer": "track",
+          "strategy": "🎯 破題關鍵策略: 搭配名詞 commodity prices（商品價格）與副詞 closely（密切地），表達「密切追蹤價格」，應選 track。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: closely track prices 為固定商務搭配；dismiss（忽視/解散）、assemble（組裝）、allocate（分配）在文意與搭配上均不合適。",
+          "collocations": [
+            "track prices",
+            "volatile commodity prices"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "track",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "追蹤；記錄",
+              "reason": "【🟢 正解 · v.】closely track prices 表「密切追蹤價格」，能有效避免預算超支。"
+            },
+            {
+              "option": "dismiss",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "駁回；不理會",
+              "reason": "【❌ 干擾 · v.】若不理會價格波動，無法防止預算超支，邏輯相反。"
+            },
+            {
+              "option": "assemble",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "組裝；聚集",
+              "reason": "【❌ 干擾 · v.】用於組裝零件或召集人員，不能搭配 prices。"
+            },
+            {
+              "option": "allocate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "撥給；分配",
+              "reason": "【❌ 干擾 · v.】通常搭配 budget 或 resources，不直接搭配 prices。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80",
@@ -42579,7 +43593,10 @@
           "en": "commodity trading",
           "zh": "商品交易"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "commodities"
+      }
     },
     {
       "id": "tw_w_b535ac02ca47",
@@ -45031,6 +46048,18 @@
           "en": "We identified a legal 【complication】 that might delay the merger.",
           "zh": "我們發現了一個可能拖延合併案的法律【問題】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Unforeseen regulatory complications arose during the cross-border acquisition, requiring immediate legal intervention and oversight.",
+          "zh": "在跨境併購過程中出現了預期之外的法規難題，需要立即進行法律干預與監督。",
+          "scenario": "Corporate Governance & Securities Compliance"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The project failed due to technical 【complications】 in the final phase.",
+          "zh": "該項目由於最後階段的技術【複雜困難】而失敗了。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -45142,6 +46171,104 @@
               "reason": "【❌ 干擾 · v.】通常搭配課程、計畫或會員制度。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Unexpected legal _____ regarding overseas tax liabilities delayed the merger between the two corporations.",
+          "stemTranslation": "關於海外稅務債務的突發法律【併發問題/複雜難題】，延誤了兩家大企業之間的合併案。",
+          "options": [
+            "complications",
+            "compliments",
+            "commitments",
+            "competencies"
+          ],
+          "answer": "complications",
+          "strategy": "🎯 破題關鍵策略: 句中提到「延誤了合併案（delayed the merger）」，可知主詞必然是某種負面的「障礙或複雜狀況」，應選名詞複數形 complications。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 留意類似拼寫的名詞：compliments 是「讚美」，commitments 是「承諾/投入」，competencies 是「能力/勝任特質」。只有 complications 具「併發困難」之意。",
+          "collocations": [
+            "unforeseen complications (未預料到的難題)",
+            "legal complications (法律糾紛/複雜問題)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "complications",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "複雜問題；難事（複數）",
+              "reason": "【🟢 正解 · n.】符合句意「法律上的複雜難題延誤了合併案」。"
+            },
+            {
+              "option": "compliments",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "讚美；恭維",
+              "reason": "【❌ 干擾 · n.】正面詞彙，不可能導致企業合併案延誤。"
+            },
+            {
+              "option": "commitments",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "承諾；奉獻",
+              "reason": "【❌ 干擾 · n.】指合約承諾或努力投入，語意與延誤合併相反。"
+            },
+            {
+              "option": "competencies",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "專業能力；資格",
+              "reason": "【❌ 干擾 · n.】指個人或組織的能力，與遭遇障礙情境不符。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Legal consultants were hired to help the board _____ complex regulatory complications during the acquisition.",
+          "stemTranslation": "公司聘請了法律顧問，以協助董事會在併購過程中【應對/引導化解】複雜的法規難題。",
+          "options": [
+            "navigate",
+            "terminate",
+            "subcontract",
+            "accumulate"
+          ],
+          "answer": "navigate",
+          "strategy": "🎯 破題關鍵策略: 動詞與 complications/challenges 搭配時，navigate 常用於表示「順利應對、化解複雜情勢」（比喻操舵航行過險境）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 在企業治理與法律領域，navigate regulatory challenges / complications 是極常見高階英語搭配。",
+          "collocations": [
+            "navigate complications (化解/應對複雜難題)",
+            "regulatory complications (監管法規難題)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "navigate",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "妥善處理；引導應對（複雜局面）",
+              "reason": "【🟢 正解 · v.】與 complications 搭配極佳，表示化解或順利渡過法規難題。"
+            },
+            {
+              "option": "terminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止；結束",
+              "reason": "【❌ 干擾 · v.】通常搭配合約 (contract) 或僱傭关系，不搭配名詞 complications。"
+            },
+            {
+              "option": "subcontract",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "外包；轉包",
+              "reason": "【❌ 干擾 · v.】指將工程或合約外包，無法外包「問題」。"
+            },
+            {
+              "option": "accumulate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "累積；聚積",
+              "reason": "【❌ 干擾 · v.】顧問的目的不可能去「累積」困難。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -45204,7 +46331,10 @@
           "en": "medical complications",
           "zh": "併發症"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "complications"
+      }
     },
     {
       "id": "tw_w_ce5fa89c2512",
@@ -50662,6 +51792,18 @@
           "en": "The company cannot use your data without your prior consent.",
           "zh": "本公司若未取得您的事先【授權】，不得使用您的資料。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Automated fulfillment hubs operate seamlessly by sharing customer location data with consenting users.",
+          "zh": "自動化履約中心透過與同意授權的用戶共享客戶位置資料來流暢運作。",
+          "scenario": "E-Commerce Omnichannel Fulfillment & Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The survey results include only those from consenting employees.",
+          "zh": "問卷結果僅包含來自【自願參與】的員工。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -50773,6 +51915,104 @@
               "reason": "【❌ 干擾 · v.】通常為不及物動詞（resign from a position），不可接 consent。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The omnichannel platform distributes personalized delivery notifications exclusively to _____ customers who opted into the program.",
+          "stemTranslation": "該全通路平台僅向選擇加入該計畫的【同意】客戶發送個人化配送通知。",
+          "options": [
+            "consenting",
+            "challenging",
+            "competing",
+            "complaining"
+          ],
+          "answer": "consenting",
+          "strategy": "🎯 破題關鍵策略: 後方有限定修飾句「who opted into the program（選擇加入計畫的）」，說明這些客戶是「表達同意/授權的」，應選擇分詞形容詞 consenting。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: consenting 在此做形容詞修飾名詞（如 consenting adults / consenting customers），表示「表達同意的、給予許可的」。",
+          "collocations": [
+            "consenting party",
+            "consenting customer"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "consenting",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "同意的；授權的",
+              "reason": "【🟢 正解 · adj.】分詞形容詞，修飾 customers，表示同意提供個人資料與接收訊息的客戶。"
+            },
+            {
+              "option": "challenging",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "具挑戰性的",
+              "reason": "【❌ 干擾 · adj.】形容詞，常用於形容工作或任務艱難（a challenging task）。"
+            },
+            {
+              "option": "competing",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "競爭的",
+              "reason": "【❌ 干擾 · adj.】常用於 competing companies（競爭對手公司），與 opted into 的意涵無關。"
+            },
+            {
+              "option": "complaining",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "抱怨的",
+              "reason": "【❌ 干擾 · adj.】指發出抱怨的，不符句子中主動訂閱該計畫的邏輯。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "E-commerce retailers must obtain clear authorization from consenting parties before _____ personal purchase histories.",
+          "stemTranslation": "電子商務零售商在【處理】同意方的個人購買記錄之前，必須取得明確授權。",
+          "options": [
+            "processing",
+            "demolishing",
+            "interfering",
+            "relinquishing"
+          ],
+          "answer": "processing",
+          "strategy": "🎯 破題關鍵策略: 介系詞 before 後需接動名詞，搭配後方受詞 personal purchase histories（個人購買紀錄），最適當的資訊處理動詞為 processing。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 在個資與資安法規（如 GDPR）情境中，process data/histories（處理資料/紀錄）為極常見的高頻搭配詞。",
+          "collocations": [
+            "process personal data",
+            "process transactions"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "processing",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "處理（資料、訂單）",
+              "reason": "【🟢 正解 · v.】process data/histories 為標準電商與資安專業搭配語。"
+            },
+            {
+              "option": "demolishing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆毀；破壞",
+              "reason": "【❌ 干擾 · v.】通常用於拆除建築物（demolish a building），不可用於資料。"
+            },
+            {
+              "option": "interfering",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "干涉；干預",
+              "reason": "【❌ 干擾 · v.】通常搭配介系詞 with（interfere with），無法直接接受詞。"
+            },
+            {
+              "option": "relinquishing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "放棄；交出",
+              "reason": "【❌ 干擾 · v.】指放棄權利或職位（relinquish control），不符合商家處理客戶資料的行為。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -50836,7 +52076,10 @@
           "en": "without consent",
           "zh": "未經許可"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "consenting"
+      }
     },
     {
       "id": "tw_w_9d39c1fbe2a1",
@@ -61312,6 +62555,18 @@
           "en": "Sales representatives are trained to cultivate long-term partnerships with vendors.",
           "zh": "業務代表受過培訓，以【培養】與供應商的長期合作關係。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Cyber security directors focus on cultivating advanced analytical skills among incident response team members.",
+          "zh": "資訊安全總監專注於培養事件應變小組成員的高級分析技能。",
+          "scenario": "Enterprise Cyber Security & Incident Response"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "She is dedicated to cultivating the skills of her team members.",
+          "zh": "她致力於【培養】團隊成員的技能。",
+          "scenario": "人力資源"
         }
       ],
       "examTips": [
@@ -61423,6 +62678,104 @@
               "reason": "【❌ 干擾 · n.】語意不符，企業不尋求短缺。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "By _____ trust with key corporate clients, the cybersecurity firm successfully secured several long-term contracts.",
+          "stemTranslation": "透過與關鍵企業客戶【建立/培養】信任，該資安公司成功獲得了數份長期服務合約。",
+          "options": [
+            "cultivating",
+            "terminating",
+            "postponing",
+            "violating"
+          ],
+          "answer": "cultivating",
+          "strategy": "🎯 破題關鍵策略: 分析句中動名詞與名詞 trust（信任）的語意搭配。「建立/培養信任」應使用 cultivating trust。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 介系詞 by 後接動名詞 V-ing，四個選項皆為 V-ing，需純粹從動賓語意搭配解題。",
+          "collocations": [
+            "cultivating trust (建立信任)",
+            "cultivating expertise (培養專業知識)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "cultivating",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "培養；建立（信任、能力）",
+              "reason": "【🟢 正解 · v.】cultivating trust 為固定商務搭配，表示長期用心建立信任關係。"
+            },
+            {
+              "option": "terminating",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止；解雇",
+              "reason": "【❌ 干擾 · v.】終止信任無法導向「獲得長期合約」的正面結果。"
+            },
+            {
+              "option": "postponing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延後；延期",
+              "reason": "【❌ 干擾 · v.】延後信任語意不通。"
+            },
+            {
+              "option": "violating",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "違反；侵犯",
+              "reason": "【❌ 干擾 · v.】違反信任（violating trust）會破壞合作，不符句意。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The department head spent months cultivating strong _____ with external threat intelligence experts.",
+          "stemTranslation": "部門主管花了數月時間與外部脅迫情報專家培養緊密的【關係/聯繫】。",
+          "options": [
+            "ties",
+            "flaws",
+            "losses",
+            "barriers"
+          ],
+          "answer": "ties",
+          "strategy": "🎯 破題關鍵策略: 動名詞 cultivating 搭配形容詞 strong 後，需要一個表示「關係、連結」的名詞，cultivate strong ties 表示「建立緊密聯繫/關係」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: tie 做名詞除了「領帶」外，在多益商務語境中多為複數形 ties，意為「關係；聯繫」（相當於 relationships 或 connections）。",
+          "collocations": [
+            "cultivate strong ties (建立緊密關係)",
+            "business ties (商業聯繫)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "ties",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "關係；聯繫",
+              "reason": "【🟢 正解 · n.】cultivate strong ties 是標準商業道地寫法。"
+            },
+            {
+              "option": "flaws",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "缺點；瑕疵",
+              "reason": "【❌ 干擾 · n.】不可能花時間去培養瑕疵。"
+            },
+            {
+              "option": "losses",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "損失；虧損",
+              "reason": "【❌ 干擾 · n.】語意極其不合邏輯。"
+            },
+            {
+              "option": "barriers",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "障礙；障壁",
+              "reason": "【❌ 干擾 · n.】建立障礙會阻止合作，與句意相悖。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -61484,7 +62837,10 @@
           "en": "cultivate professional skills",
           "zh": "培養專業技能"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "cultivating"
+      }
     },
     {
       "id": "tw_w_b5a1edf618c7",
@@ -68310,6 +69666,18 @@
           "en": "We must adapt our strategies to match the changing 【demographic】 of the city.",
           "zh": "我們必須調整策略以適應該城市變動的【人口結構】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The lead architect carefully studied the city's changing demographics before designing the mixed-use high-rise complex.",
+          "zh": "首席建築師在設計這棟複合式摩天大樓建案前，仔細研究了該城市變化中的人口結構數據。",
+          "scenario": "Commercial Architecture & High-Rise Engineering"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The latest 【demographics】 indicate a rise in the middle-income household segment.",
+          "zh": "最新的【人口統計資料】顯示中等收入家庭區塊的成長。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -68421,6 +69789,104 @@
               "reason": "【❌ 干擾 · n.】法律合約用語，不合句意。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Understanding local _____ is essential for commercial developers aiming to build high-end residential towers.",
+          "stemTranslation": "對於旨在建造高端住宅大樓的商業開發商而言，瞭解當地的【人口結構數據】至關重要。",
+          "options": [
+            "demographics",
+            "deliberations",
+            "dependencies",
+            "divergences"
+          ],
+          "answer": "demographics",
+          "strategy": "🎯 破題關鍵策略: 句中指開發商需要研究的居民年齡、收入等統計資料，應選名詞恆用複數的 'demographics'（人口結構數據）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: demographics（複數形名詞）專指「特定地區/族群的人口結構統計資料」，常作為研判市場趨勢的受詞。",
+          "collocations": [
+            "changing demographics",
+            "study demographics"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "demographics",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "人口統計資料；人口結構數據",
+              "reason": "【🟢 正解 · n.】指年齡、收入等人口數據，符合建商前期市場調查語境。"
+            },
+            {
+              "option": "deliberations",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "商議；研討",
+              "reason": "【❌ 干擾 · n.】指討論過程，與研判目標客群數據不符。"
+            },
+            {
+              "option": "dependencies",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "依賴性；屬地",
+              "reason": "【❌ 干擾 · n.】語意不連貫。"
+            },
+            {
+              "option": "divergences",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "分歧；偏離",
+              "reason": "【❌ 干擾 · n.】指意見或方向的分岐，非市場分析對象。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Commercial engineering firms often _____ detailed demographics data before selecting sites for new skyscraper projects.",
+          "stemTranslation": "商業工程公司在為新摩天大樓計畫選址前，通常會【分析】詳細的人口結構數據。",
+          "options": [
+            "analyze",
+            "forfeit",
+            "jeopardize",
+            "alleviate"
+          ],
+          "answer": "analyze",
+          "strategy": "🎯 破題關鍵策略: 搭配動詞 analyze demographics data（分析人口數據），為建案選址之前的標準商業流程。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 常見名動搭配包括 analyze/evaluate/collect demographics data。",
+          "collocations": [
+            "analyze demographics",
+            "target demographics"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "analyze",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "分析；研判",
+              "reason": "【🟢 正解 · v.】與 detailed demographics data 形成標準動賓搭配。"
+            },
+            {
+              "option": "forfeit",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "喪失；被沒收",
+              "reason": "【❌ 干擾 · v.】指因違規而失去權益，不合句意。"
+            },
+            {
+              "option": "jeopardize",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "危及；損害",
+              "reason": "【❌ 干擾 · v.】工程公司不會主動危害數據。"
+            },
+            {
+              "option": "alleviate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "減輕；緩和",
+              "reason": "【❌ 干擾 · v.】常用於減輕疼痛或交通擁塞，無法修飾數據。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80",
@@ -68477,7 +69943,10 @@
           "en": "demographic shift",
           "zh": "人口結構變化"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "demographics"
+      }
     },
     {
       "id": "tw_w_4e53245754b8",
@@ -84822,6 +86291,6 @@
     }
   ],
   "wordCount": 389,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

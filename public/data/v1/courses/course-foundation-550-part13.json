@@ -5,7 +5,7 @@
   "toeicScoreRange": "400-600",
   "category": "綜合商務",
   "level": "基礎",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_p_26038a54d78d",
@@ -696,6 +696,18 @@
           "en": "We send our best 【wishes】 for the success of your new business venture.",
           "zh": "我們致上最誠摯的【祝福】，期許您的新事業成功。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The board of directors respected the shareholder's wishes regarding the restructuring of executive compensation.",
+          "zh": "董事會尊重股東關於高階主管薪酬重組的意願。",
+          "scenario": "Corporate Governance & Securities Compliance"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "She acts in accordance with the client's 【wishes】 regarding the design.",
+          "zh": "她依照客戶對設計的【期望】行事。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -807,6 +819,104 @@
               "reason": "【❌ 干擾 · v.】搭配資料或報告。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The corporate compliance committee acted in full accordance with the regulator's explicit _____.",
+          "stemTranslation": "企業合規委員會完全按照監管機構明確的【意願/指示】行事。",
+          "options": [
+            "wishes",
+            "wishing",
+            "wished",
+            "wishful"
+          ],
+          "answer": "wishes",
+          "strategy": "🎯 破題關鍵策略: 所有格「regulator's」與形容詞「explicit」之後需要填入複數名詞「wishes」（意願、指示）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: wishful 為形容詞（如 wishful thinking）；wishing/wished 為動詞分詞，在此文法結構不符。",
+          "collocations": [
+            "explicit wishes",
+            "express wishes"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "wishes",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "意願/願望",
+              "reason": "【🟢 正解 · n.】複數名詞，作為限定詞與形容詞後的受詞。"
+            },
+            {
+              "option": "wishing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "希望(現在分詞)",
+              "reason": "【❌ 干擾 · v./adj.】分詞形態，無法直接當定語後之核心名詞。"
+            },
+            {
+              "option": "wished",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "希望(過去分詞)",
+              "reason": "【❌ 干擾 · v.】動詞過去式或過去分詞。"
+            },
+            {
+              "option": "wishful",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "渴望的",
+              "reason": "【❌ 干擾 · adj.】形容詞。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The board must strictly _____ all relevant securities regulatory compliance standards.",
+          "stemTranslation": "董事會必須嚴格【遵守】所有相關證券監管合規標準。",
+          "options": [
+            "follow",
+            "discard",
+            "postpone",
+            "overlook"
+          ],
+          "answer": "follow",
+          "strategy": "🎯 破題關鍵策略: 動詞「follow」與「standards / guidelines」（標準/準則）搭配，意為「遵循/遵守」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: overlook 為「忽略/忽視」，意圖恰好相反；discard（拋棄）不符合規脈絡。",
+          "collocations": [
+            "follow standards",
+            "comply with regulations"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "follow",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "遵循/遵守",
+              "reason": "【🟢 正解 · v.】與 standards 構成常見合規搭配。"
+            },
+            {
+              "option": "discard",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "廢棄/丟棄",
+              "reason": "【❌ 干擾 · v.】語意相反。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期",
+              "reason": "【❌ 干擾 · v.】不合邏輯。"
+            },
+            {
+              "option": "overlook",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "忽略",
+              "reason": "【❌ 干擾 · v.】與合規標準完全背道而馳。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -885,7 +995,10 @@
       },
       "prepAnchor": "wish to (+ 動詞原型) —— 想要做某事（等同於 would like to）",
       "listeningTrap": "wash (洗) / watch (看) —— 聽力相似音干擾",
-      "confusedWith": "well (好/井)"
+      "confusedWith": "well (好/井)",
+      "inflections": {
+        "s": "wishes"
+      }
     },
     {
       "id": "tw_p_4efb34e9dc76",
@@ -3821,6 +3934,18 @@
           "en": "Careful 【word】 choice is essential in marketing.",
           "zh": "謹慎的【用詞】選擇在行銷中至關重要。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The chief appraiser chose her words carefully while addressing potential risks during the presentation.",
+          "zh": "主任估價師在簡報中闡述潛在風險時，非常斟酌她的措辭。",
+          "scenario": "Commercial Real Estate & Asset Valuation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "His final 【words】 impressed the board members.",
+          "zh": "他最後的【言談】令董事會成員印象深刻。",
+          "scenario": "辦公日常"
         }
       ],
       "examTips": [
@@ -3932,6 +4057,104 @@
               "reason": "【❌ 干擾 · n.】非正確慣用法。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "During negotiations, the asset evaluator chose his _____ with caution to avoid misunderstandings regarding property value.",
+          "stemTranslation": "在談判期間，資產估價師謹慎【措辭】，以避免對不動產價值產生誤解。",
+          "options": [
+            "words",
+            "clauses",
+            "leases",
+            "deeds"
+          ],
+          "answer": "words",
+          "strategy": "🎯 破題關鍵策略: 認識片語 choose one's words（斟酌措辭），此處 words 作複數使用，指發言講述的言詞。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意別與法律文件名詞（如 clauses 條款、deeds 地契）混淆，choose one's words 為慣用語。",
+          "collocations": [
+            "choose one's words (斟酌措辭)",
+            "in other words (換句話說)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "words",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "言詞、措辭（複數）",
+              "reason": "【🟢 正解 · n.】choose one's words 表示說話謹慎、注意措辭。"
+            },
+            {
+              "option": "clauses",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "合約條款",
+              "reason": "【❌ 干擾 · n.】通常搭配 draft/insert clauses，而非形容口頭謹慎發言。"
+            },
+            {
+              "option": "leases",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "租約",
+              "reason": "【❌ 干擾 · n.】與 choose with caution 口頭溝通語境不符。"
+            },
+            {
+              "option": "deeds",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "產權契據",
+              "reason": "【❌ 干擾 · n.】指不動產契約文件，非指說話措辭。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The contract stipulates that both parties must abide by the terms set forth; in other _____, no unilateral changes are allowed.",
+          "stemTranslation": "合約規定雙方必須遵守所述條款，【換句話說】，不允許單方面變更。",
+          "options": [
+            "words",
+            "terms",
+            "notes",
+            "cases"
+          ],
+          "answer": "words",
+          "strategy": "🎯 破題關鍵策略: 選用過渡副詞片語 in other words（換句話說），引導補充說明。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: in other words 屬於固定轉換連接詞組，其中的 words 必須使用複數形。",
+          "collocations": [
+            "in other words (換句話說)",
+            "abide by terms (遵守條款)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "words",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "言詞（in other words 換言之）",
+              "reason": "【🟢 正解 · n.】固定片語 in other words 用於重申或澄清前述內容。"
+            },
+            {
+              "option": "terms",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "條款",
+              "reason": "【❌ 干擾 · n.】in other terms 雖然偶見，但最標準且常見的轉折片語為 in other words。"
+            },
+            {
+              "option": "notes",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "筆記、票據",
+              "reason": "【❌ 干擾 · n.】無法構成轉折片語。"
+            },
+            {
+              "option": "cases",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "案例、情況",
+              "reason": "【❌ 干擾 · n.】in other cases 代表「在其他情況下」，與此處重申邏輯不符。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
@@ -4015,6 +4238,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'word'. Modern automated e-commerce fulfillment center featuring high-speed robotic sorting lines and executive managers discussing project targets. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T06:43:05Z"
+      },
+      "inflections": {
+        "s": "words"
       }
     },
     {
@@ -6244,6 +6470,18 @@
           "en": "The union represents thousands of factory workers in the region.",
           "zh": "該工會代表了區域內數千名的工廠【工作人員】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Incubator workers analyze startup financial statements to assist venture capital investment decisions.",
+          "zh": "育成中心的員工分析新創公司財務報表，以協助創投投資決策。",
+          "scenario": "Venture Capital Due Diligence & Tech Incubation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Many workers are dissatisfied with the recent changes in company policy.",
+          "zh": "許多【勞工】對公司最近的政策變動感到不滿。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -6355,6 +6593,104 @@
               "reason": "【❌ 干擾 · v.】與品質管理無關。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Experienced incubation _____ often mentor founding teams on long-term market expansion strategies.",
+          "stemTranslation": "經驗豐富的育成中心【員工】經常在長期市場擴張策略上指導創辦團隊。",
+          "options": [
+            "workers",
+            "workplaces",
+            "workloads",
+            "workshops"
+          ],
+          "answer": "workers",
+          "strategy": "🎯 破題關鍵策略: 句中動詞為 mentor（指導），主詞必須是具備專業知識的人員複數名詞，故選 workers。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 區分 work- 字根複合詞：workplaces（職場）、workloads（工作量）、workshops（工作坊），僅 workers 為指稱人的名詞。",
+          "collocations": [
+            "incubation workers",
+            "knowledge workers"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "workers",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "員工、工作人員（複數）",
+              "reason": "【🟢 正解 · n.】人稱複數名詞，符合動詞 mentor（指導）的主詞身份。"
+            },
+            {
+              "option": "workplaces",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "工作場所（複數）",
+              "reason": "【❌ 干擾 · n.】地點名詞，無法作為 mentor 的主詞。"
+            },
+            {
+              "option": "workloads",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "工作量（複數）",
+              "reason": "【❌ 干擾 · n.】抽象量詞名詞。"
+            },
+            {
+              "option": "workshops",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "研討會、工作坊（複數）",
+              "reason": "【❌ 干擾 · n.】會議活動名詞。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Venture capitalists conduct thorough due diligence to _____ potential operational risks.",
+          "stemTranslation": "創投家進行徹底的盡職調查，以【識別】潛在的營運風險。",
+          "options": [
+            "identify",
+            "cancel",
+            "replace",
+            "postpone"
+          ],
+          "answer": "identify",
+          "strategy": "🎯 破題關鍵策略: 動詞與風險（risks）的搭配。盡職調查（due diligence）的核心目的為「識別/找出」風險，選擇 identify。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: cancel（取消）、replace（替代）、postpone（延期）皆不符合盡職調查調查階段的企管邏輯。",
+          "collocations": [
+            "identify risks",
+            "conduct due diligence"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "identify",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "識別、找出",
+              "reason": "【🟢 正解 · v.】identify risks 為商業分析常用固定語意組合。"
+            },
+            {
+              "option": "cancel",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "取消",
+              "reason": "【❌ 干擾 · v.】調查無法直接「取消」既有風險。"
+            },
+            {
+              "option": "replace",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "替代",
+              "reason": "【❌ 干擾 · v.】語意不通。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期",
+              "reason": "【❌ 干擾 · v.】無法與「風險」做合理動作搭配。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -6427,7 +6763,10 @@
       },
       "prepAnchor": null,
       "listeningTrap": "walker (步行者) —— 聽力發音極相似，注意區分",
-      "confusedWith": "employer (雇主)"
+      "confusedWith": "employer (雇主)",
+      "inflections": {
+        "s": "workers"
+      }
     },
     {
       "id": "tw_p_567f5fdbabb4",
@@ -6693,6 +7032,18 @@
           "en": "We view this training as a mental 【workout】 to sharpen our strategic thinking.",
           "zh": "我們將這項訓練視為一種心智【訓練】，以磨練我們的策略思考。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The fitness platform streams interactive live workouts daily to millions of international subscribers worldwide.",
+          "zh": "該健身平台每天向全球數百萬國際訂戶直播互動式健身訓練課程。",
+          "scenario": "Digital Media Production & Streaming Tech"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The wellness center offers various group 【workout】s for staff members.",
+          "zh": "健康中心為員工提供多樣化的團體【訓練】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -6804,6 +7155,104 @@
               "reason": "【❌ 干擾 · v.】退還款項。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The streaming platform released a new series of interactive video _____ designed for home fitness enthusiasts.",
+          "stemTranslation": "該影音串流平台推出了一系列專為居家健身愛好者設計的互動影片【訓練課程】。",
+          "options": [
+            "workouts",
+            "appliances",
+            "inventories",
+            "creditors"
+          ],
+          "answer": "workouts",
+          "strategy": "🎯 破題關鍵策略: 由關鍵字 interactive video（互動影片）與 fitness enthusiasts（健身愛好者）判斷，此處需填入代表健身運動/訓練項目的複數名詞 workouts。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: appliances（家電）、inventories（存貨清單）、creditors（債權人）均與健身影音內容無關。",
+          "collocations": [
+            "live workouts (直播健身訓練課程)",
+            "daily workouts (每日鍛鍊)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "workouts",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "鍛鍊項目、訓練課程（複數）",
+              "reason": "【🟢 正解 · n.】符合健身影音平台發布的「訓練影片課程」。"
+            },
+            {
+              "option": "appliances",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "家電產品",
+              "reason": "【❌ 干擾 · n.】與健身訓練無關。"
+            },
+            {
+              "option": "inventories",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "庫存清冊",
+              "reason": "【❌ 干擾 · n.】倉儲管理術語。"
+            },
+            {
+              "option": "creditors",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "債權人",
+              "reason": "【❌ 干擾 · n.】金融會計術語。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Subscribers can easily _____ custom daily workouts according to their individual health goals.",
+          "stemTranslation": "訂戶可以根據個人健康目標輕鬆【安排】自訂的每日訓練課程。",
+          "options": [
+            "schedule",
+            "overcharge",
+            "corrode",
+            "demote"
+          ],
+          "answer": "schedule",
+          "strategy": "🎯 破題關鍵策略: 動詞後方接 custom daily workouts（自訂每日訓練），選 schedule 表示「排定/安排時間」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: overcharge（超收費用）、corrode（腐蝕）、demote（降職）均不符合使用者操作串流平台的行為語境。",
+          "collocations": [
+            "schedule workouts (排定訓練時間)",
+            "customize workouts (自訂訓練內容)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "schedule",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "排定、安排時間",
+              "reason": "【🟢 正解 · v.】schedule workouts 意為排定運動/訓練的時間時程。"
+            },
+            {
+              "option": "overcharge",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "多收錢、索價過高",
+              "reason": "【❌ 干擾 · v.】商業收費術語。"
+            },
+            {
+              "option": "corrode",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "侵蝕、腐蝕",
+              "reason": "【❌ 干擾 · v.】化學或金屬用語。"
+            },
+            {
+              "option": "demote",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "使降級、降職",
+              "reason": "【❌ 干擾 · v.】人力資源職位調動。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -6859,7 +7308,10 @@
           "en": "intense workout",
           "zh": "高強度訓練"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "workouts"
+      }
     },
     {
       "id": "tw_w_56ad09f6ca53",
@@ -8422,6 +8874,18 @@
           "en": "The main worry of the management is the increasing market competition.",
           "zh": "管理層主要的【煩惱】是日益激烈的市場競爭。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Logistics managers were worried about potential supply chain bottlenecks caused by bad port weather.",
+          "zh": "物流經理們對惡劣港口天氣可能導致的供應鏈瓶頸感到擔憂。",
+          "scenario": "Global Maritime Shipping & Port Logistics"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The board of directors is worried about the sudden decline in quarterly profits.",
+          "zh": "董事會對季利潤的突然下滑感到【擔憂】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -8533,6 +8997,104 @@
               "reason": "【❌ 干擾 · v.】常用於 enforce regulations/laws（執行法規），不搭配 delay。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Port operators remain _____ about severe weather conditions delaying container ship arrivals at the terminal.",
+          "stemTranslation": "港口營運商對於惡劣天氣狀況延誤集裝箱船抵達碼頭仍感到【擔憂】。",
+          "options": [
+            "worried",
+            "satisfied",
+            "eligible",
+            "redundant"
+          ],
+          "answer": "worried",
+          "strategy": "🎯 破題關鍵策略: 句中提到「severe weather conditions delaying container ship arrivals」（惡劣天氣導致貨櫃船延誤），屬負面情境，主詞搭配形容詞庫中應選 worried（擔憂的）。常用句型為 be/remain worried about...",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: be worried about / be concerned about 均為高頻介詞搭配，勿將介詞 about 誤搭配至 eligible (for) 或 satisfied (with)。",
+          "collocations": [
+            "worried about... (對……感到擔憂)",
+            "severe weather conditions (惡劣天氣狀況)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "worried",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "擔憂的、焦慮的",
+              "reason": "【🟢 正解 · adj.】與介詞 about 搭配，切合對氣候延誤感到擔憂的邏輯。"
+            },
+            {
+              "option": "satisfied",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "滿意的",
+              "reason": "【❌ 干擾 · adj.】滿意多接 with，且遭遇延誤不可能「滿意」。"
+            },
+            {
+              "option": "eligible",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "有資格的",
+              "reason": "【❌ 干擾 · adj.】固定搭配為 be eligible for，語意與氣候延誤無關。"
+            },
+            {
+              "option": "redundant",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "多餘的、被解僱的",
+              "reason": "【❌ 干擾 · adj.】形容人力或系統多餘，無法表達心理狀態。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The maritime shipping line issued an alert warning clients about _____ delays due to harbor congestion.",
+          "stemTranslation": "海運公司發出警告，提醒客戶注意因港口擁擠導致的【嚴重】延誤。",
+          "options": [
+            "severe",
+            "fluent",
+            "capacious",
+            "optional"
+          ],
+          "answer": "severe",
+          "strategy": "🎯 破題關鍵策略: 空格修飾名詞 delays（延誤），考查常見修飾程度的形容詞。severe delays（嚴重延誤）為海運與物流領域的高頻搭配。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 不要選擇與「延誤」毫無語意連結的形容詞。例如 fluent 修飾外語，capacious 修飾容量空間。",
+          "collocations": [
+            "severe delays (嚴重延誤)",
+            "harbor congestion (港口擁塞)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "severe",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "嚴重的、劇烈的",
+              "reason": "【🟢 正解 · adj.】與 delays 構成極高頻商業語料庫搭配。"
+            },
+            {
+              "option": "fluent",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "流利的",
+              "reason": "【❌ 干擾 · adj.】通常修飾語言能力（如 fluent in English）。"
+            },
+            {
+              "option": "capacious",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "容量大的、寬敞的",
+              "reason": "【❌ 干擾 · adj.】用於形容建築或貨艙空間，無法形容抽象延誤。"
+            },
+            {
+              "option": "optional",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "可選擇的、非強制的",
+              "reason": "【❌ 干擾 · adj.】延誤為不可抗力事件，非「可供選擇的」。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
@@ -8626,7 +9188,10 @@
       },
       "prepAnchor": "worry about / be worried about (+ 事情) —— 介係詞 about 為必考點！",
       "listeningTrap": "weary (疲憊的) —— 聽力常考相似音干擾",
-      "confusedWith": "warranty (保固)"
+      "confusedWith": "warranty (保固)",
+      "inflections": {
+        "ed": "worried"
+      }
     },
     {
       "id": "tw_w_63bd9edef43a",
@@ -8895,6 +9460,18 @@
           "en": "The team will 【wrap】 the files after the meeting concludes.",
           "zh": "會議結束後，團隊將會把文件【整理歸檔】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Specialized software wrapping protects sensitive neural network models when deployed to cloud servers.",
+          "zh": "專用的軟體包覆技術可在將敏感的神經網路模型部署至雲端伺服器時提供保護。",
+          "scenario": "Artificial Intelligence & Cloud Computing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The 【wrapping】 of the goods was damaged during transit.",
+          "zh": "貨物的【包裝】在運輸過程中受損了。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -9006,6 +9583,104 @@
               "reason": "【❌ 干擾 · adv.】物流安全要求嚴格，不能隨意包覆。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Cloud security protocols require protective software _____ around legacy APIs before integrating them into the AI ecosystem.",
+          "stemTranslation": "雲端安全協定要求在將舊版 API 整合至人工智慧生態系統之前，對其進行保護性軟體【包覆/外殼封裝】。",
+          "options": [
+            "wrapping",
+            "vacancy",
+            "admission",
+            "refund"
+          ],
+          "answer": "wrapping",
+          "strategy": "🎯 破題關鍵策略: 句意指對舊版 API 外層加上軟體封裝/包覆（software wrapping），以符合雲端安全規範，故選名詞 wrapping。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: wrapping 作不可數名詞，指外層包裝、封裝物；在科技領域亦可指「封裝/層外包裝」。",
+          "collocations": [
+            "protective wrapping",
+            "software wrapping"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "wrapping",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "包覆；外殼；封裝",
+              "reason": "【🟢 正解 · n.】指軟體外層封裝與保護層。"
+            },
+            {
+              "option": "vacancy",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "空缺；空房",
+              "reason": "【❌ 干擾 · n.】用於求職或飯店情境。"
+            },
+            {
+              "option": "admission",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "准許進入；入場費",
+              "reason": "【❌ 干擾 · n.】語意不符。"
+            },
+            {
+              "option": "refund",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "退款",
+              "reason": "【❌ 干擾 · n.】屬於財務消費用語。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Engineers must inspect the protective wrapping to ensure there is no damage _____ the hardware components.",
+          "stemTranslation": "工程師必須檢查保護性外層，以確保硬體組件沒有【收到】任何損壞。",
+          "options": [
+            "to",
+            "from",
+            "with",
+            "about"
+          ],
+          "answer": "to",
+          "strategy": "🎯 破題關鍵策略: 介系詞搭配題，damage 常與介系詞 to 搭配，表示「對…的損害」（damage to sth）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 名詞 damage 後方接受詞時，必定搭配介系詞 to。",
+          "collocations": [
+            "damage to components",
+            "protective wrapping"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "to",
+              "isCorrect": true,
+              "pos": "prep.",
+              "meaning": "對…；向…",
+              "reason": "【🟢 正解 · prep.】構成固定搭配「damage to...」。"
+            },
+            {
+              "option": "from",
+              "isCorrect": false,
+              "pos": "prep.",
+              "meaning": "來自",
+              "reason": "【❌ 干擾 · prep.】無法與 damage 搭配表達受損對象。"
+            },
+            {
+              "option": "with",
+              "isCorrect": false,
+              "pos": "prep.",
+              "meaning": "和…一起",
+              "reason": "【❌ 干擾 · prep.】文法搭配錯誤。"
+            },
+            {
+              "option": "about",
+              "isCorrect": false,
+              "pos": "prep.",
+              "meaning": "關於",
+              "reason": "【❌ 干擾 · prep.】語意不通。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80",
@@ -9067,7 +9742,10 @@
           "en": "bubble wrap",
           "zh": "氣泡紙"
         }
-      ]
+      ],
+      "inflections": {
+        "ed": "wrapping"
+      }
     },
     {
       "id": "tw_w_839640454dba",
@@ -9742,6 +10420,18 @@
           "en": "We must write to the stakeholders immediately.",
           "zh": "我們必須立即【致信】給相關利益人。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The patent attorney regularly writes complex patent applications for international tech firm clients.",
+          "zh": "專利律師定期為國際科技公司客戶撰寫複雜的專利申請案。",
+          "scenario": "International Intellectual Property Law & Patents"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The assistant writes the weekly report every Monday.",
+          "zh": "助理每週一都會【撰寫】週報。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -9853,6 +10543,104 @@
               "reason": "【❌ 干擾 · adj.】不符向審查委員會提交最終專業報告的情境。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The senior legal counsel routinely _____ broad patent claims to protect the client's invention.",
+          "stemTranslation": "資深法律顧問例行性地【撰寫】範圍廣泛的專利主張，以保護客戶的發明。",
+          "options": [
+            "writes",
+            "cancels",
+            "borrows",
+            "waives"
+          ],
+          "answer": "writes",
+          "strategy": "🎯 破題關鍵策略: 主詞為第三人稱單數 The senior legal counsel，受詞為 patent claims（專利主張/權利要求），需選動詞單數形式 writes。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意三單動詞字尾 -s，且 waive (放棄/豁免) 常用於權利，但此處為律師保護發明「編撰/撰寫」專利條文。",
+          "collocations": [
+            "writes claims",
+            "writes applications"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "writes",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "撰寫（第三人稱單數現在式）",
+              "reason": "【🟢 正解 · v.】符合第三人稱單數主詞與撰寫專利條款之語意。"
+            },
+            {
+              "option": "cancels",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "取消",
+              "reason": "【❌ 干擾 · v.】與保護客戶發明的目的相反。"
+            },
+            {
+              "option": "borrows",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "借用",
+              "reason": "【❌ 干擾 · v.】專利主張需由律師專業起草，非借用。"
+            },
+            {
+              "option": "waives",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "放棄；豁免",
+              "reason": "【❌ 干擾 · v.】語意為放棄權利，與文意「保護發明」不符。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Patent attorneys must make sure to draft _____ patent claims that cover multiple technological variations.",
+          "stemTranslation": "專利律師必須確保起草【涵蓋範圍廣的】專利主張，以涵蓋多種技術變體。",
+          "options": [
+            "broad",
+            "temporary",
+            "hesitant",
+            "accidental"
+          ],
+          "answer": "broad",
+          "strategy": "🎯 破題關鍵策略: 專利法領域中常以 broad claims（涵蓋廣泛的專利權利要求）來達到全面的法律保護。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: broad 除了指寬廣的，在專利法規中專指保護範圍大、不狹隘的專利聲明。",
+          "collocations": [
+            "broad claims",
+            "draft claims"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "broad",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "廣泛的；寬廣的",
+              "reason": "【🟢 正解 · adj.】與 patent claims 構成法律高頻搭配詞「broad claims」（範圍廣泛的專利主張）。"
+            },
+            {
+              "option": "temporary",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "暫時的",
+              "reason": "【❌ 干擾 · adj.】專利主張並非暫時性的。"
+            },
+            {
+              "option": "hesitant",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "猶豫的",
+              "reason": "【❌ 干擾 · adj.】不能用於修飾法律文件條文。"
+            },
+            {
+              "option": "accidental",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "意外的",
+              "reason": "【❌ 干擾 · adj.】專利起草係經精密設計，非意外產生。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
@@ -9934,7 +10722,10 @@
       },
       "prepAnchor": "write to (+ 人) —— 寫信給某人",
       "listeningTrap": "right (正確的/權利) —— 聽力同音字干擾",
-      "confusedWith": "cite (引用)"
+      "confusedWith": "cite (引用)",
+      "inflections": {
+        "s": "writes"
+      }
     },
     {
       "id": "tw_p_f9836df5a22d",
@@ -12002,6 +12793,18 @@
           "en": "There is no need to 【yell】 during the board meeting.",
           "zh": "董事會期間完全沒必要【大聲咆哮】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The supervisor addressed the customer service team without yelling despite the intense pressure of Black Friday orders.",
+          "zh": "儘管面臨黑色星期五訂單的巨大壓力，主管依然心平氣和地對客服團隊說話，沒有咆哮。",
+          "scenario": "E-Commerce Omnichannel Fulfillment & Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The 【yelling】 in the office made it difficult for others to concentrate.",
+          "zh": "辦公室裡的【咆哮聲】讓其他人難以專注。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -12113,6 +12916,104 @@
               "reason": "【❌ 干擾 · prep.】表示空間位置，無法表達音量壓過的語意。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Management reminded team leaders that _____ at staff during high-stress fulfillment operations is strictly prohibited.",
+          "stemTranslation": "管理層提醒團隊領導，在高壓的訂單履約作業期間，對員工【咆哮大喊】是嚴格禁止的。",
+          "options": [
+            "yelling",
+            "shipping",
+            "allocating",
+            "processing"
+          ],
+          "answer": "yelling",
+          "strategy": "🎯 破題關鍵策略: 句末出現 'is strictly prohibited'（嚴格禁止），搭配介系詞 at 加上 staff（對員工），只有表示負面情緒行為的動名詞 yelling 符合句意。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: shipping、processing 均為電商物流常見動詞，容易誘使考生憑領域印象誤選，須仔細體會文意。",
+          "collocations": [
+            "yelling match (大聲爭吵)",
+            "stop yelling (停止吼叫)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "yelling",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "咆哮；大聲喊叫",
+              "reason": "【🟢 正解 · n.】動名詞作主詞，表達『對員工咆哮被嚴格禁止』。"
+            },
+            {
+              "option": "shipping",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "運輸；出貨",
+              "reason": "【❌ 干擾 · n.】物流正常業務，不可能被『嚴格禁止』。"
+            },
+            {
+              "option": "allocating",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "分配；配置",
+              "reason": "【❌ 干擾 · n.】資源分配為常規管理，非禁止事項。"
+            },
+            {
+              "option": "processing",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "處理；加工",
+              "reason": "【❌ 干擾 · n.】訂單處理為合理業務，非禁止行為。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Customer representatives are trained to handle upset callers calmly without _____ their voices.",
+          "stemTranslation": "客服代表接受過專業訓練，能冷靜處理不滿顧客的來電而無需【提高】嗓門。",
+          "options": [
+            "raising",
+            "lifting",
+            "shouting",
+            "speaking"
+          ],
+          "answer": "raising",
+          "strategy": "🎯 破題關鍵策略: 考查固定動詞搭配 'raise one's voice'（提高音量/說話提高嗓門）。受詞為 their voices，應選擇 raise。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 許多考生易選 shouting，但 shout 已含喊叫之意，不可接 'their voices' 作受詞（不說 shout voice）。",
+          "collocations": [
+            "raise one's voice (提高嗓門)",
+            "speak calmly (冷靜交談)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "raising",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "提高（音量）",
+              "reason": "【🟢 正解 · v.】raise one's voice 是表示『提高聲音說話/大聲吼』的標準搭配。"
+            },
+            {
+              "option": "lifting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "舉起；抬起",
+              "reason": "【❌ 干擾 · v.】lift 通常指物理上抬起重物，不與 voice 搭配。"
+            },
+            {
+              "option": "shouting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "喊叫",
+              "reason": "【❌ 干擾 · v.】shout 為不及物/及物動詞直接加話語，不搭配 voice。"
+            },
+            {
+              "option": "speaking",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "說話",
+              "reason": "【❌ 干擾 · v.】speak 不與 voice 直接搭配形成此情境特有片語。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -12170,7 +13071,10 @@
           "en": "yell for help",
           "zh": "大聲呼救"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "yelling"
+      }
     },
     {
       "id": "tw_w_63feb75224e9",
@@ -16097,6 +17001,6 @@
     }
   ],
   "wordCount": 73,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

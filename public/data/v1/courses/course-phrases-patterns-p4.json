@@ -5,7 +5,7 @@
   "toeicScoreRange": "600-900",
   "category": "片語句型",
   "level": "實戰",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_p_5f6c1c0b6208",
@@ -67498,6 +67498,6 @@
     }
   ],
   "wordCount": 317,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

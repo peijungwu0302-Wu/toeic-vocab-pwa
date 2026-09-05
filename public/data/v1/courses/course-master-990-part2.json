@@ -5,7 +5,7 @@
   "toeicScoreRange": "900+",
   "category": "綜合商務",
   "level": "高階",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_f9a24077ebde",
@@ -40420,6 +40420,18 @@
           "en": "The company decided to market the new 【sonicbrush】 for professional use in clinics.",
           "zh": "公司決定將新款【聲波清潔刷】行銷至專業診所。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Robotic assembly lines utilize ultrasonic sonicbrushes to maintain clean optical components in cloud server racks.",
+          "zh": "機器人裝配線利用聲波清潔刷維護雲端伺服器機架中的清潔光學元件。",
+          "scenario": "Artificial Intelligence & Cloud Computing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Our latest line of 【sonicbrushes】 features three intensity settings.",
+          "zh": "我們最新的【聲波清潔刷】系列具有三種強度設定。",
+          "scenario": "科技與技術支援"
         }
       ],
       "examTips": [
@@ -40531,6 +40543,104 @@
               "reason": "【❌ 干擾 · v.】房地產交易動詞，語意不合。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Automated maintenance drones in the data center are equipped with precision _____ to cleanse delicate sensor arrays.",
+          "stemTranslation": "資料中心內的自動化維護無人機配備了精密【聲波清潔刷】，以清潔精密的感測器陣列。",
+          "options": [
+            "sonicbrushes",
+            "algorithms",
+            "bandwidths",
+            "firewalls"
+          ],
+          "answer": "sonicbrushes",
+          "strategy": "🎯 破題關鍵策略: 名詞修飾與功能「equipped with precision _____ to cleanse」，需選擇能做物理清潔（cleanse）的複數實體工具，選 sonicbrushes。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: algorithms（演算法）、bandwidths（頻寬）、firewalls（防火牆）雖然皆為科技與 AI 熱門詞彙，但皆屬軟體或網路概念，無法裝備於無人機進行物理擦拭清潔。",
+          "collocations": [
+            "precision sonicbrushes",
+            "equipped with sonicbrushes"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "sonicbrushes",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "聲波清潔刷（複數）",
+              "reason": "【🟢 正解 · n.】指用以清潔高精密設備的聲波清潔刷工具。"
+            },
+            {
+              "option": "algorithms",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "演算法",
+              "reason": "【❌ 干擾 · n.】屬於軟體運算邏輯，無法進行實體擦拭。"
+            },
+            {
+              "option": "bandwidths",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "頻寬",
+              "reason": "【❌ 干擾 · n.】數據傳輸能力概念，非裝備工具。"
+            },
+            {
+              "option": "firewalls",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "防火牆",
+              "reason": "【❌ 干擾 · n.】網路安全機制，非清潔工具。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Technicians regularly _____ optical components using specialized cleaning tools to prevent signal loss.",
+          "stemTranslation": "技術人員定期使用專用清潔工具【淨化/清潔】光學元件，以防止訊號損失。",
+          "options": [
+            "cleanse",
+            "overclock",
+            "encrypt",
+            "compile"
+          ],
+          "answer": "cleanse",
+          "strategy": "🎯 破題關鍵策略: 搭配「_____ optical components using specialized cleaning tools」，動詞 cleanse（清潔；淨化）與清潔工具及物理組件最符合語意搭配。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: overclock（超頻）、encrypt（加密）、compile（編譯）為 IT 專有名詞，但與使用清潔工具維護物理組件無關。",
+          "collocations": [
+            "cleanse components",
+            "optical components"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "cleanse",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "清潔；淨化",
+              "reason": "【🟢 正解 · v.】搭配專用清潔工具，表示對硬體元件進行徹底清潔。"
+            },
+            {
+              "option": "overclock",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "超頻（提升處理器時脈）",
+              "reason": "【❌ 干擾 · v.】與清潔工具的使用無關。"
+            },
+            {
+              "option": "encrypt",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "加密",
+              "reason": "【❌ 干擾 · v.】資訊安全動作，非物理維護。"
+            },
+            {
+              "option": "compile",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "編譯（程式碼）；彙編",
+              "reason": "【❌ 干擾 · v.】屬於軟體開發動作，非硬體保養。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
@@ -40587,7 +40697,10 @@
           "en": "use a sonicbrush",
           "zh": "使用聲波刷"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "sonicbrushes"
+      }
     },
     {
       "id": "tw_w_3596e55e929b",
@@ -51054,6 +51167,18 @@
           "en": "Inefficiency in the legacy system acted like a tumor on company profits.",
           "zh": "舊系統中的低效率問題就像公司獲利上的【腫瘤】一樣（頑疾）。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Telecom researchers study radiation safety to ensure 6G towers do not cause tumors.",
+          "zh": "電信研究人員研究輻射安全，以確保6G基地台不會引致腫瘤。",
+          "scenario": "Modern Telecommunications & 6G Infrastructure"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The AI diagnostic software successfully identified several small tumors.",
+          "zh": "人工智慧診斷軟體成功識別出幾處微小的【腫瘤】。",
+          "scenario": "科技與技術支援"
         }
       ],
       "examTips": [
@@ -51165,6 +51290,104 @@
               "reason": "【❌ 干擾 · n.】法律專用語（如收監），不合商業語境。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Rigorous health assessments confirmed that emissions from new 6G towers do not cause cellular _____.",
+          "stemTranslation": "嚴格的健康評估證實，新型 6G 基地台的電磁波發射不會引發細胞【腫瘤】。",
+          "options": [
+            "tumors",
+            "tariffs",
+            "subsidies",
+            "discrepancies"
+          ],
+          "answer": "tumors",
+          "strategy": "🎯 破題關鍵策略: 通過主詞 emissions（發射/輻射）與動詞 cause（引起），得知受詞應為與健康風險相關的名詞 tumors（腫瘤）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 電信領域常有 tariffs（資費）、subsidies（補助金），但配合前文 health assessments 與 cellular（細胞的），只能選擇生理病變名詞 tumors。",
+          "collocations": [
+            "cellular tumors",
+            "brain tumors"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "tumors",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "腫瘤（複數）",
+              "reason": "【🟢 正解 · n.】符合健康與輻射防護的上下文文意。"
+            },
+            {
+              "option": "tariffs",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "關稅；資費",
+              "reason": "【❌ 干擾 · n.】指電信費率或進出口關稅，與細胞（cellular）無關。"
+            },
+            {
+              "option": "subsidies",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "補助金",
+              "reason": "【❌ 干擾 · n.】指政府津貼，不符合語意。"
+            },
+            {
+              "option": "discrepancies",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "差異；不一致",
+              "reason": "【❌ 干擾 · n.】指數據差異，無法由 emissions 直接引起。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The telecommunications committee will _____ public safety guidelines before approving tower installations.",
+          "stemTranslation": "電信委員會將在批准基地台安裝之前【審查】公共安全指南。",
+          "options": [
+            "review",
+            "reviewer",
+            "reviewable",
+            "reviewing"
+          ],
+          "answer": "review",
+          "strategy": "🎯 破題關鍵策略: 助動詞 will 後必須接原形動詞 review，構成搭配『review guidelines（審查指南）』。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 助動詞 will 之後切勿接名詞或現在分詞，保持 V-orig 形式。",
+          "collocations": [
+            "review guidelines",
+            "approve installations"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "review",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "審查；複查",
+              "reason": "【🟢 正解 · v.】will + 動詞原形 review，完全正確。"
+            },
+            {
+              "option": "reviewer",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "審查者",
+              "reason": "【❌ 干擾 · n.】名詞不能接在助動詞 will 之後。"
+            },
+            {
+              "option": "reviewable",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "可審查的",
+              "reason": "【❌ 干擾 · adj.】形容詞不能直接跟在 will 後面（需有 be 動詞）。"
+            },
+            {
+              "option": "reviewing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "正在審查",
+              "reason": "【❌ 干擾 · v.】現在分詞不可直接接在 will 後面。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -51221,7 +51444,10 @@
           "en": "detect a tumor",
           "zh": "檢測出腫瘤"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "tumors"
+      }
     },
     {
       "id": "tw_w_d8ecaa055e0a",
@@ -58574,6 +58800,6 @@
     }
   ],
   "wordCount": 277,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

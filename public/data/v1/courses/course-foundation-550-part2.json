@@ -5,7 +5,7 @@
   "toeicScoreRange": "400-600",
   "category": "綜合商務",
   "level": "基礎",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_2869082ecf65",
@@ -63353,6 +63353,18 @@
           "en": "We aim to 【increase】 our market share in the next fiscal year.",
           "zh": "我們目標在下一會計年度【提高】市占率。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "We noticed increased foot traffic at our local coffee shop after the new renovation.",
+          "zh": "我們注意到重新裝修後，當地咖啡館的人流量增加了。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The 【increased】 production capacity helped us meet the holiday deadlines.",
+          "zh": "【增加的】生產能力幫助我們達成節慶期限。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -63464,6 +63476,202 @@
               "reason": "【❌ 干擾 · v.】股東不會投票去「放棄」公司的資本準備金。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The intellectual property firm hired additional patent attorneys to handle the _____ workload from international filings.",
+          "stemTranslation": "該智慧財產權事務所聘請了額外的專利律師，以處理因國際申請而【增加的】工作量。",
+          "options": [
+            "increased",
+            "diminished",
+            "obsolete",
+            "vacant"
+          ],
+          "answer": "increased",
+          "strategy": "🎯 破題關鍵策略: 句前提到「hired additional patent attorneys（聘請額外的專利律師）」，推斷原因是工作量「增加了 (increased)」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: increased 作為分詞形容詞，專門修飾需求 (demand)、工作量 (workload)、競爭 (competition) 等名詞。",
+          "collocations": [
+            "increased workload",
+            "increased demand"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "increased",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "增加的、提高的",
+              "reason": "【🟢 正解 · adj.】修飾 workload，合理解釋事務所需要增補人力的原因。"
+            },
+            {
+              "option": "diminished",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "減少的",
+              "reason": "【❌ 干擾 · adj.】工作量減少不會需要聘請「額外」律師。"
+            },
+            {
+              "option": "obsolete",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "淘汰的、過時的",
+              "reason": "【❌ 干擾 · adj.】形容技術或設備過時，不可修飾工作量。"
+            },
+            {
+              "option": "vacant",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "空缺的、未被佔用的",
+              "reason": "【❌ 干擾 · adj.】常用於 vacant position（職缺）或 vacant room，不修飾 workload。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Strict patent enforcement has led to an increased _____ of tech disputes being settled out of court.",
+          "stemTranslation": "嚴格的專利執法措施導致科技糾紛在庭外和解的【比例】增加。",
+          "options": [
+            "proportion",
+            "hesitation",
+            "reluctance",
+            "distraction"
+          ],
+          "answer": "proportion",
+          "strategy": "🎯 破題關鍵策略: 辨識冠詞與形容詞後的膠合名詞「an increased _____ of...」，proportion（比例/比率）為最佳名詞搭配，表示「增加的比例」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 常見的高頻組合作為 an increased proportion of / an increased number of / an increased level of，須熟記其搭配形態。",
+          "collocations": [
+            "an increased proportion of",
+            "an increased number of"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "proportion",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "比例、部分",
+              "reason": "【🟢 正解 · n.】構詞：an increased proportion of...（……逐漸上升的比例）。"
+            },
+            {
+              "option": "hesitation",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "猶豫",
+              "reason": "【❌ 干擾 · n.】與 of tech disputes being settled 語意不銜接。"
+            },
+            {
+              "option": "reluctance",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "不情願",
+              "reason": "【❌ 干擾 · n.】抽象情緒名詞，無法描述可量化的和解趨勢。"
+            },
+            {
+              "option": "distraction",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "分心、干擾因素",
+              "reason": "【❌ 干擾 · n.】語意與專利執法及和解結果無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Due to _____ pressure from global competitors, the semiconductor foundry accelerated its research program.",
+          "stemTranslation": "由於來自全球競爭對手【日益增加的】壓力，該晶圓代工廠加快了其研究計畫。",
+          "options": [
+            "increasing",
+            "resolving",
+            "strictly",
+            "finalized"
+          ],
+          "answer": "increasing",
+          "strategy": "🎯 破題關鍵策略: 空格處修飾名詞 'pressure'，需要形容詞或分詞形式。根據上下文『競爭對手帶來的壓力』，選用形容詞增加中的 (increasing) 最符合句意。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: increasing 常與 demand, pressure, interest, number 等名詞連用，表示「逐漸增加的」。注意不要誤選副詞 strictly 或動詞過去分詞 finalized。",
+          "collocations": [
+            "increasing demand (日益增加的需求)",
+            "increasing pressure (逐漸增加的壓力)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "increasing",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "逐漸增加的、增長的",
+              "reason": "【🟢 正解 · adj.】修飾名詞 pressure，表示「日益增加的壓力」，符合句意。"
+            },
+            {
+              "option": "resolving",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "解決",
+              "reason": "【❌ 干擾 · v.】現在分詞形式，與壓力搭配不合語意邏輯。"
+            },
+            {
+              "option": "strictly",
+              "isCorrect": false,
+              "pos": "adv.",
+              "meaning": "嚴格地",
+              "reason": "【❌ 干擾 · adv.】副詞無法直接修飾名詞 pressure。"
+            },
+            {
+              "option": "finalized",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "已敲定的、已完成的",
+              "reason": "【❌ 干擾 · adj.】語意為「已敲定的壓力」，不合邏輯。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The fabrication plant decided to _____ production capacity to meet the growing market demand.",
+          "stemTranslation": "該製造廠決定【擴充】產能，以滿足日益增長之市場需求。",
+          "options": [
+            "expand",
+            "perform",
+            "donate",
+            "insert"
+          ],
+          "answer": "expand",
+          "strategy": "🎯 破題關鍵策略: 搭配詞考題。空格後方為名詞組 'production capacity'（產能），商業英語中常見搭配為 expand capacity（擴充產能）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: expand 表示「擴充、擴展」，常與 capacity, market, footprint 搭配；perform 常用於 perform tasks 或 perform maintenance，不與 capacity 直接連用。",
+          "collocations": [
+            "expand capacity (擴充產能)",
+            "meet market demand (滿足市場需求)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "expand",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "擴張、擴充",
+              "reason": "【🟢 正解 · v.】與 production capacity 組成高頻動賓搭配「擴充產能」。"
+            },
+            {
+              "option": "perform",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "執行、表演",
+              "reason": "【❌ 干擾 · v.】不與 capacity 形成慣用商業搭配。"
+            },
+            {
+              "option": "donate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "捐贈",
+              "reason": "【❌ 干擾 · v.】捐贈產能不合商業邏輯。"
+            },
+            {
+              "option": "insert",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "插入、嵌入",
+              "reason": "【❌ 干擾 · v.】語意不符。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
@@ -63557,6 +63765,10 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'increase'. A spacious modern boardroom with corporate compliance directors reviewing rising performance charts on high-end glass displays. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T08:55:03Z"
+      },
+      "inflections": {
+        "ed": "increased",
+        "ing": "increasing"
       }
     },
     {
@@ -63602,6 +63814,18 @@
           "en": "Market trends indicate a shift in consumer habits.",
           "zh": "市場趨勢【表明】消費習慣有所轉變。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The steam rising from his mug indicates that the fresh coffee is perfectly hot.",
+          "zh": "杯中升起的熱氣顯示這杯新鮮咖啡正處於完美的熱度。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "This graph indicates a stable growth rate.",
+          "zh": "這張圖表【顯示】穩定的成長率。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -63713,6 +63937,104 @@
               "reason": "【❌ 干擾 · v.】造成語意重複 (inspect inspections)。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The market research survey clearly _____ that affluent travelers prioritize sustainable luxury accommodations.",
+          "stemTranslation": "市場研究調查明確【指出】，富裕的旅客優先考慮永續發展的奢華住宿。",
+          "options": [
+            "indicates",
+            "removes",
+            "deliberate",
+            "totally"
+          ],
+          "answer": "indicates",
+          "strategy": "🎯 破題關鍵策略: 主詞為單數名詞 'survey'，空格處需要第三人稱單數現在式動詞。indicates that... 代表「（調查/數據）顯示出...」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: TOEIC 經常考單數動詞形變。當主詞是單數名詞（如 survey, report, research）時，須選擇加 -s 的動詞 indicates，而非原形 indicate。",
+          "collocations": [
+            "clearly indicates (明確顯示)",
+            "research indicates (研究指出)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "indicates",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "顯示、表明（單數）",
+              "reason": "【🟢 正解 · v.】第三人稱單數動詞，符合主詞 survey 與後方 that 子句結構。"
+            },
+            {
+              "option": "removes",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "移除、消除",
+              "reason": "【❌ 干擾 · v.】「調查移除子句」語意不通。"
+            },
+            {
+              "option": "deliberate",
+              "isCorrect": false,
+              "pos": "adj./v.",
+              "meaning": "深思熟慮的；深思",
+              "reason": "【❌ 干擾 · adj./v.】若為動詞應加 -s，語意亦不符。"
+            },
+            {
+              "option": "totally",
+              "isCorrect": false,
+              "pos": "adv.",
+              "meaning": "完全地",
+              "reason": "【❌ 干擾 · adv.】副詞無法充當主要動詞。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Hotel managers strive to _____ high standards of customer satisfaction through continuous staff training.",
+          "stemTranslation": "飯店經理努力透過持續的員工培訓來【維持】高標準的顧客滿意度。",
+          "options": [
+            "maintain",
+            "locate",
+            "inquire",
+            "occupy"
+          ],
+          "answer": "maintain",
+          "strategy": "🎯 破題關鍵策略: 搭配詞考題。不定詞 to 後接動詞原形，與 'high standards'（高標準）搭配的動詞為 maintain（維護/維持）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: maintain high standards 為極高頻企業管理搭配語；inquire 須接 about，occupy 表示佔據（如 occupy a room）。",
+          "collocations": [
+            "maintain high standards (維持高標準)",
+            "customer satisfaction (顧客滿意度)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "maintain",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "維持、維護",
+              "reason": "【🟢 正解 · v.】與 high standards 構成習慣用語「維持高標準」。"
+            },
+            {
+              "option": "locate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "找出...的位置",
+              "reason": "【❌ 干擾 · v.】無法與抽象的 standards 搭配。"
+            },
+            {
+              "option": "inquire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "詢問",
+              "reason": "【❌ 干擾 · v.】通常搭配 inquire about，不接 standards。"
+            },
+            {
+              "option": "occupy",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "佔用、占領",
+              "reason": "【❌ 干擾 · v.】語意不符。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
@@ -63800,6 +64122,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'indicate'. Transit engineers holding digital tablets near a modern high-speed rail viaduct over a river. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T05:54:33Z"
+      },
+      "inflections": {
+        "s": "indicates"
       }
     },
     {
@@ -63852,6 +64177,18 @@
           "en": "Each individual has a role in the project.",
           "zh": "每一位【個人】在該項目中都扮演一個角色。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "These talented individuals gather at the park every weekend to practice their amazing acrobatics.",
+          "zh": "這些才華洋溢的個人每週末都會聚集在公園，練習他們驚人的特技表演。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "We are looking for highly motivated individuals.",
+          "zh": "我們正在尋找積極主動的【人才/個人】。",
+          "scenario": "人力資源"
         }
       ],
       "examTips": [
@@ -63963,6 +64300,104 @@
               "reason": "【❌ 干擾 · v.】不直接與 authorization 搭配。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Only authorized _____ possessing valid security credentials may enter the sensitive data server center.",
+          "stemTranslation": "只有擁有有效安全憑證授權的【個人/人員】，才能進入敏感數據伺服器中心。",
+          "options": [
+            "individuals",
+            "descriptions",
+            "strictly",
+            "complete"
+          ],
+          "answer": "individuals",
+          "strategy": "🎯 破題關鍵策略: 空格填入形容詞 'authorized' 後方，且需要複數可數名詞作為主詞。qualified / authorized individuals （合格/受權的人士）為商務英文高頻表述。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: individuals 做複數名詞時，常用來替代 people 或 personnel，前面常有形容詞修飾（如 talented individuals, authorized individuals）。",
+          "collocations": [
+            "authorized individuals (獲授權的人士)",
+            "qualified individuals (符合資格的人士)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "individuals",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "個人、個人/人士（複數）",
+              "reason": "【🟢 正解 · n.】複數名詞，指獲授權的人員，符合句意。"
+            },
+            {
+              "option": "descriptions",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "描述、說明書",
+              "reason": "【❌ 干擾 · n.】描述無法擁有憑證或進入資料中心。"
+            },
+            {
+              "option": "strictly",
+              "isCorrect": false,
+              "pos": "adv.",
+              "meaning": "嚴格地",
+              "reason": "【❌ 干擾 · adv.】副詞無法作為主詞。"
+            },
+            {
+              "option": "complete",
+              "isCorrect": false,
+              "pos": "adj./v.",
+              "meaning": "完整的；完成",
+              "reason": "【❌ 干擾 · adj./v.】無法做名詞主詞。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Security teams work around the clock to _____ cyber threats before system integrity is compromised.",
+          "stemTranslation": "資安團隊全天候工作，以在系統完整性受損前【減輕】網路威脅。",
+          "options": [
+            "mitigate",
+            "complete",
+            "analyze",
+            "locate"
+          ],
+          "answer": "mitigate",
+          "strategy": "🎯 破題關鍵策略: 搭配詞考題。不定詞 to 後接動詞原形，受詞為 'cyber threats'（網路威脅），專業資安與商業術語搭配為 mitigate threats（減輕/降低威脅）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: mitigate (減輕、緩和) 是多益高階常考動詞，常與 risk, threat, impact 搭配，如 mitigate risks / mitigate threats。",
+          "collocations": [
+            "mitigate threats (減輕威脅)",
+            "around the clock (全天候、二十四小時)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "mitigate",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "減輕、緩和",
+              "reason": "【🟢 正解 · v.】與 threats 構成動賓搭配「減輕威脅」。"
+            },
+            {
+              "option": "complete",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "完成",
+              "reason": "【❌ 干擾 · v.】完成威脅語意矛盾。"
+            },
+            {
+              "option": "analyze",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "分析",
+              "reason": "【❌ 干擾 · v.】「分析威脅」雖合理，但本句後半提到「在系統受損前」，強調防禦減輕風險，mitigate 最切合。"
+            },
+            {
+              "option": "locate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "找出...的位置",
+              "reason": "【❌ 干擾 · v.】不如 mitigate 能表達消除/減輕害處的動作。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
@@ -64056,6 +64491,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'individual'. An advanced telecommunications server room with high-tech optical fiber panels and server racks. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T05:54:33Z"
+      },
+      "inflections": {
+        "s": "individuals"
       }
     },
     {
@@ -64099,6 +64537,18 @@
           "en": "Keeping up with industry trends is essential for growth.",
           "zh": "跟上【產業】趨勢對成長至關重要。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Creative industries thrive in this sunny district filled with colorful studios and bustling cafes.",
+          "zh": "創意產業在這個充滿色彩工作室與繁忙咖啡館的陽光街區中蓬勃發展。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Many industries are moving toward digital transformation.",
+          "zh": "許多【產業】正朝向數位轉型。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -64209,6 +64659,104 @@
               "reason": "【❌ 干擾 · n.】指付款憑證，不符上下文語境。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Recent advancements in generative artificial intelligence are reshaping creative _____ across the media sector.",
+          "stemTranslation": "生成式人工智慧的最新進展正在重塑媒體領域的創意【產業】。",
+          "options": [
+            "industries",
+            "institutions",
+            "incentives",
+            "ingredients"
+          ],
+          "answer": "industries",
+          "strategy": "🎯 破題關鍵策略: 句子討論 AI 的發展正在重塑媒體領域的「創意產業」，名詞選填 industries（產業，複數形）最符合語境。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意近義與近形字辨析。institutions（機構/制度）、incentives（誘因/獎勵）、ingredients（原料/成分）在媒體與科技發展語意下皆不合適。",
+          "collocations": [
+            "creative industries (創意產業)",
+            "emerging industries (新興產業)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "industries",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "產業、行業（複數）",
+              "reason": "【🟢 正解 · n.】符合句意，指媒體與科技影響下的多個「產業」。"
+            },
+            {
+              "option": "institutions",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "機構、體制",
+              "reason": "【❌ 干擾 · n.】語意為「機構」，不適合修飾 creative 作為行業分類。"
+            },
+            {
+              "option": "incentives",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "獎勵、誘因",
+              "reason": "【❌ 干擾 · n.】語意為「誘因」，與句中的媒體與科技重塑標的不符。"
+            },
+            {
+              "option": "ingredients",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "成分、原料",
+              "reason": "【❌ 干擾 · n.】通常用於餐飲或配方，不適用於媒體產業情境。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The annual technology summit focused on _____ industries that are driving major economic growth.",
+          "stemTranslation": "年度科技高峰會聚焦於推動重大經濟成長的【新興】產業。",
+          "options": [
+            "emerging",
+            "exhausting",
+            "conditional",
+            "reluctant"
+          ],
+          "answer": "emerging",
+          "strategy": "🎯 破題關鍵策略: 識別高頻搭配詞「emerging industries」（新興產業），修飾正在快速發展與起飛的行業領域。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: emerging（新興的）常在商業新聞與科技主題中與 industries / markets 搭配，切勿與形容詞 urgent（緊急的）或 exhausting（令人精疲力竭的）混淆。",
+          "collocations": [
+            "emerging industries (新興產業)",
+            "across various industries (跨越各個產業)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "emerging",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "新興的、興起的",
+              "reason": "【🟢 正解 · adj.】與 industries 形成固定高頻搭配 emerging industries（新興產業）。"
+            },
+            {
+              "option": "exhausting",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "令人精疲力竭的",
+              "reason": "【❌ 干擾 · adj.】形容極度疲憊，語意與科技峰會的主題不符。"
+            },
+            {
+              "option": "conditional",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "有條件的",
+              "reason": "【❌ 干擾 · adj.】指附帶條件的，無法合理修飾產業發展。"
+            },
+            {
+              "option": "reluctant",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "不情願的",
+              "reason": "【❌ 干擾 · adj.】通常用來形容人的態度，無法搭配 industries。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -64292,6 +64840,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'industry'. A clean, automated cold-storage fulfillment warehouse with refrigerated transport vehicles, conveyor systems, and temperature control displays. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T07:43:00Z"
+      },
+      "inflections": {
+        "s": "industries"
       }
     },
     {
@@ -67898,6 +68449,18 @@
           "en": "The second round of the 【interview】 will be held via video conference.",
           "zh": "第二輪【面試】將透過視訊會議進行。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The enthusiastic candidate was interviewed by the friendly owner of the local bakery shop.",
+          "zh": "這位熱情的候選人在當地烘焙坊被友善的老闆面試了。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The applicants were 【interviewed】 by the department head.",
+          "zh": "申請人們被部門主管【面試】了。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -68009,6 +68572,202 @@
               "reason": "【❌ 干擾 · v.】通常修飾電視節目或廣播訊號。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The incident response manager _____ several systems analysts to clarify the timeline of the security breach.",
+          "stemTranslation": "事件應變經理【面談了】數名系統分析師，以釐清資安漏洞的時間軸。",
+          "options": [
+            "interviewed",
+            "encrypted",
+            "installed",
+            "intercepted"
+          ],
+          "answer": "interviewed",
+          "strategy": "🎯 破題關鍵策略: 觀察受詞為「systems analysts（系統分析師，指人員）」，主詞為經理，動作應為「面談／訪談（interviewed）」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: encrypted（加密）、installed（安裝）、intercepted（攔截）皆用於檔案或數據，不能用於「人員」受詞。",
+          "collocations": [
+            "interview staff",
+            "be interviewed by"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "interviewed",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "面談；訪談（過去式）",
+              "reason": "【🟢 正解 · v.】以人員為受詞，表示對該員工進行面談調查。"
+            },
+            {
+              "option": "encrypted",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "將...加密",
+              "reason": "【❌ 干擾 · v.】受詞應為資料或檔案，不能加密人員。"
+            },
+            {
+              "option": "installed",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "安裝",
+              "reason": "【❌ 干擾 · v.】受詞應為軟體或硬體設備。"
+            },
+            {
+              "option": "intercepted",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "攔截",
+              "reason": "【❌ 干擾 · v.】受詞通常為封包、訊號或通訊。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Key witnesses were interviewed in detail to _____ the root cause of the firewall misconfiguration.",
+          "stemTranslation": "對關鍵證人進行了詳細面談，以【確定】防火牆設定錯誤的根本原因。",
+          "options": [
+            "determine",
+            "encrypt",
+            "override",
+            "breach"
+          ],
+          "answer": "determine",
+          "strategy": "🎯 破題關鍵策略: 搭配名詞 root cause（根本原因），動詞應選 determine（確定／找出），「determine the root cause」為資安與品管領域的高頻黃金搭配。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: breach root cause（違反根本原因）不通順；override 指「優先於/覆蓋」，不可修飾找出原因。",
+          "collocations": [
+            "determine the root cause",
+            "interviewed in detail"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "determine",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "確定；查明",
+              "reason": "【🟢 正解 · v.】與 the root cause 搭配表示「查明根本原因」。"
+            },
+            {
+              "option": "encrypt",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "加密",
+              "reason": "【❌ 干擾 · v.】無法與「根本原因」合理搭配。"
+            },
+            {
+              "option": "override",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "推翻；覆蓋權限",
+              "reason": "【❌ 干擾 · v.】常用於手動覆蓋系統指令，不合句意。"
+            },
+            {
+              "option": "breach",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "違反；突破防線",
+              "reason": "【❌ 干擾 · v.】可用於 breach security，但不可用於「違反原因」。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The executive producer spent the morning _____ candidates for the chief streaming editor position.",
+          "stemTranslation": "執行製作人整個早上都在【面試】首席串流編輯職位的候選人。",
+          "options": [
+            "interviewing",
+            "broadcasting",
+            "encoding",
+            "subscribing"
+          ],
+          "answer": "interviewing",
+          "strategy": "🎯 破題關鍵策略: 文法結構「spend + 時間 + V-ing」。後方受詞為 candidates（候選人），最適合的動作為 interviewing（面試中）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 雖然題目涉及媒體製作，但 encoding（編碼）與 broadcasting（播送）的受詞都是影音檔案而非「候選人」。",
+          "collocations": [
+            "interviewing candidates",
+            "currently interviewing"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "interviewing",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "面試中；採訪中",
+              "reason": "【🟢 正解 · v.】符合主管面試應徵者（candidates）之文法與語意。"
+            },
+            {
+              "option": "broadcasting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "廣播中",
+              "reason": "【❌ 干擾 · v.】廣播的對象是節目，而非人。"
+            },
+            {
+              "option": "encoding",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "編碼中",
+              "reason": "【❌ 干擾 · v.】編碼對象為數據或影片檔。"
+            },
+            {
+              "option": "subscribing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "訂閱中",
+              "reason": "【❌ 干擾 · v.】通常後接 to a service，不合句意。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "While interviewing potential candidates, hiring managers should _____ structured evaluation forms to ensure fairness.",
+          "stemTranslation": "在面試潛在候選人時，招聘經理應【使用】結構化的評估表單以確保公平性。",
+          "options": [
+            "use",
+            "stream",
+            "render",
+            "channel"
+          ],
+          "answer": "use",
+          "strategy": "🎯 破題關鍵策略: 助動詞 should 後接動詞原形，搭配受詞 structured evaluation forms（結構化評估表單），最直接合適的動詞為 use（使用）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: render（渲染/繪製）及 stream（串流傳輸）為媒體科技專有名詞，在此處受詞為「表單」時不符合邏輯用法。",
+          "collocations": [
+            "use evaluation forms",
+            "while interviewing"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "use",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "使用",
+              "reason": "【🟢 正解 · v.】使用表單（use evaluation forms）為最自然正確的商務搭配。"
+            },
+            {
+              "option": "stream",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "串流播放",
+              "reason": "【❌ 干擾 · v.】用於影音串流，不適用於實體或數位表單之填寫。"
+            },
+            {
+              "option": "render",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "渲染；使得",
+              "reason": "【❌ 干擾 · v.】為動畫或畫面渲染專有名詞。"
+            },
+            {
+              "option": "channel",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "引導；開闢渠道",
+              "reason": "【❌ 干擾 · v.】與使用表格語意不符。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -68085,6 +68844,11 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'interview'. Telecommunications executives conducting a media session in a modern tech center surrounded by glass antennas. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T05:53:08Z"
+      },
+      "inflections": {
+        "ed": "interviewed",
+        "ing": "interviewing",
+        "s": "interviews"
       }
     },
     {
@@ -68130,6 +68894,18 @@
           "en": "The CEO will 【introduce】 our new global expansion strategy at the meeting.",
           "zh": "執行長將在會議上【介紹】我們新的全球拓展策略。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The friendly barista introduced a new organic coffee blend to the morning cafe crowd.",
+          "zh": "親切的咖啡師向早晨的咖啡客介紹了一款新的有機咖啡豆。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The 【introduced】 workflow has significantly improved efficiency.",
+          "zh": "新【引進的】工作流程顯著提高了效率。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -68241,6 +69017,202 @@
               "reason": "【❌ 干擾 · v.】用於數字計算，語意不合。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The commercial carrier _____ enhanced safety protocols following a comprehensive fleet upgrade review.",
+          "stemTranslation": "這家商業航空公司在進行全面機隊升級審查後，【導入】了增強型安全規範。",
+          "options": [
+            "introduced",
+            "inspected",
+            "interrupted",
+            "instructed"
+          ],
+          "answer": "introduced",
+          "strategy": "🎯 破題關鍵策略: 句子欠缺過去時態主動詞，表示『導入、採用新規範』應選 introduced。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意似字干擾：introduced (引進) vs instructed (指示) vs interrupted (打斷)。",
+          "collocations": [
+            "recently introduced (近期引進的)",
+            "introduce protocols (導入規範)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "introduced",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "引進；採用",
+              "reason": "【🟢 正解 · v.】表示實施/引進新安全規範，符合上下文。"
+            },
+            {
+              "option": "inspected",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "檢查",
+              "reason": "【❌ 干擾 · v.】檢查規範邏輯不通（應為檢查設備）。"
+            },
+            {
+              "option": "interrupted",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "中斷",
+              "reason": "【❌ 干擾 · v.】指打斷程序，不合文意。"
+            },
+            {
+              "option": "instructed",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "指導；指示",
+              "reason": "【❌ 干擾 · v.】通常接人為受詞（instruct somebody to do）。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Safety measures recently introduced by the airline have significantly _____ passenger confidence levels.",
+          "stemTranslation": "該航空公司最近引進的安全措施已顯著【提升】了乘客的信心程度。",
+          "options": [
+            "boosted",
+            "delayed",
+            "canceled",
+            "declined"
+          ],
+          "answer": "boosted",
+          "strategy": "🎯 破題關鍵策略: 尋找能與 confidence levels（信心程度）搭配的正向動詞，boosted（提升/增強）為最佳解答。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: confidence 常與 boost, build, restore 搭配。留意不要混淆為 negative 動詞如 delayed 或 declined。",
+          "collocations": [
+            "boost confidence (提升信心)",
+            "significantly boost (顯著提升)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "boosted",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "提升；促進",
+              "reason": "【🟢 正解 · v.】與 passenger confidence 構成高頻動賓搭配。"
+            },
+            {
+              "option": "delayed",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延誤",
+              "reason": "【❌ 干擾 · v.】常用於航班延誤，不合此處語意。"
+            },
+            {
+              "option": "canceled",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "取消",
+              "reason": "【❌ 干擾 · v.】與信心程度不搭。"
+            },
+            {
+              "option": "declined",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "下降；拒絕",
+              "reason": "【❌ 干擾 · v.】與加強安全措施帶來的正面效果相反。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "After _____ automated drone technology, the agri-tech enterprise doubled its crop monitoring efficiency.",
+          "stemTranslation": "在【引進】自動化無人機技術後，該農業科技企業的作物監測效率提升了一倍。",
+          "options": [
+            "introducing",
+            "abandoning",
+            "demolishing",
+            "restricting"
+          ],
+          "answer": "introducing",
+          "strategy": "🎯 破題關鍵策略: 介系詞 After 後接動名詞 V-ing，結合後文『效率提升一倍』，應填入表示正面導入技術的 introducing。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 介系詞（After / By / Before）後需使用 V-ing 形勢，注意上下文邏輯演變。",
+          "collocations": [
+            "introducing technology (引進技術)",
+            "by introducing (透過引進...)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "introducing",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "引進；採用",
+              "reason": "【🟢 正解 · v.】引進新技術帶來正面效益，完全符合句意。"
+            },
+            {
+              "option": "abandoning",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "放棄；拋棄",
+              "reason": "【❌ 干擾 · v.】放棄技術無法讓效率翻倍，邏輯不通。"
+            },
+            {
+              "option": "demolishing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆毀",
+              "reason": "【❌ 干擾 · v.】用於拆除建築，無法搭配 technology。"
+            },
+            {
+              "option": "restricting",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "限制",
+              "reason": "【❌ 干擾 · v.】限制技術使用不符效率提升的結果。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The farm management team plans on introducing advanced methods to _____ soil quality.",
+          "stemTranslation": "農場管理團隊計劃引進先進方法以【改善】土壤品質。",
+          "options": [
+            "enhance",
+            "diminish",
+            "export",
+            "postpone"
+          ],
+          "answer": "enhance",
+          "strategy": "🎯 破題關鍵策略: 句末表示『引進先進方法的目的』，與 soil quality（土壤品質）搭配應選 enhance（改善/提升）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: enhance / improve quality 為高頻商業與永續議題搭配詞。",
+          "collocations": [
+            "enhance quality (提升品質)",
+            "advanced methods (先進方法)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "enhance",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "提升；改善",
+              "reason": "【🟢 正解 · v.】與 quality 形成動賓搭配 enhance quality（提升品質）。"
+            },
+            {
+              "option": "diminish",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "減少；降低",
+              "reason": "【❌ 干擾 · v.】引進先進方法不可能為了降低品質。"
+            },
+            {
+              "option": "export",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "出口；輸出",
+              "reason": "【❌ 干擾 · v.】品質無法直接被出口。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期",
+              "reason": "【❌ 干擾 · v.】動詞含義與土壤品質不搭配。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -68326,6 +69298,10 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'introduce'. Real estate consultants introducing architectural blueprints and property valuation metrics in a sleek modern board room. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T05:54:35Z"
+      },
+      "inflections": {
+        "ed": "introduced",
+        "ing": "introducing"
       }
     },
     {
@@ -69346,6 +70322,18 @@
           "en": "She received a formal 【invitation】 to speak at the international business conference.",
           "zh": "她收到了一份正式【邀請】，前往國際商務會議演講。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Colorful invitations to the summer garden party were scattered across the wooden cafe table.",
+          "zh": "夏季花園派對的彩色邀請函散落在木製咖啡桌上。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The manager sent digital 【invitations】 to all stakeholders.",
+          "zh": "經理發送了數位【邀請函】給所有利益相關者。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -69457,6 +70445,104 @@
               "reason": "【❌ 干擾 · prep.】語意不符合此用語。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The board of directors sent official _____ to leading environmental consultants for the upcoming decarbonization forum.",
+          "stemTranslation": "董事會已向頂尖環保顧問發出參加即將舉行的脫碳論壇的官方【邀請函】。",
+          "options": [
+            "invitations",
+            "projections",
+            "obligations",
+            "restrictions"
+          ],
+          "answer": "invitations",
+          "strategy": "🎯 破題關鍵策略: 句子提到「向顧問發出官方的...以參加論壇」，動詞 send 搭配的名詞應為 invitations（邀請函）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: invitations 常與動詞 send, extend, issue 搭配，表示「寄出/發出邀請函」。",
+          "collocations": [
+            "extend invitations",
+            "formal invitations"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "invitations",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "邀請函",
+              "reason": "【🟢 正解 · n.】符合句意，表示發出參加論壇的邀請函。"
+            },
+            {
+              "option": "projections",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "預測；推估",
+              "reason": "【❌ 干擾 · n.】語意不符，send projections 指發送預測數據。"
+            },
+            {
+              "option": "obligations",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "義務；責任",
+              "reason": "【❌ 干擾 · n.】語意不符，不能向顧問 send obligations 參加論壇。"
+            },
+            {
+              "option": "restrictions",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "限制；約束",
+              "reason": "【❌ 干擾 · n.】語意不符，發送限制不合邏輯。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The chief executive officer decided to _____ formal invitations to international investors for the green energy expo.",
+          "stemTranslation": "執行長決定向國際投資人【發出】參加綠能博覽會的正式邀請。",
+          "options": [
+            "extend",
+            "enforce",
+            "expose",
+            "extract"
+          ],
+          "answer": "extend",
+          "strategy": "🎯 破題關鍵策略: 考查與 invitations 搭配的高頻動詞，extend invitations 表示「發出邀請」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: extend 不僅有「延長」的意思，與 invitation 連用時解作「提供；發出（邀請/感謝）」。",
+          "collocations": [
+            "extend invitations",
+            "issue invitations"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "extend",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "發出；給予",
+              "reason": "【🟢 正解 · v.】與 invitations 形成高頻搭配 extend invitations（發出邀請）。"
+            },
+            {
+              "option": "enforce",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "執行；強制",
+              "reason": "【❌ 干擾 · v.】enforce 可搭配 rules 或 laws，不與 invitations 搭配。"
+            },
+            {
+              "option": "expose",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "暴露；揭露",
+              "reason": "【❌ 干擾 · v.】expose 意為揭露，不符合語境。"
+            },
+            {
+              "option": "extract",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "萃取；提取",
+              "reason": "【❌ 干擾 · v.】extract 不與 invitations 搭配。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -69542,6 +70628,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'invitation'. Elegant digital invitation display next to an advanced autonomous robotic arm in a brightly lit modern showroom. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T07:23:02Z"
+      },
+      "inflections": {
+        "s": "invitations"
       }
     },
     {
@@ -70044,6 +71133,18 @@
           "en": "Management wants to 【involve】 junior staff in the restructuring.",
           "zh": "管理層希望【讓】初階員工參與重組過程。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Training for a half marathon involves daily morning jogs through the lush city park.",
+          "zh": "為半程馬拉松訓練需要每天早上在蔥鬱的城市公園裡慢跑。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The logistics role 【involves】 daily inventory updates.",
+          "zh": "物流職位【包含】每日庫存更新。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -70155,6 +71256,104 @@
               "reason": "【❌ 干擾 · v.】與 expenditure 不形成常態搭配。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The modern wealth management service _____ automated portfolio rebalancing to maximize investment returns.",
+          "stemTranslation": "這項現代財富管理服務【包含】自動化投資組合重置，以最大化投資報酬。",
+          "options": [
+            "involves",
+            "cancels",
+            "postpones",
+            "declines"
+          ],
+          "answer": "involves",
+          "strategy": "🎯 破題關鍵策略: 觀察句意『現代財富管理服務_____自動化投資組合重置』，動詞需表達『包含/涉及』之意，故選 involves。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: involve 後常接名詞或動名詞 V-ing，表示「包含；需要某動作/要素」，請勿與 involve in（使捲入）混淆。",
+          "collocations": [
+            "involve risk",
+            "involve process"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "involves",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "包含；涉及",
+              "reason": "【🟢 正解 · v.】符合句意，表達財富管理服務包含自動化重置功能。"
+            },
+            {
+              "option": "cancels",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "取消",
+              "reason": "【❌ 干擾 · v.】語意不符，取消服務功能與最大化報酬矛盾。"
+            },
+            {
+              "option": "postpones",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延後",
+              "reason": "【❌ 干擾 · v.】語意不符，延後重置不合乎服務內涵。"
+            },
+            {
+              "option": "declines",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "下降；婉拒",
+              "reason": "【❌ 干擾 · v.】語意不符合句中動詞搭配。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Executing high-frequency equity trading requires traders to _____ strict risk management protocols.",
+          "stemTranslation": "執行高頻股票交易要求交易員【遵守】嚴格的風險管理協定。",
+          "options": [
+            "follow",
+            "discard",
+            "forget",
+            "interrupt"
+          ],
+          "answer": "follow",
+          "strategy": "🎯 破題關鍵策略: 搭配詞修飾『strict protocols（嚴格的協定/規範）』，習慣用動詞 follow / observe / adhere to。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: follow strict protocols（遵守嚴格協定）為金融高頻考搭配詞組。",
+          "collocations": [
+            "follow protocols",
+            "risk management"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "follow",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "遵守；遵循",
+              "reason": "【🟢 正解 · v.】與 protocols 完美搭配，表示遵守風險管理協定。"
+            },
+            {
+              "option": "discard",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拋棄；丟棄",
+              "reason": "【❌ 干擾 · v.】拋棄風險規範不符金融常理。"
+            },
+            {
+              "option": "forget",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "遺忘",
+              "reason": "【❌ 干擾 · v.】語意不符合專業職場情境。"
+            },
+            {
+              "option": "interrupt",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "打斷；中斷",
+              "reason": "【❌ 干擾 · v.】中斷協定不合文意。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
@@ -70240,6 +71439,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'involve'. Medical researchers in a bright modern pharmaceutical laboratory collaborating over a clinical trial dataset. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T07:23:10Z"
+      },
+      "inflections": {
+        "s": "involves"
       }
     },
     {
@@ -70293,6 +71495,18 @@
           "en": "The bank will 【issue】 new stock options next month.",
           "zh": "銀行將在下個月【發行】新的股票選擇權。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "We discussed environmental issues while relaxing on the soft grass of the city park.",
+          "zh": "我們在城市公園柔軟的草地上放鬆時，討論了環境議題。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "There are several 【issues】 with the current supply chain.",
+          "zh": "目前的供應鏈有幾個【問題】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -70404,6 +71618,104 @@
               "reason": "【❌ 干擾 · v.】拒絕信件與句意不符。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Unexpected supply chain _____ delayed the delivery of essential silicon wafers to the fabrication plant.",
+          "stemTranslation": "突發的供應鏈【問題】延誤了關鍵矽晶圓向晶圓廠的交付。",
+          "options": [
+            "issues",
+            "recipes",
+            "gardens",
+            "trophies"
+          ],
+          "answer": "issues",
+          "strategy": "🎯 破題關鍵策略: 主語『supply chain _____』導致了交付延誤，名詞應選表示「問題；爭議」的複數形 issues。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: supply chain issues (供應鏈問題) / technical issues (技術問題) 為半導體與製造業高頻搭配。",
+          "collocations": [
+            "supply chain issues",
+            "address issues"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "issues",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "問題；爭議",
+              "reason": "【🟢 正解 · n.】supply chain issues 表示供應鏈出現的問題，符合句意。"
+            },
+            {
+              "option": "recipes",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "食譜；配方",
+              "reason": "【❌ 干擾 · n.】與供應鏈搭配不符文意。"
+            },
+            {
+              "option": "gardens",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "花園",
+              "reason": "【❌ 干擾 · n.】與晶圓製造無關。"
+            },
+            {
+              "option": "trophies",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "獎盃",
+              "reason": "【❌ 干擾 · n.】不符合供應鏈延誤情境。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The chip manufacturer strives to _____ technical flaws before releasing new processors to the market.",
+          "stemTranslation": "晶片製造商努力在向市場推出新型處理器之前【解決】技術缺陷。",
+          "options": [
+            "resolve",
+            "ignore",
+            "complicate",
+            "neglect"
+          ],
+          "answer": "resolve",
+          "strategy": "🎯 破題關鍵策略: 搭配名詞『technical flaws/issues（技術缺陷/問題）』，動詞選 resolve（解決）最適當。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: resolve issues / resolve problems（解決問題）為職場問題處理題型必考搭配。",
+          "collocations": [
+            "resolve flaws",
+            "release processors"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "resolve",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "解決；消除",
+              "reason": "【🟢 正解 · v.】resolve 和 flaws/issues 形成標準動賓搭配。"
+            },
+            {
+              "option": "ignore",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "忽視",
+              "reason": "【❌ 干擾 · v.】製造商不會刻意忽視缺陷後上市。"
+            },
+            {
+              "option": "complicate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "使複雜化",
+              "reason": "【❌ 干擾 · v.】不合乎邏輯與商業常規。"
+            },
+            {
+              "option": "neglect",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "疏忽；忽略",
+              "reason": "【❌ 干擾 · v.】語意與品牌品質保證衝突。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
@@ -70482,6 +71794,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'issue'. A sophisticated intellectual property law office where attorneys examine legal patent certificates. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T07:21:37Z"
+      },
+      "inflections": {
+        "s": "issues"
       }
     },
     {
@@ -70525,6 +71840,18 @@
           "en": "Please ensure every 【item】 is listed clearly in the contract.",
           "zh": "請確保合約中的每一個【條款/項目】都被清楚列出。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "She carefully organized all the essential items into her backpack for the mountain hike.",
+          "zh": "她將所有必需物品仔細整理進背包，準備去登山健行。",
+          "scenario": "生活具象"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Management confirmed updated protocols for items.",
+          "zh": "管理層確認了關於【物品；貨品；（採購或庫存管理中的）項目】之最新規範。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -70636,6 +71963,104 @@
               "reason": "【❌ 干擾 · v.】延後每週例行檢查不符常態維護規範。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Please review the inventory list carefully to ensure that all missing _____ are accounted for before delivery.",
+          "stemTranslation": "請仔細核對庫存清單，確保在交貨前補齊所有遺失的【物品】。",
+          "options": [
+            "items",
+            "methods",
+            "margins",
+            "signals"
+          ],
+          "answer": "items",
+          "strategy": "🎯 破題關鍵策略: 觀察名詞與「庫存清單 (inventory list)」及「補齊 (accounted for)」的語意連結，選出表示「項目/物品」的名詞。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 勿將 items (物品/品項) 與 margins (利潤/邊緣) 混淆，前者常用於物料與清單管理 context。",
+          "collocations": [
+            "line items",
+            "inventory items"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "items",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "物品、品項",
+              "reason": "【🟢 正解 · n.】符合句意，指庫存清單上遺失的具體物件或品項。"
+            },
+            {
+              "option": "methods",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "方法、方式",
+              "reason": "【❌ 干擾 · n.】指執行事情的方式或手段，與庫存遺失物無關。"
+            },
+            {
+              "option": "margins",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "利潤、頁邊空白",
+              "reason": "【❌ 干擾 · n.】商業上常用於profit margins（毛利率），置於此處語意不通。"
+            },
+            {
+              "option": "signals",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "信號、訊號",
+              "reason": "【❌ 干擾 · n.】指通訊或提示信號，不符合物流庫存場景。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The logistics manager decided to _____ line items directly from the central distribution database.",
+          "stemTranslation": "物流經理決定直接從中央分銷資料庫【刪除】特定品項。",
+          "options": [
+            "delete",
+            "repair",
+            "perform",
+            "observe"
+          ],
+          "answer": "delete",
+          "strategy": "🎯 破題關鍵策略: 找出能與 \"line items\" (清單品項) 搭配的動詞，表達處理資料庫項目的動作。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: line items 表示「明細項目」，常與 delete, add, update 等資料處理動詞搭配使用。",
+          "collocations": [
+            "delete items",
+            "track items"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "delete",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "刪除",
+              "reason": "【🟢 正解 · v.】與 \"line items\" 搭配，表示從資料庫中刪除特定品項與條目。"
+            },
+            {
+              "option": "repair",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "修理",
+              "reason": "【❌ 干擾 · v.】修復多用於實體設備或機器，不與資料庫條目連用。"
+            },
+            {
+              "option": "perform",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "執行、表演",
+              "reason": "【❌ 干擾 · v.】常用於 perform tasks 或 perform analysis，不與 items 直接搭配。"
+            },
+            {
+              "option": "observe",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "觀察、遵守",
+              "reason": "【❌ 干擾 · v.】常用於 observe rules 或 observe trends，語意不符。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80",
@@ -70705,6 +72130,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'item'. A modern high-speed rail engineering workshop with technicians reviewing safety inspection checklists. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T07:21:37Z"
+      },
+      "inflections": {
+        "s": "items"
       }
     },
     {
@@ -71672,6 +73100,18 @@
           "en": "Do not 【jump】 to conclusions before reviewing the report.",
           "zh": "在審閱報告前，請勿輕易【跳出】（草率下）結論。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Share prices jumped significantly after the pharmaceutical company received approval for its new drug.",
+          "zh": "在該製藥公司獲得新藥批准後，其股價顯著暴漲。",
+          "scenario": "Biotechnology & Clinical Pharmaceuticals"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "He 【jumped】 into the conversation to offer his opinion.",
+          "zh": "他【突然加入】對話以提供意見。",
+          "scenario": "溝通互動"
         }
       ],
       "examTips": [
@@ -71783,6 +73223,104 @@
               "reason": "【❌ 干擾 · v.】不合文意。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Biotechnology stock valuations _____ by fifteen percent after researchers announced positive Phase III trial results.",
+          "stemTranslation": "在研究人員宣布三期臨床試驗成果積極後，生物科技股票估值【暴漲】了百分之十五。",
+          "options": [
+            "jumped",
+            "delayed",
+            "collapsed",
+            "refused"
+          ],
+          "answer": "jumped",
+          "strategy": "🎯 破題關鍵策略: 根據後半句 positive Phase III trial results（積極的試驗結果）的利多訊息，前方主詞 stock valuations 需要搭配表示「上升/暴漲」的過去式動詞 jumped。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: jumped 後常搭配介詞 by（增加了…幅度），如 jumped by 15%，是財務數據題常見語法結構。",
+          "collocations": [
+            "jumped by 15%",
+            "jumped significantly"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "jumped",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "暴漲；遽增（過去式）",
+              "reason": "【🟢 正解 · v.】符合利多消息帶動股價「暴漲」的語境。"
+            },
+            {
+              "option": "delayed",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延遲",
+              "reason": "【❌ 干擾 · v.】估值不會延遲 15%。"
+            },
+            {
+              "option": "collapsed",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "崩盤；倒塌",
+              "reason": "【❌ 干擾 · v.】與正面結果帶來的市場反應相反。"
+            },
+            {
+              "option": "refused",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拒絕",
+              "reason": "【❌ 干擾 · v.】主詞為股票估值，無法發出拒絕動作。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The clinical research team managed to _____ official regulatory approval before entering the production phase.",
+          "stemTranslation": "臨床研究團隊在進入生產階段前成功【獲得】了官方監管機構的批准。",
+          "options": [
+            "obtain",
+            "evict",
+            "expire",
+            "forfeit"
+          ],
+          "answer": "obtain",
+          "strategy": "🎯 破題關鍵策略: 搭配受詞 regulatory approval（監管批准），表達「獲得批准」的最佳動詞為 obtain。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: obtain approval 為多益高頻固定搭配（獲得批准），同義詞包含 secure/gain approval。",
+          "collocations": [
+            "obtain approval",
+            "regulatory approval"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "obtain",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "獲得；取得",
+              "reason": "【🟢 正解 · v.】obtain approval 為極高頻之商務與生醫搭配詞。"
+            },
+            {
+              "option": "evict",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "驅逐；驅趕",
+              "reason": "【❌ 干擾 · v.】常用於房客驅逐，語意完全不符。"
+            },
+            {
+              "option": "expire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "到期；失效",
+              "reason": "【❌ 干擾 · v.】為不及物動詞，無法直接加受詞 approval。"
+            },
+            {
+              "option": "forfeit",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "喪失；被罰沒",
+              "reason": "【❌ 干擾 · v.】與爭取到批准的正面語意相反。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
@@ -71862,6 +73400,9 @@
         "imagePrompt": "Stylized high-detail digital concept art illustration of 'jump'. A modern cloud server data center displaying upward trending holographic data charts on server racks. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.",
         "hasTextOnImage": false,
         "preparedAt": "2026-09-05T05:55:15Z"
+      },
+      "inflections": {
+        "ed": "jumped"
       }
     },
     {
@@ -72987,6 +74528,6 @@
     }
   ],
   "wordCount": 326,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

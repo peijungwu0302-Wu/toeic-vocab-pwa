@@ -5,7 +5,7 @@
   "toeicScoreRange": "780-900",
   "category": "綜合商務",
   "level": "中高階",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_53f196930b51",
@@ -5664,6 +5664,18 @@
           "en": "The judge was chosen to preside over the complex corporate dispute.",
           "zh": "該法官被選中來【主持】這場複雜的企業爭議案件。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The presiding director highlighted automated greenhouse efficiency during the annual agri-tech summit.",
+          "zh": "主持會議的董事在年度農業科技峰會上強調了自動化溫室的效率。",
+          "scenario": "Sustainable Agriculture & Agri-Tech Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The CEO is currently presiding over the annual board meeting.",
+          "zh": "執行長目前正在【主持】年度董事會議。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -5775,6 +5787,104 @@
               "reason": "【❌ 干擾 · prep.】文法搭配錯誤。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The _____ officer at the sustainable agriculture conference outlined new protocols for automated crop monitoring.",
+          "stemTranslation": "【主持】農業永續發展會議的官員概述了自動化作物監測的新規範。",
+          "options": [
+            "presiding",
+            "retaining",
+            "conceding",
+            "residing"
+          ],
+          "answer": "presiding",
+          "strategy": "🎯 破題關鍵策略: 觀察空格後方的名詞 officer（官員/主持人），空格處需要一個修飾該人物的分詞/形容詞。「presiding officer」為多益高頻固定片語，意為「會議主持官/主席」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 形似字干擾！residing 表示「居住的」，retaining 表示「保留的」，均無法與 officer 形成「主持會議者」的合理語意搭配。",
+          "collocations": [
+            "presiding officer",
+            "preside over"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "presiding",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "主持的；主導的",
+              "reason": "【🟢 正解 · adj.】修飾 officer，presiding officer 指會議或組織的主席/主持人，完全符合文意。"
+            },
+            {
+              "option": "retaining",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "保留；保持",
+              "reason": "【❌ 干擾 · v.】動詞 retain 的現在分詞，與句意「會議主持」不符。"
+            },
+            {
+              "option": "conceding",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "承認；讓步",
+              "reason": "【❌ 干擾 · v.】動詞 concede 的現在分詞，語意不合邏輯。"
+            },
+            {
+              "option": "residing",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "居住；棲息",
+              "reason": "【❌ 干擾 · v.】拼寫與 presiding 相似，但表示居住於某處，無法修飾會議官員。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Dr. Arisawa will _____ over the international forum on automated greenhouse technologies this Friday.",
+          "stemTranslation": "有澤博士將於本週五【主持】關於自動化溫室技術的國際論壇。",
+          "options": [
+            "preside",
+            "reside",
+            "coincide",
+            "subside"
+          ],
+          "answer": "preside",
+          "strategy": "🎯 破題關鍵策略: 看到空格後搭配介系詞「over」，即可秒殺選出搭配動詞「preside」。Preside over + 會議/論壇/研討會 是商務英語標準用法。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: reside 搭配 in/at（居住於）；coincide 搭配 with（與…巧合）；subside（平息/消退）不接 over。請牢記 preside 專用介系詞 over！",
+          "collocations": [
+            "preside over a meeting",
+            "preside over a panel"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "preside",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "主持（會議或論壇）",
+              "reason": "【🟢 正解 · v.】preside over 意為「主持」，符合上下文文意及介系詞用法。"
+            },
+            {
+              "option": "reside",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "居住",
+              "reason": "【❌ 干擾 · v.】習慣搭配 in 或 at，表示居住，語意不符。"
+            },
+            {
+              "option": "coincide",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "同時發生",
+              "reason": "【❌ 干擾 · v.】習慣搭配 with，表示兩件事同時發生。"
+            },
+            {
+              "option": "subside",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "減弱；平息",
+              "reason": "【❌ 干擾 · v.】不及物動詞，指情況或風暴消退，不符合句意。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80",
@@ -5836,7 +5946,10 @@
           "en": "preside over the negotiations",
           "zh": "主導談判"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "presiding"
+      }
     },
     {
       "id": "tw_w_02840405c472",
@@ -40538,6 +40651,18 @@
           "en": "The committee approved strategic guidelines concerning sophisticate.",
           "zh": "委員會核准了關於【使複雜化；使世故；使文雅；老練的人；精通者】之策略方針。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The fabrication plant adopted sophisticated lithography systems to increase microchip production yield significantly.",
+          "zh": "該晶圓製造廠採用了先進精密的光刻系統，以大幅提升微晶片的產出良率。",
+          "scenario": "Semiconductor Fabrication & Chip Supply Chains"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Management confirmed updated protocols for sophisticated.",
+          "zh": "管理層確認了關於【複雜且精緻的；具有高度技巧或知識的，通常指在品味、風格或行為方面表現出優雅和成熟。】之最新規範。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -40649,6 +40774,104 @@
               "reason": "【❌ 干擾 · v.】與前置準備工作語意相反。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The semiconductor manufacturer invested millions in _____ machinery to produce smaller and faster processors.",
+          "stemTranslation": "半導體製造商投資數百萬美元於【先進精密的】機械設備，以生產更小更快的處理器。",
+          "options": [
+            "sophisticated",
+            "primitive",
+            "redundant",
+            "reckless"
+          ],
+          "answer": "sophisticated",
+          "strategy": "🎯 破題關鍵策略: 用以形容半導體製造的高科技設備，應選形容詞 sophisticated (精密複雜的、先進的)。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: primitive (原始的) 意思相反；redundant (多餘的) 用在此處不合邏輯。",
+          "collocations": [
+            "sophisticated machinery",
+            "sophisticated equipment"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "sophisticated",
+              "isCorrect": true,
+              "pos": "adj.",
+              "meaning": "複雜精密的；先進的",
+              "reason": "【🟢 正解 · adj.】形容半導體高精尖設備最適切。"
+            },
+            {
+              "option": "primitive",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "原始的；簡單的",
+              "reason": "【❌ 干擾 · adj.】語意相反，原始設備無法生產更小更快的晶片。"
+            },
+            {
+              "option": "redundant",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "多餘的；累贅的",
+              "reason": "【❌ 干擾 · adj.】形容投資於多餘機械不合商業邏輯。"
+            },
+            {
+              "option": "reckless",
+              "isCorrect": false,
+              "pos": "adj.",
+              "meaning": "魯莽的；輕率的",
+              "reason": "【❌ 干擾 · adj.】多用於形容人或決策輕率，非形容機器設備。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "To stay competitive, chipmakers must _____ modern technologies into their existing supply chains.",
+          "stemTranslation": "為了保持競爭力，晶片製造商必須將現代技術【整合】進現有的供應鏈中。",
+          "options": [
+            "integrate",
+            "isolate",
+            "eliminate",
+            "terminate"
+          ],
+          "answer": "integrate",
+          "strategy": "🎯 破題關鍵策略: integrate ... into ... 是高頻搭配，意為「將……整合至……」。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: isolate (孤立/隔離) 搭配 from；eliminate (消除) 與融入新技術語意矛盾。",
+          "collocations": [
+            "integrate technologies",
+            "integrate into"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "integrate",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "整合；融入",
+              "reason": "【🟢 正解 · v.】與 into 搭配，組成 integrate A into B (將 A 整合進 B)。"
+            },
+            {
+              "option": "isolate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "隔離；孤立",
+              "reason": "【❌ 干擾 · v.】通常搭配 from，意為將技術隔絕開來，不符合句意。"
+            },
+            {
+              "option": "eliminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "消除；剔除",
+              "reason": "【❌ 干擾 · v.】表示剔除現代技術，與保持競爭力之目的相反。"
+            },
+            {
+              "option": "terminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止",
+              "reason": "【❌ 干擾 · v.】常用於終止合約，無法與 into 搭配。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -40709,7 +40932,10 @@
           "en": "sophisticated consumer",
           "zh": "老練的消費者"
         }
-      ]
+      ],
+      "inflections": {
+        "ed": "sophisticated"
+      }
     },
     {
       "id": "tw_w_b4c8dfe7f356",
@@ -86421,6 +86647,6 @@
     }
   ],
   "wordCount": 398,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

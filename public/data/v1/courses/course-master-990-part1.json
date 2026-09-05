@@ -5,7 +5,7 @@
   "toeicScoreRange": "900+",
   "category": "綜合商務",
   "level": "高階",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_efbf4e0ffcfb",
@@ -36960,6 +36960,18 @@
           "en": "The press conference turned into a complete circus due to the chaos.",
           "zh": "由於混亂，記者會變成了一場【馬戲團】般的鬧劇。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The media circuses surrounding the breakthrough clinical trial results required strict public relations protocols.",
+          "zh": "圍繞該突破性臨床試驗結果的媒體騷動與宣傳熱潮，需要嚴格的公共關係協定來應對。",
+          "scenario": "Biotechnology & Clinical Pharmaceuticals"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The management team described the product launch as a total circus due to poor planning.",
+          "zh": "管理團隊將產品發布會形容為一場徹底的【混亂表演】，主因是規劃不周。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -37071,6 +37083,104 @@
               "reason": "【❌ 干擾 · v.】語意不符。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The company handled the media _____ surrounding the new pharmaceutical launch with professional composure.",
+          "stemTranslation": "該公司以專業且沉著的態度應對圍繞新藥上市的媒體【騷動與熱潮】。",
+          "options": [
+            "circuses",
+            "laboratories",
+            "specimens",
+            "prototypes"
+          ],
+          "answer": "circuses",
+          "strategy": "🎯 破題關鍵策略: 觀察句意脈絡，空中與媒體結合的習慣搭配詞『media circuses』意指『媒體熱潮／喧囂騷動』，符合新藥發布時引發熱烈關注的商業情境。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意『circus』在商業英文中常比喻為『炒作熱潮或混亂場面』，而非僅指傳統的馬戲團。",
+          "collocations": [
+            "media circuses",
+            "handle with composure"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "circuses",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "騷動；熱潮；馬戲團",
+              "reason": "【🟢 正解 · n.】與 media 組成固定搭配 media circuses，指媒體瘋狂報導與熱潮，完美符合句意。"
+            },
+            {
+              "option": "laboratories",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "實驗室",
+              "reason": "【❌ 干擾 · n.】指研究實驗室，無法與 media 形成表達『媒體炒作熱潮』的固定搭配。"
+            },
+            {
+              "option": "specimens",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "標本；檢體",
+              "reason": "【❌ 干擾 · n.】指生物或醫療檢體，語意與媒體報導場合不符。"
+            },
+            {
+              "option": "prototypes",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "原型；雛形",
+              "reason": "【❌ 干擾 · n.】指產品原型，與句中媒體關注的混亂熱潮無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The legal team worked tirelessly to _____ media circuses during the highly publicized drug approval process.",
+          "stemTranslation": "法律團隊不遺餘力地【控制】在高調的新藥審查期間出現的媒體騷動。",
+          "options": [
+            "contain",
+            "dissolve",
+            "demolish",
+            "expire"
+          ],
+          "answer": "contain",
+          "strategy": "🎯 破題關鍵策略: 選擇能與『media circuses』或『outbreaks/crises』搭配動詞，『contain』意為『控制；遏制』，為高頻商務搭配。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 『contain』除了『包含』外，在商務與公關情境常考『控制／遏制（局勢、熱潮、危機）』的用法。",
+          "collocations": [
+            "contain media circuses",
+            "highly publicized"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "contain",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "控制；遏制",
+              "reason": "【🟢 正解 · v.】contain media circuses 意指控制媒體騷動與混亂局勢，動賓搭配極為道地。"
+            },
+            {
+              "option": "dissolve",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "溶解；解散",
+              "reason": "【❌ 干擾 · v.】通常用於液體溶解或公司／合約解散，不搭配 media circuses。"
+            },
+            {
+              "option": "demolish",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拆毀；粉碎",
+              "reason": "【❌ 干擾 · v.】主要指拆除建築物或摧毀論點，不合公關場合體統。"
+            },
+            {
+              "option": "expire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "到期；失效",
+              "reason": "【❌ 干擾 · v.】為不及物動詞，指合約或證件到期，後不可直接接賓語。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80",
@@ -37127,7 +37237,10 @@
           "en": "circus tent",
           "zh": "馬戲團帳篷"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "circuses"
+      }
     },
     {
       "id": "tw_w_e7ff555899de",
@@ -84285,6 +84398,6 @@
     }
   ],
   "wordCount": 399,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }

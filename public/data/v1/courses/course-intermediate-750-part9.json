@@ -5,7 +5,7 @@
   "toeicScoreRange": "600-780",
   "category": "綜合商務",
   "level": "中階",
-  "version": 15,
+  "version": 16,
   "words": [
     {
       "id": "tw_w_e618d7fcb2f1",
@@ -13489,6 +13489,18 @@
           "en": "Our policy is designed to ensure no user is a victim of unfair practices.",
           "zh": "我們的政策旨在確保沒有使用者成為不公平操作的【犧牲者】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Automated sorting systems assisted logistics staff after weather delays created thousands of victims.",
+          "zh": "在天候延誤導致數千名受害者後，自動化分揀系統協助了物流人員。",
+          "scenario": "E-Commerce Omnichannel Fulfillment & Automation"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The company has set up a fund for the victims of the recent incident.",
+          "zh": "公司已為近期事件的【受害者】設立基金。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -13600,6 +13612,104 @@
               "reason": "【❌ 干擾 · n.】常用 be subject to，而非 fall subject to。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Customer service representatives issued store credits to soothe _____ of the shipping system glitch.",
+          "stemTranslation": "客服代表發放商店購物金，以安撫此次配送系統故障的【受害者們】。",
+          "options": [
+            "victims",
+            "investors",
+            "manufacturers",
+            "sponsors"
+          ],
+          "answer": "victims",
+          "strategy": "🎯 破題關鍵策略: 主語為客服代表，發放優惠以撫平受系統錯誤影響的『受害者們/受害顧客』，應選複數名詞 victims。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 注意名詞單複數名詞搭配，本句動詞 soothe 接複數對象，且上下文表示受損害的人數群體。",
+          "collocations": [
+            "soothe victims (安撫受害者)",
+            "victims of system errors (系統錯誤的受害者們)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "victims",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "受害者們",
+              "reason": "【🟢 正解 · n.】符合因系統故障而權益受損的複數顧客群體。"
+            },
+            {
+              "option": "investors",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "投資者們",
+              "reason": "【❌ 干擾 · n.】客服通常直接對應消費者而非投資者。"
+            },
+            {
+              "option": "manufacturers",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "製造商們",
+              "reason": "【❌ 干擾 · n.】不符客服安撫補償的上下文。"
+            },
+            {
+              "option": "sponsors",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "贊助者們",
+              "reason": "【❌ 干擾 · n.】與電商配送故障情境無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The e-commerce platform offered monetary vouchers to _____ victims of the unauthorized data breach.",
+          "stemTranslation": "電子商務平台提供代金券，以【補償】未經授權資料外洩事件的受害者們。",
+          "options": [
+            "compensate",
+            "subdue",
+            "reconcile",
+            "distribute"
+          ],
+          "answer": "compensate",
+          "strategy": "🎯 破題關鍵策略: 選出能與 compensate victims（補償受害者）形成道地商業搭配的動詞。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: compensate + 人 + for + 損失，或直接接 victims 表示補償受害者，是 Part 5 長考的動賓結構。",
+          "collocations": [
+            "compensate victims (補償受害者)",
+            "fairly compensate (給予公平的補償)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "compensate",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "補償；賠償",
+              "reason": "【🟢 正解 · v.】與 victims 形成極常見的企業客服賠償語意搭配。"
+            },
+            {
+              "option": "subdue",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "鎮壓；克制",
+              "reason": "【❌ 干擾 · v.】不符合企業對待顧客的商業規範。"
+            },
+            {
+              "option": "reconcile",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "調和；使和解",
+              "reason": "【❌ 干擾 · v.】多用於對帳 reconcile accounts 或調解爭議。"
+            },
+            {
+              "option": "distribute",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "分發；分配",
+              "reason": "【❌ 干擾 · v.】若用 distribute，受詞應為 vouchers（發放折價券），而非 distribute victims。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -13659,7 +13769,10 @@
           "en": "support the victims",
           "zh": "支援受害者"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "victims"
+      }
     },
     {
       "id": "tw_w_bc98f83da3fe",
@@ -25066,6 +25179,18 @@
           "en": "The new industrial 【blade】 design increases cutting efficiency by 20%.",
           "zh": "這款新型工業【刀片】設計提升了 20% 的切割效率。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Inspectors examined the turbine blades at the clean energy facility for safety regulatory compliance.",
+          "zh": "檢查員檢查了清潔能源設施的風力發電機葉片，以符合安全法規。",
+          "scenario": "Corporate Governance & Securities Compliance"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Maintenance crews are replacing the worn 【blades】 on the ventilation unit.",
+          "zh": "維修人員正在更換通風設備上磨損的【葉片】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -25177,6 +25302,104 @@
               "reason": "【❌ 干擾 · v.】文意相反。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The audit report confirmed that all turbine _____ met environmental safety and structural compliance standards.",
+          "stemTranslation": "審計報告確認所有發電機【葉片】皆符合環境安全與結構合規標準。",
+          "options": [
+            "blades",
+            "charters",
+            "dividends",
+            "ledgers"
+          ],
+          "answer": "blades",
+          "strategy": "🎯 破題關鍵策略: 風力發電設施相關名詞為 turbine blades（發電機葉片），句中提及 structural compliance（結構合規），選擇實體組件 blades 最合適。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: charters（憲章/執照）、dividends（股利）、ledgers（帳簿）皆為常見公司治理名詞，但無法與 turbine（渦輪）組成正確工業實體搭配。",
+          "collocations": [
+            "turbine blades",
+            "rotor blades"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "blades",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "葉片；刀刃（複數）",
+              "reason": "【🟢 正解 · n.】與 turbine 搭配，指風力或蒸氣發電機的葉片。"
+            },
+            {
+              "option": "charters",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "章程；憲章",
+              "reason": "【❌ 干擾 · n.】屬公司治理法律文件，與 turbine 無關。"
+            },
+            {
+              "option": "dividends",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "股利；分紅",
+              "reason": "【❌ 干擾 · n.】財務名詞，與結構安全無關。"
+            },
+            {
+              "option": "ledgers",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "總帳；分類帳",
+              "reason": "【❌ 干擾 · n.】會計名詞，無法搭配 turbine。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Energy corporations must _____ strict compliance regulations when operating large offshore wind farms.",
+          "stemTranslation": "能源公司在營運大型離岸風電場時，必須【遵守】嚴格的合規法規。",
+          "options": [
+            "observe",
+            "terminate",
+            "calculate",
+            "reject"
+          ],
+          "answer": "observe",
+          "strategy": "🎯 破題關鍵策略: observe regulations/laws 意為「遵守法規」，屬正式商務及法律高頻搭配詞。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: observe 除了「觀察」，在商務英語中常作「遵守（規定、法律、合約）」解，為多益高頻考點！",
+          "collocations": [
+            "observe regulations",
+            "observe compliance"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "observe",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "遵守；遵循",
+              "reason": "【🟢 正解 · v.】observe 搭配 regulations 表示遵守法規。"
+            },
+            {
+              "option": "terminate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "終止",
+              "reason": "【❌ 干擾 · v.】與法規搭配不合邏輯。"
+            },
+            {
+              "option": "calculate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "計算",
+              "reason": "【❌ 干擾 · v.】法規無法被「計算」。"
+            },
+            {
+              "option": "reject",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "拒絕",
+              "reason": "【❌ 干擾 · v.】違背企業合規經營原則。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80",
@@ -25233,7 +25456,10 @@
           "en": "replace the blade",
           "zh": "更換刀片"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "blades"
+      }
     },
     {
       "id": "tw_w_e9c08a2d50af",
@@ -35573,6 +35799,18 @@
           "en": "This small town is a hidden 【gem】 for international tourism.",
           "zh": "這座小鎮是國際旅遊業中一顆隱藏的【寶石】。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Smart factory sensors utilize synthetic gems to maintain ultra-precise optical calibration during automated assembly.",
+          "zh": "智慧工廠感測器利用人造寶石，在自動化組裝過程中維持極精準的光學校準。",
+          "scenario": "Autonomous Robotics & Smart Manufacturing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The catalog features a collection of rare 【gems】 from around the world.",
+          "zh": "該目錄展示了來自世界各地的一系列稀有【寶石】。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -35684,6 +35922,104 @@
               "reason": "【❌ 干擾 · v.】常用於 invalidate a contract（使合約失效），與經營長期關係相反。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The engineering team discovered several hidden _____ in the legacy software that significantly optimized robotic precision.",
+          "stemTranslation": "工程團隊在舊版軟體中發現了幾個隱藏的【寶藏/精華】，大幅優化了機器人的精準度。",
+          "options": [
+            "gems",
+            "duties",
+            "leaks",
+            "vessels"
+          ],
+          "answer": "gems",
+          "strategy": "🎯 破題關鍵策略: 根據句意，團隊在軟體中發現能「顯著提升機器人精準度」的高價值項目，填入 gems (寶物/精華/珍品) 符合隱喻用法（hidden gems 指隱藏的寶藏或極具價值的亮點）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: gems 常考本義「貴重寶石」，但職場英文常延伸為「極具價值的優秀事物/人才/功能 (hidden gems)」，注意此類抽象延伸語意。",
+          "collocations": [
+            "hidden gems (隱藏的寶藏/珍品)",
+            "synthetic gems (人造寶石)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "gems",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "寶石；珍寶/極有價值的事物",
+              "reason": "【🟢 正解 · n.】帶入句中表「隱藏的優秀功能/精華」，語意流暢且合乎情境。"
+            },
+            {
+              "option": "duties",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "職責；關稅",
+              "reason": "【❌ 干擾 · n.】軟體中無法發現「職責」，文意不符。"
+            },
+            {
+              "option": "leaks",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "漏洞；洩漏",
+              "reason": "【❌ 干擾 · n.】漏洞會降低系統效能，而非「顯著優化精準度」，邏輯矛盾。"
+            },
+            {
+              "option": "vessels",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "船隻；容器",
+              "reason": "【❌ 干擾 · n.】軟體中不會包含「船隻或容器」，詞義無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Specialized technicians carefully _____ synthetic gems into laser sensors to ensure high-precision measurements.",
+          "stemTranslation": "專業技術人員仔細地將人造寶石【安裝】至雷射感測器中，以確保高精準度的測量結果。",
+          "options": [
+            "mount",
+            "cancel",
+            "postpone",
+            "expire"
+          ],
+          "answer": "mount",
+          "strategy": "🎯 破題關鍵策略: 觀察空格後介詞 into，搭配「將元件安裝至設備中」的動作，應選擇動詞 mount (鑲嵌/安裝/固定)。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: mount A into B 是工業製造與工程常見搭配詞，表示將精密零件固定或裝配於指定位置。",
+          "collocations": [
+            "mount components (安裝元件)",
+            "precision sensors (精準感測器)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "mount",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "安裝；鑲嵌；固定",
+              "reason": "【🟢 正解 · v.】與介詞 into 搭配，符合將寶石安裝至感測器的語意。"
+            },
+            {
+              "option": "cancel",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "取消",
+              "reason": "【❌ 干擾 · v.】無法與 into 搭配表示安裝物件，語意不通。"
+            },
+            {
+              "option": "postpone",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "延期",
+              "reason": "【❌ 干擾 · v.】時間相關動詞，與實體零件裝配無關。"
+            },
+            {
+              "option": "expire",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "過期；到期",
+              "reason": "【❌ 干擾 · v.】不及物動詞，後不可直接接賓語或 into。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=600&q=80",
@@ -35741,7 +36077,10 @@
           "en": "rare gem",
           "zh": "稀世珍寶"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "gems"
+      }
     },
     {
       "id": "tw_w_17dab10ef0d7",
@@ -36428,6 +36767,18 @@
           "en": "The company’s reputation was damaged by groundless gossip regarding its financial stability.",
           "zh": "公司的聲譽因為有關其財務穩定的無端【流言蜚語】而受損。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "Management warned staff that gossiping about patient diagnostic data violates strict medical privacy regulations.",
+          "zh": "管理層警告員工，八卦討論患者診斷數據違反了嚴格的醫療隱私規定。",
+          "scenario": "Medical Diagnostics & Advanced Medical Devices"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "Gossiping about coworkers can lead to a toxic work environment.",
+          "zh": "【傳播同事八卦】可能導致負面的工作環境。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -36539,6 +36890,104 @@
               "reason": "【❌ 干擾 · v.】組裝電池組，無法用於『消弭謠言』。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "Laboratory technicians were reminded that _____ about confidential medical trial results can lead to immediate termination of employment.",
+          "stemTranslation": "實驗室技術員被提醒，【閒聊八卦】機密醫療試驗結果可能導致立即解雇。",
+          "options": [
+            "gossiping",
+            "inspecting",
+            "calibrating",
+            "sterilizing"
+          ],
+          "answer": "gossiping",
+          "strategy": "🎯 破題關鍵策略: 句首需要動名詞作為主詞，且後接『關於機密試驗結果』表示不合適的談論行為，應選擇 gossiping。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: gossiping 為動名詞/名詞型態，指『說閒話、八卦』的行為，常接介系詞 about。",
+          "collocations": [
+            "gossiping about (八卦/閒聊...)",
+            "habitual gossiping (習慣性聊八卦)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "gossiping",
+              "isCorrect": true,
+              "pos": "v. / gerund",
+              "meaning": "八卦，閒聊",
+              "reason": "【🟢 正解 · v./gerund】符合『私下閒聊八卦機密數據』違反規定的語境。"
+            },
+            {
+              "option": "inspecting",
+              "isCorrect": false,
+              "pos": "v. / gerund",
+              "meaning": "檢查，檢驗",
+              "reason": "【❌ 干擾 · v./gerund】檢查數據為正常工作職責，不會導致被解雇。"
+            },
+            {
+              "option": "calibrating",
+              "isCorrect": false,
+              "pos": "v. / gerund",
+              "meaning": "校準，標定",
+              "reason": "【❌ 干擾 · v./gerund】醫療設備的校準，為正常技術操作。"
+            },
+            {
+              "option": "sterilizing",
+              "isCorrect": false,
+              "pos": "v. / gerund",
+              "meaning": "消毒，殺菌",
+              "reason": "【❌ 干擾 · v./gerund】醫療器具的消毒，與試驗結果數據無關。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "The medical clinic director implemented strict workplace guidelines in an effort to _____ unproductive gossiping during working hours.",
+          "stemTranslation": "醫療診所主任實施了嚴格的職場規範，旨在【抑制】工作時間內無效率的八卦閒聊。",
+          "options": [
+            "curb",
+            "stimulate",
+            "expand",
+            "manufacture"
+          ],
+          "answer": "curb",
+          "strategy": "🎯 破題關鍵策略: 尋找能搭配 gossiping (八卦/閒聊) 且表示『控制、抑制』負面行為的動詞 curb。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: curb 後常接負面現象，如 curb gossiping / curb inflation / curb spending。",
+          "collocations": [
+            "curb gossiping (抑制八卦閒聊)",
+            "unproductive gossiping (無效率的閒聊)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "curb",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "抑制，控制",
+              "reason": "【🟢 正解 · v.】curb gossiping 意為『抑制/控制閒聊八卦』，完美符合句意。"
+            },
+            {
+              "option": "stimulate",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "刺激，鼓勵",
+              "reason": "【❌ 干擾 · v.】管理者不可能『鼓勵』無效率的職場八卦。"
+            },
+            {
+              "option": "expand",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "擴張，擴展",
+              "reason": "【❌ 干擾 · v.】與管理者欲消除不良行為的意圖相反。"
+            },
+            {
+              "option": "manufacture",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "製造，生產",
+              "reason": "【❌ 干擾 · v.】常用於實體商品製造，無法與此語境搭配。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
@@ -36600,7 +37049,10 @@
           "en": "idle gossip",
           "zh": "無聊的閒聊"
         }
-      ]
+      ],
+      "inflections": {
+        "ing": "gossiping"
+      }
     },
     {
       "id": "tw_w_11df22a0e8f8",
@@ -40507,6 +40959,18 @@
           "en": "We are seeking a sponsor to put their logo on our jerseys.",
           "zh": "我們正在尋找贊助商將他們的標誌印在我們的【球衣】上。",
           "id": "ex_3"
+        },
+        {
+          "id": "ex_absorbed_4",
+          "en": "The EV plant custom-designed breathable athletic jerseys for employees participating in the regional marathon.",
+          "zh": "該電動車工廠為參加區域馬拉松的員工特別設計了透氣的運動球衣。",
+          "scenario": "Automotive Electronics & EV Battery Manufacturing"
+        },
+        {
+          "id": "ex_absorbed_5",
+          "en": "The shipment of custom-made jerseys arrived on time for the tournament.",
+          "zh": "那批客製化【球衣】準時抵達，趕上了比賽。",
+          "scenario": "營運管理"
         }
       ],
       "examTips": [
@@ -40618,6 +41082,104 @@
               "reason": "【❌ 干擾 · v.】指形態改變，無法精準表達即時追蹤健康狀況。"
             }
           ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "vocab_choice",
+          "stem": "The corporate communications team ordered custom athletic _____ for staff members taking part in the upcoming charity run.",
+          "stemTranslation": "企業公關團隊為參加即將到來的慈善路跑員工訂購了客製化運動【球衣】。",
+          "options": [
+            "jerseys",
+            "gadgets",
+            "pipelines",
+            "vessels"
+          ],
+          "answer": "jerseys",
+          "strategy": "🎯 破題關鍵策略: 觀察空格前後文，「custom athletic _____（客製化運動……）」搭配後文「taking part in the upcoming charity run（參加慈善路跑）」，應選擇與運動服飾相關的名詞 jerseys（球衣、運動衫）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 勿將科技製造業場景與單字類型混淆，雖然背景為電動車製造業，但活動涉及慈善路跑，選詞需契合「運動」脈絡。",
+          "collocations": [
+            "athletic jerseys (運動球衣)",
+            "custom-designed jerseys (客製化球衣)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "jerseys",
+              "isCorrect": true,
+              "pos": "n.",
+              "meaning": "球衣；運動衫",
+              "reason": "【🟢 正解 · n.】符合句意「客製化運動球衣」，能完美銜接慈善路跑語境。"
+            },
+            {
+              "option": "gadgets",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "小器具；小裝置",
+              "reason": "【❌ 干擾 · n.】指電子或機械小配件，與路跑裝備不符。"
+            },
+            {
+              "option": "pipelines",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "管道；管線",
+              "reason": "【❌ 干擾 · n.】指輸送管線，與運動服飾主題無關。"
+            },
+            {
+              "option": "vessels",
+              "isCorrect": false,
+              "pos": "n.",
+              "meaning": "船隻；容器",
+              "reason": "【❌ 干擾 · n.】指大型船隻或容器，不符合文意。"
+            }
+          ]
+        },
+        {
+          "type": "multiple_choice",
+          "subType": "collocation_choice",
+          "stem": "Employees are required to _____ custom jerseys during the annual EV battery summit's friendly sports tournament.",
+          "stemTranslation": "員工被要求在年度電動車電池高峰會的友誼體育賽事期間【穿著】客製化球衣。",
+          "options": [
+            "wear",
+            "install",
+            "compile",
+            "audit"
+          ],
+          "answer": "wear",
+          "strategy": "🎯 破題關鍵策略: 句中受詞為「custom jerseys（客製化球衣）」，動詞需選擇能搭配衣物的 wear（穿著）。",
+          "examTrapTip": "⚠️ 多益考場避坑提醒: 題目雖涉及 EV battery summit（電動車電池高峰會），但動詞對象為 jerseys，不可誤選工廠設備常用的 install（安裝）。",
+          "collocations": [
+            "wear jerseys (穿著球衣)",
+            "friendly sports tournament (友誼體育賽事)"
+          ],
+          "optionAnalyses": [
+            {
+              "option": "wear",
+              "isCorrect": true,
+              "pos": "v.",
+              "meaning": "穿著；佩戴",
+              "reason": "【🟢 正解 · v.】與 jerseys 構成經典搭配「穿著球衣」。"
+            },
+            {
+              "option": "install",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "安裝",
+              "reason": "【❌ 干擾 · v.】常用於機器或軟體，不能用於衣服。"
+            },
+            {
+              "option": "compile",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "彙整；編輯",
+              "reason": "【❌ 干擾 · v.】常用於資料、報告的整理，語意不符。"
+            },
+            {
+              "option": "audit",
+              "isCorrect": false,
+              "pos": "v.",
+              "meaning": "審計；查帳",
+              "reason": "【❌ 干擾 · v.】指財務或品質稽核，無法搭配球衣。"
+            }
+          ]
         }
       ],
       "imageUrl": "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=600&q=80",
@@ -40671,7 +41233,10 @@
           "en": "official game jersey",
           "zh": "正式比賽球衣"
         }
-      ]
+      ],
+      "inflections": {
+        "s": "jerseys"
+      }
     },
     {
       "id": "tw_w_69468c560eaf",
@@ -62431,6 +62996,6 @@
     }
   ],
   "wordCount": 291,
-  "datasetVersion": "v7.1.0-flagship-full-sync",
-  "buildTimestamp": "2026-09-05T13:47:32.695Z"
+  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
+  "buildTimestamp": "2026-09-05T14:06:24.160Z"
 }
