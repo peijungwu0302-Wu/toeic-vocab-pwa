@@ -39,6 +39,7 @@ import { Modal } from '../components/ui/Modal';
 import { SwipeableCard } from '../components/ui/SwipeableCard';
 import { WordQuickPeekModal } from '../components/ui/WordQuickPeekModal';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
+import { useReviewStyle } from '../contexts/ReviewStyleContext';
 import { db } from '../db';
 
 interface StudyItem {
@@ -112,6 +113,7 @@ export const FlashcardPage: React.FC = () => {
   const { activeProfile } = useProfile();
   const { syncState } = useSync();
   const { zoomIn, zoomOut, currentPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass } = useTypography();
+  const { reviewStyle, setReviewStyle } = useReviewStyle();
 
   const courseId = searchParams.get('courseId');
 
@@ -928,6 +930,21 @@ export const FlashcardPage: React.FC = () => {
             <Shuffle size={13} />
           </button>
 
+          {/* Review Mode Toggle (Swipe vs Anki Button) */}
+          <button
+            type="button"
+            onClick={() => setReviewStyle(reviewStyle === 'swipe' ? 'button' : 'swipe')}
+            aria-label={reviewStyle === 'swipe' ? '滑動刷卡模式' : 'Anki 按鈕模式'}
+            className={`px-2 py-1 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1 ${
+              reviewStyle === 'swipe'
+                ? 'bg-indigo-950/70 text-indigo-300 border border-indigo-700/60 hover:bg-indigo-900/70'
+                : 'bg-slate-900/90 text-slate-400 border border-slate-700/70 hover:bg-slate-800'
+            }`}
+            title={reviewStyle === 'swipe' ? '當前模式：🎴 刷卡模式（背面支援滑動/點按）' : '當前模式：🎯 Anki 模式（純按鈕零誤觸）'}
+          >
+            <span>{reviewStyle === 'swipe' ? '🎴 刷卡' : '🎯 按鈕'}</span>
+          </button>
+
           {/* Star Button */}
           <button
             type="button"
@@ -969,6 +986,7 @@ export const FlashcardPage: React.FC = () => {
           <SwipeableCard
             onSwipeLeft={handleSwipeLeft}
             onSwipeRight={handleSwipeRight}
+            disabled={!isFlipped || reviewStyle === 'button'}
           >
           <motion.div
             animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -1058,7 +1076,7 @@ export const FlashcardPage: React.FC = () => {
               <div className="space-y-2">
                 <div className="flex flex-col items-center justify-center space-y-1">
                   <AudioButton headword={word.headword} audioUrl={word.audioUSUrl} size="md" />
-                  <p className="text-[10px] text-slate-500">👈 左滑掌握 · 右滑忘記 👉</p>
+                  <p className="text-[10px] text-emerald-400/90 font-medium">👆 點擊卡片翻面確認意思</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">

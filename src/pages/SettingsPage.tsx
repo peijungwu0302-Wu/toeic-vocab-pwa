@@ -28,6 +28,7 @@ import { useProfile } from '../contexts/ProfileContext';
 import { useSync } from '../contexts/SyncContext';
 import { useTypography } from '../contexts/TypographyContext';
 import { useNavigationStyle } from '../contexts/NavigationStyleContext';
+import { useReviewStyle } from '../contexts/ReviewStyleContext';
 import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
 import { getSupabaseClient } from '../services/supabaseClient';
@@ -43,6 +44,7 @@ export const SettingsPage: React.FC = () => {
   const { syncState, triggerSync } = useSync();
   const { settings, updateSettings, resetSettings, applyPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
   const { navStyle, setNavStyle, navOffset, setNavOffset } = useNavigationStyle();
+  const { reviewStyle, setReviewStyle } = useReviewStyle();
 
   const [isNewProfileModalOpen, setIsNewProfileModalOpen] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
@@ -1011,7 +1013,85 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 7. Backup & Restore (Local-first) */}
+      {/* 7. 閃卡複習操作模式 (Flashcard Review Interaction Style) */}
+      <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Sparkles size={17} className="text-indigo-400" />
+            <h3 className="text-sm font-bold text-slate-200">閃卡複習操作模式</h3>
+          </div>
+          <span className="text-[10px] font-bold text-indigo-300 bg-indigo-950/80 border border-indigo-800/60 px-2 py-0.5 rounded-full">
+            即時切換生效
+          </span>
+        </div>
+        <p className="text-[11px] text-slate-400 leading-relaxed">
+          正面一律為「點擊翻面」進行大腦主動回想；背面可自由選擇喜歡「左右滑卡解決」或「純按鈕精準評分」。
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          {/* Option 1: Swipe Mode */}
+          <button
+            type="button"
+            onClick={() => setReviewStyle('swipe')}
+            className={`p-3.5 rounded-xl border text-left transition-all flex items-start justify-between ${
+              reviewStyle === 'swipe'
+                ? 'bg-slate-900 border-indigo-500 shadow-md shadow-indigo-950/20'
+                : 'bg-slate-900/60 border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-indigo-300">🎴 1. 刷卡解決模式（推薦）</span>
+                {reviewStyle === 'swipe' && (
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-indigo-950 text-indigo-300 border border-indigo-800">
+                    目前生效
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1.5 leading-relaxed">
+                背面支援左滑掌握、右滑忘記與微震動回饋。具備首動意圖鎖定技術，上下滑動看例句絕不誤觸！
+              </p>
+            </div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
+              reviewStyle === 'swipe' ? 'border-indigo-500 bg-indigo-500' : 'border-slate-600'
+            }`}>
+              {reviewStyle === 'swipe' && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+            </div>
+          </button>
+
+          {/* Option 2: Anki Button Mode */}
+          <button
+            type="button"
+            onClick={() => setReviewStyle('button')}
+            className={`p-3.5 rounded-xl border text-left transition-all flex items-start justify-between ${
+              reviewStyle === 'button'
+                ? 'bg-slate-900 border-emerald-500 shadow-md shadow-emerald-950/20'
+                : 'bg-slate-900/60 border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-emerald-300">🎯 2. Anki 專注按鈕模式</span>
+                {reviewStyle === 'button' && (
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    目前生效
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1.5 leading-relaxed">
+                背面徹底關閉水平手勢，專門依賴底部【忘記 / 不熟 / 掌握】大按鈕，100% 杜絕任何誤滑，適合長文深度閱讀。
+              </p>
+            </div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
+              reviewStyle === 'button' ? 'border-emerald-500 bg-emerald-500' : 'border-slate-600'
+            }`}>
+              {reviewStyle === 'button' && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* 8. Backup & Restore (Local-first) */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
           <Download size={16} className="text-blue-400" />

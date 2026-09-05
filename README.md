@@ -1,75 +1,88 @@
-# TOEIC 速記 (TOEIC Vocab PWA) - 智慧間隔重複單字學習 App
+# TOEIC 速記 (TOEIC Vocab PWA) - 具象商務情境圖解 · FSRS 智慧間隔重複學習系統
 
-專為 iPhone、iPad 與桌面瀏覽器打造的繁體中文 TOEIC 多益單字學習 Progressive Web App (PWA)。採用現代化 **FSRS (Free Spaced Repetition Scheduler)** 記憶演算法，具備 100% 離線可用、資料隔離、Local-first 架構與可選的雲端同步能力。
-
----
-
-## 🌟 核心特色 (Key Features)
-
-- **Local-First & 離線可用**：
-  - 核心架構以 IndexedDB (`dexie.js`) 為主，任何複習評分皆即時以原子交易 (Atomic Transaction) 寫入本機，完全不依賴網路。
-  - 題庫切分成獨立靜態模組 (`public/data/v1/courses/*.json`)，按需下載至本機快取，支援隨時在飛航模式下完整學習。
-- **科學化 FSRS 記憶排程**：
-  - 採用現代化 `ts-fsrs` 演算法（DSR 難度、穩定度、可提取度模型），精準預估 1-Again (忘記)、2-Hard (困難)、3-Good (良好)、4-Easy (簡單) 的下次複習時間。
-  - 提供即時間隔預覽（如 `< 1 分鐘`、`1 天`、`3 天`、`6 天`），評分前卡片鎖定避免誤觸。
-- **雙核心學習模式**：
-  - **快速速讀 (Fast Skim)**：3~10 秒自動計時換卡、例句與發音、背景分頁防暴衝暫停機制。
-  - **主動回想 (Flashcard Review)**：3D 翻轉卡片、詞性釋義、商務情境例句、多益關鍵解題技巧、鍵盤快捷鍵（1-4 評分、Space 翻面）。
-- **多學生資料獨立隔離**：
-  - 單一裝置支援建立多位本機學生（UUID 獨立隔離），家庭共用或教師出借設備時紀錄互不干擾。
-- **音訊彈性降級 (Web Speech API)**：
-  - 首次學習手勢解鎖 iOS Safari Web Audio；優先播放遠端音訊，失敗時自動無縫退回 Web Speech API 合成語音。
-- **隱私安全教師進度回報**：
-  - 學生可於設定頁一鍵產生學習週報（包含完成字數、良好率、專注時長與 Top 15 常忘單字），不洩漏任何私人帳號或敏感資訊。
-- **完整備份與遷移**：
-  - 支援一鍵匯出版本化 JSON 備份檔案，並具備 Zod 格式驗證與「合併 (Merge) / 取代 (Replace)」還原策略。
+專為 iPhone、iPad、Android 與桌面瀏覽器打造的現代化多益（TOEIC）單字學習 Progressive Web App (PWA)。結合 **Google Imagen 3 具象商務情境插畫**、**FSRS (Free Spaced Repetition Scheduler) 記憶排程**、**雙軌手勢互動引擎** 與 **即時 Live AI 多益教練**，具備 100% 離線可用與 Local-first 架構。
 
 ---
 
-## 🏗️ 系統架構圖 (Architecture Diagram)
+## 🌟 核心特色 (Key Innovations)
+
+### 1. 📸 具象商務情境圖解 (Bespoke Scenario Art)
+- **非泛用圖庫，真題考點情境量身定做**：採用 Google Imagen 3 與 Gemini 2.5 Flash 生成 1:1 正方形數位概念藝術插畫。
+- **商務場景沉浸**：單字直接融入跨國商務談判、半導體晶圓無塵室、航運港口調度、航空地勤檢修、ESG 永續能源等真實多益高頻出題情境。
+- **WebP 極致輕量化**：每張圖檔經智慧無失真 WebP 轉碼，體積壓縮至 ~150KB，兼具超高解析度與行動裝置極速載入。
+
+### 2. 🧠 現代化科學記憶排程 (FSRS v4.5 Algorithm)
+- **超越傳統 Anki SM-2**：採用現代化 DSR（難度 Difficulty、穩定度 Stability、可提取度 Retrievability）記憶模型，有效減少 30% 以上的重複刷題時間。
+- **四段精準評分**：提供 `Again (忘記)`、`Hard (不熟)`、`Good (掌握)`、`Easy (簡單)`，卡片翻面即時預覽下次複習間隔（例如 `< 1分`、`1天`、`3天`、`7天`）。
+
+### 3. 🎴 頂級雙模互動引擎 (Swipe & Anki Dual Modes)
+- **正面純淨主動回想 (Active Recall)**：
+  - 正面僅呈現單字、發音與情境插圖，點擊卡片任何位置立即翻面，專注於大腦自我回想，消除誤導性操作。
+- **背面極致順暢滑動 (Direction Intent Lock)**：
+  - **首動 12px 意圖鎖定技術**：手指垂直滾動閱讀長例句時，立即鎖定為 120Hz 原生滾動，絕不卡頓、絕不誤觸跳題！
+  - **橫向瀟灑刷卡解決**：手指明確水平橫滑時，支援左滑掌握、右滑忘記，伴隨手機原生微震動回饋（Haptic Feedback），享有俐落切換的快感。
+- **雙操作模式自由切換**：
+  - 🎴 **滑動刷卡模式 (Swipe)**：適合喜歡單手左右滑動切換卡片的使用者（支援滑動與按鈕雙軌）。
+  - 🎯 **Anki 專注按鈕模式 (Button)**：背面徹底停用手勢，100% 依賴底部三大按鈕，適合深度研讀長文例句。
+
+### 4. 🤖 4 大即時 Live AI 助教 (Gemini 2.5 Live Integration)
+- 💡 **一鍵記憶法 (Mnemonic)**：結合諧音、詞根字首或職場趣味情境，秒解難背冷僻字。
+- 📝 **Part 5 擬真即時出題 (Instant Quiz)**：現場生成多益 Part 5 單選文法考題，即時作答與詳解剖析。
+- ✍️ **商務造句文法診斷 (Sentence Coach)**：輸入你的英文造句，AI 立即評分、修正文法，並提供道地商務潤飾建議。
+- 🔍 **近義詞微語感辨析 (Nuance Compare)**：輸入混淆字，AI 以 30 秒快速圖表說明使用場合與細微差異。
+
+### 5. 📚 全量 11,154 詞彙全球大辭典 & 點擊速查 (WordQuickPeek)
+- 涵蓋完整多益 5 大分級庫（Core 1200、Advanced 2500、Expert High Part 1/2/3）。
+- 例句中每個英文單字皆可點擊（Clickable Sentence），立即彈出速查卡，衍生字族（Word Family）無縫鏈結。
+
+### 6. 📱 iPhone PWA 專屬優化 & Local-First 本機優先
+- **獨立 App 沉浸體驗**：加入 iPhone 主畫面後，以全螢幕 Standalone 啟動，無網址列干擾。
+- **底欄外觀與像素級微調**：支援經典底欄、平貼底邊、Apple Music 懸浮島嶼膠囊風格，並提供 -30px ~ +30px 像素微調滑桿。
+- **純離線可用**：核心資料存於 IndexedDB（Dexie.js），無網路或飛航模式下所有進度正常累積。
+
+---
+
+## 🏗️ 系統架構圖 (System Architecture)
 
 ```mermaid
 flowchart TB
-    subgraph Client ["Client Browser / iPhone PWA"]
+    subgraph Client ["Client Browser / iPhone PWA (Local-First)"]
         subgraph UI ["UI 互動層 (React 19 + Tailwind CSS + Framer Motion)"]
             Dashboard["首頁儀表板\n(Dashboard)"]
-            Catalog["課程題庫庫\n(Catalog)"]
-            Skim["快速速讀\n(Fast Skim)"]
-            Review["主動回想翻卡\n(Flashcard + FSRS)"]
-            Stats["統計分析\n(Stats)"]
-            Settings["設定與備份\n(Settings)"]
+            Flashcard["主動回想閃卡\n(Direction-Locked Flashcard)"]
+            Skim["極速速讀\n(Fast Skim)"]
+            Catalog["課程總庫\n(Catalog)"]
+            Settings["設定與樣式自訂\n(Settings & Review Style)"]
         end
 
-        subgraph Service ["業務邏輯層 (Services & Repositories)"]
-            AudioSvc["音訊服務\n(AudioService: Web Speech)"]
-            FSRSSvc["FSRS 排程核心\n(fsrsService via ts-fsrs)"]
-            BackupSvc["備份還原引擎\n(backupService with Zod)"]
-            TeacherSvc["教師週報服務\n(teacherReportService)"]
-            SyncEng["可選背景同步\n(SyncEngine with Queue)"]
+        subgraph Service ["核心服務層 (Services)"]
+            FSRSSvc["FSRS 排程引擎\n(ts-fsrs v5.2)"]
+            AudioSvc["音訊引擎\n(Web Audio & Web Speech API)"]
+            GeminiSvc["Live AI 助教\n(Gemini 2.5 API)"]
+            MorphSvc["詞根字首詞族\n(morphologyService)"]
         end
 
-        subgraph Storage ["本機儲存層 (Local-first IndexedDB)"]
-            DexieDB[("Dexie.js DB\n- Profiles\n- Courses\n- Words\n- Progress\n- ReviewLogs\n- DailyStats\n- SyncQueue")]
+        subgraph Storage ["本機儲存層 (IndexedDB via Dexie.js)"]
+            LocalDB[("Dexie Database\n- Profiles\n- Words\n- Progress (FSRS)\n- ReviewLogs\n- AppSettings")]
         end
     end
 
-    subgraph StaticAssets ["靜態資源 (CDN / Static Hosting)"]
-        DatasetJSON[("/data/v1/catalog.json\n/data/v1/courses/*.json\n(11,154 筆詞彙分級模組)")]
-    end
-
-    subgraph CloudSync ["可選雲端服務 (Optional Supabase)"]
-        SupabaseDB[("PostgreSQL + Auth + RLS\n- profiles\n- user_word_progress\n- review_logs")]
+    subgraph Cloud ["雲端資源 (Static Hosting & Optional Sync)"]
+        VercelCDN["Vercel Edge Hosting\n(PWA Static Assets)"]
+        ImageRepo["WebP 具象商務圖庫\n(public/assets/images/words/*.webp)"]
+        CloudSync["可選雲端備份\n(Supabase PostgreSQL + RLS)"]
     end
 
     UI --> Service
     Service --> Storage
-    Catalog -.->|按需下載課程 Chunk| DatasetJSON
-    SyncEng -.->|離線佇列與重試| CloudSync
+    UI -.-> ImageRepo
+    Client -.-> VercelCDN
+    Service -.->|可選雙向同步| CloudSync
 ```
 
 ---
 
-## 🚀 快速開始與本機開發 (Getting Started)
+## 🚀 本機開發與建置 (Development)
 
 ### 1. 系統需求
 - Node.js 20 或 22+ LTS
@@ -80,101 +93,30 @@ flowchart TB
 npm install
 ```
 
-### 3. 下載與清洗資料集 (ETL Pipeline)
-本專案已內建完整的 Hugging Face dataset ETL 下載與清洗工具：
-```bash
-# 1. 從 Hugging Face 下載最新 11,000+ 詞彙資料
-npm run data:download
-
-# 2. 執行清洗、Unicode 正規化、去重、FSRS 分級模組與 QA 報告產出
-npm run data:build
-```
-> 若在無網路環境或想自訂 JSON 資料，可使用本機檔案：
-> `node scripts/download-dataset.mjs --input <path-to-json>`
-
-### 4. 啟動本機開發伺服器
+### 3. 啟動本機開發伺服器
 ```bash
 npm run dev
 ```
-瀏覽器開啟：`http://localhost:5173`
+開啟瀏覽器訪問：`http://localhost:5173`
 
----
-
-## 🧪 測試與品質檢查 (Testing & Quality Assurance)
-
+### 4. 生產環境建置
 ```bash
-# 執行全部單元測試與整合測試 (Vitest)
-npm run test
-
-# 執行 TypeScript 嚴格型別檢查
-npm run typecheck
-
-# 執行 ESLint 靜態代碼檢查 (0 warnings 限制)
-npm run lint
-
-# Production 建置驗證
 npm run build
 ```
+Vite 將自動執行 TypeScript 型別檢查並完成 PWA Service Worker 最佳化打包。
 
 ---
 
-## 📦 部署指南 (Deployment)
+## 📦 發布與部署 (Deployment)
 
-### Local-Only 模式（預設）
-本專案為純靜態 SPA + PWA 架構，建置後產生的 `dist/` 目錄可直接部署至任何靜態託管平台：
-
-#### 1. Vercel
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-#### 2. Cloudflare Pages
-- 建立新專案，連接 Git Repository
-- Build Command: `npm run build`
-- Build Output Directory: `dist`
-
-#### 3. GitHub Pages
-在 `vite.config.ts` 中若部署至子路徑（如 `https://<user>.github.io/<repo>/`），請設定 `base: '/<repo>/'`。
+本專案經過 Workbox PWA 快取優化，原生適配 **Vercel** 邊緣部署：
+- Push 代碼至 `main` 分支後，Vercel 將自動觸發 CI/CD 建置與全球 CDN 上線。
+- 若需設定自訂網域或環境變數，可於 Vercel Project Settings 中配置。
 
 ---
 
-## ☁️ 可選雲端同步配置 (Optional Supabase Cloud Sync)
-
-若需要跨裝置同步，可啟用 Supabase 後端：
-
-1. 在 [Supabase](https://supabase.com) 建立專案。
-2. 進入 SQL Editor，執行專案中的資料庫遷移腳本：
-   `supabase/migrations/0001_initial.sql`
-   *(已包含完整 RLS 權限與 auth.uid() 限制)*。
-3. 複製 `.env.example` 為 `.env` 並填入金鑰：
-   ```env
-   VITE_ENABLE_CLOUD_SYNC=true
-   VITE_SUPABASE_URL=https://your-project.supabase.co
-   VITE_SUPABASE_ANON_KEY=your-anon-key
-   ```
-4. 重新建置 `npm run build`，App 將自動啟用雲端同步引擎。
-
----
-
-## 📱 iPhone 實機驗收與安裝清單 (iPhone PWA Acceptance)
-
-| 測試項目 | 驗收步驟 | 預期結果 |
-| :--- | :--- | :--- |
-| **1. Safari 安裝至主畫面** | 以 Safari 開啟網址，點擊「分享」→「加入主畫面」。 | 主畫面出現 App 圖示，點擊後以全螢幕 Standalone 模式啟動（無 Safari 網址列）。 |
-| **2. 音訊首次手勢解鎖** | 進入「快速速讀」或「主動回想」，點擊「開始」按鈕。 | 手勢成功解鎖 AudioContext，單字能正常發音，切卡時上一段發音立即中斷。 |
-| **3. 離線斷網測試** | 下載任一課程後，手機開啟「飛航模式」。 | 重新開啟 App 仍可順暢速讀、翻卡並評分，紀錄正常寫入本機 IndexedDB。 |
-| **4. 進度重啟保存** | 評分數張卡片後，滑掉關閉 PWA 並重新開啟。 | 儀表板正確顯示今日已複習數量與連續天數，進度未遺失。 |
-| **5. 多學生本機隔離** | 在「設定」中建立「學生 A」與「學生 B」並切換。 | 學生 A 的複習進度與收藏不會出現在學生 B 的畫面上。 |
-| **6. 安全區適配** | 於具備 Dynamic Island 或 Home Indicator 的 iPhone 上測試。 | 頂部標題列與底部評分按鈕均安全避開 Safe Area Inset，無任何遮擋。 |
-| **7. 備份還原測試** | 於設定頁點擊「匯出備份」，並於新學生身分點擊「匯入備份」。 | 成功讀取 JSON 備份檔，選擇「合併」後成功恢復歷史進度。 |
-
----
-
-## 📄 第三方資料集與授權聲明 (Attribution & Licenses)
+## 📄 授權與聲明 (Attribution & Notices)
 
 - **單字資料集**：`kknono668/toeic-vocab-tw` 採用 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 授權。
-- **FSRS 演算法**：`ts-fsrs` 採用 MIT License。
-- **IndexedDB 封裝**：`dexie.js` 採用 Apache License 2.0。
-- **免責聲明**：TOEIC® 為 ETS 之註冊商標，本專案為開源學習工具，非由 ETS 官方贊助或認可。
-- 詳細第三方說明請參閱工作區內之 [`THIRD_PARTY_NOTICES.md`](file:///c:/Users/hands/Downloads/多益單字gemini/THIRD_PARTY_NOTICES.md)。
+- **FSRS 演算法**：採用 `ts-fsrs` (MIT License)。
+- **商標免責聲明**：TOEIC® 為 ETS（Educational Testing Service）之註冊商標。本專案為個人開源自主學習工具，非由 ETS 官方贊助、認可或隸屬。

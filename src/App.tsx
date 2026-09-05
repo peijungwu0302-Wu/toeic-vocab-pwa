@@ -4,6 +4,7 @@ import { ProfileProvider, useProfile } from './contexts/ProfileContext';
 import { SyncProvider } from './contexts/SyncContext';
 import { TypographyProvider } from './contexts/TypographyContext';
 import { NavigationStyleProvider } from './contexts/NavigationStyleContext';
+import { ReviewStyleProvider } from './contexts/ReviewStyleContext';
 import { AppLayout } from './components/layout/AppLayout';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -79,9 +80,11 @@ export const App: React.FC = () => {
         <SyncProvider>
           <TypographyProvider>
             <NavigationStyleProvider>
-              <ErrorBoundary>
-                <AppRoutes />
-              </ErrorBoundary>
+              <ReviewStyleProvider>
+                <ErrorBoundary>
+                  <AppRoutes />
+                </ErrorBoundary>
+              </ReviewStyleProvider>
             </NavigationStyleProvider>
           </TypographyProvider>
         </SyncProvider>

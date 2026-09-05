@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 
@@ -18,48 +18,86 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   disabled = false
 }) => {
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-200, 0, 200], [-14, 0, 14]);
+  const rotate = useTransform(x, [-200, 0, 200], [-7, 0, 7]);
 
-  // Opacities for 2-direction horizontal swipe overlays
-  const rightAgainOpacity = useTransform(x, [30, 100], [0, 1]); // Drag Right -> Again
-  const leftGoodOpacity = useTransform(x, [-30, -100], [0, 1]); // Drag Left -> Good
+  // Opacities for 2-direction horizontal swipe overlays (clear threshold)
+  const rightAgainOpacity = useTransform(x, [45, 110], [0, 1]); // Drag Right -> Again
+  const leftGoodOpacity = useTransform(x, [-45, -110], [0, 1]); // Drag Left -> Good
 
   const [isDragging, setIsDragging] = useState(false);
+  const dragLockedRef = useRef<'vertical' | 'horizontal' | null>(null);
+
+  const handleDragStart = () => {
+    setIsDragging(true);
+    dragLockedRef.current = null;
+  };
+
+  const handleDrag = (_: unknown, info: PanInfo) => {
+    // Determine intention in the first micro-movements
+    if (!dragLockedRef.current) {
+      const absX = Math.abs(info.offset.x);
+      const absY = Math.abs(info.offset.y);
+      if (absY > 10 && absY > absX * 1.2) {
+        dragLockedRef.current = 'vertical';
+      } else if (absX > 10 && absX > absY * 1.3) {
+        dragLockedRef.current = 'horizontal';
+      }
+    }
+  };
 
   const handleDragEnd = (_: unknown, info: PanInfo) => {
     setIsDragging(false);
-    const thresholdX = 55;
-    const velocityThreshold = 250;
 
-    // Smart Anti-misoperation:
-    // Only lock out horizontal swipe if the user was actively performing a deep vertical scroll (|offset.y| > 35px and dominant)
-    if (Math.abs(info.offset.y) > 35 && Math.abs(info.offset.y) > Math.abs(info.offset.x) * 1.1) {
+    // If locked into vertical scrolling, NEVER trigger horizontal swipe
+    if (dragLockedRef.current === 'vertical') {
+      dragLockedRef.current = null;
+      x.set(0);
+      return;
+    }
+
+    const thresholdX = 85;
+    const velocityThreshold = 380;
+    const absX = Math.abs(info.offset.x);
+    const absY = Math.abs(info.offset.y);
+
+    // Strict Anti-misoperation:
+    // 1. Vertical displacement must not be notable
+    // 2. Horizontal displacement must be clearly dominant
+    if (absY > 28 || absX < absY * 1.4) {
+      dragLockedRef.current = null;
+      x.set(0);
       return;
     }
 
     // Check horizontal swipes with responsive natural feel
-    if (info.offset.x > thresholdX || info.velocity.x > velocityThreshold) {
+    if (info.offset.x > thresholdX || (info.offset.x > 35 && info.velocity.x > velocityThreshold)) {
+      try { navigator.vibrate?.([12]); } catch {}
       if (onSwipeRight) onSwipeRight(); // Right = Again
-    } else if (info.offset.x < -thresholdX || info.velocity.x < -velocityThreshold) {
+    } else if (info.offset.x < -thresholdX || (info.offset.x < -35 && info.velocity.x < -velocityThreshold)) {
+      try { navigator.vibrate?.([12]); } catch {}
       if (onSwipeLeft) onSwipeLeft(); // Left = Good
+    } else {
+      x.set(0);
     }
+    dragLockedRef.current = null;
   };
 
   return (
     <div className="relative w-full h-full perspective-1000 select-none touch-pan-y">
       <motion.div
-        style={{ x, rotate }}
+        style={disabled ? {} : { x, rotate }}
         drag={disabled ? false : 'x'}
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.65}
-        onDragStart={() => setIsDragging(true)}
+        dragElastic={0.45}
+        onDragStart={handleDragStart}
+        onDrag={handleDrag}
         onDragEnd={handleDragEnd}
         onClick={() => {
           if (!isDragging && onClick) onClick();
         }}
-        className="w-full h-full cursor-grab active:cursor-grabbing relative"
+        className={`w-full h-full relative ${disabled ? '' : 'cursor-grab active:cursor-grabbing'}`}
       >
-        {/* Dynamic Visual Swipe Overlays */}
+        {/* Dynamic Visual Swipe Overlays (Only visible during active horizontal swipe in enabled mode) */}
         {!disabled && (
           <>
             {/* Right Swipe: 💥 忘記 (AGAIN - Red) */}
@@ -87,4 +125,5 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
     </div>
   );
 };
+
 
