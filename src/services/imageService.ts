@@ -189,29 +189,38 @@ export const imageService = {
     const cleanWord = headword.trim().toLowerCase();
     const slugWord = cleanWord.replace(/[^a-z0-9_-]/g, '_');
 
+    const resolveImageUrl = (url: string): string => {
+      if (url.startsWith('http://') || url.startsWith('https://')) return url;
+      const base = import.meta.env.BASE_URL || '/';
+      const prefix = base.endsWith('/') ? base : base + '/';
+      return `${prefix}${url.replace(/^\//, '')}`;
+    };
+
     // 0. Primary: 100% Offline Local WebP Image from Core 1,200 Suite
     if (LOCAL_IMAGE_SET.has(cleanWord)) {
-      return { url: `/assets/images/words/${cleanWord}.webp`, tag: `${headword} 商務實景` };
+      return { url: resolveImageUrl(`/assets/images/words/${cleanWord}.webp`), tag: `${headword} 商務實景` };
     }
     if (LOCAL_IMAGE_SET.has(slugWord)) {
-      return { url: `/assets/images/words/${slugWord}.webp`, tag: `${headword} 商務實景` };
+      return { url: resolveImageUrl(`/assets/images/words/${slugWord}.webp`), tag: `${headword} 商務實景` };
     }
 
     // 1. Direct exact word match
     if (KEYWORD_IMAGE_MAP[cleanWord]) {
-      return KEYWORD_IMAGE_MAP[cleanWord];
+      const item = KEYWORD_IMAGE_MAP[cleanWord];
+      return { url: resolveImageUrl(item.url), tag: item.tag };
     }
 
     // 2. Keyword substring matching (e.g. 'arm in arm' matches 'arm', 'a copy of' matches 'copy')
     for (const [kw, info] of Object.entries(KEYWORD_IMAGE_MAP)) {
       if (cleanWord.includes(kw)) {
-        return info;
+        return { url: resolveImageUrl(info.url), tag: info.tag };
       }
     }
 
     // 3. Deterministic Category Pool matching so words in the same category have distinct photos!
     const pool = CATEGORY_POOLS[category] || CATEGORY_POOLS['辦公日常'];
     const idx = simpleHash(cleanWord) % pool.length;
-    return pool[idx];
+    const poolItem = pool[idx];
+    return { url: resolveImageUrl(poolItem.url), tag: poolItem.tag };
   }
 };

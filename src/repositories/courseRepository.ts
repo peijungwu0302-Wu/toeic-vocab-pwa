@@ -11,9 +11,15 @@ function shuffleList<T>(array: T[]): T[] {
   return arr;
 }
 
+const getBaseDataUrl = (relPath: string): string => {
+  const base = import.meta.env.BASE_URL || '/';
+  const prefix = base.endsWith('/') ? base : base + '/';
+  return `${prefix}${relPath.replace(/^\//, '')}`;
+};
+
 export const courseRepository = {
   async fetchCatalog(): Promise<DatasetCatalog> {
-    const res = await fetch(`/data/v1/catalog.json?t=${Date.now()}`, { cache: 'no-cache' });
+    const res = await fetch(`${getBaseDataUrl('data/v1/catalog.json')}?t=${Date.now()}`, { cache: 'no-cache' });
     if (!res.ok) {
       throw new Error(`Failed to fetch course catalog: HTTP ${res.status}`);
     }
@@ -95,11 +101,11 @@ export const courseRepository = {
         } else {
           // Fetch master datasets in parallel
           const [coreRes, advRes, exp1Res, exp2Res, exp3Res] = await Promise.allSettled([
-            fetch('/data/v1/core-1200.json').then(r => r.json()),
-            fetch('/data/v1/advanced-2500.json').then(r => r.json()),
-            fetch('/data/v1/expert-high-part1.json').then(r => r.json()),
-            fetch('/data/v1/expert-high-part2.json').then(r => r.json()),
-            fetch('/data/v1/expert-high-part3.json').then(r => r.json())
+            fetch(getBaseDataUrl('data/v1/core-1200.json')).then(r => r.json()),
+            fetch(getBaseDataUrl('data/v1/advanced-2500.json')).then(r => r.json()),
+            fetch(getBaseDataUrl('data/v1/expert-high-part1.json')).then(r => r.json()),
+            fetch(getBaseDataUrl('data/v1/expert-high-part2.json')).then(r => r.json()),
+            fetch(getBaseDataUrl('data/v1/expert-high-part3.json')).then(r => r.json())
           ]);
 
           const combined: Word[] = [...localWords];
@@ -170,7 +176,7 @@ export const courseRepository = {
   },
 
   async downloadAndSaveCourse(courseId: string, fileName: string): Promise<void> {
-    const res = await fetch(`/data/v1/courses/${fileName}?t=${Date.now()}`, { cache: 'no-cache' });
+    const res = await fetch(`${getBaseDataUrl(`data/v1/courses/${fileName}`)}?t=${Date.now()}`, { cache: 'no-cache' });
     if (!res.ok) {
       throw new Error(`Failed to download course file ${fileName}: HTTP ${res.status}`);
     }

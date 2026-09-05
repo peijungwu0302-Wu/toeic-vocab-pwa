@@ -103,7 +103,9 @@ export const quizService = {
     type: 'mcq' | 'cloze' = 'mcq'
   ): Promise<QuizItem[]> {
     try {
-      const res = await fetch(`/data/v1/quiz/${tier}-${type}.json`);
+      const base = import.meta.env.BASE_URL || '/';
+      const prefix = base.endsWith('/') ? base : base + '/';
+      const res = await fetch(`${prefix}data/v1/quiz/${tier}-${type}.json`);
       if (!res.ok) return [];
       const data = await res.json();
       return data.questions || [];
