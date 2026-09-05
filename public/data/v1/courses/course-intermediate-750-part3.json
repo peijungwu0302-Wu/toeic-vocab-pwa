@@ -5,7 +5,7 @@
   "toeicScoreRange": "600-780",
   "category": "綜合商務",
   "level": "中階",
-  "version": 16,
+  "version": 17,
   "words": [
     {
       "id": "tw_p_9df757f5de5b",
@@ -84631,6 +84631,6 @@
     }
   ],
   "wordCount": 378,
-  "datasetVersion": "v7.2.0-flagship-consolidated-option2",
-  "buildTimestamp": "2026-09-05T14:06:24.160Z"
+  "datasetVersion": "v7.3.0-flagship-all-tiers-consolidated",
+  "buildTimestamp": "2026-09-05T14:14:08.075Z"
 }
