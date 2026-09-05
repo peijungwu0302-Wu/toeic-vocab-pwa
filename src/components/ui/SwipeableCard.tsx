@@ -8,6 +8,7 @@ interface SwipeableCardProps {
   onSwipeRight?: () => void; // 1: Again (忘記)
   onClick?: () => void;
   disabled?: boolean;
+  handPreference?: 'left' | 'right';
 }
 
 export const SwipeableCard: React.FC<SwipeableCardProps> = ({
@@ -15,14 +16,15 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   onSwipeLeft,
   onSwipeRight,
   onClick,
-  disabled = false
+  disabled = false,
+  handPreference = 'left'
 }) => {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 0, 200], [-7, 0, 7]);
 
-  // Opacities for 2-direction horizontal swipe overlays (clear threshold)
-  const rightAgainOpacity = useTransform(x, [45, 110], [0, 1]); // Drag Right -> Again
-  const leftGoodOpacity = useTransform(x, [-45, -110], [0, 1]); // Drag Left -> Good
+  // Opacities for 2-direction horizontal swipe overlays (smooth fade-in from 30px to 80px)
+  const rightAgainOpacity = useTransform(x, [30, 80], [0, 1]); // Drag Right -> Again
+  const leftGoodOpacity = useTransform(x, [-30, -80], [0, 1]); // Drag Left -> Good
 
   const [isDragging, setIsDragging] = useState(false);
   const touchZoneRef = useRef<'fast' | 'content'>('content');
@@ -97,13 +99,37 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       }
     } else {
       // Content Reading Zone (Plan A): dynamic ratio + long sweep override
-      // 1. Long Sweep Override: if user dragged across screen (> 75px) with arc motion (absX > absY * 1.05)
-      // 2. Flick: brisk horizontal flick (> 320px/s)
-      const contentThresholdX = 75;
-      const contentVelocity = 320;
+      // 1. Long Sweep Override: if user dragged across screen (> 70px) with natural arc motion
+      // 2. Flick: brisk horizontal flick (> 290px/s)
+      const contentThresholdX = 70;
+      const contentVelocity = 290;
 
-      const isHorizontalDominant = absX > absY * 1.05;
-      const isQuickFlick = absX > 30 && Math.abs(info.velocity.x) > contentVelocity && Math.abs(info.velocity.x) > Math.abs(info.velocity.y) * 1.2;
+      // Ergonomic Thumb Arc Compensation based on Handedness:
+      // Left Hand:
+      // - Swiping LEFT (掌握) naturally scoops downward-left (offset.y > 0).
+      // - Swiping RIGHT (忘記) naturally pushes upward-right (offset.y < 0).
+      // Right Hand:
+      // - Swiping RIGHT naturally scoops downward-right (offset.y > 0).
+      // - Swiping LEFT naturally pushes upward-left (offset.y < 0).
+      let ratioMultiplier = 1.05;
+      if (handPreference === 'left') {
+        if (info.offset.x < 0 && info.offset.y >= -15) {
+          // Left-hand inward scoop: highly natural thumb contraction towards bottom-left
+          ratioMultiplier = 0.85;
+        } else if (info.offset.x > 0 && info.offset.y <= 20) {
+          ratioMultiplier = 0.9;
+        }
+      } else {
+        if (info.offset.x > 0 && info.offset.y >= -15) {
+          // Right-hand inward scoop: highly natural thumb contraction towards bottom-right
+          ratioMultiplier = 0.85;
+        } else if (info.offset.x < 0 && info.offset.y <= 20) {
+          ratioMultiplier = 0.9;
+        }
+      }
+
+      const isHorizontalDominant = absX > absY * ratioMultiplier;
+      const isQuickFlick = absX > 28 && Math.abs(info.velocity.x) > contentVelocity && Math.abs(info.velocity.x) > Math.abs(info.velocity.y) * 1.15;
 
       if ((absX > contentThresholdX && isHorizontalDominant) || isQuickFlick) {
         if (info.offset.x > 0) {

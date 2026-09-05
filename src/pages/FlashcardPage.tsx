@@ -113,7 +113,7 @@ export const FlashcardPage: React.FC = () => {
   const { activeProfile } = useProfile();
   const { syncState } = useSync();
   const { zoomIn, zoomOut, currentPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass } = useTypography();
-  const { reviewStyle, setReviewStyle } = useReviewStyle();
+  const { reviewStyle, setReviewStyle, handPreference, setHandPreference } = useReviewStyle();
 
   const courseId = searchParams.get('courseId');
 
@@ -945,6 +945,21 @@ export const FlashcardPage: React.FC = () => {
             <span>{reviewStyle === 'swipe' ? '🎴 刷卡' : '🎯 按鈕'}</span>
           </button>
 
+          {/* Handedness Toggle (Left-Hand vs Right-Hand Ergonomics) */}
+          <button
+            type="button"
+            onClick={() => setHandPreference(handPreference === 'left' ? 'right' : 'left')}
+            aria-label={handPreference === 'left' ? '切換為右手模式' : '切換為左手模式'}
+            className={`px-1.5 py-1 rounded-lg text-xs font-semibold transition-all flex items-center space-x-0.5 ${
+              handPreference === 'left'
+                ? 'bg-teal-950/70 text-teal-300 border border-teal-700/60 hover:bg-teal-900/70'
+                : 'bg-slate-900/90 text-slate-400 border border-slate-700/70 hover:bg-slate-800'
+            }`}
+            title={handPreference === 'left' ? '當前握持：🖐️ 左手模式（拇指弧度補償 + 掌握按鈕在左側）' : '當前握持：✋ 右手模式（掌握按鈕在右側）'}
+          >
+            <span>{handPreference === 'left' ? '🖐️ 左手' : '✋ 右手'}</span>
+          </button>
+
           {/* Star Button */}
           <button
             type="button"
@@ -987,6 +1002,7 @@ export const FlashcardPage: React.FC = () => {
             onSwipeLeft={handleSwipeLeft}
             onSwipeRight={handleSwipeRight}
             disabled={!isFlipped || reviewStyle === 'button'}
+            handPreference={handPreference}
           >
           <motion.div
             animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -1644,50 +1660,101 @@ export const FlashcardPage: React.FC = () => {
             className="sticky bottom-0 z-30 pt-2 pb-1.5 bg-slate-900/95 backdrop-blur-md border-t border-slate-800/80 w-full shrink-0 shadow-2xl"
           >
             <div className="grid grid-cols-3 gap-2">
-              {/* 1. Again (忘記) */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRate(1);
-                }}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-rose-950/90 hover:bg-rose-900 active:scale-95 border border-rose-700 text-white shadow-lg min-h-[56px] transition-all"
-              >
-                <div className="text-xs font-black text-rose-300">💥 忘記 (1)</div>
-                <div className="text-[10px] text-rose-200/80 font-mono mt-0.5">
-                  {intervalPreviews[0]?.intervalText || '< 1分'}
-                </div>
-              </button>
+              {handPreference === 'left' ? (
+                <>
+                  {/* 3. Good (掌握) - Leftmost for left thumb natural reach */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRate(3);
+                    }}
+                    className="flex flex-col items-center justify-center p-2 rounded-2xl bg-emerald-950/90 hover:bg-emerald-900 active:scale-95 border border-emerald-600 text-white shadow-lg min-h-[56px] transition-all"
+                  >
+                    <div className="text-xs font-black text-emerald-300">💡 掌握 (3)</div>
+                    <div className="text-[10px] text-emerald-200/80 font-mono mt-0.5">
+                      {intervalPreviews[2]?.intervalText || '3天'}
+                    </div>
+                  </button>
 
-              {/* 2. Hard (不熟) */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRate(2);
-                }}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-amber-950/90 hover:bg-amber-900 active:scale-95 border border-amber-700 text-white shadow-lg min-h-[56px] transition-all"
-              >
-                <div className="text-xs font-black text-amber-300">🤔 不熟 (2)</div>
-                <div className="text-[10px] text-amber-200/80 font-mono mt-0.5">
-                  {intervalPreviews[1]?.intervalText || '1天'}
-                </div>
-              </button>
+                  {/* 2. Hard (不熟) */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRate(2);
+                    }}
+                    className="flex flex-col items-center justify-center p-2 rounded-2xl bg-amber-950/90 hover:bg-amber-900 active:scale-95 border border-amber-700 text-white shadow-lg min-h-[56px] transition-all"
+                  >
+                    <div className="text-xs font-black text-amber-300">🤔 不熟 (2)</div>
+                    <div className="text-[10px] text-amber-200/80 font-mono mt-0.5">
+                      {intervalPreviews[1]?.intervalText || '1天'}
+                    </div>
+                  </button>
 
-              {/* 3. Good (掌握) */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRate(3);
-                }}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-emerald-950/90 hover:bg-emerald-900 active:scale-95 border border-emerald-600 text-white shadow-lg min-h-[56px] transition-all"
-              >
-                <div className="text-xs font-black text-emerald-300">💡 掌握 (3)</div>
-                <div className="text-[10px] text-emerald-200/80 font-mono mt-0.5">
-                  {intervalPreviews[2]?.intervalText || '3天'}
-                </div>
-              </button>
+                  {/* 1. Again (忘記) */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRate(1);
+                    }}
+                    className="flex flex-col items-center justify-center p-2 rounded-2xl bg-rose-950/90 hover:bg-rose-900 active:scale-95 border border-rose-700 text-white shadow-lg min-h-[56px] transition-all"
+                  >
+                    <div className="text-xs font-black text-rose-300">💥 忘記 (1)</div>
+                    <div className="text-[10px] text-rose-200/80 font-mono mt-0.5">
+                      {intervalPreviews[0]?.intervalText || '< 1分'}
+                    </div>
+                  </button>
+                </>
+              ) : (
+                <>
+                  {/* 1. Again (忘記) - Leftmost for right thumb safe reach */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRate(1);
+                    }}
+                    className="flex flex-col items-center justify-center p-2 rounded-2xl bg-rose-950/90 hover:bg-rose-900 active:scale-95 border border-rose-700 text-white shadow-lg min-h-[56px] transition-all"
+                  >
+                    <div className="text-xs font-black text-rose-300">💥 忘記 (1)</div>
+                    <div className="text-[10px] text-rose-200/80 font-mono mt-0.5">
+                      {intervalPreviews[0]?.intervalText || '< 1分'}
+                    </div>
+                  </button>
+
+                  {/* 2. Hard (不熟) */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRate(2);
+                    }}
+                    className="flex flex-col items-center justify-center p-2 rounded-2xl bg-amber-950/90 hover:bg-amber-900 active:scale-95 border border-amber-700 text-white shadow-lg min-h-[56px] transition-all"
+                  >
+                    <div className="text-xs font-black text-amber-300">🤔 不熟 (2)</div>
+                    <div className="text-[10px] text-amber-200/80 font-mono mt-0.5">
+                      {intervalPreviews[1]?.intervalText || '1天'}
+                    </div>
+                  </button>
+
+                  {/* 3. Good (掌握) - Rightmost for right thumb natural reach */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRate(3);
+                    }}
+                    className="flex flex-col items-center justify-center p-2 rounded-2xl bg-emerald-950/90 hover:bg-emerald-900 active:scale-95 border border-emerald-600 text-white shadow-lg min-h-[56px] transition-all"
+                  >
+                    <div className="text-xs font-black text-emerald-300">💡 掌握 (3)</div>
+                    <div className="text-[10px] text-emerald-200/80 font-mono mt-0.5">
+                      {intervalPreviews[2]?.intervalText || '3天'}
+                    </div>
+                  </button>
+                </>
+              )}
             </div>
           </motion.div>
         )}

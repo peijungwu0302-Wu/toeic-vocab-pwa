@@ -44,7 +44,7 @@ export const SettingsPage: React.FC = () => {
   const { syncState, triggerSync } = useSync();
   const { settings, updateSettings, resetSettings, applyPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
   const { navStyle, setNavStyle, navOffset, setNavOffset } = useNavigationStyle();
-  const { reviewStyle, setReviewStyle } = useReviewStyle();
+  const { reviewStyle, setReviewStyle, handPreference, setHandPreference } = useReviewStyle();
 
   const [isNewProfileModalOpen, setIsNewProfileModalOpen] = useState(false);
   const [newProfileName, setNewProfileName] = useState('');
@@ -1091,7 +1091,85 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 8. Backup & Restore (Local-first) */}
+      {/* 8. 握持慣用手人體工學 (Handedness Ergonomics) */}
+      <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Smartphone size={17} className="text-amber-400" />
+            <h3 className="text-sm font-bold text-slate-200">單手操作與慣用手 (Ergonomics)</h3>
+          </div>
+          <span className="text-[10px] font-bold text-amber-300 bg-amber-950/80 border border-amber-800/60 px-2 py-0.5 rounded-full">
+            拇指弧度補償
+          </span>
+        </div>
+        <p className="text-[11px] text-slate-400 leading-relaxed">
+          配合人體工學拇指橈骨弧線與黃金觸控區（Thumb Zone）。左手模式將【掌握】置於左下舒適區並容許自然的弧形斜切滑動；右手模式則反向鏡像。
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          {/* Option 1: Left Hand (Default) */}
+          <button
+            type="button"
+            onClick={() => setHandPreference('left')}
+            className={`p-3.5 rounded-xl border text-left transition-all flex items-start justify-between ${
+              handPreference === 'left'
+                ? 'bg-slate-900 border-amber-500 shadow-md shadow-amber-950/20'
+                : 'bg-slate-900/60 border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-amber-300">🖐️ 1. 左手操作模式（推薦預設）</span>
+                {handPreference === 'left' && (
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-800">
+                    目前生效
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1.5 leading-relaxed">
+                【💡 掌握】按鈕置於左下角最舒適觸及區。對左內收拇指斜切滑動提供角度補償（0.85x 容錯），單手操作極致順暢。
+              </p>
+            </div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
+              handPreference === 'left' ? 'border-amber-500 bg-amber-500' : 'border-slate-600'
+            }`}>
+              {handPreference === 'left' && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+            </div>
+          </button>
+
+          {/* Option 2: Right Hand */}
+          <button
+            type="button"
+            onClick={() => setHandPreference('right')}
+            className={`p-3.5 rounded-xl border text-left transition-all flex items-start justify-between ${
+              handPreference === 'right'
+                ? 'bg-slate-900 border-sky-500 shadow-md shadow-sky-950/20'
+                : 'bg-slate-900/60 border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-sky-300">✋ 2. 右手操作模式</span>
+                {handPreference === 'right' && (
+                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-800">
+                    目前生效
+                  </span>
+                )}
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1.5 leading-relaxed">
+                【💡 掌握】按鈕鏡像置於右側。對右內收拇指滑動弧度最佳化，方便右手單手握持時拇指輕鬆點擊掌握。
+              </p>
+            </div>
+            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
+              handPreference === 'right' ? 'border-sky-500 bg-sky-500' : 'border-slate-600'
+            }`}>
+              {handPreference === 'right' && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* 9. Backup & Restore (Local-first) */}
       <div className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3">
         <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
           <Download size={16} className="text-blue-400" />
