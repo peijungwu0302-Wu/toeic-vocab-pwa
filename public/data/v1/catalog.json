@@ -1,7 +1,7 @@
 {
-  "version": 9,
-  "generatedAt": "2026-09-04T07:40:27.833Z",
-  "totalWords": 21011,
+  "version": 15,
+  "generatedAt": "2026-09-05T13:47:32.695Z",
+  "totalWords": 21808,
   "totalCourses": 35,
   "courses": [
     {
@@ -13,12 +13,12 @@
       "level": "核心必考",
       "wordCount": 1200,
       "fileName": "course-core-1200.json",
-      "checksum": "0787de72fb3cf5b23b39f590f25cf1d4a22522f4a713c5982914959330b1c896",
-      "sizeBytes": 17338366,
-      "version": 6,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "8e29feee579b9bb1443d5f43d8d74f089d046386c646ef393427db9979c4a979",
-      "checksumSha256": "8e29feee579b9bb1443d5f43d8d74f089d046386c646ef393427db9979c4a979"
+      "checksum": "f7fbcdab4d301613e476351b2fe35921666a845dfa7e8eb5ffaebee9207fe2e9",
+      "sizeBytes": 11390171,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "f7fbcdab4d301613e476351b2fe35921666a845dfa7e8eb5ffaebee9207fe2e9",
+      "checksumSha256": "f7fbcdab4d301613e476351b2fe35921666a845dfa7e8eb5ffaebee9207fe2e9"
     },
     {
       "id": "course-advanced-2500",
@@ -27,14 +27,14 @@
       "toeicScoreRange": "750-860",
       "category": "進階實戰",
       "level": "金證衝刺",
-      "wordCount": 2053,
+      "wordCount": 2500,
       "fileName": "course-advanced-2500.json",
-      "checksum": "a72f80b97f4d31b61914d0ac64913fa5ec75b5514bdc42f72d50795a336864ee",
-      "sizeBytes": 26603748,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "c5bcba4e86705a1d5d2d417d7e0630c588473c05be4d7c45d1e25046a98048a6",
-      "checksumSha256": "c5bcba4e86705a1d5d2d417d7e0630c588473c05be4d7c45d1e25046a98048a6"
+      "checksum": "e1700080932d5a1beefab3d5174dcdda6dc70cbba5b9743c51bbf041c3816bdc",
+      "sizeBytes": 25891423,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "e1700080932d5a1beefab3d5174dcdda6dc70cbba5b9743c51bbf041c3816bdc",
+      "checksumSha256": "e1700080932d5a1beefab3d5174dcdda6dc70cbba5b9743c51bbf041c3816bdc"
     },
     {
       "id": "course-foundation-550-part1",
@@ -45,12 +45,12 @@
       "level": "基礎",
       "wordCount": 317,
       "fileName": "course-foundation-550-part1.json",
-      "checksum": "fc4e0e059821ef3fbf3a39b9ff4e7087a32f65ec31ceabf538c19eed7d74cd3e",
-      "sizeBytes": 3067532,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "e1036781fee38f3ac59f39c7960180e48c538bd93e2c3b628af06fcd9ef6e6a7",
-      "checksumSha256": "e1036781fee38f3ac59f39c7960180e48c538bd93e2c3b628af06fcd9ef6e6a7"
+      "checksum": "4d8685c7bcd178c8f1ae429cd8c337d1ecb5ee19eed08d2ad3d6e5112927763a",
+      "sizeBytes": 3024795,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "4d8685c7bcd178c8f1ae429cd8c337d1ecb5ee19eed08d2ad3d6e5112927763a",
+      "checksumSha256": "4d8685c7bcd178c8f1ae429cd8c337d1ecb5ee19eed08d2ad3d6e5112927763a"
     },
     {
       "id": "course-foundation-550-part2",
@@ -61,12 +61,12 @@
       "level": "基礎",
       "wordCount": 326,
       "fileName": "course-foundation-550-part2.json",
-      "checksum": "b1266aa35c3e0abcf55246da77a1321a109135f1c6465ff9f98fc294787a4145",
-      "sizeBytes": 3219584,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "84536c876e5f539adeb67cac1b0b488c99e1bc40e8c5826e28044f43fceeaac3",
-      "checksumSha256": "84536c876e5f539adeb67cac1b0b488c99e1bc40e8c5826e28044f43fceeaac3"
+      "checksum": "f0081ba743de8c60353a03cd937d220686b3e88afa0b27412af35182ed85231f",
+      "sizeBytes": 3189689,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "f0081ba743de8c60353a03cd937d220686b3e88afa0b27412af35182ed85231f",
+      "checksumSha256": "f0081ba743de8c60353a03cd937d220686b3e88afa0b27412af35182ed85231f"
     },
     {
       "id": "course-foundation-550-part3",
@@ -77,12 +77,12 @@
       "level": "基礎",
       "wordCount": 313,
       "fileName": "course-foundation-550-part3.json",
-      "checksum": "2d60b10094eb39b82042a69a46bc682aa5af1cbcb9325ba9631ae228a4e42670",
-      "sizeBytes": 3781226,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "43561c7c38a404761538e065a798420e447217f6908d983929f316d179348baf",
-      "checksumSha256": "43561c7c38a404761538e065a798420e447217f6908d983929f316d179348baf"
+      "checksum": "3b688c46b5960d5326c17bdc2fa394b61e9f4b15d623b068b13e1de957819bd5",
+      "sizeBytes": 3240285,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "3b688c46b5960d5326c17bdc2fa394b61e9f4b15d623b068b13e1de957819bd5",
+      "checksumSha256": "3b688c46b5960d5326c17bdc2fa394b61e9f4b15d623b068b13e1de957819bd5"
     },
     {
       "id": "course-foundation-550-part4",
@@ -93,12 +93,12 @@
       "level": "基礎",
       "wordCount": 313,
       "fileName": "course-foundation-550-part4.json",
-      "checksum": "e49e326f2efef47ab000550689f51a2aec822a50f85146a79bda1964b6174bdb",
-      "sizeBytes": 3783791,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "1cd44983b61553fd7cb41aae155775dd5d2420dadf3e6ba5c97db7fab3fb89f5",
-      "checksumSha256": "1cd44983b61553fd7cb41aae155775dd5d2420dadf3e6ba5c97db7fab3fb89f5"
+      "checksum": "37b34adc6da73aa1be8068d151862d1fe72d119904d78972d473886c9eb6f252",
+      "sizeBytes": 3226489,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "37b34adc6da73aa1be8068d151862d1fe72d119904d78972d473886c9eb6f252",
+      "checksumSha256": "37b34adc6da73aa1be8068d151862d1fe72d119904d78972d473886c9eb6f252"
     },
     {
       "id": "course-foundation-550-part5",
@@ -109,12 +109,12 @@
       "level": "基礎",
       "wordCount": 373,
       "fileName": "course-foundation-550-part5.json",
-      "checksum": "2f3b55382372e94cca3d1a915c0f705d4077330c1bf13fc0976058d0c3c66ca7",
-      "sizeBytes": 4522580,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "272e6f2628f7029c36a34b78257a24fa257d448ed7540e630241c8b6943d5649",
-      "checksumSha256": "272e6f2628f7029c36a34b78257a24fa257d448ed7540e630241c8b6943d5649"
+      "checksum": "e530c71c3ebe366ad2c224f4c9132db7cab4c1faead756e17202e32bc9da9d3f",
+      "sizeBytes": 3862231,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "e530c71c3ebe366ad2c224f4c9132db7cab4c1faead756e17202e32bc9da9d3f",
+      "checksumSha256": "e530c71c3ebe366ad2c224f4c9132db7cab4c1faead756e17202e32bc9da9d3f"
     },
     {
       "id": "course-foundation-550-part6",
@@ -125,12 +125,12 @@
       "level": "基礎",
       "wordCount": 373,
       "fileName": "course-foundation-550-part6.json",
-      "checksum": "c3f6ba91ef1f2e35bd7292978c13e37260ca43d6ba0ffcafbdd5ca2453b97b59",
-      "sizeBytes": 4553298,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "84357cb4b561b20ed276a052f0148e28da5dd972eb3af4d3bedc6ecb3a4d48a8",
-      "checksumSha256": "84357cb4b561b20ed276a052f0148e28da5dd972eb3af4d3bedc6ecb3a4d48a8"
+      "checksum": "b3466b15fa4c793e5914f36b93b3603d0e3d579ed52a34c40a74c044bcc9f597",
+      "sizeBytes": 3518423,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "b3466b15fa4c793e5914f36b93b3603d0e3d579ed52a34c40a74c044bcc9f597",
+      "checksumSha256": "b3466b15fa4c793e5914f36b93b3603d0e3d579ed52a34c40a74c044bcc9f597"
     },
     {
       "id": "course-foundation-550-part7",
@@ -141,12 +141,12 @@
       "level": "基礎",
       "wordCount": 376,
       "fileName": "course-foundation-550-part7.json",
-      "checksum": "98b22727c70a6293c099efc0a1afabccdf5447c181bbfc457ebbf3ebfe048f49",
-      "sizeBytes": 4573133,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "29fd89f88a6777e99acecf6fc1faff9ded9b5bf762eafe77f13f258fda32e4dc",
-      "checksumSha256": "29fd89f88a6777e99acecf6fc1faff9ded9b5bf762eafe77f13f258fda32e4dc"
+      "checksum": "37c240209e449674e22acf2fb67f5390d473c6cf26617c31a4ee69e743648f19",
+      "sizeBytes": 3475941,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "37c240209e449674e22acf2fb67f5390d473c6cf26617c31a4ee69e743648f19",
+      "checksumSha256": "37c240209e449674e22acf2fb67f5390d473c6cf26617c31a4ee69e743648f19"
     },
     {
       "id": "course-foundation-550-part8",
@@ -157,12 +157,12 @@
       "level": "基礎",
       "wordCount": 375,
       "fileName": "course-foundation-550-part8.json",
-      "checksum": "c5cc9e1daa5b28eca10178586be9acb06a892869190ea85fad1d27c68af153dd",
-      "sizeBytes": 4574661,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "379f28a3b9ca2c1cf291d1f396445473c4e52529a8ddde4bfc29ae2746a2eaec",
-      "checksumSha256": "379f28a3b9ca2c1cf291d1f396445473c4e52529a8ddde4bfc29ae2746a2eaec"
+      "checksum": "36a3bf98f484e2235cecb2669b80f5947c7e0f8c83df63d407544696f56cc551",
+      "sizeBytes": 3478641,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "36a3bf98f484e2235cecb2669b80f5947c7e0f8c83df63d407544696f56cc551",
+      "checksumSha256": "36a3bf98f484e2235cecb2669b80f5947c7e0f8c83df63d407544696f56cc551"
     },
     {
       "id": "course-foundation-550-part9",
@@ -173,12 +173,12 @@
       "level": "基礎",
       "wordCount": 341,
       "fileName": "course-foundation-550-part9.json",
-      "checksum": "a4b0b5aabecfa7bd60cd3502c918328a5e41c9eec968d5f35c1f6107bbf6d923",
-      "sizeBytes": 3946862,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "ca7cd5ac7515a4b4d50a755b79ad375636016caaf48209347e135e1a2b78d8a6",
-      "checksumSha256": "ca7cd5ac7515a4b4d50a755b79ad375636016caaf48209347e135e1a2b78d8a6"
+      "checksum": "a74ac081f42848762d28f3207f65dc70cecefd63843af6a9769201c6019bf830",
+      "sizeBytes": 3148669,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "a74ac081f42848762d28f3207f65dc70cecefd63843af6a9769201c6019bf830",
+      "checksumSha256": "a74ac081f42848762d28f3207f65dc70cecefd63843af6a9769201c6019bf830"
     },
     {
       "id": "course-intermediate-750-part1",
@@ -189,12 +189,12 @@
       "level": "中階",
       "wordCount": 361,
       "fileName": "course-intermediate-750-part1.json",
-      "checksum": "d11061b2e0d0bd0a4646d3fc25905092aa593715ee7d31978529474a1d37b60d",
-      "sizeBytes": 4415766,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "9ec0742eb3e068b8f51668f4d39c48a923d855de46e70eb502395edf18df2c21",
-      "checksumSha256": "9ec0742eb3e068b8f51668f4d39c48a923d855de46e70eb502395edf18df2c21"
+      "checksum": "b8bde09ded6b27a3e5c80ccef0bc5a21bb37d1ad2eb2e0511ab532b894fdccd9",
+      "sizeBytes": 3787474,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "b8bde09ded6b27a3e5c80ccef0bc5a21bb37d1ad2eb2e0511ab532b894fdccd9",
+      "checksumSha256": "b8bde09ded6b27a3e5c80ccef0bc5a21bb37d1ad2eb2e0511ab532b894fdccd9"
     },
     {
       "id": "course-intermediate-750-part2",
@@ -205,12 +205,12 @@
       "level": "中階",
       "wordCount": 368,
       "fileName": "course-intermediate-750-part2.json",
-      "checksum": "338a934a4160a3ac1e86950c80cc7e7a1c96cd55a641791b1d6268d4969b236e",
-      "sizeBytes": 4497532,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "19ca6e357375a093f4f16b68251348e208fe322d8313d36a0475098a197d0560",
-      "checksumSha256": "19ca6e357375a093f4f16b68251348e208fe322d8313d36a0475098a197d0560"
+      "checksum": "0843eea5d92649b26379a25b78b6431e777390bb648c0c032d96262bb2f9e22b",
+      "sizeBytes": 3664240,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "0843eea5d92649b26379a25b78b6431e777390bb648c0c032d96262bb2f9e22b",
+      "checksumSha256": "0843eea5d92649b26379a25b78b6431e777390bb648c0c032d96262bb2f9e22b"
     },
     {
       "id": "course-intermediate-750-part3",
@@ -221,12 +221,12 @@
       "level": "中階",
       "wordCount": 378,
       "fileName": "course-intermediate-750-part3.json",
-      "checksum": "bd7818a857c0a9caac43bfafa98903b71f58cf888b77c6c04cc2c382a61e3b61",
-      "sizeBytes": 4677173,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "d43431dec1a5dd900c9b1cee1db96e418a34dfb4580cb7887bacab52cab065de",
-      "checksumSha256": "d43431dec1a5dd900c9b1cee1db96e418a34dfb4580cb7887bacab52cab065de"
+      "checksum": "7dd748c0b3c85d30b30917283c6cc08cbd883d0366ea63a7346ca047e849ed3a",
+      "sizeBytes": 3528470,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "7dd748c0b3c85d30b30917283c6cc08cbd883d0366ea63a7346ca047e849ed3a",
+      "checksumSha256": "7dd748c0b3c85d30b30917283c6cc08cbd883d0366ea63a7346ca047e849ed3a"
     },
     {
       "id": "course-intermediate-750-part4",
@@ -237,12 +237,12 @@
       "level": "中階",
       "wordCount": 357,
       "fileName": "course-intermediate-750-part4.json",
-      "checksum": "15f51868177df6d0ff1bcf62925d8d1f4fe9f7f4f273366ada2190e36d10d24c",
-      "sizeBytes": 4376948,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "4998b6e4c28bbf259bdd7ad91bda511e9fbd676b0072ff29bc0993945f61034b",
-      "checksumSha256": "4998b6e4c28bbf259bdd7ad91bda511e9fbd676b0072ff29bc0993945f61034b"
+      "checksum": "a0ebc654c17a7987962eb58707a27b3a619725255ed53576b849a6beb3bd9627",
+      "sizeBytes": 3338391,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "a0ebc654c17a7987962eb58707a27b3a619725255ed53576b849a6beb3bd9627",
+      "checksumSha256": "a0ebc654c17a7987962eb58707a27b3a619725255ed53576b849a6beb3bd9627"
     },
     {
       "id": "course-intermediate-750-part5",
@@ -253,12 +253,12 @@
       "level": "中階",
       "wordCount": 371,
       "fileName": "course-intermediate-750-part5.json",
-      "checksum": "71377983754e7aee0c77e3d8fc8a4263dc60dae59d6238b875a604f50b2708d3",
-      "sizeBytes": 4572565,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "95fb634b0e4fb5b097f84b69e5e359c0afcf3aed3088bb65fcbcbffcb3a49091",
-      "checksumSha256": "95fb634b0e4fb5b097f84b69e5e359c0afcf3aed3088bb65fcbcbffcb3a49091"
+      "checksum": "1a7114da18eaed086a702d780e52bf686638861ae37a9fc0a1360fbd4a677e9e",
+      "sizeBytes": 3474854,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "1a7114da18eaed086a702d780e52bf686638861ae37a9fc0a1360fbd4a677e9e",
+      "checksumSha256": "1a7114da18eaed086a702d780e52bf686638861ae37a9fc0a1360fbd4a677e9e"
     },
     {
       "id": "course-intermediate-750-part6",
@@ -269,12 +269,12 @@
       "level": "中階",
       "wordCount": 384,
       "fileName": "course-intermediate-750-part6.json",
-      "checksum": "b50a16171f24ff21e44190f13d765022b6d33e29c777d742e93cd6532ef064d2",
-      "sizeBytes": 4730683,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "918f4db55841f5e51472335fd717646dccb00339d1dea404a6a44e2041e4f615",
-      "checksumSha256": "918f4db55841f5e51472335fd717646dccb00339d1dea404a6a44e2041e4f615"
+      "checksum": "09daedcc7d4341ac9f84e537096abcfd1393ff7f06a280493f0c97a1bc0b28c1",
+      "sizeBytes": 3603386,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "09daedcc7d4341ac9f84e537096abcfd1393ff7f06a280493f0c97a1bc0b28c1",
+      "checksumSha256": "09daedcc7d4341ac9f84e537096abcfd1393ff7f06a280493f0c97a1bc0b28c1"
     },
     {
       "id": "course-intermediate-750-part7",
@@ -285,12 +285,12 @@
       "level": "中階",
       "wordCount": 388,
       "fileName": "course-intermediate-750-part7.json",
-      "checksum": "eb7a7f21436d64b8fc8e13f8e1c3372333bc9bdbad31c064f34b13de6eaef66f",
-      "sizeBytes": 4795843,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "c109fe6f71d2a83f36bb854bbc937407448c1390718c3a116fff7781ca07fdcf",
-      "checksumSha256": "c109fe6f71d2a83f36bb854bbc937407448c1390718c3a116fff7781ca07fdcf"
+      "checksum": "71bbb9a8636b57fb9967c11c2c521832ad6c073626dc958fb37709b7301c9ed4",
+      "sizeBytes": 3653840,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "71bbb9a8636b57fb9967c11c2c521832ad6c073626dc958fb37709b7301c9ed4",
+      "checksumSha256": "71bbb9a8636b57fb9967c11c2c521832ad6c073626dc958fb37709b7301c9ed4"
     },
     {
       "id": "course-intermediate-750-part8",
@@ -301,12 +301,12 @@
       "level": "中階",
       "wordCount": 381,
       "fileName": "course-intermediate-750-part8.json",
-      "checksum": "82482e97c31e311b02f2a7d6bf27ab3af217a518bf7d306d333934992ab7af8d",
-      "sizeBytes": 4630964,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "f1372024915ce122c518c5cb5a26ff987aba3a13687c430acfeb74ad53af3ded",
-      "checksumSha256": "f1372024915ce122c518c5cb5a26ff987aba3a13687c430acfeb74ad53af3ded"
+      "checksum": "558f3eae9e1a8c86eacb5c40ca1d1b185832672a773de497628eaf9039d5228b",
+      "sizeBytes": 3568281,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "558f3eae9e1a8c86eacb5c40ca1d1b185832672a773de497628eaf9039d5228b",
+      "checksumSha256": "558f3eae9e1a8c86eacb5c40ca1d1b185832672a773de497628eaf9039d5228b"
     },
     {
       "id": "course-intermediate-750-part9",
@@ -317,12 +317,12 @@
       "level": "中階",
       "wordCount": 291,
       "fileName": "course-intermediate-750-part9.json",
-      "checksum": "47468507e5771f5b633fe7083a1ef7f65e5d8474445ddd85be5d755e25ef5c7c",
-      "sizeBytes": 3190597,
-      "version": 12,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "7da26ac9a841a1cedba468d6261af57af0ea099b42ea2a2907e77d868c6fbcc6",
-      "checksumSha256": "7da26ac9a841a1cedba468d6261af57af0ea099b42ea2a2907e77d868c6fbcc6"
+      "checksum": "14af13f783eab751da91b4a655d7eeba36dd3883cf5508f1d69fae07c872d809",
+      "sizeBytes": 2719814,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "14af13f783eab751da91b4a655d7eeba36dd3883cf5508f1d69fae07c872d809",
+      "checksumSha256": "14af13f783eab751da91b4a655d7eeba36dd3883cf5508f1d69fae07c872d809"
     },
     {
       "id": "course-advanced-860-part1",
@@ -333,12 +333,12 @@
       "level": "中高階",
       "wordCount": 389,
       "fileName": "course-advanced-860-part1.json",
-      "checksum": "0c8be217042c571166728b41343d97a79f817e1c9a2867abfe9fccac9499bcfd",
-      "sizeBytes": 4792963,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "9262fcf27fb06f2bba5c74ee83d6a1061e1bf2e9b37683ce7b9632f989dcebf3",
-      "checksumSha256": "9262fcf27fb06f2bba5c74ee83d6a1061e1bf2e9b37683ce7b9632f989dcebf3"
+      "checksum": "b202c2ca99871a17e1b9a1e55f31e8a31eb76f37fe043b280bc340692b4abace",
+      "sizeBytes": 3691623,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "b202c2ca99871a17e1b9a1e55f31e8a31eb76f37fe043b280bc340692b4abace",
+      "checksumSha256": "b202c2ca99871a17e1b9a1e55f31e8a31eb76f37fe043b280bc340692b4abace"
     },
     {
       "id": "course-advanced-860-part2",
@@ -349,12 +349,12 @@
       "level": "中高階",
       "wordCount": 393,
       "fileName": "course-advanced-860-part2.json",
-      "checksum": "fbccc472b9e020801ea9d31641301ba07510f6cf11f6c0f7d120f75915a05c25",
-      "sizeBytes": 4857912,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "109cc6ef1ec563d8a57b7a82bee5a88ac80e514962eeda8b733e6434251b658c",
-      "checksumSha256": "109cc6ef1ec563d8a57b7a82bee5a88ac80e514962eeda8b733e6434251b658c"
+      "checksum": "b11d788adaef6e7990bd1168208c73737dc34ebe47eaaa63dffb3ca872c8dbb2",
+      "sizeBytes": 3724827,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "b11d788adaef6e7990bd1168208c73737dc34ebe47eaaa63dffb3ca872c8dbb2",
+      "checksumSha256": "b11d788adaef6e7990bd1168208c73737dc34ebe47eaaa63dffb3ca872c8dbb2"
     },
     {
       "id": "course-advanced-860-part3",
@@ -365,12 +365,12 @@
       "level": "中高階",
       "wordCount": 398,
       "fileName": "course-advanced-860-part3.json",
-      "checksum": "543932faf2709bf136857063058a274ba24cb8c64792de716d461a65853913c7",
-      "sizeBytes": 4711174,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "b910fbfd251a5a5ebc063be0b979d956b720316289f84e3dc9366764591e123f",
-      "checksumSha256": "b910fbfd251a5a5ebc063be0b979d956b720316289f84e3dc9366764591e123f"
+      "checksum": "c704acade9dbf44c1ec93e5536824465039adeae2df0c1a70123f4a72b333a46",
+      "sizeBytes": 3768189,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "c704acade9dbf44c1ec93e5536824465039adeae2df0c1a70123f4a72b333a46",
+      "checksumSha256": "c704acade9dbf44c1ec93e5536824465039adeae2df0c1a70123f4a72b333a46"
     },
     {
       "id": "course-advanced-860-part4",
@@ -381,12 +381,12 @@
       "level": "中高階",
       "wordCount": 400,
       "fileName": "course-advanced-860-part4.json",
-      "checksum": "58bf0b00b0ef408beee1d8d9896581d61386efe64165cceed6e9cf3df7e5a2e6",
-      "sizeBytes": 4409017,
-      "version": 12,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "ee6bcaa9887949ba7508f273a67a62d13d15dd3cd551e20ddbf2d1156bc58ea8",
-      "checksumSha256": "ee6bcaa9887949ba7508f273a67a62d13d15dd3cd551e20ddbf2d1156bc58ea8"
+      "checksum": "4eddd45e375d5fa79fa083982d83082a102f8bf35454c29341bead1508709467",
+      "sizeBytes": 3792989,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "4eddd45e375d5fa79fa083982d83082a102f8bf35454c29341bead1508709467",
+      "checksumSha256": "4eddd45e375d5fa79fa083982d83082a102f8bf35454c29341bead1508709467"
     },
     {
       "id": "course-advanced-860-part5",
@@ -397,12 +397,12 @@
       "level": "中高階",
       "wordCount": 399,
       "fileName": "course-advanced-860-part5.json",
-      "checksum": "c346339d206742469236f0cd8e7179a2d0f6c6ccdbe785264c9abea6a5aa349c",
-      "sizeBytes": 4390282,
-      "version": 12,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "9fff68bb05e6b428c25855100598bd628db7495f322a4b8a532b80bc29eaa30b",
-      "checksumSha256": "9fff68bb05e6b428c25855100598bd628db7495f322a4b8a532b80bc29eaa30b"
+      "checksum": "cbe2e2972efda2287fce941ab26d352c826ba178ab952a55e2180e1a91de79ee",
+      "sizeBytes": 3756637,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "cbe2e2972efda2287fce941ab26d352c826ba178ab952a55e2180e1a91de79ee",
+      "checksumSha256": "cbe2e2972efda2287fce941ab26d352c826ba178ab952a55e2180e1a91de79ee"
     },
     {
       "id": "course-advanced-860-part6",
@@ -413,12 +413,12 @@
       "level": "中高階",
       "wordCount": 97,
       "fileName": "course-advanced-860-part6.json",
-      "checksum": "db924df89c313a8e72906717a95309cc6cc75df4a6a1633dd0c27f65732dbba2",
-      "sizeBytes": 1064389,
-      "version": 12,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "062b6862942fc11ad65858aeb6ae619723507a130f66b45f4108fecabf19a589",
-      "checksumSha256": "062b6862942fc11ad65858aeb6ae619723507a130f66b45f4108fecabf19a589"
+      "checksum": "a18a2ae22de853d7b8546409ad2f78724c7e6dadc6389ddba14df6b21a4b6a4f",
+      "sizeBytes": 905631,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "a18a2ae22de853d7b8546409ad2f78724c7e6dadc6389ddba14df6b21a4b6a4f",
+      "checksumSha256": "a18a2ae22de853d7b8546409ad2f78724c7e6dadc6389ddba14df6b21a4b6a4f"
     },
     {
       "id": "course-master-990-part1",
@@ -429,12 +429,12 @@
       "level": "高階",
       "wordCount": 399,
       "fileName": "course-master-990-part1.json",
-      "checksum": "143c2c4be253aa1e259be6a8388094a5729b5ad5fc7d7a5f552cd031e54201ff",
-      "sizeBytes": 4396597,
-      "version": 12,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "60ef7fd347b000714e2234e314e5b3c1561bf221ab2916b3cf6334b998153558",
-      "checksumSha256": "60ef7fd347b000714e2234e314e5b3c1561bf221ab2916b3cf6334b998153558"
+      "checksum": "9747b5f25f5f134dd1aec2da6ccda739a22dacacd39fb21d2080a167e6c31811",
+      "sizeBytes": 3718479,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "9747b5f25f5f134dd1aec2da6ccda739a22dacacd39fb21d2080a167e6c31811",
+      "checksumSha256": "9747b5f25f5f134dd1aec2da6ccda739a22dacacd39fb21d2080a167e6c31811"
     },
     {
       "id": "course-master-990-part2",
@@ -445,12 +445,12 @@
       "level": "高階",
       "wordCount": 277,
       "fileName": "course-master-990-part2.json",
-      "checksum": "9e1c905b059df7f4e13d0f9d90bbcd885c0174ce04429a144d12d532088e521a",
-      "sizeBytes": 3053369,
-      "version": 12,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "8b3bf52679a4aef8d869d87b1c51c6522e2bbb8de5c7bb47edcc2d2f1c56bd27",
-      "checksumSha256": "8b3bf52679a4aef8d869d87b1c51c6522e2bbb8de5c7bb47edcc2d2f1c56bd27"
+      "checksum": "1f3fe4c0499caee4a4dfb7c92fee3e377a0c42d20230cbc9cfbf21ef3f1fe8b9",
+      "sizeBytes": 2588249,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "1f3fe4c0499caee4a4dfb7c92fee3e377a0c42d20230cbc9cfbf21ef3f1fe8b9",
+      "checksumSha256": "1f3fe4c0499caee4a4dfb7c92fee3e377a0c42d20230cbc9cfbf21ef3f1fe8b9"
     },
     {
       "id": "course-phrases-patterns-p1",
@@ -461,12 +461,12 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p1.json",
-      "checksum": "a08fdc0d9d216cd1767ca7639731f1807933a8c6cf997fb1401054a6f9156d3a",
-      "sizeBytes": 4610814,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "8c5165906ccd0d4f884734be812bcaac6a219e351980e542ff1cdc4a0f32d742",
-      "checksumSha256": "8c5165906ccd0d4f884734be812bcaac6a219e351980e542ff1cdc4a0f32d742"
+      "checksum": "f6c2db88becc5033357cee57cdcb3f1b47ced4aaa062626f4e11c5c443819736",
+      "sizeBytes": 4032104,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "f6c2db88becc5033357cee57cdcb3f1b47ced4aaa062626f4e11c5c443819736",
+      "checksumSha256": "f6c2db88becc5033357cee57cdcb3f1b47ced4aaa062626f4e11c5c443819736"
     },
     {
       "id": "course-phrases-patterns-p2",
@@ -477,12 +477,12 @@
       "level": "實戰",
       "wordCount": 400,
       "fileName": "course-phrases-patterns-p2.json",
-      "checksum": "57086c0bd6cdb3e66fcf352b798b477cd2ae28b95823b6c39e6362cf38cd1b19",
-      "sizeBytes": 4999019,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "f2f517851de9cbfb909c24e01acc36b1df64e0d4785d802be65373a835eb5f2c",
-      "checksumSha256": "f2f517851de9cbfb909c24e01acc36b1df64e0d4785d802be65373a835eb5f2c"
+      "checksum": "5b4fa170d4ccacf0c247cb31f70b31239acaed44fd317eabff4e3fa8fd8b0b3d",
+      "sizeBytes": 3793991,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "5b4fa170d4ccacf0c247cb31f70b31239acaed44fd317eabff4e3fa8fd8b0b3d",
+      "checksumSha256": "5b4fa170d4ccacf0c247cb31f70b31239acaed44fd317eabff4e3fa8fd8b0b3d"
     },
     {
       "id": "course-phrases-patterns-p3",
@@ -493,12 +493,12 @@
       "level": "實戰",
       "wordCount": 399,
       "fileName": "course-phrases-patterns-p3.json",
-      "checksum": "74a83e414d67744f62710920658a9b7b5667c0303a913043b8382be9d7b59787",
-      "sizeBytes": 4998060,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "bfea03d5cddafd7b9edc8c51318ab4c959b4b5fd7e66b6844fa28e34badf8695",
-      "checksumSha256": "bfea03d5cddafd7b9edc8c51318ab4c959b4b5fd7e66b6844fa28e34badf8695"
+      "checksum": "c69c24f52c037a8de83139ede1faa07f65ea09b74a6ae2ab31ce19d2e50363bb",
+      "sizeBytes": 3762935,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "c69c24f52c037a8de83139ede1faa07f65ea09b74a6ae2ab31ce19d2e50363bb",
+      "checksumSha256": "c69c24f52c037a8de83139ede1faa07f65ea09b74a6ae2ab31ce19d2e50363bb"
     },
     {
       "id": "course-phrases-patterns-p4",
@@ -509,12 +509,12 @@
       "level": "實戰",
       "wordCount": 317,
       "fileName": "course-phrases-patterns-p4.json",
-      "checksum": "9485f1d75fa2c5734f98dc57db89e2972cd81300619e2cb507aa061bca825b21",
-      "sizeBytes": 3871468,
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "4fc9a5e794ffbb65fdf7f6a2d8b602d26b28d578043f139d2cabbb343e33beca",
-      "checksumSha256": "4fc9a5e794ffbb65fdf7f6a2d8b602d26b28d578043f139d2cabbb343e33beca"
+      "checksum": "c36be3e3744caa9a8d4bda942f67f66c8713552a458c5f62ed7a5410ba791f6d",
+      "sizeBytes": 3009766,
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "c36be3e3744caa9a8d4bda942f67f66c8713552a458c5f62ed7a5410ba791f6d",
+      "checksumSha256": "c36be3e3744caa9a8d4bda942f67f66c8713552a458c5f62ed7a5410ba791f6d"
     },
     {
       "id": "course-expert-high-part1",
@@ -523,13 +523,14 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2284,
+      "wordCount": 2500,
       "fileName": "course-expert-high-part1.json",
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "cf3235eb023f5c61424751dab1e06857a341fa2eff69cfd95d50cb7a8938e332",
-      "sizeBytes": 27989963,
-      "checksumSha256": "cf3235eb023f5c61424751dab1e06857a341fa2eff69cfd95d50cb7a8938e332"
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "7e0d0cc6fef4c629790713fe5a4931e121e75a3be36f019716d0c3db8ec62e38",
+      "sizeBytes": 23304560,
+      "checksumSha256": "7e0d0cc6fef4c629790713fe5a4931e121e75a3be36f019716d0c3db8ec62e38",
+      "checksum": "7e0d0cc6fef4c629790713fe5a4931e121e75a3be36f019716d0c3db8ec62e38"
     },
     {
       "id": "course-expert-high-part2",
@@ -538,13 +539,14 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2411,
+      "wordCount": 2500,
       "fileName": "course-expert-high-part2.json",
-      "version": 9,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "4fdfc432a56150e8b7e976de894bb7bc12d3e342e21ffb50cef7db89939ed0d3",
-      "sizeBytes": 29675896,
-      "checksumSha256": "4fdfc432a56150e8b7e976de894bb7bc12d3e342e21ffb50cef7db89939ed0d3"
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "d86ce4356216a9b5dd2502e3b04d1cafaeb4b3359432cf952527d35652e57e01",
+      "sizeBytes": 23519697,
+      "checksumSha256": "d86ce4356216a9b5dd2502e3b04d1cafaeb4b3359432cf952527d35652e57e01",
+      "checksum": "d86ce4356216a9b5dd2502e3b04d1cafaeb4b3359432cf952527d35652e57e01"
     },
     {
       "id": "course-expert-high-part3",
@@ -553,13 +555,14 @@
       "toeicScoreRange": "860-990",
       "category": "高階挑戰",
       "level": "滿分巔峰",
-      "wordCount": 2409,
+      "wordCount": 2454,
       "fileName": "course-expert-high-part3.json",
-      "version": 12,
-      "datasetVersion": "v6.2.0-bbword-vip-lexicon",
-      "sha256": "ca8856fab51247e1bce3da34b4f7bd5893dc087c45c0f75173fff0a58dbe00af",
-      "sizeBytes": 26469824,
-      "checksumSha256": "ca8856fab51247e1bce3da34b4f7bd5893dc087c45c0f75173fff0a58dbe00af"
+      "version": 15,
+      "datasetVersion": "v7.1.0-flagship-full-sync",
+      "sha256": "125ed36e8c83e0acc5e04ce1555fd02ab78be14c76f7b6c302d48f0425d3947a",
+      "sizeBytes": 22944811,
+      "checksumSha256": "125ed36e8c83e0acc5e04ce1555fd02ab78be14c76f7b6c302d48f0425d3947a",
+      "checksum": "125ed36e8c83e0acc5e04ce1555fd02ab78be14c76f7b6c302d48f0425d3947a"
     }
   ],
   "tiers": {
@@ -614,7 +617,7 @@
       "count": 22362
     }
   },
-  "datasetVersion": "v6.2.0-bbword-vip-lexicon",
+  "datasetVersion": "v7.1.0-flagship-full-sync",
   "buildTimestamp": "2026-09-02T15:45:52.625Z",
   "totalQuizzes": 66924
 }
