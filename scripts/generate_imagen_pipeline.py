@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import os, sys, json, time, argparse, io, re
 from pathlib import Path
 from PIL import Image
@@ -9,7 +9,22 @@ if hasattr(sys.stdout, 'reconfigure'):
 if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8', errors='replace', line_buffering=True)
 
-DEFAULT_PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "project-5dc653c7-c4ff-4154-99e")
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
+# 🌐 Auto-load .env.local
+env_file = ROOT_DIR / ".env.local"
+if env_file.exists():
+    try:
+        with open(env_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+    except Exception:
+        pass
+
+DEFAULT_PROJECT_ID = os.environ.get("GCP_PROJECT_ID", "project-b1a6c46f-15c6-45b7-920")
 DEFAULT_LOCATION = os.environ.get("GCP_LOCATION", "us-central1")
 MODEL_NAME = "gemini-2.5-flash-image"
 
@@ -22,7 +37,6 @@ INITIAL_REMAINING_CREDIT_TWD = 8017.0  # 當前剩餘 GCP 試用金總額
 DEFAULT_MAX_BATCH_BUDGET_TWD = 3150.0  # 本次批次預算上限 (精準覆蓋 advanced-2500)
 SAFETY_CREDIT_FLOOR_TWD = 4500.0       # 帳戶最低安全底限 (剩餘低於此值強制停機)
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
 ORIGINALS_DIR = ROOT_DIR / "public" / "assets" / "images" / "originals"
 AUDIT_FILE = ROOT_DIR / "scripts" / "image_generation_audit.json"

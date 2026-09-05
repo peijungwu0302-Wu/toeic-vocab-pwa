@@ -1,0 +1,11 @@
+{
+  "activeTier": "第一階段：核心高頻 1200",
+  "activeFile": "core-1200.json",
+  "pass": 3,
+  "totalWordsInTier": 1200,
+  "completedInTier": 1170,
+  "percentInTier": "97.5%",
+  "processedThisRun": 45,
+  "status": "pass_3_completed",
+  "lastUpdated": "2026-09-05T08:51:46Z"
+}

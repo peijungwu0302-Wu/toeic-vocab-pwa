@@ -316,6 +316,8 @@ const server = http.createServer(async (req, res) => {
             businessEn: ex2 ? ex2.en : '',
             businessZh: ex2 ? ex2.zh : '',
             businessScenario: ex2 ? (ex2.scenario || '多益商務情境') : '',
+            domainTheme: va.domainTheme || '',
+            quizzes: w.quizzes || [],
             imagePrompt: va.imagePrompt || '', // 100% Latest Stylized Concept Art Prompt!
             tier
           });
