@@ -1125,16 +1125,19 @@ export const FlashcardPage: React.FC = () => {
                 style={{ WebkitOverflowScrolling: 'touch', willChange: 'scroll-position', touchAction: 'pan-y' }}
                 className="overflow-y-auto overflow-x-hidden flex-1 min-h-0 overscroll-y-contain touch-pan-y"
               >
-                {/* 🌟 具象商務情境圖片橫幅 (頂部左右 100% 貼齊外框 · 圓角契合 · 零溢出) */}
+                {/* 🌟 具象商務情境圖片橫幅 (頂部左右 100% 貼齊外框 · 圓角契合 · 零溢出 · 敏銳刷卡區) */}
                 {!imgFailed && (
-                  <div className="relative w-full h-48 sm:h-52 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
+                  <div
+                    data-swipe-zone="fast"
+                    className="relative w-full h-48 sm:h-52 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0"
+                  >
                     <img
                       src={finalImageUrl}
                       alt={word.headword}
                       onError={() => setImgFailed(true)}
-                      className="w-full h-full object-cover object-center brightness-90 contrast-105"
+                      className="w-full h-full object-cover object-center brightness-90 contrast-105 pointer-events-none"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
                   </div>
                 )}
 
@@ -1148,8 +1151,8 @@ export const FlashcardPage: React.FC = () => {
                     <AudioButton headword={word.headword} audioUrl={word.audioUSUrl} size="sm" />
                   </div>
 
-                  {/* Headword & Meaning (Click word to pronounce) */}
-                  <div>
+                  {/* Headword & Meaning (Click word to pronounce · 敏銳刷卡區) */}
+                  <div data-swipe-zone="fast">
                     <div
                       onClick={(e) => {
                         e.stopPropagation();

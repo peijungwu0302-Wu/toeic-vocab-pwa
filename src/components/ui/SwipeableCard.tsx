@@ -25,22 +25,44 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   const leftGoodOpacity = useTransform(x, [-45, -110], [0, 1]); // Drag Left -> Good
 
   const [isDragging, setIsDragging] = useState(false);
-  const dragLockedRef = useRef<'vertical' | 'horizontal' | null>(null);
+  const touchZoneRef = useRef<'fast' | 'content'>('content');
+  const dragDirectionLockedRef = useRef<'vertical' | 'horizontal' | null>(null);
 
-  const handleDragStart = () => {
+  const handleDragStart = (event: MouseEvent | TouchEvent | PointerEvent) => {
     setIsDragging(true);
-    dragLockedRef.current = null;
+    dragDirectionLockedRef.current = null;
+
+    // Detect if touch originated in the upper fast-swipe zone
+    const target = (event as any)?.target as HTMLElement | null;
+    const isFastZone = Boolean(target?.closest?.('[data-swipe-zone="fast"]'));
+    touchZoneRef.current = isFastZone ? 'fast' : 'content';
   };
 
   const handleDrag = (_: unknown, info: PanInfo) => {
-    // Determine intention in the first micro-movements
-    if (!dragLockedRef.current) {
-      const absX = Math.abs(info.offset.x);
-      const absY = Math.abs(info.offset.y);
-      if (absY > 10 && absY > absX * 1.2) {
-        dragLockedRef.current = 'vertical';
-      } else if (absX > 10 && absX > absY * 1.3) {
-        dragLockedRef.current = 'horizontal';
+    const absX = Math.abs(info.offset.x);
+    const absY = Math.abs(info.offset.y);
+
+    if (touchZoneRef.current === 'fast') {
+      // In fast zone, we prioritize horizontal swipe
+      if (!dragDirectionLockedRef.current && absX > 8) {
+        dragDirectionLockedRef.current = 'horizontal';
+      }
+      return;
+    }
+
+    // In content (reading) zone, detect initial direction intent
+    if (!dragDirectionLockedRef.current) {
+      if (absY > 12 && absY > absX * 1.3) {
+        // Clear vertical scroll intent -> lock out horizontal dragging to keep 120Hz scrolling pure
+        dragDirectionLockedRef.current = 'vertical';
+      } else if (absX > 15 && absX > absY * 1.1) {
+        dragDirectionLockedRef.current = 'horizontal';
+      }
+    } else if (dragDirectionLockedRef.current === 'vertical') {
+      // Breakout check: if user subsequently sweeps horizontally over a significant distance (> 70px)
+      // and horizontal clearly dominates, break out and restore horizontal swipe!
+      if (absX > 70 && absX > absY * 1.05) {
+        dragDirectionLockedRef.current = 'horizontal';
       }
     }
   };
@@ -48,38 +70,64 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   const handleDragEnd = (_: unknown, info: PanInfo) => {
     setIsDragging(false);
 
-    // If locked into vertical scrolling, NEVER trigger horizontal swipe
-    if (dragLockedRef.current === 'vertical') {
-      dragLockedRef.current = null;
-      x.set(0);
-      return;
-    }
-
-    const thresholdX = 85;
-    const velocityThreshold = 380;
+    const isFastZone = touchZoneRef.current === 'fast';
     const absX = Math.abs(info.offset.x);
     const absY = Math.abs(info.offset.y);
 
-    // Strict Anti-misoperation:
-    // 1. Vertical displacement must not be notable
-    // 2. Horizontal displacement must be clearly dominant
-    if (absY > 28 || absX < absY * 1.4) {
-      dragLockedRef.current = null;
+    // If still locked in vertical reading in content zone without horizontal breakout
+    if (!isFastZone && dragDirectionLockedRef.current === 'vertical' && absX < 75) {
+      dragDirectionLockedRef.current = null;
       x.set(0);
       return;
     }
 
-    // Check horizontal swipes with responsive natural feel
-    if (info.offset.x > thresholdX || (info.offset.x > 35 && info.velocity.x > velocityThreshold)) {
+    let isSwipeTriggered = false;
+    let direction: 'left' | 'right' | null = null;
+
+    if (isFastZone) {
+      // Upper Fast Zone (Plan B): very responsive
+      const fastThresholdX = 45;
+      const fastVelocity = 220;
+      if (info.offset.x > fastThresholdX || (info.offset.x > 25 && info.velocity.x > fastVelocity)) {
+        isSwipeTriggered = true;
+        direction = 'right';
+      } else if (info.offset.x < -fastThresholdX || (info.offset.x < -25 && info.velocity.x < -fastVelocity)) {
+        isSwipeTriggered = true;
+        direction = 'left';
+      }
+    } else {
+      // Content Reading Zone (Plan A): dynamic ratio + long sweep override
+      // 1. Long Sweep Override: if user dragged across screen (> 75px) with arc motion (absX > absY * 1.05)
+      // 2. Flick: brisk horizontal flick (> 320px/s)
+      const contentThresholdX = 75;
+      const contentVelocity = 320;
+
+      const isHorizontalDominant = absX > absY * 1.05;
+      const isQuickFlick = absX > 30 && Math.abs(info.velocity.x) > contentVelocity && Math.abs(info.velocity.x) > Math.abs(info.velocity.y) * 1.2;
+
+      if ((absX > contentThresholdX && isHorizontalDominant) || isQuickFlick) {
+        if (info.offset.x > 0) {
+          isSwipeTriggered = true;
+          direction = 'right';
+        } else {
+          isSwipeTriggered = true;
+          direction = 'left';
+        }
+      }
+    }
+
+    if (isSwipeTriggered && direction) {
       try { navigator.vibrate?.([12]); } catch {}
-      if (onSwipeRight) onSwipeRight(); // Right = Again
-    } else if (info.offset.x < -thresholdX || (info.offset.x < -35 && info.velocity.x < -velocityThreshold)) {
-      try { navigator.vibrate?.([12]); } catch {}
-      if (onSwipeLeft) onSwipeLeft(); // Left = Good
+      if (direction === 'right' && onSwipeRight) {
+        onSwipeRight();
+      } else if (direction === 'left' && onSwipeLeft) {
+        onSwipeLeft();
+      }
     } else {
       x.set(0);
     }
-    dragLockedRef.current = null;
+
+    dragDirectionLockedRef.current = null;
   };
 
   return (
