@@ -80,17 +80,22 @@ def atomic_save_json(target_path, data):
     temp_path.replace(target_path)
 
 def save_audit_log(audit_data, new_in_this_session=0):
-    total_count = len(audit_data["records"])
+    new_project_records = [
+        r for r in audit_data["records"].values()
+        if r.get("generatedAt", "") >= "2026-09-03"
+    ]
+    new_project_count = len(new_project_records)
     audit_data["metadata"]["lastUpdated"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    audit_data["metadata"]["totalGenerated"] = total_count
+    audit_data["metadata"]["totalGenerated"] = len(audit_data["records"])
+    audit_data["metadata"]["newProjectGenerated"] = new_project_count
     audit_data["metadata"]["unitCostTwd"] = PRICE_PER_IMAGE_TWD
     audit_data["metadata"]["unitCostUsd"] = PRICE_PER_IMAGE_USD
     
     session_cost_twd = round(new_in_this_session * PRICE_PER_IMAGE_TWD, 1)
     audit_data["metadata"]["sessionCostTwd"] = session_cost_twd
     audit_data["metadata"]["remainingCreditTwd"] = round(INITIAL_REMAINING_CREDIT_TWD - session_cost_twd, 1)
-    audit_data["metadata"]["totalCostTwd"] = round(total_count * PRICE_PER_IMAGE_TWD, 1)
-    audit_data["metadata"]["totalCostUsd"] = round(total_count * PRICE_PER_IMAGE_USD, 2)
+    audit_data["metadata"]["totalCostTwd"] = round(new_project_count * PRICE_PER_IMAGE_TWD, 1)
+    audit_data["metadata"]["totalCostUsd"] = round(new_project_count * PRICE_PER_IMAGE_USD, 2)
 
     atomic_save_json(AUDIT_FILE, audit_data)
 
@@ -206,7 +211,7 @@ def generate_preview_html(audit_data):
     with open(PREVIEW_FILE, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAULT_MAX_BATCH_BUDGET_TWD, project_id=DEFAULT_PROJECT_ID, location=DEFAULT_LOCATION, force_regenerate=False):
+def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAULT_MAX_BATCH_BUDGET_TWD, project_id=DEFAULT_PROJECT_ID, location=DEFAULT_LOCATION, force_regenerate=False, only_slugs=None):
     ensure_dirs()
     audit_data = load_audit_log()
     
@@ -265,22 +270,30 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
             "imagePrompt": image_prompt
         })
 
-    tasks_to_run = pending_tasks[:limit] if limit > 0 else pending_tasks
-    print(f"📋 Total pending in [{tier}]: {len(tasks_to_run)} images to generate.", flush=True)
+    if only_slugs:
+        slug_set = {s.strip().lower() for s in only_slugs}
+        pending_tasks = [t for t in pending_tasks if t["slug"] in slug_set]
 
-    if len(tasks_to_run) == 0:
+    target_count = limit if limit > 0 else len(pending_tasks)
+    print(f"📋 Total pending in [{tier}]: {len(pending_tasks)} images. Batch target: {target_count} images.", flush=True)
+
+    if len(pending_tasks) == 0:
         print("🎉 All words in this tier already have verified images on disk and in audit!", flush=True)
         generate_preview_html(audit_data)
         return
 
     if dry_run:
-        print(f"--- [Dry-Run] Estimated Cost for {len(tasks_to_run)} items: ~{len(tasks_to_run) * PRICE_PER_IMAGE_TWD:.1f} TWD ---", flush=True)
+        print(f"--- [Dry-Run] Estimated Cost for {target_count} items: ~{target_count * PRICE_PER_IMAGE_TWD:.1f} TWD ---", flush=True)
         return
 
     session_generated_count = 0
     client = genai.Client(vertexai=True, project=project_id, location=location)
 
-    for idx, task in enumerate(tasks_to_run, 1):
+    for idx, task in enumerate(pending_tasks, 1):
+        if limit > 0 and session_generated_count >= limit:
+            print(f"\n🎯 已順利達成指定目標數量 ({session_generated_count}/{limit} 張)！批次完成。", flush=True)
+            break
+
         # 1. 雙重熔斷檢查
         spent_twd = session_generated_count * PRICE_PER_IMAGE_TWD
         rem_twd = INITIAL_REMAINING_CREDIT_TWD - spent_twd
@@ -300,11 +313,11 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
         if not force_regenerate and webp_path.exists() and webp_path.stat().st_size > 10000 and slug in audit_data["records"]:
             continue
 
-        print(f"[{idx}/{len(tasks_to_run)}] Generating image for '{headword}' -> '{slug}.webp'...", flush=True)
+        print(f"[{session_generated_count + 1}/{target_count}] Generating image for '{headword}' -> '{slug}.webp'...", flush=True)
         t0 = time.time()
         img_bytes = None
 
-        for attempt in range(3):
+        for attempt in range(4):
             try:
                 res = client.models.generate_content(
                     model=MODEL_NAME,
@@ -324,6 +337,9 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
                 if "429" in err_str or "quota" in err_str.lower():
                     print(f"  [429 Quota Delay] Waiting 20s before retry...", flush=True)
                     time.sleep(20)
+                elif "timeout" in err_str.lower() or "deadline" in err_str.lower():
+                    print(f"  [Timeout Warning] 請求超時，等待 10s 自動重試 (嘗試 {attempt + 1}/4)...", flush=True)
+                    time.sleep(10)
                 else:
                     print(f"  Attempt {attempt + 1} error: {err_str[:80]}", flush=True)
                     time.sleep(3)
@@ -383,8 +399,8 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
 
             curr_spent = session_generated_count * PRICE_PER_IMAGE_TWD
             left_credit = INITIAL_REMAINING_CREDIT_TWD - curr_spent
-            pct = (idx / len(tasks_to_run)) * 100
-            print(f"  ✅ Saved: {webp_filename} ({webp_size // 1024} KB) in {duration_ms}ms | [{idx}/{len(tasks_to_run)}] {pct:.1f}% | Spent: {curr_spent:.1f} TWD | Left: ~{left_credit:.1f} TWD", flush=True)
+            pct = (idx / len(pending_tasks)) * 100
+            print(f"  ✅ Saved: {webp_filename} ({webp_size // 1024} KB) in {duration_ms}ms | [{idx}/{len(pending_tasks)}] {pct:.1f}% | Spent: {curr_spent:.1f} TWD | Left: ~{left_credit:.1f} TWD", flush=True)
 
         except Exception as e:
             print(f"  ❌ File save error for '{headword}': {e}", flush=True)
@@ -411,6 +427,7 @@ if __name__ == "__main__":
     parser.add_argument("--budget-twd", type=float, default=DEFAULT_MAX_BATCH_BUDGET_TWD)
     parser.add_argument("--project", default=DEFAULT_PROJECT_ID)
     parser.add_argument("--location", default=DEFAULT_LOCATION)
+    parser.add_argument("--only-slugs", nargs="+", default=None, help="Only process specific slugs")
     args = parser.parse_args()
 
     if args.preview_only:
@@ -424,5 +441,6 @@ if __name__ == "__main__":
             budget_twd=args.budget_twd,
             project_id=args.project,
             location=args.location,
-            force_regenerate=args.force
+            force_regenerate=args.force,
+            only_slugs=args.only_slugs
         )
