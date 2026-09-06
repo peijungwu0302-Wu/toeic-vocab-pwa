@@ -16,7 +16,8 @@ import {
   GitBranch,
   Target,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  RotateCcw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
@@ -119,6 +120,7 @@ export const FlashcardPage: React.FC = () => {
 
   const [queue, setQueue] = useState<StudyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isViewingPrevious, setIsViewingPrevious] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
   const [intervalPreviews, setIntervalPreviews] = useState<IntervalPreviewItem[]>([]);
@@ -399,10 +401,12 @@ export const FlashcardPage: React.FC = () => {
     }
     setCurrentIndex(0);
     setIsFlipped(false);
+    setIsViewingPrevious(false);
     setResumedNotice(null);
   };
 
-  const currentItem = queue[currentIndex];
+  const activeStudyIndex = isViewingPrevious && currentIndex > 0 ? currentIndex - 1 : currentIndex;
+  const currentItem = queue[activeStudyIndex];
 
   useEffect(() => {
     if (currentItem && activeProfile) {
@@ -448,7 +452,7 @@ export const FlashcardPage: React.FC = () => {
         window.scrollTo({ top: 0, behavior: 'instant' });
       });
     }
-  }, [currentIndex, queue, activeProfile, currentItem]);
+  }, [activeStudyIndex, queue, activeProfile, currentItem]);
 
   const handleToggleStar = async () => {
     if (!currentItem || !activeProfile) return;
@@ -481,7 +485,7 @@ export const FlashcardPage: React.FC = () => {
   };
 
   const handleRate = useCallback(async (rating: FSRSRating) => {
-    if (!currentItem || !activeProfile) return;
+    if (isViewingPrevious || !currentItem || !activeProfile) return;
 
     const totalElapsedMs = Date.now() - cardStartTimeRef.current;
     const durationMs = Math.max(500, totalElapsedMs - hiddenTimeAccumulatorRef.current);
@@ -505,6 +509,7 @@ export const FlashcardPage: React.FC = () => {
       }));
 
       // Next card immediately without flipping back
+      setIsViewingPrevious(false);
       if (currentIndex < queue.length - 1) {
         if (cardBackScrollRef.current) {
           cardBackScrollRef.current.scrollTop = 0;
@@ -526,33 +531,67 @@ export const FlashcardPage: React.FC = () => {
     } catch (err) {
       console.error('[FlashcardPage] Rating error:', err);
     }
-  }, [currentItem, activeProfile, syncState.cloudUserEmail, currentIndex, queue.length]);
+  }, [currentItem, activeProfile, syncState.cloudUserEmail, currentIndex, queue.length, isViewingPrevious]);
 
   // Horizontal Swipe Handlers
   const handleSwipeLeft = () => {
-    // 👈 Left Swipe = 💡 掌握 (Good - 3)
+    if (isViewingPrevious) {
+      return;
+    }
     if (isFlipped) {
+      // 👈 Left Swipe on BACK = 💡 掌握 (Good - 3)
       handleRate(3);
     } else {
-      setIsFlipped(true);
+      // 👈 Left Swipe on FRONT = ↺ 回看上一詞 (Rewind to previous word)
+      if (currentIndex > 0) {
+        setIsViewingPrevious(true);
+        setIsFlipped(false);
+        try { navigator.vibrate?.([15]); } catch {}
+      }
     }
   };
 
   const handleSwipeRight = () => {
-    // 👉 Right Swipe = 💥 忘記 (Again - 1)
+    if (isViewingPrevious) {
+      // 👉 Right Swipe on PREVIOUS CARD = ➔ 返回當前題目
+      setIsViewingPrevious(false);
+      setIsFlipped(false);
+      try { navigator.vibrate?.([15]); } catch {}
+      return;
+    }
     if (isFlipped) {
+      // 👉 Right Swipe on BACK = 💥 忘記 (Again - 1)
       handleRate(1);
     } else {
-      setIsFlipped(true);
+      // 👉 Right Swipe on FRONT = 📖 翻到背面 (Flip card to back)
+      handleFlipCard();
     }
   };
 
-  // Keyboard shortcut listener (Space to flip, 1-3 for ratings)
+  // Keyboard shortcut listener (Space to flip, 1-3 for ratings, arrows for navigation)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isViewingPrevious) {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          handleFlipCard();
+        } else if (e.code === 'ArrowRight' || e.code === 'Escape') {
+          e.preventDefault();
+          setIsViewingPrevious(false);
+          setIsFlipped(false);
+        }
+        return;
+      }
       if (e.code === 'Space') {
         e.preventDefault();
-        if (!isFlipped) handleFlipCard();
+        handleFlipCard();
+      } else if (e.code === 'ArrowLeft' && !isFlipped && currentIndex > 0) {
+        e.preventDefault();
+        setIsViewingPrevious(true);
+        setIsFlipped(false);
+      } else if (e.code === 'ArrowRight' && !isFlipped) {
+        e.preventDefault();
+        handleFlipCard();
       } else if (isFlipped) {
         if (e.key === '1') handleRate(1);
         else if (e.key === '2') handleRate(2);
@@ -561,7 +600,7 @@ export const FlashcardPage: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isFlipped, handleRate, handleFlipCard]);
+  }, [isFlipped, isViewingPrevious, currentIndex, handleRate, handleFlipCard]);
 
   // Initial API Key load
   useEffect(() => {
@@ -985,8 +1024,27 @@ export const FlashcardPage: React.FC = () => {
 
       {/* Swipeable 3D Flashcard */}
       <div className="relative z-10 flex-1 flex flex-col min-h-0 py-0.5">
+        {isViewingPrevious && (
+          <div className="mb-1.5 flex items-center justify-between px-3 py-1.5 rounded-xl bg-amber-950/85 border border-amber-500/60 text-amber-200 text-xs font-bold shadow-lg shrink-0">
+            <span className="flex items-center space-x-1.5">
+              <RotateCcw size={14} className="text-amber-400" />
+              <span>剛剛看過的單字（唯讀複習）</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setIsViewingPrevious(false);
+                setIsFlipped(false);
+              }}
+              className="px-2.5 py-0.5 rounded-lg bg-amber-500/25 hover:bg-amber-500/40 text-amber-100 text-[11px] font-bold border border-amber-400/50 cursor-pointer transition-colors active:scale-95"
+            >
+              返回當前題目 ➔
+            </button>
+          </div>
+        )}
+
         <ErrorBoundary
-          key={word.id || currentIndex}
+          key={word.id || activeStudyIndex}
           fallback={(_err, reset) => (
             <div className="w-full h-full min-h-[350px] flex flex-col items-center justify-center p-6 text-center bg-slate-900 border border-slate-700 rounded-3xl text-slate-200 shadow-2xl">
               <p className="text-sm font-bold text-amber-300 mb-2">單字卡渲染遇到防護處理</p>
@@ -1001,8 +1059,18 @@ export const FlashcardPage: React.FC = () => {
           <SwipeableCard
             onSwipeLeft={handleSwipeLeft}
             onSwipeRight={handleSwipeRight}
-            disabled={!isFlipped || reviewStyle === 'button'}
+            disabled={isFlipped && reviewStyle === 'button' && !isViewingPrevious}
             handPreference={handPreference}
+            overlayMode={
+              isViewingPrevious
+                ? 'rewind'
+                : !isFlipped
+                ? 'front'
+                : reviewStyle === 'button'
+                ? 'none'
+                : 'review'
+            }
+            canSwipeLeft={isViewingPrevious ? false : !isFlipped ? currentIndex > 0 : true}
           >
           <motion.div
             animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -1092,39 +1160,62 @@ export const FlashcardPage: React.FC = () => {
               <div className="space-y-2">
                 <div className="flex flex-col items-center justify-center space-y-1">
                   <AudioButton headword={word.headword} audioUrl={word.audioUSUrl} size="md" />
-                  <p className="text-[10px] text-emerald-400/90 font-medium">👆 點擊卡片翻面確認意思</p>
+                  <div className="flex items-center justify-center space-x-3 text-[10px] font-medium text-slate-400">
+                    {currentIndex > 0 && !isViewingPrevious && (
+                      <span className="text-amber-400/90 font-bold">← 左滑回看上一詞</span>
+                    )}
+                    <span className="text-emerald-400/90 font-bold">
+                      {isViewingPrevious ? '👆 點擊翻面 · 右滑返回 ➔' : '點擊或右滑翻面 →'}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                {isViewingPrevious ? (
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handlePreConfidenceSelect('unsure');
+                      setIsViewingPrevious(false);
+                      setIsFlipped(false);
                     }}
-                    className="flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl bg-slate-900/90 hover:bg-slate-750 border border-slate-700 text-slate-300 text-xs font-semibold active:scale-98 transition-all"
+                    className="w-full py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 text-xs font-bold flex items-center justify-center space-x-1.5 transition-all active:scale-98 cursor-pointer shadow-sm"
                   >
-                    <HelpCircle size={14} className="text-amber-400" />
-                    <span>🤔 沒印象 / 不熟</span>
+                    <span>➔ 返回當前題目（第 {currentIndex + 1} 題）</span>
                   </button>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePreConfidenceSelect('unsure');
+                      }}
+                      className="flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl bg-slate-900/90 hover:bg-slate-750 border border-slate-700 text-slate-300 text-xs font-semibold active:scale-98 transition-all"
+                    >
+                      <HelpCircle size={14} className="text-amber-400" />
+                      <span>🤔 沒印象 / 不熟</span>
+                    </button>
 
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePreConfidenceSelect('confident');
-                    }}
-                    className="flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-600/50 text-emerald-300 text-xs font-semibold active:scale-98 transition-all"
-                  >
-                    <Lightbulb size={14} className="text-emerald-400" />
-                    <span>💡 我記得意思</span>
-                  </button>
-                </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePreConfidenceSelect('confident');
+                      }}
+                      className="flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-600/50 text-emerald-300 text-xs font-semibold active:scale-98 transition-all"
+                    >
+                      <Lightbulb size={14} className="text-emerald-400" />
+                      <span>💡 我記得意思</span>
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div className="text-center pt-1 border-t border-slate-800 text-[10px] text-slate-400 flex items-center justify-between">
                 <span>{progress.reps > 0 ? `複習第 ${progress.reps} 次` : '新單字'}</span>
-                <span className="text-emerald-400 font-medium">點擊翻面查看詳解與例句</span>
+                <span className="text-emerald-400 font-medium">
+                  {isViewingPrevious ? '唯讀模式 · 不重複記錄排程' : '點擊或右滑翻面查看詳解'}
+                </span>
               </div>
             </div>
 
@@ -1628,7 +1719,7 @@ export const FlashcardPage: React.FC = () => {
               </div>
 
               {/* Downgrade '記錯了' option if pre-confidence was confident */}
-              {preConfidence === 'confident' && (
+              {preConfidence === 'confident' && !isViewingPrevious && (
                 <div className="pt-1 border-t border-slate-800">
                   <button
                     type="button"
@@ -1649,9 +1740,25 @@ export const FlashcardPage: React.FC = () => {
       </ErrorBoundary>
       </div>
 
+      {/* Read-Only Rewind Docked Return Bar */}
+      {isViewingPrevious && (
+        <div className="sticky bottom-0 z-30 pt-2 pb-1.5 bg-slate-900/95 backdrop-blur-md border-t border-slate-800/80 w-full shrink-0 shadow-2xl">
+          <button
+            type="button"
+            onClick={() => {
+              setIsViewingPrevious(false);
+              setIsFlipped(false);
+            }}
+            className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-98 text-white font-bold text-sm shadow-xl flex items-center justify-center space-x-2 transition-all cursor-pointer"
+          >
+            <span>➔ 返回當前題目（第 {currentIndex + 1} 題）</span>
+          </button>
+        </div>
+      )}
+
       {/* Slide-Up FSRS Rating Bar (Visible ONLY when flipped, docked cleanly at bottom) */}
       <AnimatePresence>
-        {isFlipped && (
+        {isFlipped && !isViewingPrevious && (
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}

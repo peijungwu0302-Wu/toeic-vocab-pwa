@@ -1,14 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
-import { Check, X } from 'lucide-react';
+import { Check, X, RotateCw, RotateCcw, ArrowRight } from 'lucide-react';
 
 interface SwipeableCardProps {
   children: React.ReactNode;
-  onSwipeLeft?: () => void; // 3: Good / Pass (掌握)
-  onSwipeRight?: () => void; // 1: Again (忘記)
+  onSwipeLeft?: () => void; // Rate 3 or Previous
+  onSwipeRight?: () => void; // Rate 1 or Flip / Return
   onClick?: () => void;
   disabled?: boolean;
   handPreference?: 'left' | 'right';
+  overlayMode?: 'review' | 'front' | 'rewind' | 'none';
+  canSwipeLeft?: boolean;
 }
 
 export const SwipeableCard: React.FC<SwipeableCardProps> = ({
@@ -17,7 +19,9 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   onSwipeRight,
   onClick,
   disabled = false,
-  handPreference = 'left'
+  handPreference = 'left',
+  overlayMode = 'review',
+  canSwipeLeft = true
 }) => {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 0, 200], [-7, 0, 7]);
@@ -172,25 +176,66 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
         className={`w-full h-full relative ${disabled ? '' : 'cursor-grab active:cursor-grabbing'}`}
       >
         {/* Dynamic Visual Swipe Overlays (Only visible during active horizontal swipe in enabled mode) */}
-        {!disabled && (
+        {!disabled && overlayMode !== 'none' && (
           <>
-            {/* Right Swipe: 💥 忘記 (AGAIN - Red) */}
-            <motion.div
-              style={{ opacity: rightAgainOpacity }}
-              className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-rose-600/95 text-white font-black border-2 border-rose-300 shadow-2xl shadow-rose-950/60 backdrop-blur-md transform -rotate-12"
-            >
-              <X size={22} className="stroke-[3]" />
-              <span className="text-sm tracking-wider">💥 忘記 (AGAIN)</span>
-            </motion.div>
+            {/* Mode: review (Back of card: Again / Good) */}
+            {overlayMode === 'review' && (
+              <>
+                {/* Right Swipe: 💥 忘記 (AGAIN - Red) */}
+                <motion.div
+                  style={{ opacity: rightAgainOpacity }}
+                  className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-rose-600/95 text-white font-black border-2 border-rose-300 shadow-2xl shadow-rose-950/60 backdrop-blur-md transform -rotate-12"
+                >
+                  <X size={22} className="stroke-[3]" />
+                  <span className="text-sm tracking-wider">💥 忘記 (AGAIN)</span>
+                </motion.div>
 
-            {/* Left Swipe: 💡 掌握 (GOOD - Emerald Green) */}
-            <motion.div
-              style={{ opacity: leftGoodOpacity }}
-              className="absolute top-6 right-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-emerald-600/95 text-white font-black border-2 border-emerald-300 shadow-2xl shadow-emerald-950/60 backdrop-blur-md transform rotate-12"
-            >
-              <Check size={22} className="stroke-[3]" />
-              <span className="text-sm tracking-wider">💡 掌握 (GOOD)</span>
-            </motion.div>
+                {/* Left Swipe: 💡 掌握 (GOOD - Emerald Green) */}
+                <motion.div
+                  style={{ opacity: leftGoodOpacity }}
+                  className="absolute top-6 right-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-emerald-600/95 text-white font-black border-2 border-emerald-300 shadow-2xl shadow-emerald-950/60 backdrop-blur-md transform rotate-12"
+                >
+                  <Check size={22} className="stroke-[3]" />
+                  <span className="text-sm tracking-wider">💡 掌握 (GOOD)</span>
+                </motion.div>
+              </>
+            )}
+
+            {/* Mode: front (Front of card: Swipe Right -> Flip, Swipe Left -> Previous Word) */}
+            {overlayMode === 'front' && (
+              <>
+                {/* Right Swipe: 📖 翻看背面 */}
+                <motion.div
+                  style={{ opacity: rightAgainOpacity }}
+                  className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-indigo-600/95 text-white font-black border-2 border-indigo-300 shadow-2xl shadow-indigo-950/60 backdrop-blur-md transform -rotate-12"
+                >
+                  <RotateCw size={22} className="stroke-[3]" />
+                  <span className="text-sm tracking-wider">📖 翻看背面</span>
+                </motion.div>
+
+                {/* Left Swipe: ↺ 回看上一詞 */}
+                {canSwipeLeft && (
+                  <motion.div
+                    style={{ opacity: leftGoodOpacity }}
+                    className="absolute top-6 right-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-amber-600/95 text-white font-black border-2 border-amber-300 shadow-2xl shadow-amber-950/60 backdrop-blur-md transform rotate-12"
+                  >
+                    <RotateCcw size={22} className="stroke-[3]" />
+                    <span className="text-sm tracking-wider">↺ 回看上一詞</span>
+                  </motion.div>
+                )}
+              </>
+            )}
+
+            {/* Mode: rewind (Viewing Previous Word: Swipe Right -> Return to Current) */}
+            {overlayMode === 'rewind' && (
+              <motion.div
+                style={{ opacity: rightAgainOpacity }}
+                className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-emerald-600/95 text-white font-black border-2 border-emerald-300 shadow-2xl shadow-emerald-950/60 backdrop-blur-md transform -rotate-12"
+              >
+                <ArrowRight size={22} className="stroke-[3]" />
+                <span className="text-sm tracking-wider">➔ 返回當前題目</span>
+              </motion.div>
+            )}
           </>
         )}
 
