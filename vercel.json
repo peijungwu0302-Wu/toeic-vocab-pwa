@@ -4,13 +4,30 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/portable_studio.html",
+      "destination": "/portable_studio.html"
+    },
+    {
+      "source": "/portable_studio",
+      "destination": "/portable_studio.html"
+    },
+    {
+      "source": "/((?!portable_studio|data/|assets/|icons/).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
     {
       "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/portable_studio.html",
       "headers": [
         {
           "key": "Cache-Control",
