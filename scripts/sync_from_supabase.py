@@ -14,6 +14,12 @@ from PIL import Image
 import urllib.request
 import urllib.error
 
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 ROOT_DIR = Path(__file__).resolve().parent.parent
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
 ORIGINALS_DIR = ROOT_DIR / "public" / "assets" / "images" / "originals"
@@ -86,7 +92,7 @@ def sync_from_cloud():
         prompt = r.get("prompt") or ""
         tier = r.get("tier") or "portable-studio"
 
-        if not slug or not image_url:
+        if not slug or not image_url or slug.startswith("test_"):
             continue
 
         orig_file = ORIGINALS_DIR / f"{slug}.jpg"
