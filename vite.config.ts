@@ -68,7 +68,7 @@ export default defineConfig({
           }
         ],
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/data\//, /^\/icons\//, /\.[a-zA-Z0-9]+$/]
+        navigateFallbackDenylist: [/^\/data\//, /^\/icons\//, /^\/portable_studio/, /\.[a-zA-Z0-9]+$/]
       }
     })
   ],
