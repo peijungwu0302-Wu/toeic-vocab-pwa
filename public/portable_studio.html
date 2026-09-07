@@ -6,6 +6,7 @@
   <title>多益單字外出伴侶出圖工作台 (Portable Studio)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -93,6 +94,17 @@
     
     <!-- Left: Word Cards List -->
     <div class="lg:col-span-5 flex flex-col h-[75vh]">
+            <!-- 👁️ 安心可見：雙頁籤切換器 -->
+      <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-950/80 border border-slate-800 rounded-xl mb-3">
+        <button id="tabPending" type="button" class="py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-sky-600 text-white shadow-sm">
+          <span>🔵 待出圖清單</span>
+          <span id="tabPendingCount" class="bg-sky-950/80 text-sky-200 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
+        </button>
+        <button id="tabCompleted" type="button" class="py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200">
+          <span>🟢 已完工檢視</span>
+          <span id="tabCompletedCount" class="bg-emerald-950/80 text-emerald-300 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
+        </button>
+      </div>
       <div class="flex items-center justify-between mb-2 text-xs text-slate-400 px-1">
         <span>單字清單（共 <span id="listTotal">0</span> 詞）</span>
         <span class="text-sky-400">點擊卡片置於工作區</span>
@@ -186,6 +198,91 @@
     let selectedWord = null;
     const stagedImages = new Map(); // slug -> { base64, ext, headword }
 
+    // ==========================================
+    // ☁️ Supabase 雲端中繼站直連配置
+    // ==========================================
+    const SUPABASE_URL = "https://hgufhnytbkbmivhofqeu.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_t9IdBH8oln0Jd2Gjala0Lw_7W1KBXAu";
+    let supabase = null;
+    try {
+      if (window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch (e) {
+      console.warn("Supabase init warning:", e);
+    }
+
+    let activeTab = 'pending'; // 'pending' | 'completed'
+    const tabPending = document.getElementById('tabPending');
+    const tabCompleted = document.getElementById('tabCompleted');
+    const tabPendingCount = document.getElementById('tabPendingCount');
+    const tabCompletedCount = document.getElementById('tabCompletedCount');
+
+    function updateTabUI() {
+      if (activeTab === 'pending') {
+        tabPending.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-sky-600 text-white shadow-sm';
+        tabCompleted.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200';
+      } else {
+        tabCompleted.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-emerald-600 text-white shadow-sm';
+        tabPending.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200';
+      }
+    }
+
+    if (tabPending && tabCompleted) {
+      tabPending.onclick = () => { activeTab = 'pending'; updateTabUI(); renderList(); };
+      tabCompleted.onclick = () => { activeTab = 'completed'; updateTabUI(); renderList(); };
+    }
+
+    async function uploadToSupabase(word, blob, ext) {
+      if (!supabase) return;
+      try {
+        showToast(`☁️ 正在直傳 "${word.headword}" 至 Supabase 雲端...`, false);
+        const filename = `${word.slug}.${ext}`;
+        const { data, error } = await supabase.storage
+          .from('word-images')
+          .upload(filename, blob, { upsert: true, contentType: ext === 'png' ? 'image/png' : 'image/jpeg' });
+
+        if (error) {
+          console.warn('Storage upload notice:', error.message);
+        }
+
+        const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/word-images/${filename}`;
+
+        await supabase.from('studio_images').upsert({
+          slug: word.slug,
+          headword: word.headword,
+          tier: currentTier,
+          prompt: word.prompt || '',
+          status: 'completed',
+          image_url: publicUrl,
+          image_size_bytes: blob.size,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'slug' });
+
+        word.hasImage = true;
+        word.cloudImageUrl = publicUrl;
+        updateTabCounts();
+        renderList();
+        showToast(`🎉 "${word.headword}" 已安全備份至 Supabase！跨電腦即時同步！`, true);
+      } catch (err) {
+        console.warn('Cloud sync fallback:', err);
+      }
+    }
+
+    function updateTabCounts() {
+      const all = DATASET[currentTier] || [];
+      let pendingNum = 0;
+      let completedNum = 0;
+      all.forEach(w => {
+        const isDone = w.hasImage || stagedImages.has(w.slug);
+        if (isDone) completedNum++;
+        else pendingNum++;
+      });
+      if (tabPendingCount) tabPendingCount.textContent = pendingNum;
+      if (tabCompletedCount) tabCompletedCount.textContent = completedNum;
+    }
+
+
     const tierSelect = document.getElementById('tierSelect');
     const chkPendingOnly = document.getElementById('chkPendingOnly');
     const searchInput = document.getElementById('searchInput');
@@ -226,12 +323,14 @@
 
     function renderList() {
       const all = DATASET[currentTier] || [];
-      const pendingOnly = chkPendingOnly.checked;
       const query = searchInput.value.trim().toLowerCase();
       const sortOrder = sortSelect ? sortSelect.value : 'asc';
+      updateTabCounts();
 
       let filtered = all.filter(w => {
-        if (pendingOnly && w.hasImage && !stagedImages.has(w.slug)) return false;
+        const isDone = w.hasImage || stagedImages.has(w.slug);
+        if (activeTab === 'pending' && isDone) return false;
+        if (activeTab === 'completed' && !isDone) return false;
         if (query) {
           return w.headword.toLowerCase().includes(query) || w.zh.toLowerCase().includes(query);
         }
@@ -301,7 +400,14 @@
         pasteZonePreview.classList.remove('hidden');
         pasteZonePreview.classList.add('flex');
         previewImg.src = item.base64;
-        previewFilename.textContent = `${w.slug}.${item.ext}`;
+        previewFilename.textContent = `${w.slug}.${item.ext} (本次貼圖暫存)`;
+      } else if (w.hasImage) {
+        pasteZoneNormal.classList.add('hidden');
+        pasteZonePreview.classList.remove('hidden');
+        pasteZonePreview.classList.add('flex');
+        const imgUrl = w.cloudImageUrl || `./assets/images/words/${w.slug}.webp`;
+        previewImg.src = imgUrl;
+        previewFilename.textContent = `${w.slug} ✅ 雲端/庫存已完工圖檔 (點擊或貼圖可重新覆蓋)`;
       } else {
         pasteZoneNormal.classList.remove('hidden');
         pasteZonePreview.classList.add('hidden');
@@ -339,6 +445,9 @@
         showToast(`🎉 成功貼入 "${selectedWord.headword}" 圖檔！`, true);
       };
       reader.readAsDataURL(file);
+        if (supabase) {
+          uploadToSupabase(selectedWord, file, file.name.split('.').pop().toLowerCase() || 'jpg');
+        }
     }
 
     window.addEventListener('paste', (e) => {
