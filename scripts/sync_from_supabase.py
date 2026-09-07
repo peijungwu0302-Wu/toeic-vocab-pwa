@@ -25,7 +25,7 @@ WORDS_DIR.mkdir(parents=True, exist_ok=True)
 ORIGINALS_DIR.mkdir(parents=True, exist_ok=True)
 
 SUPABASE_URL = "https://hgufhnytbkbmivhofqeu.supabase.co"
-SUPABASE_KEY = "sb_publishable_t9IdBH8oln0Jd2Gjala0Lw_7W1KBXAu"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhndWZobnl0YmtibWl2aG9mcWV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MDA4MjYsImV4cCI6MjEwNDM3NjgyNn0._yPGhMCGKCmD1XoOeCMWSi9thyA1F_3QQdyX5BVsWXQ"
 
 def load_audit():
     if AUDIT_FILE.exists():
