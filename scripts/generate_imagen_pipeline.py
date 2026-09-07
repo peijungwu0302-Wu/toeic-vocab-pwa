@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, sys, json, time, argparse, io, re, socket
+import os, sys, json, time, argparse, io, re, socket, urllib.request, urllib.error
 from pathlib import Path
 from PIL import Image
 from google import genai
@@ -215,6 +215,41 @@ def generate_preview_html(audit_data):
     with open(PREVIEW_FILE, "w", encoding="utf-8") as f:
         f.write(html_content)
 
+def notify_supabase_completed(slug, headword, tier, prompt="", image_size_bytes=0):
+    """
+    輕量通知 Supabase 雲端轉運站：單字已完工打勾（含時間戳）
+    僅發送 ~150 bytes 純文字，大圖留存本機硬碟，耗用 0 MB 雲端 Storage。
+    設有短超時與全域容錯，網路波動絕不影響本機生圖。
+    """
+    try:
+        url = "https://hgufhnytbkbmivhofqeu.supabase.co/rest/v1/studio_images"
+        key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhndWZobnl0YmtibWl2aG9mcWV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MDA4MjYsImV4cCI6MjEwNDM3NjgyNn0._yPGhMCGKCmD1XoOeCMWSi9thyA1F_3QQdyX5BVsWXQ"
+        headers = {
+            "apikey": key,
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
+            "Prefer": "resolution=merge-duplicates"
+        }
+        now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        payload = json.dumps([{
+            "slug": slug,
+            "headword": headword,
+            "tier": tier,
+            "prompt": (prompt[:200] if prompt else ""),
+            "status": "completed",
+            "image_url": "local_gcp",
+            "image_size_bytes": image_size_bytes,
+            "created_at": now_iso,
+            "updated_at": now_iso
+        }]).encode("utf-8")
+
+        req = urllib.request.Request(url, data=payload, headers=headers)
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            pass
+    except Exception:
+        # 容錯：網絡異常或超時靜默忽略，絕不阻礙本地生圖
+        pass
+
 def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAULT_MAX_BATCH_BUDGET_TWD, project_id=DEFAULT_PROJECT_ID, location=DEFAULT_LOCATION, force_regenerate=False, only_slugs=None):
     ensure_dirs()
     audit_data = load_audit_log()
@@ -400,6 +435,9 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
             session_generated_count += 1
             save_audit_log(audit_data, session_generated_count)
             sync_local_image_words(slug)
+
+            # ☁️ 輕量即時通知 Supabase（便於外出端即時避開與顯示時間戳）
+            notify_supabase_completed(slug, headword, tier, prompt, webp_size)
 
             # 🌟 每一張生成後「立刻」刷新 preview_gallery.html，讓使用者零延遲看到！
             generate_preview_html(audit_data)

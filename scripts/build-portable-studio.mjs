@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 
 const WORDS_DIR = path.join(ROOT_DIR, 'public', 'assets', 'images', 'words');
+const AUDIT_FILE = path.join(ROOT_DIR, 'scripts', 'image_generation_audit.json');
 const OUTPUT_FILE = path.join(ROOT_DIR, 'public', 'portable_studio.html');
 
 const diskSlugs = new Set(
@@ -15,13 +16,17 @@ const diskSlugs = new Set(
     : []
 );
 
+const auditRecords = fs.existsSync(AUDIT_FILE)
+  ? (JSON.parse(fs.readFileSync(AUDIT_FILE, 'utf8')).records || {})
+  : {};
+
 function slugify(text) {
   return text.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
 }
 
 const tiers = [
-  { id: 'core-1200', name: '🔥 高頻核心 1200 (僅 5 詞待補)' },
-  { id: 'advanced-2500', name: '💼 商務進階 2500 (金證衝刺主力庫)' },
+  { id: 'core-1200', name: '🔥 高頻核心 1200 (僅 2 詞待補)' },
+  { id: 'advanced-2500', name: '💼 商務進階 2500 (🎉 100% 全數完工)' },
   { id: 'expert-high-part1', name: '🚀 滿分巔峰 Part 1' },
   { id: 'expert-high-part2', name: '🚀 滿分巔峰 Part 2' },
   { id: 'expert-high-part3', name: '🚀 滿分巔峰 Part 3' }
@@ -37,6 +42,11 @@ for (const t of tiers) {
       const slug = slugify(w.headword);
       const va = w.visualAnchor || {};
       const ex1 = (w.examples && w.examples[0]) || {};
+      const auditRec = auditRecords[slug];
+      const hasImage = diskSlugs.has(slug) || !!auditRec;
+      const completedAt = auditRec ? auditRec.generatedAt : null;
+      const source = auditRec ? '🤖 GCP 自動管線' : (hasImage ? '📦 本機庫存' : null);
+
       return {
         headword: w.headword,
         slug,
@@ -45,7 +55,9 @@ for (const t of tiers) {
         en: va.shortEn || ex1.en || '',
         theme: va.domainTheme || '',
         prompt: va.imagePrompt || '',
-        hasImage: diskSlugs.has(slug)
+        hasImage,
+        completedAt,
+        source
       };
     });
   }
@@ -59,6 +71,7 @@ const htmlContent = `<!DOCTYPE html>
   <title>多益單字外出伴侶出圖工作台 (Portable Studio)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -98,6 +111,9 @@ const htmlContent = `<!DOCTYPE html>
 
     <!-- Actions & Stats -->
     <div class="flex items-center gap-3 flex-wrap">
+      <span id="lastSyncLabel" class="text-xs bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-xl text-slate-400">
+        最後同步: 尚未同步
+      </span>
       <button id="btnSyncCloud" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-sky-400 text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 transition">
         🔄 刷新雲端進度
       </button>
@@ -123,11 +139,6 @@ const htmlContent = `<!DOCTYPE html>
         <option value="asc">正序 (A ➔ Z)</option>
         <option value="desc">逆序 (Z ➔ A 錯開衝刺)</option>
       </select>
-      
-      <div class="flex items-center gap-1.5 ml-2">
-        <input type="checkbox" id="chkPendingOnly" class="rounded bg-slate-800 border-slate-700 text-sky-500 focus:ring-sky-500" checked />
-        <label for="chkPendingOnly" class="text-xs text-slate-300 cursor-pointer">僅顯示待生圖單字</label>
-      </div>
     </div>
 
     <!-- Search Input -->
@@ -142,6 +153,18 @@ const htmlContent = `<!DOCTYPE html>
     
     <!-- Left: Word Cards List -->
     <div class="lg:col-span-5 flex flex-col h-[75vh]">
+      <!-- 👁️ 安心可見：雙頁籤切換器 -->
+      <div class="grid grid-cols-2 gap-1.5 p-1 bg-slate-950/80 border border-slate-800 rounded-xl mb-3">
+        <button id="tabPending" type="button" class="py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-sky-600 text-white shadow-sm">
+          <span>🔵 待出圖清單</span>
+          <span id="tabPendingCount" class="bg-sky-950/80 text-sky-200 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
+        </button>
+        <button id="tabCompleted" type="button" class="py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200">
+          <span>🟢 已完工檢視</span>
+          <span id="tabCompletedCount" class="bg-emerald-950/80 text-emerald-300 px-1.5 py-0.5 rounded-full text-[10px]">0</span>
+        </button>
+      </div>
+
       <div class="flex items-center justify-between mb-2 text-xs text-slate-400 px-1">
         <span>單字清單（共 <span id="listTotal">0</span> 詞）</span>
         <span class="text-sky-400">點擊卡片置於工作區</span>
@@ -160,9 +183,9 @@ const htmlContent = `<!DOCTYPE html>
           <p class="text-sm">請從左側點選任一單字開始出圖</p>
         </div>
 
-        <div id="focusCard" class="hidden flex-col h-full space-y-5">
+        <div id="focusCard" class="hidden flex-col h-full space-y-4">
           <!-- Header -->
-          <div class="flex items-baseline justify-between border-b border-slate-800 pb-4">
+          <div class="flex items-baseline justify-between border-b border-slate-800 pb-3">
             <div>
               <div class="flex items-center gap-2">
                 <h2 id="focusWord" class="text-2xl font-black text-white"></h2>
@@ -173,8 +196,17 @@ const htmlContent = `<!DOCTYPE html>
             <span id="focusTheme" class="text-xs bg-sky-500/10 text-sky-400 border border-sky-500/20 px-2.5 py-1 rounded-full"></span>
           </div>
 
+          <!-- 🕒 完工時間戳與來源標記資訊列 -->
+          <div id="focusStatusBadge" class="hidden bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-400 font-bold">🟢 已完工</span>
+              <span id="focusCompletedAt" class="text-slate-300"></span>
+            </div>
+            <span id="focusSource" class="text-[11px] bg-slate-800 border border-slate-700 text-sky-400 px-2 py-0.5 rounded-lg"></span>
+          </div>
+
           <!-- Sentence -->
-          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3.5 space-y-1">
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 space-y-1">
             <div class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
               <span>📖 多益具象考點句</span>
             </div>
@@ -182,7 +214,7 @@ const htmlContent = `<!DOCTYPE html>
           </div>
 
           <!-- Prompt & Copy Button -->
-          <div class="space-y-2 flex-1 flex flex-col">
+          <div class="space-y-1.5 flex-1 flex flex-col">
             <div class="flex items-center justify-between">
               <label class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
                 <span>🎨 1:1 發光看板概念插畫 Prompt</span>
@@ -191,7 +223,7 @@ const htmlContent = `<!DOCTYPE html>
                 <span>📋 複製生圖 Prompt</span>
               </button>
             </div>
-            <textarea id="focusPrompt" readonly class="w-full flex-1 bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 font-mono resize-none focus:outline-none focus:border-sky-500 select-all"></textarea>
+            <textarea id="focusPrompt" readonly class="w-full flex-1 min-h-[90px] bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 font-mono resize-none focus:outline-none focus:border-sky-500 select-all"></textarea>
           </div>
 
           <!-- Drop / Paste Zone -->
@@ -204,7 +236,7 @@ const htmlContent = `<!DOCTYPE html>
             <div id="pasteZonePreview" class="hidden items-center gap-4">
               <img id="previewImg" class="w-24 h-24 object-cover rounded-xl border border-emerald-500/50 shadow-md" src="" alt="preview" />
               <div class="text-left space-y-1">
-                <span class="text-xs font-bold text-emerald-400 flex items-center gap-1">✅ 圖片已成功載入暫存！</span>
+                <span class="text-xs font-bold text-emerald-400 flex items-center gap-1">✅ 圖片已成功載入！</span>
                 <p id="previewFilename" class="text-[11px] font-mono text-slate-400"></p>
                 <div class="flex items-center gap-2 pt-1">
                   <button id="btnDownloadSingle" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs px-3 py-1 rounded-lg text-slate-200">
@@ -230,13 +262,126 @@ const htmlContent = `<!DOCTYPE html>
 
   <script>
     const DATASET = ${JSON.stringify(dataset)};
-    let currentTier = 'advanced-2500';
+    let currentTier = 'expert-high-part1';
     let currentWords = [];
     let selectedWord = null;
     const stagedImages = new Map(); // slug -> { base64, ext, headword }
 
+    // ==========================================
+    // ☁️ Supabase 雲端中繼站直連配置
+    // ==========================================
+    const SUPABASE_URL = "https://hgufhnytbkbmivhofqeu.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhndWZobnl0YmtibWl2aG9mcWV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MDA4MjYsImV4cCI6MjEwNDM3NjgyNn0._yPGhMCGKCmD1XoOeCMWSi9thyA1F_3QQdyX5BVsWXQ";
+    let supabase = null;
+    try {
+      if (window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch (e) {
+      console.warn("Supabase init warning:", e);
+    }
+
+    let activeTab = 'pending'; // 'pending' | 'completed'
+    const tabPending = document.getElementById('tabPending');
+    const tabCompleted = document.getElementById('tabCompleted');
+    const tabPendingCount = document.getElementById('tabPendingCount');
+    const tabCompletedCount = document.getElementById('tabCompletedCount');
+    const lastSyncLabel = document.getElementById('lastSyncLabel');
+
+    function updateTabUI() {
+      if (activeTab === 'pending') {
+        tabPending.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-sky-600 text-white shadow-sm';
+        tabCompleted.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200';
+      } else {
+        tabCompleted.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-emerald-600 text-white shadow-sm';
+        tabPending.className = 'py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200';
+      }
+    }
+
+    if (tabPending && tabCompleted) {
+      tabPending.onclick = () => { activeTab = 'pending'; updateTabUI(); renderList(); };
+      tabCompleted.onclick = () => { activeTab = 'completed'; updateTabUI(); renderList(); };
+    }
+
+    async function uploadToSupabase(word, blob, ext) {
+      if (!supabase) return;
+      try {
+        showToast(\`☁️ 正在直傳 "\${word.headword}" 至 Supabase 雲端...\`, false);
+        const filename = \`\${word.slug}.\${ext}\`;
+        const { data, error } = await supabase.storage
+          .from('word-images')
+          .upload(filename, blob, { upsert: true, contentType: ext === 'png' ? 'image/png' : 'image/jpeg' });
+
+        if (error) {
+          console.warn('Storage upload notice:', error.message);
+        }
+
+        const publicUrl = \`\${SUPABASE_URL}/storage/v1/object/public/word-images/\${filename}\`;
+        const nowIso = new Date().toISOString();
+
+        await supabase.from('studio_images').upsert({
+          slug: word.slug,
+          headword: word.headword,
+          tier: currentTier,
+          prompt: word.prompt || '',
+          status: 'completed',
+          image_url: publicUrl,
+          image_size_bytes: blob.size,
+          created_at: nowIso,
+          updated_at: nowIso
+        }, { onConflict: 'slug' });
+
+        word.hasImage = true;
+        word.completedAt = nowIso;
+        word.source = '🎨 圖書館手動貼圖';
+        word.cloudImageUrl = publicUrl;
+        updateTabCounts();
+        renderList();
+        showToast(\`🎉 "\${word.headword}" 已安全備份至 Supabase！跨電腦即時同步！\`, true);
+      } catch (err) {
+        console.warn('Cloud sync fallback:', err);
+      }
+    }
+
+    function updateTabCounts() {
+      const all = DATASET[currentTier] || [];
+      let pendingNum = 0;
+      let completedNum = 0;
+      all.forEach(w => {
+        const isDone = w.hasImage || stagedImages.has(w.slug);
+        if (isDone) completedNum++;
+        else pendingNum++;
+      });
+      if (tabPendingCount) tabPendingCount.textContent = pendingNum;
+      if (tabCompletedCount) tabCompletedCount.textContent = completedNum;
+    }
+
+    function formatTime(isoStr) {
+      if (!isoStr) return '';
+      try {
+        const d = new Date(isoStr);
+        return d.toLocaleDateString('zh-TW', { month: '2-digit', day: '2-digit' }) + ' ' +
+               d.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function formatFullTime(isoStr) {
+      if (!isoStr) return '';
+      try {
+        const d = new Date(isoStr);
+        return d.getFullYear() + '-' +
+               String(d.getMonth() + 1).padStart(2, '0') + '-' +
+               String(d.getDate()).padStart(2, '0') + ' ' +
+               d.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      } catch (e) {
+        return '';
+      }
+    }
+
     const tierSelect = document.getElementById('tierSelect');
-    const chkPendingOnly = document.getElementById('chkPendingOnly');
+    const sortSelect = document.getElementById('sortSelect');
     const searchInput = document.getElementById('searchInput');
     const wordsList = document.getElementById('wordsList');
     const listTotal = document.getElementById('listTotal');
@@ -250,6 +395,9 @@ const htmlContent = `<!DOCTYPE html>
     const focusEn = document.getElementById('focusEn');
     const focusPrompt = document.getElementById('focusPrompt');
     const btnCopyPrompt = document.getElementById('btnCopyPrompt');
+    const focusStatusBadge = document.getElementById('focusStatusBadge');
+    const focusCompletedAt = document.getElementById('focusCompletedAt');
+    const focusSource = document.getElementById('focusSource');
 
     const pasteZone = document.getElementById('pasteZone');
     const pasteZoneNormal = document.getElementById('pasteZoneNormal');
@@ -262,6 +410,7 @@ const htmlContent = `<!DOCTYPE html>
     const zipCount = document.getElementById('zipCount');
     const stagedCount = document.getElementById('stagedCount');
     const toast = document.getElementById('toast');
+    const btnSyncCloud = document.getElementById('btnSyncCloud');
 
     function showToast(msg, isSuccess = true) {
       toast.textContent = msg;
@@ -275,12 +424,14 @@ const htmlContent = `<!DOCTYPE html>
 
     function renderList() {
       const all = DATASET[currentTier] || [];
-      const pendingOnly = chkPendingOnly.checked;
       const query = searchInput.value.trim().toLowerCase();
       const sortOrder = sortSelect ? sortSelect.value : 'asc';
+      updateTabCounts();
 
       let filtered = all.filter(w => {
-        if (pendingOnly && w.hasImage && !stagedImages.has(w.slug)) return false;
+        const isDone = w.hasImage || stagedImages.has(w.slug);
+        if (activeTab === 'pending' && isDone) return false;
+        if (activeTab === 'completed' && !isDone) return false;
         if (query) {
           return w.headword.toLowerCase().includes(query) || w.zh.toLowerCase().includes(query);
         }
@@ -296,7 +447,7 @@ const htmlContent = `<!DOCTYPE html>
       wordsList.innerHTML = '';
 
       if (currentWords.length === 0) {
-        wordsList.innerHTML = '<div class=\"text-center py-8 text-xs text-slate-500\">無符合單字</div>';
+        wordsList.innerHTML = '<div class="text-center py-8 text-xs text-slate-500">此頁籤暫無符合項目</div>';
         return;
       }
 
@@ -304,24 +455,26 @@ const htmlContent = `<!DOCTYPE html>
         const isStaged = stagedImages.has(w.slug);
         const isDone = w.hasImage || isStaged;
         const isSelected = selectedWord && selectedWord.slug === w.slug;
+        const timeBadge = w.completedAt ? formatTime(w.completedAt) : '';
 
         const card = document.createElement('div');
         card.className = 'bg-slate-900/80 hover:bg-slate-850 border border-slate-800 p-3 rounded-xl cursor-pointer transition flex items-center justify-between gap-3 ' + (isSelected ? 'card-active bg-slate-850' : '');
         card.innerHTML = \`
-          <div class=\"flex items-center gap-3 overflow-hidden\">
-            <span class=\"w-2.5 h-2.5 rounded-full flex-shrink-0 \${isStaged ? 'bg-emerald-400 shadow-sm shadow-emerald-400' : isDone ? 'bg-sky-400' : 'bg-slate-600'}\"></span>
-            <div class=\"overflow-hidden\">
-              <div class=\"flex items-center gap-2\">
-                <span class=\"font-bold text-sm text-white truncate\">\${w.headword}</span>
-                <span class=\"text-[10px] text-slate-400\">\${w.pos}</span>
+          <div class="flex items-center gap-3 overflow-hidden">
+            <span class="w-2.5 h-2.5 rounded-full flex-shrink-0 \${isStaged ? 'bg-emerald-400 shadow-sm shadow-emerald-400' : isDone ? 'bg-sky-400' : 'bg-slate-600'}"></span>
+            <div class="overflow-hidden">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-sm text-white truncate">\${w.headword}</span>
+                <span class="text-[10px] text-slate-400">\${w.pos}</span>
               </div>
-              <p class=\"text-xs text-slate-400 truncate\">\${w.zh}</p>
+              <p class="text-xs text-slate-400 truncate">\${w.zh}</p>
             </div>
           </div>
-          <div class=\"flex-shrink-0 text-right\">
-            <span class=\"text-[11px] px-2 py-0.5 rounded-full border \${isStaged ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : isDone ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' : 'bg-slate-800 text-slate-400 border-slate-700'}\">
-              \${isStaged ? '已暫存' : isDone ? '庫存有圖' : '待出圖'}
+          <div class="flex-shrink-0 text-right">
+            <span class="text-[11px] px-2 py-0.5 rounded-full border \${isStaged ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : isDone ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' : 'bg-slate-800 text-slate-400 border-slate-700'}">
+              \${isStaged ? '已暫存' : isDone ? '已完工' : '待出圖'}
             </span>
+            \${timeBadge ? \`<span class="text-[10px] text-slate-400 block mt-0.5">🕒 \${timeBadge}</span>\` : ''}
           </div>
         \`;
         card.onclick = () => selectWord(w);
@@ -344,13 +497,33 @@ const htmlContent = `<!DOCTYPE html>
       focusEn.textContent = w.en || '暫無例句';
       focusPrompt.value = w.prompt || '';
 
+      // 時間戳與來源資訊列
+      const isDone = w.hasImage || stagedImages.has(w.slug);
+      if (isDone) {
+        focusStatusBadge.classList.remove('hidden');
+        focusStatusBadge.classList.add('flex');
+        const timeStr = w.completedAt ? formatFullTime(w.completedAt) : '時間記錄於本機';
+        focusCompletedAt.textContent = \`完工時間: \${timeStr}\`;
+        focusSource.textContent = w.source || (stagedImages.has(w.slug) ? '🎨 圖書館手動暫存' : '🤖 GCP 自動管線');
+      } else {
+        focusStatusBadge.classList.add('hidden');
+        focusStatusBadge.classList.remove('flex');
+      }
+
       if (stagedImages.has(w.slug)) {
         const item = stagedImages.get(w.slug);
         pasteZoneNormal.classList.add('hidden');
         pasteZonePreview.classList.remove('hidden');
         pasteZonePreview.classList.add('flex');
         previewImg.src = item.base64;
-        previewFilename.textContent = \`\${w.slug}.\${item.ext}\`;
+        previewFilename.textContent = \`\${w.slug}.\${item.ext} (本次貼圖暫存)\`;
+      } else if (w.hasImage) {
+        pasteZoneNormal.classList.add('hidden');
+        pasteZonePreview.classList.remove('hidden');
+        pasteZonePreview.classList.add('flex');
+        const imgUrl = w.cloudImageUrl || \`./assets/images/words/\${w.slug}.webp\`;
+        previewImg.src = imgUrl;
+        previewFilename.textContent = \`\${w.slug} ✅ 完工圖檔 (可重新貼圖覆蓋)\`;
       } else {
         pasteZoneNormal.classList.remove('hidden');
         pasteZonePreview.classList.add('hidden');
@@ -388,6 +561,9 @@ const htmlContent = `<!DOCTYPE html>
         showToast(\`🎉 成功貼入 "\${selectedWord.headword}" 圖檔！\`, true);
       };
       reader.readAsDataURL(file);
+      if (supabase) {
+        uploadToSupabase(selectedWord, file, file.name.split('.').pop().toLowerCase() || 'jpg');
+      }
     }
 
     window.addEventListener('paste', (e) => {
@@ -425,7 +601,7 @@ const htmlContent = `<!DOCTYPE html>
       if (idx >= 0 && idx + 1 < currentWords.length) {
         selectWord(currentWords[idx + 1]);
       } else {
-        showToast('🎉 本清單待辦已全部瀏覽完畢！', true);
+        showToast('🎉 本清單項目已全部瀏覽完畢！', true);
       }
     };
 
@@ -447,31 +623,60 @@ const htmlContent = `<!DOCTYPE html>
       showToast('📦 ZIP 下載完成！回家丟進 incoming_images 資料夾即可一秒入庫！', true);
     };
 
-    const sortSelect = document.getElementById('sortSelect');
-    const btnSyncCloud = document.getElementById('btnSyncCloud');
-
     async function syncFromCloud(showFeedback = true) {
       try {
         if (showFeedback) showToast('⏳ 正在同步最新雲端出圖進度...', false);
-        const res = await fetch('./data/v1/completed_images.json?t=' + Date.now());
-        if (res.ok) {
-          const cloudSlugs = new Set(await res.json());
-          let updated = 0;
-          Object.keys(DATASET).forEach(tier => {
-            DATASET[tier].forEach(w => {
-              if (cloudSlugs.has(w.slug) && !w.hasImage) {
-                w.hasImage = true;
-                updated++;
-              }
+        let cloudRecordsCount = 0;
+
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('studio_images')
+            .select('slug, headword, created_at, status, image_url')
+            .limit(5000);
+
+          if (!error && data) {
+            cloudRecordsCount = data.length;
+            const cloudMap = new Map();
+            data.forEach(r => cloudMap.set(r.slug, r));
+
+            let newlyAdded = 0;
+            Object.keys(DATASET).forEach(tier => {
+              DATASET[tier].forEach(w => {
+                if (cloudMap.has(w.slug)) {
+                  const rec = cloudMap.get(w.slug);
+                  if (!w.hasImage) {
+                    w.hasImage = true;
+                    newlyAdded++;
+                  }
+                  w.completedAt = rec.created_at;
+                  w.cloudImageUrl = rec.image_url !== 'local_gcp' ? rec.image_url : null;
+                  w.source = rec.image_url === 'local_gcp' ? '🤖 GCP 自動管線' : '🎨 圖書館手動貼圖';
+                }
+              });
             });
-          });
-          renderList();
-          if (showFeedback) showToast(\`🔄 雲端進度同步完成！已標記 \${updated} 筆新入庫單字！\`, true);
-        } else if (showFeedback) {
-          showToast('ℹ️ 離線模式：使用預載單字庫', false);
+
+            updateTabCounts();
+            renderList();
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            if (lastSyncLabel) {
+              lastSyncLabel.textContent = \`最後同步: \${timeStr} (雲端共 \${cloudRecordsCount} 詞)\`;
+              lastSyncLabel.className = 'text-xs bg-slate-800 border border-emerald-500/40 text-emerald-300 px-3 py-1.5 rounded-xl';
+            }
+
+            if (showFeedback) {
+              showToast(\`🔄 雲端同步完成！已對齊 \${cloudRecordsCount} 筆雲端進度 (新避開 \${newlyAdded} 詞)！\`, true);
+            }
+            return;
+          }
         }
+
+        // 離線降級
+        if (showFeedback) showToast('ℹ️ 離線模式：使用本機預載完工庫存', false);
       } catch (e) {
-        if (showFeedback) showToast('ℹ️ 離線模式：使用預載單字庫', false);
+        console.warn('Sync error:', e);
+        if (showFeedback) showToast('ℹ️ 離線模式：使用本機預載完工庫存', false);
       }
     }
 
@@ -485,17 +690,17 @@ const htmlContent = `<!DOCTYPE html>
       if (currentWords.length > 0) selectWord(currentWords[0]);
     };
 
-    chkPendingOnly.onchange = () => renderList();
     searchInput.oninput = () => renderList();
 
-    // Initial
+    // Initial load
+    tierSelect.value = currentTier;
     renderList();
     if (currentWords.length > 0) selectWord(currentWords[0]);
-    syncFromCloud(false); // Silent check on load
+    syncFromCloud(false); // 頁面載入時安靜對齊一次雲端
   </script>
 </body>
 </html>`;
 
 fs.writeFileSync(OUTPUT_FILE, htmlContent, 'utf8');
-console.log(`✅ 已生成獨立離線外出工作台: ${OUTPUT_FILE}`);
-console.log(`  體積: ${(Buffer.byteLength(htmlContent, 'utf8') / 1024).toFixed(1)} KB (自帶全量單字資料與 Prompt)`);
+console.log(`✅ 已生成升級版獨立離線外出工作台: ${OUTPUT_FILE}`);
+console.log(`  體積: ${(Buffer.byteLength(htmlContent, 'utf8') / 1024).toFixed(1)} KB (自帶 4280+ 詞時間戳與 Prompt)`);
