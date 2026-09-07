@@ -73,16 +73,26 @@ const htmlContent = `<!DOCTYPE html>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: { 500: '#38bdf8', 600: '#0284c7' }
+    window.addEventListener('error', function(e) {
+      console.error('Portable Studio Runtime Error:', e);
+      var b = document.getElementById('debugErrorBanner');
+      if (b) {
+        b.style.display = 'block';
+        b.textContent = '❌ 載入異常: ' + (e.message || e.error || '語法錯誤') + ' (' + e.filename + ':' + e.lineno + ')';
+      }
+    });
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: { 500: '#38bdf8', 600: '#0284c7' }
+            }
           }
         }
-      }
-    };
+      };
+    }
   </script>
   <style>
     body { background-color: #0b0f19; color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -93,6 +103,7 @@ const htmlContent = `<!DOCTYPE html>
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
+  <div id="debugErrorBanner" class="hidden bg-rose-600 text-white px-4 py-2 text-xs font-mono text-center"></div>
 
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
@@ -272,10 +283,10 @@ const htmlContent = `<!DOCTYPE html>
     // ==========================================
     const SUPABASE_URL = "https://hgufhnytbkbmivhofqeu.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhndWZobnl0YmtibWl2aG9mcWV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MDA4MjYsImV4cCI6MjEwNDM3NjgyNn0._yPGhMCGKCmD1XoOeCMWSi9thyA1F_3QQdyX5BVsWXQ";
-    let supabase = null;
+    let supabaseClient = null;
     try {
-      if (window.supabase) {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      if (window.supabase && typeof window.supabase.createClient === 'function') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
     } catch (e) {
       console.warn("Supabase init warning:", e);
@@ -304,11 +315,11 @@ const htmlContent = `<!DOCTYPE html>
     }
 
     async function uploadToSupabase(word, blob, ext) {
-      if (!supabase) return;
+      if (!supabaseClient) return;
       try {
         showToast(\`☁️ 正在直傳 "\${word.headword}" 至 Supabase 雲端...\`, false);
         const filename = \`\${word.slug}.\${ext}\`;
-        const { data, error } = await supabase.storage
+        const { data, error } = await supabaseClient.storage
           .from('word-images')
           .upload(filename, blob, { upsert: true, contentType: ext === 'png' ? 'image/png' : 'image/jpeg' });
 
@@ -319,7 +330,7 @@ const htmlContent = `<!DOCTYPE html>
         const publicUrl = \`\${SUPABASE_URL}/storage/v1/object/public/word-images/\${filename}\`;
         const nowIso = new Date().toISOString();
 
-        await supabase.from('studio_images').upsert({
+        await supabaseClient.from('studio_images').upsert({
           slug: word.slug,
           headword: word.headword,
           tier: currentTier,
@@ -561,7 +572,7 @@ const htmlContent = `<!DOCTYPE html>
         showToast(\`🎉 成功貼入 "\${selectedWord.headword}" 圖檔！\`, true);
       };
       reader.readAsDataURL(file);
-      if (supabase) {
+      if (supabaseClient) {
         uploadToSupabase(selectedWord, file, file.name.split('.').pop().toLowerCase() || 'jpg');
       }
     }
@@ -628,8 +639,8 @@ const htmlContent = `<!DOCTYPE html>
         if (showFeedback) showToast('⏳ 正在同步最新雲端出圖進度...', false);
         let cloudRecordsCount = 0;
 
-        if (supabase) {
-          const { data, error } = await supabase
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient
             .from('studio_images')
             .select('slug, headword, created_at, status, image_url')
             .limit(5000);
