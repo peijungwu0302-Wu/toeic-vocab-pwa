@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-import os, sys, json, time, argparse, io, re
+import os, sys, json, time, argparse, io, re, socket
 from pathlib import Path
 from PIL import Image
 from google import genai
+
+# 🛡️ 避免夜間網絡長連接掛死：設定 socket 逾時 90 秒
+socket.setdefaulttimeout(90)
 
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace', line_buffering=True)
