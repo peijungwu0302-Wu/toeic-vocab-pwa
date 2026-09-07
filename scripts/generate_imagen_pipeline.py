@@ -35,7 +35,7 @@ PRICE_PER_IMAGE_TWD = 1.244            # 實測真金白銀成本 (1,493 TWD / 1
 PRICE_PER_IMAGE_USD = 0.0385           # 對應折算美金
 INITIAL_REMAINING_CREDIT_TWD = 7324.0  # 當前剩餘 GCP 試用金總額 (2026-09-06 最新)
 DEFAULT_MAX_BATCH_BUDGET_TWD = 2500.0  # 本次批次預算上限 (精準覆蓋 advanced-2500)
-SAFETY_CREDIT_FLOOR_TWD = 4000.0       # 帳戶最低安全底限 (剩餘低於此值強制停機)
+SAFETY_CREDIT_FLOOR_TWD = 3000.0       # 帳戶最低安全底限 (剩餘低於此值強制停機)
 
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
 ORIGINALS_DIR = ROOT_DIR / "public" / "assets" / "images" / "originals"
@@ -93,9 +93,10 @@ def save_audit_log(audit_data, new_in_this_session=0):
     
     session_cost_twd = round(new_in_this_session * PRICE_PER_IMAGE_TWD, 1)
     audit_data["metadata"]["sessionCostTwd"] = session_cost_twd
-    audit_data["metadata"]["remainingCreditTwd"] = round(INITIAL_REMAINING_CREDIT_TWD - session_cost_twd, 1)
-    audit_data["metadata"]["totalCostTwd"] = round(new_project_count * PRICE_PER_IMAGE_TWD, 1)
+    total_cost_twd = round(new_project_count * PRICE_PER_IMAGE_TWD, 1)
+    audit_data["metadata"]["totalCostTwd"] = total_cost_twd
     audit_data["metadata"]["totalCostUsd"] = round(new_project_count * PRICE_PER_IMAGE_USD, 2)
+    audit_data["metadata"]["remainingCreditTwd"] = round(INITIAL_REMAINING_CREDIT_TWD - total_cost_twd, 1)
 
     atomic_save_json(AUDIT_FILE, audit_data)
 
@@ -294,14 +295,17 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
             print(f"\n🎯 已順利達成指定目標數量 ({session_generated_count}/{limit} 張)！批次完成。", flush=True)
             break
 
-        # 1. 雙重熔斷檢查
+        # 1. 雙重熔斷檢查 (以新專案累計真金白銀扣抵為基準，絕對守住安全底限)
         spent_twd = session_generated_count * PRICE_PER_IMAGE_TWD
-        rem_twd = INITIAL_REMAINING_CREDIT_TWD - spent_twd
+        new_project_count = len([r for r in audit_data["records"].values() if r.get("generatedAt", "") >= "2026-09-03"])
+        cum_img_spent = new_project_count * PRICE_PER_IMAGE_TWD
+        real_rem_twd = INITIAL_REMAINING_CREDIT_TWD - cum_img_spent
+
         if spent_twd >= budget_twd:
             print(f"\n🛑 觸發批次預算熔斷 ({spent_twd:.1f} >= {budget_twd} TWD)！安全停止。", flush=True)
             break
-        if rem_twd <= SAFETY_CREDIT_FLOOR_TWD:
-            print(f"\n🚨 觸發試用金安全底限 ({rem_twd:.1f} <= {SAFETY_CREDIT_FLOOR_TWD} TWD)！緊急停機。", flush=True)
+        if real_rem_twd <= SAFETY_CREDIT_FLOOR_TWD:
+            print(f"\n🚨 觸發試用金安全底限 ({real_rem_twd:.1f} <= {SAFETY_CREDIT_FLOOR_TWD} TWD)！緊急停機。", flush=True)
             break
 
         slug = task["slug"]
@@ -398,9 +402,8 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
             generate_preview_html(audit_data)
 
             curr_spent = session_generated_count * PRICE_PER_IMAGE_TWD
-            left_credit = INITIAL_REMAINING_CREDIT_TWD - curr_spent
             pct = (idx / len(pending_tasks)) * 100
-            print(f"  ✅ Saved: {webp_filename} ({webp_size // 1024} KB) in {duration_ms}ms | [{idx}/{len(pending_tasks)}] {pct:.1f}% | Spent: {curr_spent:.1f} TWD | Left: ~{left_credit:.1f} TWD", flush=True)
+            print(f"  ✅ Saved: {webp_filename} ({webp_size // 1024} KB) in {duration_ms}ms | [{idx}/{len(pending_tasks)}] {pct:.1f}% | 本次: {curr_spent:.1f} TWD | 帳戶剩餘: ~{real_rem_twd:.1f} TWD (底限: {SAFETY_CREDIT_FLOOR_TWD} TWD)", flush=True)
 
         except Exception as e:
             print(f"  ❌ File save error for '{headword}': {e}", flush=True)
