@@ -640,15 +640,42 @@ const htmlContent = `<!DOCTYPE html>
         let cloudRecordsCount = 0;
 
         if (supabaseClient) {
-          const { data, error } = await supabaseClient
-            .from('studio_images')
-            .select('slug, headword, created_at, status, image_url')
-            .limit(5000);
+          const pageSize = 1000;
+          let allData = [];
 
-          if (!error && data) {
-            cloudRecordsCount = data.length;
+          // 第一頁查詢：依 id 降序 (最新生成的放最前)，並取得精確總筆數 count
+          const { data: firstPage, count, error } = await supabaseClient
+            .from('studio_images')
+            .select('slug, headword, created_at, status, image_url', { count: 'exact' })
+            .order('id', { ascending: false })
+            .range(0, pageSize - 1);
+
+          if (!error && firstPage) {
+            allData = [...firstPage];
+            const totalCount = count || allData.length;
+
+            // 若總筆數突破 1000 筆 (PostgREST 預設上限)，並行拉取剩餘分頁
+            if (totalCount > pageSize) {
+              const pagesNeeded = Math.ceil(totalCount / pageSize);
+              const fetchPromises = [];
+              for (let p = 1; p < pagesNeeded && p < 10; p++) {
+                fetchPromises.push(
+                  supabaseClient
+                    .from('studio_images')
+                    .select('slug, headword, created_at, status, image_url')
+                    .order('id', { ascending: false })
+                    .range(p * pageSize, (p + 1) * pageSize - 1)
+                );
+              }
+              const results = await Promise.all(fetchPromises);
+              results.forEach(res => {
+                if (res.data) allData.push(...res.data);
+              });
+            }
+
+            cloudRecordsCount = allData.length;
             const cloudMap = new Map();
-            data.forEach(r => cloudMap.set(r.slug, r));
+            allData.forEach(r => cloudMap.set(r.slug, r));
 
             let newlyAdded = 0;
             Object.keys(DATASET).forEach(tier => {
