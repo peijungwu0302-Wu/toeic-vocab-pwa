@@ -9,6 +9,10 @@ const basePath = process.env.VITE_BASE_PATH || '/';
 // https://vitejs.dev/config/
 export default defineConfig({
   base: basePath,
+  server: {
+    host: true,
+    port: 5173,
+  },
   plugins: [
     react(),
     VitePWA({
