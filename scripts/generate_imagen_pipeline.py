@@ -35,7 +35,7 @@ PRICE_PER_IMAGE_TWD = 1.244            # 實測真金白銀成本 (1,493 TWD / 1
 PRICE_PER_IMAGE_USD = 0.0385           # 對應折算美金
 INITIAL_REMAINING_CREDIT_TWD = 7324.0  # 當前剩餘 GCP 試用金總額 (2026-09-06 最新)
 DEFAULT_MAX_BATCH_BUDGET_TWD = 2500.0  # 本次批次預算上限 (精準覆蓋 advanced-2500)
-SAFETY_CREDIT_FLOOR_TWD = 3000.0       # 帳戶最低安全底限 (剩餘低於此值強制停機)
+SAFETY_CREDIT_FLOOR_TWD = 2000.0       # 帳戶最低安全底限 (剩餘低於此值強制停機)
 
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
 ORIGINALS_DIR = ROOT_DIR / "public" / "assets" / "images" / "originals"
