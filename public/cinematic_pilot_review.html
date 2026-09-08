@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 多益單字「例句電影分鏡」提示詞優化效果評估</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b0f19; color: #f1f5f9; padding: 24px; }
+        header { max-width: 1200px; margin: 0 auto 28px; padding-bottom: 20px; border-bottom: 1px solid #1e293b; }
+        h1 { font-size: 1.6rem; color: #38bdf8; margin-bottom: 8px; }
+        p.sub { color: #94a3b8; font-size: 0.95rem; line-height: 1.5; }
+        .grid { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+        .card { background: #131d2e; border: 1px solid #1e293b; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); }
+        @media (min-width: 900px) {
+            .card { flex-direction: row; }
+            .img-box { width: 440px; min-width: 440px; }
+            .content { flex: 1; }
+        }
+        .img-box { position: relative; aspect-ratio: 1/1; background: #000; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .badge { position: absolute; top: 12px; left: 12px; background: rgba(14, 165, 233, 0.9); color: #fff; font-size: 0.75rem; font-weight: bold; padding: 4px 10px; border-radius: 6px; backdrop-filter: blur(4px); }
+        .content { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+        .title-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+        .headword { font-size: 1.6rem; font-weight: bold; color: #f8fafc; letter-spacing: -0.02em; }
+        .zh-def { font-size: 1.05rem; color: #38bdf8; }
+        .sentence-box { background: #0b0f19; border-left: 4px solid #38bdf8; padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 18px; }
+        .st-label { font-size: 0.8rem; font-weight: bold; color: #94a3b8; margin-bottom: 4px; }
+        .st-en { font-size: 1rem; color: #f8fafc; font-weight: 600; line-height: 1.45; margin-bottom: 4px; }
+        .st-zh { font-size: 0.9rem; color: #94a3b8; }
+        .prompt-compare { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 18px; }
+        @media (min-width: 680px) {
+            .prompt-compare { grid-template-columns: 1fr 1fr; }
+        }
+        .prompt-col { padding: 14px; border-radius: 8px; font-size: 0.8rem; line-height: 1.45; }
+        .prompt-col.old { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); color: #fca5a5; }
+        .prompt-col.new { background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.25); color: #86efac; }
+        .p-header { font-weight: bold; margin-bottom: 6px; font-size: 0.82rem; }
+        .meta-row { display: flex; gap: 20px; font-size: 0.75rem; color: #64748b; border-top: 1px solid #1e293b; padding-top: 12px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎬 多益單字「例句電影分鏡」提示詞優化效果評估</h1>
+        <p class="sub">
+            測試目的：解決舊版提示詞「只畫行業背景空景、完全看不到例句意象」的問題。<br>
+            全新導演哲學：不套用任何刻板文字印章或霓虹看板，將例句轉化為「電影級概念美術分鏡（Cinematic Storyboard）」，讓例句的情節與衝突自然融入光影與畫面。
+        </p>
+    </header>
+    <div class="grid">
+        
+        <div class="card">
+            <div class="img-box">
+                <img src="/assets/images/words/termination.webp?t=1788840629" alt="termination" />
+                <span class="badge">🎬 電影分鏡新版</span>
+            </div>
+            <div class="content">
+                <div class="title-row">
+                    <span class="headword">termination</span>
+                    <span class="zh-def">終止；解除；結束</span>
+                </div>
+                <div class="sentence-box">
+                    <div class="st-label">🎯 多益真題考點例句：</div>
+                    <div class="st-en">The unexpected termination of the charter agreement delayed several international container shipments this morning.</div>
+                    <div class="st-zh">包船協議的突然終止導致今晨數批國際貨櫃運輸有所延誤。</div>
+                </div>
+
+                <div class="prompt-compare">
+                    <div class="prompt-col old">
+                        <div class="p-header">❌ 舊版提示詞（無例句意象 / 背景空景）：</div>
+                        <p>Stylized high-detail digital concept art illustration of 'termination'. A massive maritime port terminal with gantry cranes lifting ocean shipping containers from a cargo vessel under clear blue sky. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.</p>
+                    </div>
+                    <div class="prompt-col new">
+                        <div class="p-header">✨ 電影分鏡新版提示詞（情境自然融入）：</div>
+                        <p>Stylized high-detail digital concept art illustration of 'termination'. Inside a modern maritime harbor operations dispatch office overlooking a tranquil bay under morning light, an official charter agreement lies open on a conference desk with highlighted cancellation clauses. A logistics director in business attire stands by the floor-to-ceiling glass window, phone in hand, looking out with serious concern. Outside across the harbor, several massive container ships sit idle at the docks, their towering gantry cranes motionless in pause against the morning sky, conveying the stillness and unexpected delay in international shipments. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.</p>
+                    </div>
+                </div>
+
+                <div class="meta-row">
+                    <span>⏱️ 生成耗時: 11072ms</span>
+                    <span>💾 WebP: 101 KB | 原圖: 305 KB</span>
+                    <span>💰 成本: ~1.24 TWD</span>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="card">
+            <div class="img-box">
+                <img src="/assets/images/words/tense.webp?t=1788840629" alt="tense" />
+                <span class="badge">🎬 電影分鏡新版</span>
+            </div>
+            <div class="content">
+                <div class="title-row">
+                    <span class="headword">tense</span>
+                    <span class="zh-def">緊張的；緊繃的；僵持的</span>
+                </div>
+                <div class="sentence-box">
+                    <div class="st-label">🎯 多益真題考點例句：</div>
+                    <div class="st-en">Tense clinical negotiations dissolved after both diagnostic equipment providers agreed on joint patent licensing terms.</div>
+                    <div class="st-zh">在兩家診斷設備提供商同意共同專利授權條款後，緊張的臨床談判得以化解。</div>
+                </div>
+
+                <div class="prompt-compare">
+                    <div class="prompt-col old">
+                        <div class="p-header">❌ 舊版提示詞（無例句意象 / 背景空景）：</div>
+                        <p>Stylized high-detail digital concept art illustration of 'tense'. A sleek modern medical diagnostic lab where technicians focus intently on high-tech brain imaging screens during a critical trial. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.</p>
+                    </div>
+                    <div class="prompt-col new">
+                        <div class="p-header">✨ 電影分鏡新版提示詞（情境自然融入）：</div>
+                        <p>Stylized high-detail digital concept art illustration of 'tense'. Inside a sunlit, high-rise boardroom overlooking a modern medical research campus, the palpable tension of a long negotiation finally breaks into relief. Two opposing executive teams sit across a polished glass conference table covered with patent dossiers and medical equipment schematics. The atmosphere softens as the two lead negotiators stand and shake hands across the table with subtle relieved smiles, while colleagues visibly ease their posture, setting down their pens. Warm ambient daylight floods through panoramic windows, signaling resolution after intense deadlock. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.</p>
+                    </div>
+                </div>
+
+                <div class="meta-row">
+                    <span>⏱️ 生成耗時: 8777ms</span>
+                    <span>💾 WebP: 161 KB | 原圖: 417 KB</span>
+                    <span>💰 成本: ~1.24 TWD</span>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="card">
+            <div class="img-box">
+                <img src="/assets/images/words/exception.webp?t=1788840629" alt="exception" />
+                <span class="badge">🎬 電影分鏡新版</span>
+            </div>
+            <div class="content">
+                <div class="title-row">
+                    <span class="headword">exception</span>
+                    <span class="zh-def">例外；異例；豁免</span>
+                </div>
+                <div class="sentence-box">
+                    <div class="st-label">🎯 多益真題考點例句：</div>
+                    <div class="st-en">The investment committee approved the venture funding proposal with one single exception regarding governance.</div>
+                    <div class="st-zh">投資委員會批准了該創業資金提案，僅對治理結構提出一項例外規定。</div>
+                </div>
+
+                <div class="prompt-compare">
+                    <div class="prompt-col old">
+                        <div class="p-header">❌ 舊版提示詞（無例句意象 / 背景空景）：</div>
+                        <p>Stylized high-detail digital concept art illustration of 'exception'. Venture capital board room with analysts evaluating startup pitch slide decks on modern glass tables. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.</p>
+                    </div>
+                    <div class="prompt-col new">
+                        <div class="p-header">✨ 電影分鏡新版提示詞（情境自然融入）：</div>
+                        <p>Stylized high-detail digital concept art illustration of 'exception'. In an elegant venture capital firm boardroom, an investment committee conducts a proposal review around an oval conference table. In the center, a formal funding agreement document is laid out with official green approval signatures alongside a cleanly annotated yellow note highlighting a single governance exception clause. The committee chairperson in sharp attire gestures warmly toward the marked clause with a fountain pen while conferring with colleagues, balancing formal executive approval with precise procedural distinction. Sunlit floor-to-ceiling windows showcase a bright financial skyline. Crisp linework, vibrant daylight lighting, clean cel-shading with smooth reflections, rich architectural perspective, exact stylized concept art aesthetic, 1:1 square composition.</p>
+                    </div>
+                </div>
+
+                <div class="meta-row">
+                    <span>⏱️ 生成耗時: 52626ms</span>
+                    <span>💾 WebP: 72 KB | 原圖: 261 KB</span>
+                    <span>💰 成本: ~1.24 TWD</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
