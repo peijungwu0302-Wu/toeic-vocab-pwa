@@ -53,6 +53,7 @@ for (const t of tiers) {
         pos: (w.partsOfSpeech || []).join(', ') || 'n.',
         zh: w.definitionZh || '',
         en: va.shortEn || ex1.en || '',
+        enZh: va.scene || ex1.zh || '',
         theme: va.domainTheme || '',
         prompt: va.imagePrompt || '',
         hasImage,
@@ -217,11 +218,13 @@ const htmlContent = `<!DOCTYPE html>
           </div>
 
           <!-- Sentence -->
-          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 space-y-1">
-            <div class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
-              <span>📖 多益具象考點句</span>
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-4 space-y-2">
+            <div class="text-xs font-semibold text-sky-400 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">📖 多益具象考點句</span>
+              <span class="text-[10px] text-slate-500 font-normal">字體已放大 2 號 · 附情境中譯</span>
             </div>
-            <p id="focusEn" class="text-xs text-slate-200 leading-relaxed"></p>
+            <p id="focusEn" class="text-base font-semibold text-slate-100 leading-relaxed"></p>
+            <p id="focusEnZh" class="text-sm text-slate-400 leading-relaxed border-t border-slate-800/80 pt-2"></p>
           </div>
 
           <!-- Prompt & Copy Button -->
@@ -404,6 +407,7 @@ const htmlContent = `<!DOCTYPE html>
     const focusZh = document.getElementById('focusZh');
     const focusTheme = document.getElementById('focusTheme');
     const focusEn = document.getElementById('focusEn');
+    const focusEnZh = document.getElementById('focusEnZh');
     const focusPrompt = document.getElementById('focusPrompt');
     const btnCopyPrompt = document.getElementById('btnCopyPrompt');
     const focusStatusBadge = document.getElementById('focusStatusBadge');
@@ -506,6 +510,10 @@ const htmlContent = `<!DOCTYPE html>
       focusZh.textContent = w.zh;
       focusTheme.textContent = w.theme || '商業場景';
       focusEn.textContent = w.en || '暫無例句';
+      if (focusEnZh) {
+        focusEnZh.textContent = w.enZh || '';
+        focusEnZh.style.display = w.enZh ? 'block' : 'none';
+      }
       focusPrompt.value = w.prompt || '';
 
       // 時間戳與來源資訊列
