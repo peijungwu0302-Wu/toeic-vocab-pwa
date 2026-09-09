@@ -38,7 +38,7 @@ PRICE_PER_IMAGE_TWD = 1.244            # 實測真金白銀成本 (1,493 TWD / 1
 PRICE_PER_IMAGE_USD = 0.0385           # 對應折算美金
 INITIAL_REMAINING_CREDIT_TWD = 7324.0  # 當前剩餘 GCP 試用金總額 (2026-09-06 最新)
 DEFAULT_MAX_BATCH_BUDGET_TWD = 2500.0  # 本次批次預算上限 (精準覆蓋 advanced-2500)
-SAFETY_CREDIT_FLOOR_TWD = 2000.0       # 帳戶最低安全底限 (剩餘低於此值強制停機)
+SAFETY_CREDIT_FLOOR_TWD = 500.0        # 帳戶最低安全底限 (剩餘低於此值強制停機)
 
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
 ORIGINALS_DIR = ROOT_DIR / "public" / "assets" / "images" / "originals"
@@ -250,7 +250,7 @@ def notify_supabase_completed(slug, headword, tier, prompt="", image_size_bytes=
         # 容錯：網絡異常或超時靜默忽略，絕不阻礙本地生圖
         pass
 
-def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAULT_MAX_BATCH_BUDGET_TWD, project_id=DEFAULT_PROJECT_ID, location=DEFAULT_LOCATION, force_regenerate=False, only_slugs=None):
+def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAULT_MAX_BATCH_BUDGET_TWD, project_id=DEFAULT_PROJECT_ID, location=DEFAULT_LOCATION, force_regenerate=False, only_slugs=None, safety_floor_twd=SAFETY_CREDIT_FLOOR_TWD):
     ensure_dirs()
     audit_data = load_audit_log()
     
@@ -270,7 +270,7 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
     print(f"\n=================================================================", flush=True)
     print(f"🚀 Vertex AI High-Resilience Generator: [{tier}]", flush=True)
     print(f"💰 Real Unit Cost: {PRICE_PER_IMAGE_TWD} TWD / image", flush=True)
-    print(f"🛑 Batch Budget Cap: {budget_twd} TWD (Safety Floor: {SAFETY_CREDIT_FLOOR_TWD} TWD)", flush=True)
+    print(f"🛑 Batch Budget Cap: {budget_twd} TWD (Safety Floor: {safety_floor_twd} TWD)", flush=True)
     print(f"💳 Initial Remaining Credit: {INITIAL_REMAINING_CREDIT_TWD} TWD", flush=True)
     print(f"🛡️ Power-Cut Proof: Atomic Swap + File Size Gate Active", flush=True)
     print(f"=================================================================\n", flush=True)
@@ -342,8 +342,8 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
         if spent_twd >= budget_twd:
             print(f"\n🛑 觸發批次預算熔斷 ({spent_twd:.1f} >= {budget_twd} TWD)！安全停止。", flush=True)
             break
-        if real_rem_twd <= SAFETY_CREDIT_FLOOR_TWD:
-            print(f"\n🚨 觸發試用金安全底限 ({real_rem_twd:.1f} <= {SAFETY_CREDIT_FLOOR_TWD} TWD)！緊急停機。", flush=True)
+        if real_rem_twd <= safety_floor_twd:
+            print(f"\n🚨 觸發試用金安全底限 ({real_rem_twd:.1f} <= {safety_floor_twd} TWD)！緊急停機。", flush=True)
             break
 
         slug = task["slug"]
@@ -469,6 +469,7 @@ if __name__ == "__main__":
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--preview-only", action="store_true")
     parser.add_argument("--budget-twd", type=float, default=DEFAULT_MAX_BATCH_BUDGET_TWD)
+    parser.add_argument("--safety-floor", type=float, default=SAFETY_CREDIT_FLOOR_TWD)
     parser.add_argument("--project", default=DEFAULT_PROJECT_ID)
     parser.add_argument("--location", default=DEFAULT_LOCATION)
     parser.add_argument("--only-slugs", nargs="+", default=None, help="Only process specific slugs")
@@ -483,6 +484,7 @@ if __name__ == "__main__":
             limit=args.limit,
             dry_run=args.dry_run,
             budget_twd=args.budget_twd,
+            safety_floor_twd=args.safety_floor,
             project_id=args.project,
             location=args.location,
             force_regenerate=args.force,
