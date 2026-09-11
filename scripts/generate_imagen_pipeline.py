@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, sys, json, time, argparse, io, re, socket, urllib.request, urllib.error
+import os, sys, json, time, argparse, io, re, socket, urllib.request, urllib.error, concurrent.futures
 from pathlib import Path
 from PIL import Image
 from google import genai
@@ -38,7 +38,7 @@ PRICE_PER_IMAGE_TWD = 1.244            # 實測真金白銀成本 (1,493 TWD / 1
 PRICE_PER_IMAGE_USD = 0.0385           # 對應折算美金
 INITIAL_REMAINING_CREDIT_TWD = 7324.0  # 當前剩餘 GCP 試用金總額 (2026-09-06 最新)
 DEFAULT_MAX_BATCH_BUDGET_TWD = 2500.0  # 本次批次預算上限 (精準覆蓋 advanced-2500)
-SAFETY_CREDIT_FLOOR_TWD = 500.0        # 帳戶最低安全底限 (剩餘低於此值強制停機)
+SAFETY_CREDIT_FLOOR_TWD = 0.0          # 帳戶最低安全底限 (剩餘低於此值強制停機)
 
 WORDS_DIR = ROOT_DIR / "public" / "assets" / "images" / "words"
 ORIGINALS_DIR = ROOT_DIR / "public" / "assets" / "images" / "originals"
@@ -326,7 +326,7 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
         return
 
     session_generated_count = 0
-    client = genai.Client(vertexai=True, project=project_id, location=location)
+    client = genai.Client(vertexai=True, project=project_id, location=location, http_options={'timeout': 60000})
 
     for idx, task in enumerate(pending_tasks, 1):
         if limit > 0 and session_generated_count >= limit:
@@ -361,10 +361,7 @@ def run_pipeline(tier="advanced-2500", limit=0, dry_run=False, budget_twd=DEFAUL
 
         for attempt in range(4):
             try:
-                res = client.models.generate_content(
-                    model=MODEL_NAME,
-                    contents=prompt
-                )
+                res = client.models.generate_content(model=MODEL_NAME, contents=prompt)
                 for cand in res.candidates:
                     for part in cand.content.parts:
                         if hasattr(part, "inline_data") and part.inline_data and part.inline_data.data:

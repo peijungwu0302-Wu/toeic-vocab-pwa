@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多益單字伴侶程式 · 說明手冊 (Portable Studio Guide)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0b0f19; color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-10 max-w-4xl mx-auto">
+
+  <!-- Top Action Bar for Mobile -->
+  <div class="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-800 mb-8">
+    <a href="./portable_studio.html" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-sky-400 text-xs font-semibold px-4 py-2.5 rounded-xl border border-slate-700 transition">
+      <span>🎨 返回伴侶工作台</span>
+    </a>
+    <a href="./PORTABLE_STUDIO_README.md" download="PORTABLE_STUDIO_README.md" class="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-sky-600/30 transition">
+      <span>📥 下載 .md 說明檔至手機</span>
+    </a>
+  </div>
+
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-semibold mb-3">
+      TOEIC Vocab PWA Companion
+    </div>
+    <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2">
+      🎨 多益單字外出出圖小秘書 · 說明手冊
+    </h1>
+    <p class="text-sm text-slate-400">
+      Portable Studio 核心定位、雙頁籤審計、Z➔A 逆向錯開出圖與 ZIP 打包下載指引
+    </p>
+  </div>
+
+  <!-- Main Content Cards -->
+  <div class="space-y-6 text-sm leading-relaxed text-slate-300">
+
+    <!-- Card 1: 產品定位 -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-7 space-y-3">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <span>📖 產品定位與設計初衷</span>
+      </h2>
+      <p class="text-slate-300">
+        <strong>Portable Studio</strong> 是專為「TOEIC 速記 PWA」打造的輔助審計工作台。它的核心使命是：
+      </p>
+      <ul class="list-disc list-inside space-y-1.5 text-slate-300 pl-1">
+        <li><strong>隨身便攜（Portable）</strong>：無論在筆電、平板或手機上，隨時隨地檢視 5 大題庫的 v4 故事板提示詞與考點例句。</li>
+        <li><strong>直觀審計（Visual QA）</strong>：即時查看哪些單字已成功生成圖片、哪些單字尚待出圖，杜絕缺圖或錯圖。</li>
+        <li><strong>外出協作與手動貼圖（Paste & Pack ZIP）</strong>：在外用網頁版 Gemini 生圖時，可直接複製圖片貼上暫存，一鍵打包下載 ZIP 檔帶回本機入庫。</li>
+        <li><strong>雲端進度同步（Supabase Real-time Sync）</strong>：透過極輕量純文字中繼站，追蹤自動管線與手動出圖的完工標記與時間戳。</li>
+      </ul>
+    </div>
+
+    <!-- Card 2: 核心功能 -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-7 space-y-4">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <span>🌟 核心功能特色</span>
+      </h2>
+
+      <div class="space-y-3">
+        <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-sky-400 text-sm mb-1">1. 雙頁籤進度過濾器 (Dual-Tab Filter)</h3>
+          <p class="text-xs text-slate-300">
+            • <strong>🔵 待出圖清單 (Pending)</strong>：即時篩選出尚未落盤的單字，按鈕直接顯示剩餘待補數量。<br>
+            • <strong>🟢 已完工檢視 (Completed)</strong>：檢視所有已驗證完工的單字卡片與生成成果。
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-sky-400 text-sm mb-1">2. 五大題庫切換與 Z➔A 逆向錯開 (Tier & Sorting)</h3>
+          <p class="text-xs text-slate-300">
+            支援 Core 1200、Advanced 2500、Expert High Part 1/2/3 自由切換。<br>
+            提供 <strong>Z ➔ A 逆序模式</strong>：外出用手機手動生圖時，與本機背景自動管線（A ➔ Z）<strong>雙向對開、兩端合圍</strong>，絕不撞題重複花費。
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-sky-400 text-sm mb-1">3. 工作台專注檢視區 (Workbench)</h3>
+          <p class="text-xs text-slate-300">
+            • 顯示單字標題、詞性（POS）、多益情境中譯、產業領域主題標籤。<br>
+            • 多益具象考點句（字體放大 2 號 + 專屬情境中譯）。<br>
+            • <strong>🎨 1:1 發光看板概念插畫 Prompt</strong>：點擊「📋 複製生圖 Prompt」一鍵複製至剪貼簿。
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-sky-400 text-sm mb-1">4. 剪貼簿極速貼圖與打包 (Paste Zone & ZIP Export)</h3>
+          <p class="text-xs text-slate-300">
+            • 在 Gemini 網頁版產出圖後，直接按 <kbd class="bg-slate-800 px-1 py-0.5 rounded text-sky-400">Ctrl + V</kbd> 或長按貼上。<br>
+            • 點擊 <strong>📦 一鍵打包下載 ZIP</strong>，整批下載為標準命名的 ZIP 檔，帶回本機解壓縮直接入庫！
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: 操作指引 -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-7 space-y-3">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <span>🛠️ 本機同步與發布指令</span>
+      </h2>
+      <p class="text-xs text-slate-400">
+        生圖任務結束後，在專案終端機執行下列指令，即可同步圖檔並推播至線上網址：
+      </p>
+      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-sky-300 space-y-2 overflow-x-auto">
+        <p><span class="text-slate-500"># 1. 自動校準伴侶程式題庫與圖片標記</span><br>python scripts/sync_portable_dataset.py</p>
+        <p><span class="text-slate-500"># 2. 打包建置並推送到 Vercel 上線</span><br>cmd.exe /c "npm run build"<br>git add public/portable_studio.html dist/portable_studio.html<br>git commit -m "feat(studio): sync latest dataset and image status"<br>git push origin main</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+    TOEIC Vocab PWA · Portable Studio Companion · 2026
+  </footer>
+
+</body>
+</html>

@@ -50,3 +50,10 @@ sample_*
 applicant.jpg
 a_copy_of*
 pollinations_vs_imagen3_preview.html
+
+# AI Agent Charters, private skills, and local SOP (Plan B: Local only, keep GitHub open-source)
+AGENTS.md
+GEMINI.md
+.agent/
+.agents/
+
