@@ -1,0 +1,39 @@
+{
+  "fullMigrationSummary": {
+    "status": "PASS",
+    "intendedEligibleCount": 6750,
+    "alreadyMigratedCount": 110,
+    "newlyMigratedCount": 6750,
+    "finalTotalManifestCount": 6860,
+    "failedCount": 0,
+    "retriedCount": 1,
+    "uploadWallTimeSec": 6242.8,
+    "uploadWallTimeMin": 104.05,
+    "batchCommitLatencyMs": 3945.8,
+    "snapshotUri": "manifests/manifest-1789750459209.json",
+    "r2PublicBytesAdded": 921232848,
+    "r2PublicMbAdded": 878.56,
+    "estR2PrivateBytesAdded": 9112500,
+    "avgImageSizeBytes": 136478.9,
+    "manifestRawBeforeBytes": 7653,
+    "manifestRawAfterBytes": 466654,
+    "manifestGzipBeforeBytes": 2400,
+    "manifestGzipAfterBytes": 131624,
+    "manifestGzipDiffBytes": 129224,
+    "localWebpCount": 7165,
+    "localOriginalsCount": 7080
+  },
+  "provenanceBreakdown": {
+    "promptProvenance": {
+      "recovered-from-audit": 6750
+    },
+    "formulaVersion": {
+      "modern-editorial": 937,
+      "legacy-raw": 5813
+    }
+  },
+  "samplingVerification": {
+    "migratedSample100Pass": 100,
+    "orphanSample50Pass": 50
+  }
+}

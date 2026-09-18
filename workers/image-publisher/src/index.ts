@@ -25,6 +25,14 @@ interface PublishMetadata {
   wordId: string;
   imageSha256: string;
   prompt?: {
+    promptProvenance?: 'recovered-from-audit' | 'legacy-local-unrecorded' | 'unknown';
+    historicalPrompt?: string | null;
+    currentDatasetContext?: {
+      source: string;
+      visualAnchorPrompt?: string;
+      exampleEn?: string;
+      exampleZh?: string;
+    } | null;
     formulaVersion?: string;
     fullPromptText?: string;
     promptHash?: string;
