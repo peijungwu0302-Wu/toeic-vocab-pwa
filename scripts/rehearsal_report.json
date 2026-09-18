@@ -1,0 +1,337 @@
+{
+  "rehearsalSummary": {
+    "status": "PASS",
+    "totalWordsMigrated": 100,
+    "baselineCount": 10,
+    "finalCount": 110,
+    "snapshotUri": "manifests/manifest-1789742290336.json",
+    "snapshotAccessible": true,
+    "uploadWallTimeSec": 114.01,
+    "avgUploadWallTimeSec": 1.14,
+    "batchCommitLatencyMs": 3065.22,
+    "avgWorkerExecutionMs": 1.8,
+    "r2PublicBytesAdded": 11203336,
+    "r2PrivateBytesAdded": 133905,
+    "avgImageSizeBytes": 112033.4,
+    "avgLedgerSizeBytes": 1339.0,
+    "manifestRawBeforeBytes": 852,
+    "manifestRawAfterBytes": 7653,
+    "manifestRawDiffBytes": 6801,
+    "manifestGzipBeforeBytes": 393,
+    "manifestGzipAfterBytes": 2400,
+    "manifestGzipDiffBytes": 2007,
+    "localWebpCount": 7165,
+    "localOriginalsCount": 7080
+  },
+  "stratifiedBreakdown": {
+    "legacy_local": 4,
+    "phrase_special": 26,
+    "audit_boosted": 40,
+    "audit_raw": 30
+  },
+  "provenanceStats": {
+    "formulaDistribution": {
+      "legacy-local-unrecorded": 4,
+      "phrase-v4": 23,
+      "legacy-phrase": 3,
+      "modern-editorial": 40,
+      "legacy-raw": 30
+    },
+    "generatorDistribution": {
+      "legacy-migration": 100
+    }
+  },
+  "integrityVerification": {
+    "cdnDeliveryPass": 100,
+    "cdnDeliveryFail": 0,
+    "sha256MatchPass": 100,
+    "ledgerPass": 100,
+    "ledgerFail": 0
+  },
+  "samplingResolutions": {
+    "migratedSample20": [
+      {
+        "wordId": "tw_w_9794f1736a04",
+        "headword": "acquaintance",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_9794f1736a04/v1.webp",
+        "version": 1,
+        "shaPrefix": "0b1982eb85fd64a2"
+      },
+      {
+        "wordId": "tw_p_e0b993648c73",
+        "headword": "file folder",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_e0b993648c73/v1.webp",
+        "version": 1,
+        "shaPrefix": "86ab4bae31113efd"
+      },
+      {
+        "wordId": "tw_w_e6bad0a1b3a9",
+        "headword": "lines",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_e6bad0a1b3a9/v1.webp",
+        "version": 1,
+        "shaPrefix": "841bdef3b41ebad1"
+      },
+      {
+        "wordId": "tw_w_f8157282d578",
+        "headword": "survival",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_f8157282d578/v1.webp",
+        "version": 1,
+        "shaPrefix": "14f5a0f5cb6ac412"
+      },
+      {
+        "wordId": "tw_w_df94666ba33f",
+        "headword": "article",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_df94666ba33f/v1.webp",
+        "version": 1,
+        "shaPrefix": "e3d23966f516ceed"
+      },
+      {
+        "wordId": "tw_w_55fd444df1e4",
+        "headword": "actor",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_55fd444df1e4/v1.webp",
+        "version": 1,
+        "shaPrefix": "c37f4fb1f7cb4bf4"
+      },
+      {
+        "wordId": "tw_p_12eef498b821",
+        "headword": "cut benefits",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_12eef498b821/v1.webp",
+        "version": 1,
+        "shaPrefix": "050761e0f23d6d0c"
+      },
+      {
+        "wordId": "tw_p_bdc167d4c887",
+        "headword": "grocery store",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_bdc167d4c887/v1.webp",
+        "version": 1,
+        "shaPrefix": "8418611e9dc254c7"
+      },
+      {
+        "wordId": "tw_p_8d08f3506cac",
+        "headword": "be seated",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_8d08f3506cac/v1.webp",
+        "version": 1,
+        "shaPrefix": "2c5dde7ccdd56662"
+      },
+      {
+        "wordId": "tw_w_5e5315bdef87",
+        "headword": "footwear",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_5e5315bdef87/v1.webp",
+        "version": 1,
+        "shaPrefix": "a0aafee5e944d5be"
+      },
+      {
+        "wordId": "tw_w_760d2fff0357",
+        "headword": "dates",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_760d2fff0357/v1.webp",
+        "version": 1,
+        "shaPrefix": "b41e46c75de78798"
+      },
+      {
+        "wordId": "tw_p_2bd235a1c75f",
+        "headword": "reach one’s full potential",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_2bd235a1c75f/v1.webp",
+        "version": 1,
+        "shaPrefix": "c12b3d8fef5040bc"
+      },
+      {
+        "wordId": "tw_w_f8640aae79e9",
+        "headword": "supposed",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_f8640aae79e9/v1.webp",
+        "version": 1,
+        "shaPrefix": "134070c574d636a9"
+      },
+      {
+        "wordId": "tw_w_409d1b5ea57f",
+        "headword": "eighteen",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_409d1b5ea57f/v1.webp",
+        "version": 1,
+        "shaPrefix": "f131c9cb68181494"
+      },
+      {
+        "wordId": "tw_p_0e48823bcec6",
+        "headword": "instead of",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_0e48823bcec6/v1.webp",
+        "version": 1,
+        "shaPrefix": "e7ed031ae0871364"
+      },
+      {
+        "wordId": "tw_p_c0b763a3a251",
+        "headword": "as a courtesy (= as a favor)",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_c0b763a3a251/v1.webp",
+        "version": 1,
+        "shaPrefix": "6b8f1adc96b305fe"
+      },
+      {
+        "wordId": "tw_p_3aebe6c1803a",
+        "headword": "glass cabinet",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_p_3aebe6c1803a/v1.webp",
+        "version": 1,
+        "shaPrefix": "e502017d17c00a24"
+      },
+      {
+        "wordId": "tw_w_ffbeb8bfade8",
+        "headword": "hair",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_ffbeb8bfade8/v1.webp",
+        "version": 1,
+        "shaPrefix": "67fda3b3eeae3565"
+      },
+      {
+        "wordId": "tw_w_f844bd55092c",
+        "headword": "analyst",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_f844bd55092c/v1.webp",
+        "version": 1,
+        "shaPrefix": "b8be058d7eedb91c"
+      },
+      {
+        "wordId": "tw_w_0859334e9a6b",
+        "headword": "manufacturing",
+        "resolvedTo": "R2_CDN",
+        "url": "https://toeic-image-publisher.peijungwu0302.workers.dev/words/tw_w_0859334e9a6b/v1.webp",
+        "version": 1,
+        "shaPrefix": "dcba2d490aaa1eaa"
+      }
+    ],
+    "unmigratedSample20": [
+      {
+        "wordId": "tw_w_6317e5b8f391",
+        "headword": "billing",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/billing.webp"
+      },
+      {
+        "wordId": "tw_w_992e6ef3a6d6",
+        "headword": "gather",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/gather.webp"
+      },
+      {
+        "wordId": "tw_w_6d9ca49ea916",
+        "headword": "financial",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/financial.webp"
+      },
+      {
+        "wordId": "tw_w_65b3cda95687",
+        "headword": "fun",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/fun.webp"
+      },
+      {
+        "wordId": "tw_w_30e4bd4ed3ce",
+        "headword": "electronic",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/electronic.webp"
+      },
+      {
+        "wordId": "tw_w_83393038f249",
+        "headword": "currently",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/currently.webp"
+      },
+      {
+        "wordId": "tw_w_3b9c4454ef10",
+        "headword": "borrow",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/borrow.webp"
+      },
+      {
+        "wordId": "tw_w_e5ae759b7bf0",
+        "headword": "degree",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/degree.webp"
+      },
+      {
+        "wordId": "tw_w_9c6a9899fcbf",
+        "headword": "excite",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/excite.webp"
+      },
+      {
+        "wordId": "tw_w_33d7fa632140",
+        "headword": "care",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/care.webp"
+      },
+      {
+        "wordId": "tw_w_b6e6f67989d5",
+        "headword": "hi",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/hi.webp"
+      },
+      {
+        "wordId": "tw_w_39dbebc3cf36",
+        "headword": "able",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/able.webp"
+      },
+      {
+        "wordId": "tw_w_b5f154be5733",
+        "headword": "grey",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/grey.webp"
+      },
+      {
+        "wordId": "tw_w_984adb9cdecc",
+        "headword": "hesitate",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/hesitate.webp"
+      },
+      {
+        "wordId": "tw_p_eb2dd5a02218",
+        "headword": "be based on",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/be_based_on.webp"
+      },
+      {
+        "wordId": "tw_w_da54ae8c6127",
+        "headword": "fuel",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/fuel.webp"
+      },
+      {
+        "wordId": "tw_p_0441bc161e17",
+        "headword": "customer survey",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/customer_survey.webp"
+      },
+      {
+        "wordId": "tw_w_2d2034f4bdd4",
+        "headword": "cloudy",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/cloudy.webp"
+      },
+      {
+        "wordId": "tw_w_c71b87db9ecc",
+        "headword": "basis",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/basis.webp"
+      },
+      {
+        "wordId": "tw_w_fdce38811ce2",
+        "headword": "book",
+        "resolvedTo": "LOCAL_FALLBACK",
+        "url": "/assets/images/words/book.webp"
+      }
+    ]
+  }
+}

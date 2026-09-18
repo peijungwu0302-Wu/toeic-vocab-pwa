@@ -133,8 +133,26 @@ export default {
       });
     }
 
-    // 2.1 Route: GET /words/* (Public image delivery route)
-    if (request.method === 'GET' && url.pathname.startsWith('/words/')) {
+    // 2.05 Route: GET/HEAD /manifests/* (Public manifest snapshot delivery)
+    if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname.startsWith('/manifests/')) {
+      const objectKey = url.pathname.slice(1);
+      const object = await env.PUBLIC_BUCKET.get(objectKey);
+      if (!object) {
+        return new Response('Not Found', { status: 404, headers: corsHeaders });
+      }
+      const headers = new Headers();
+      headers.set('Content-Type', 'application/json; charset=utf-8');
+      headers.set('etag', object.httpEtag);
+      headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+      Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v as string));
+      if (request.method === 'HEAD') {
+        return new Response(null, { headers });
+      }
+      return new Response(object.body, { headers });
+    }
+
+    // 2.1 Route: GET/HEAD /words/* (Public image delivery route)
+    if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname.startsWith('/words/')) {
       const objectKey = url.pathname.slice(1);
       const object = await env.PUBLIC_BUCKET.get(objectKey);
       if (!object) {
@@ -145,6 +163,9 @@ export default {
       headers.set('etag', object.httpEtag);
       headers.set('Cache-Control', 'public, max-age=31536000, immutable');
       Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v as string));
+      if (request.method === 'HEAD') {
+        return new Response(null, { headers });
+      }
       return new Response(object.body, { headers });
     }
 
