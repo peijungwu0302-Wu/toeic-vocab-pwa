@@ -28,7 +28,7 @@ import { progressRepository } from '../repositories/progressRepository';
 import { courseRepository } from '../repositories/courseRepository';
 import { fsrsService } from '../services/fsrsService';
 import { audioService } from '../services/audioService';
-import { imageService } from '../services/imageService';
+import { useWordImage } from '../services/imageService';
 import { morphologyService, MorphologyInfo } from '../services/morphologyService';
 import { geminiService, SentenceEvaluationResult, NuanceExplanationResult, MnemonicResult, InstantQuizResult } from '../services/geminiService';
 import { Word, Progress } from '../types/db';
@@ -803,8 +803,8 @@ export const FlashcardPage: React.FC = () => {
     ? word.examples
     : [];
 
-  // High-associative business imagery
-  const imgInfo = imageService.getImageForWord(word.headword, word.category);
+  // High-associative business imagery (Reactive to async R2 manifest arrival!)
+  const imgInfo = useWordImage(word.headword, word.category, word.id);
   const finalImageUrl = imgInfo.url;
 
   return (

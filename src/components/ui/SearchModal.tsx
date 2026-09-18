@@ -195,7 +195,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
             {/* 🌟 Word Context Image Banner in Search Modal */}
             {(() => {
-              const imgInfo = imageService.getImageForWord(selectedWord.headword, selectedWord.category);
+              const imgInfo = imageService.getImageForWord(selectedWord.headword, selectedWord.category, selectedWord.id);
               return (
                 <div className="relative rounded-2xl overflow-hidden border border-slate-700 shadow-md h-32 bg-slate-800">
                   <img
@@ -417,7 +417,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               </div>
             ) : searchResults.length > 0 ? (
               searchResults.map((w) => {
-                const img = imageService.getImageForWord(w.headword, w.category);
+                const img = imageService.getImageForWord(w.headword, w.category, w.id);
                 return (
                   <div
                     key={w.id}

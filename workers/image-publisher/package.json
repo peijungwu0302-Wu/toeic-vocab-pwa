@@ -1,0 +1,15 @@
+{
+  "name": "toeic-image-publisher",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker for TOEIC Vocab image publishing and manifest management",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240909.0",
+    "typescript": "^5.5.4",
+    "wrangler": "^4.134.0"
+  }
+}

@@ -372,12 +372,12 @@ export const StatsPage: React.FC = () => {
             {/* Visual Image Banner */}
             <div className="relative rounded-xl overflow-hidden border border-slate-700 bg-slate-950 max-h-36">
               <img
-                src={imageService.getImageForWord(previewWord.headword, previewWord.category).url}
+                src={imageService.getImageForWord(previewWord.headword, previewWord.category, previewWord.id).url}
                 alt={previewWord.headword}
                 className="w-full h-32 object-cover"
               />
               <div className="absolute bottom-1.5 left-2 bg-slate-900/90 border border-slate-700/80 rounded-md px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
-                📸 {imageService.getImageForWord(previewWord.headword, previewWord.category).tag}
+                📸 {imageService.getImageForWord(previewWord.headword, previewWord.category, previewWord.id).tag}
               </div>
             </div>
 

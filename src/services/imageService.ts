@@ -3,6 +3,7 @@
  * 專為多益高頻核心 1200 單字全集設計的語意具象圖片映射庫（0 API 消耗，100% 離線秒開）
  */
 
+import { useState, useEffect } from 'react';
 import localImageWords from '../data/localImageWords.json';
 
 export interface ImageInfo {
@@ -181,11 +182,94 @@ function simpleHash(str: string): number {
   return Math.abs(hash);
 }
 
+export interface RuntimeManifestData {
+  schemaVersion: string;
+  manifestUri: string | null;
+  count: number;
+  images: Record<string, { v: number; h: string; w?: number; ht?: number }>;
+}
+
+let runtimeManifest: RuntimeManifestData | null = null;
+let isFetchingManifest = false;
+
+export const R2_MEDIA_BASE_URL = 'https://toeic-image-publisher.peijungwu0302.workers.dev';
+
+type ManifestListener = (manifest: RuntimeManifestData) => void;
+const manifestListeners = new Set<ManifestListener>();
+
+export function onManifestLoaded(listener: ManifestListener): () => void {
+  if (runtimeManifest) {
+    listener(runtimeManifest);
+  }
+  manifestListeners.add(listener);
+  return () => {
+    manifestListeners.delete(listener);
+  };
+}
+
+export async function initRuntimeManifest(): Promise<RuntimeManifestData | null> {
+  if (runtimeManifest) return runtimeManifest;
+  if (isFetchingManifest) return null;
+  isFetchingManifest = true;
+  try {
+    const res = await fetch(`${R2_MEDIA_BASE_URL}/api/manifest/current`);
+    if (res.ok) {
+      runtimeManifest = await res.json();
+      manifestListeners.forEach((fn) => {
+        try {
+          fn(runtimeManifest!);
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    }
+  } catch (err) {
+    console.warn('[imageService] Could not fetch R2 manifest:', err);
+  } finally {
+    isFetchingManifest = false;
+  }
+  return runtimeManifest;
+}
+
+// Automatically trigger quiet background manifest preload
+if (typeof window !== 'undefined') {
+  setTimeout(() => {
+    initRuntimeManifest();
+  }, 50);
+}
+
+/**
+ * React hook: Automatically reactive to R2 runtime manifest async arrival!
+ * Ensures that if manifest loads after initial render, the UI immediately re-renders with the R2 image.
+ */
+export function useWordImage(headword: string, category = '辦公日常', wordId?: string): { url: string; tag: string } {
+  const [imgInfo, setImgInfo] = useState(() => imageService.getImageForWord(headword, category, wordId));
+
+  useEffect(() => {
+    setImgInfo(imageService.getImageForWord(headword, category, wordId));
+    const unsubscribe = onManifestLoaded(() => {
+      setImgInfo(imageService.getImageForWord(headword, category, wordId));
+    });
+    return unsubscribe;
+  }, [headword, category, wordId]);
+
+  return imgInfo;
+}
+
 export const imageService = {
   /**
    * Get semantic, highly associative business photo object for any TOEIC word
    */
-  getImageForWord(headword: string, category = '辦公日常'): { url: string; tag: string } {
+  getImageForWord(headword: string, category = '辦公日常', wordId?: string): { url: string; tag: string } {
+    // Priority -1: R2 Runtime Manifest match (if wordId provided and active in R2 manifest)
+    if (wordId && runtimeManifest?.images?.[wordId]) {
+      const entry = runtimeManifest.images[wordId];
+      return {
+        url: `${R2_MEDIA_BASE_URL}/words/${wordId}/v${entry.v}.webp`,
+        tag: `${headword} 商務實景 (R2 v${entry.v})`
+      };
+    }
+
     const cleanWord = headword.trim().toLowerCase();
     const slugWord = cleanWord.replace(/[^a-z0-9_-]/g, '_');
 

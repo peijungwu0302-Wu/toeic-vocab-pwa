@@ -726,7 +726,7 @@ export const FastSkimPage: React.FC = () => {
             {showImage && !imgFailed && (
               <div className="relative -mx-5 -mt-5 mb-3 h-48 sm:h-52 overflow-hidden rounded-t-3xl border-b border-slate-700/60 shrink-0">
                 <img
-                  src={imageService.getImageForWord(currentWord.headword, currentWord.category).url}
+                  src={imageService.getImageForWord(currentWord.headword, currentWord.category, currentWord.id).url}
                   alt={currentWord.headword}
                   onError={() => setImgFailed(true)}
                   className="w-full h-full object-cover object-center brightness-90 contrast-105"

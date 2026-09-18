@@ -13,12 +13,14 @@ def slugify(text):
     return clean if clean else 'word'
 
 def sync():
-    course_map = {}
+    course_prompt_map = {}
+    course_id_map = {}
     for tier in ['core-1200', 'advanced-2500', 'expert-high-part1', 'expert-high-part2', 'expert-high-part3']:
         p = ROOT / 'public' / 'data' / 'v1' / 'courses' / f'course-{tier}.json'
         if p.exists():
             d = json.load(open(p, encoding='utf-8'))
-            course_map[tier] = {w.get('headword'): w.get('visualAnchor', {}).get('imagePrompt') for w in d.get('words', []) if w.get('visualAnchor', {}).get('imagePrompt')}
+            course_prompt_map[tier] = {w.get('headword'): w.get('visualAnchor', {}).get('imagePrompt') for w in d.get('words', []) if w.get('visualAnchor', {}).get('imagePrompt')}
+            course_id_map[tier] = {w.get('headword'): w.get('id') for w in d.get('words', [])}
 
     words_dir = ROOT / 'public' / 'assets' / 'images' / 'words'
 
@@ -38,12 +40,16 @@ def sync():
         pending_stats = {}
 
         for tier, items in data.items():
-            prompts = course_map.get(tier, {})
+            prompts = course_prompt_map.get(tier, {})
+            id_map = course_id_map.get(tier, {})
             pending_count = 0
             for item in items:
                 hw = item.get('headword', '')
                 slug = item.get('slug', '')
                 norm_slug = slugify(hw)
+
+                if hw in id_map and id_map[hw]:
+                    item['id'] = id_map[hw]
 
                 if hw in prompts and prompts[hw]:
                     item['prompt'] = prompts[hw]
