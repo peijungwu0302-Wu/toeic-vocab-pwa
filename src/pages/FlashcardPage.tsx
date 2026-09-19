@@ -703,6 +703,15 @@ export const FlashcardPage: React.FC = () => {
     }
   };
 
+  // High-associative business imagery (Reactive to async R2 manifest arrival!)
+  // Placed at component top-level before early returns to preserve strict hook execution order (#310 guard)
+  const imgInfo = useWordImage(
+    currentItem?.word?.headword,
+    currentItem?.word?.category,
+    currentItem?.word?.id
+  );
+  const finalImageUrl = imgInfo.url;
+
   if (isLoading) {
     return (
       <div className="text-center py-16 text-slate-400">
@@ -803,9 +812,7 @@ export const FlashcardPage: React.FC = () => {
     ? word.examples
     : [];
 
-  // High-associative business imagery (Reactive to async R2 manifest arrival!)
-  const imgInfo = useWordImage(word.headword, word.category, word.id);
-  const finalImageUrl = imgInfo.url;
+  // High-associative business imagery imgInfo and finalImageUrl are resolved at top level (L708)
 
   return (
     <div className="flex flex-col h-full justify-between w-full max-w-md mx-auto space-y-1 pb-1 select-none overscroll-y-contain touch-pan-y overflow-x-hidden">

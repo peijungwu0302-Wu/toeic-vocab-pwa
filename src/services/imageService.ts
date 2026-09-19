@@ -281,7 +281,7 @@ if (typeof window !== 'undefined') {
  * React hook: Automatically reactive to R2 runtime manifest async arrival!
  * Ensures that if manifest loads after initial render, the UI immediately re-renders with the R2 image.
  */
-export function useWordImage(headword: string, category = '辦公日常', wordId?: string): { url: string; tag: string } {
+export function useWordImage(headword?: string | null, category = '辦公日常', wordId?: string | null): { url: string; tag: string } {
   const [imgInfo, setImgInfo] = useState(() => imageService.getImageForWord(headword, category, wordId));
 
   useEffect(() => {
@@ -303,7 +303,14 @@ export const imageService = {
    * 2. Curated Unsplash associative business photo
    * 3. Deterministic Category Pool matching (100% stable, zero 404s)
    */
-  getImageForWord(headword: string, category = '辦公日常', wordId?: string): { url: string; tag: string } {
+  getImageForWord(headword?: string | null, category = '辦公日常', wordId?: string | null): { url: string; tag: string } {
+    if (!headword || !headword.trim()) {
+      return {
+        url: OFFLINE_PLACEHOLDER_URL,
+        tag: '載入中...'
+      };
+    }
+
     // 1. R2 Runtime Manifest match (Primary production source of truth)
     if (wordId && runtimeManifest?.images?.[wordId]) {
       const entry = runtimeManifest.images[wordId];
