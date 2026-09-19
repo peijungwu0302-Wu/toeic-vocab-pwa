@@ -1,16 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { Check, X, RotateCw, RotateCcw, ArrowRight } from 'lucide-react';
 
 interface SwipeableCardProps {
   children: React.ReactNode;
-  onSwipeLeft?: () => void; // Rate 3 or Previous
-  onSwipeRight?: () => void; // Rate 1 or Flip / Return
+  onSwipeLeft?: () => void; // Rate 3, Flip to back, or History Forward
+  onSwipeRight?: () => void; // Rate 1 or History Backward
   onClick?: () => void;
   disabled?: boolean;
   handPreference?: 'left' | 'right';
   overlayMode?: 'review' | 'front' | 'rewind' | 'none';
   canSwipeLeft?: boolean;
+  canSwipeRight?: boolean;
 }
 
 export const SwipeableCard: React.FC<SwipeableCardProps> = ({
@@ -21,21 +22,33 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   disabled = false,
   handPreference = 'left',
   overlayMode = 'review',
-  canSwipeLeft = true
+  canSwipeLeft = true,
+  canSwipeRight = true,
 }) => {
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 0, 200], [-7, 0, 7]);
 
   // Opacities for 2-direction horizontal swipe overlays (smooth fade-in from 30px to 80px)
-  const rightAgainOpacity = useTransform(x, [30, 80], [0, 1]); // Drag Right -> Again
-  const leftGoodOpacity = useTransform(x, [-30, -80], [0, 1]); // Drag Left -> Good
+  const rightAgainOpacity = useTransform(x, [30, 80], [0, 1]); // Drag Right
+  const leftGoodOpacity = useTransform(x, [-30, -80], [0, 1]); // Drag Left
 
-  const [isDragging, setIsDragging] = useState(false);
   const touchZoneRef = useRef<'fast' | 'content'>('content');
   const dragDirectionLockedRef = useRef<'vertical' | 'horizontal' | null>(null);
 
+  const hasSwipedRef = useRef(false);
+  const dragDistanceRef = useRef(0);
+  const lastActionTimeRef = useRef(0);
+
+  const isActionLocked = () => {
+    const now = Date.now();
+    if (now - lastActionTimeRef.current < 260) return true;
+    lastActionTimeRef.current = now;
+    return false;
+  };
+
   const handleDragStart = (event: MouseEvent | TouchEvent | PointerEvent) => {
-    setIsDragging(true);
+    hasSwipedRef.current = false;
+    dragDistanceRef.current = 0;
     dragDirectionLockedRef.current = null;
 
     // Detect if touch originated in the upper fast-swipe zone
@@ -47,6 +60,7 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   const handleDrag = (_: unknown, info: PanInfo) => {
     const absX = Math.abs(info.offset.x);
     const absY = Math.abs(info.offset.y);
+    dragDistanceRef.current = Math.hypot(absX, absY);
 
     if (touchZoneRef.current === 'fast') {
       // In fast zone, we prioritize horizontal swipe
@@ -74,8 +88,6 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   };
 
   const handleDragEnd = (_: unknown, info: PanInfo) => {
-    setIsDragging(false);
-
     const isFastZone = touchZoneRef.current === 'fast';
     const absX = Math.abs(info.offset.x);
     const absY = Math.abs(info.offset.y);
@@ -103,29 +115,18 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       }
     } else {
       // Content Reading Zone (Plan A): dynamic ratio + long sweep override
-      // 1. Long Sweep Override: if user dragged across screen (> 70px) with natural arc motion
-      // 2. Flick: brisk horizontal flick (> 290px/s)
       const contentThresholdX = 70;
       const contentVelocity = 290;
 
-      // Ergonomic Thumb Arc Compensation based on Handedness:
-      // Left Hand:
-      // - Swiping LEFT (掌握) naturally scoops downward-left (offset.y > 0).
-      // - Swiping RIGHT (忘記) naturally pushes upward-right (offset.y < 0).
-      // Right Hand:
-      // - Swiping RIGHT naturally scoops downward-right (offset.y > 0).
-      // - Swiping LEFT naturally pushes upward-left (offset.y < 0).
       let ratioMultiplier = 1.05;
       if (handPreference === 'left') {
         if (info.offset.x < 0 && info.offset.y >= -15) {
-          // Left-hand inward scoop: highly natural thumb contraction towards bottom-left
           ratioMultiplier = 0.85;
         } else if (info.offset.x > 0 && info.offset.y <= 20) {
           ratioMultiplier = 0.9;
         }
       } else {
         if (info.offset.x > 0 && info.offset.y >= -15) {
-          // Right-hand inward scoop: highly natural thumb contraction towards bottom-right
           ratioMultiplier = 0.85;
         } else if (info.offset.x < 0 && info.offset.y <= 20) {
           ratioMultiplier = 0.9;
@@ -147,11 +148,18 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
     }
 
     if (isSwipeTriggered && direction) {
+      if (isActionLocked()) {
+        x.set(0);
+        return;
+      }
+      hasSwipedRef.current = true;
       try { navigator.vibrate?.([12]); } catch {}
-      if (direction === 'right' && onSwipeRight) {
+      if (direction === 'right' && canSwipeRight && onSwipeRight) {
         onSwipeRight();
-      } else if (direction === 'left' && onSwipeLeft) {
+      } else if (direction === 'left' && canSwipeLeft && onSwipeLeft) {
         onSwipeLeft();
+      } else {
+        x.set(0);
       }
     } else {
       x.set(0);
@@ -171,7 +179,10 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
         onDrag={handleDrag}
         onDragEnd={handleDragEnd}
         onClick={() => {
-          if (!isDragging && onClick) onClick();
+          if (!disabled && !hasSwipedRef.current && dragDistanceRef.current <= 12 && onClick) {
+            if (isActionLocked()) return;
+            onClick();
+          }
         }}
         className={`w-full h-full relative ${disabled ? '' : 'cursor-grab active:cursor-grabbing'}`}
       >
@@ -201,40 +212,58 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
               </>
             )}
 
-            {/* Mode: front (Front of card: Swipe Right -> Flip, Swipe Left -> Previous Word) */}
+            {/* Mode: front (Front of active card: Swipe Left -> Flip to Back, Swipe Right -> Rewind to Previous Word) */}
             {overlayMode === 'front' && (
               <>
-                {/* Right Swipe: 📖 翻看背面 */}
-                <motion.div
-                  style={{ opacity: rightAgainOpacity }}
-                  className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-indigo-600/95 text-white font-black border-2 border-indigo-300 shadow-2xl shadow-indigo-950/60 backdrop-blur-md transform -rotate-12"
-                >
-                  <RotateCw size={22} className="stroke-[3]" />
-                  <span className="text-sm tracking-wider">📖 翻看背面</span>
-                </motion.div>
-
-                {/* Left Swipe: ↺ 回看上一詞 */}
-                {canSwipeLeft && (
+                {/* Right Swipe: ↺ 回看上一詞 */}
+                {canSwipeRight && (
                   <motion.div
-                    style={{ opacity: leftGoodOpacity }}
-                    className="absolute top-6 right-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-amber-600/95 text-white font-black border-2 border-amber-300 shadow-2xl shadow-amber-950/60 backdrop-blur-md transform rotate-12"
+                    style={{ opacity: rightAgainOpacity }}
+                    className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-amber-600/95 text-white font-black border-2 border-amber-300 shadow-2xl shadow-amber-950/60 backdrop-blur-md transform -rotate-12"
                   >
                     <RotateCcw size={22} className="stroke-[3]" />
                     <span className="text-sm tracking-wider">↺ 回看上一詞</span>
                   </motion.div>
                 )}
+
+                {/* Left Swipe: 📖 翻到背面 */}
+                {canSwipeLeft && (
+                  <motion.div
+                    style={{ opacity: leftGoodOpacity }}
+                    className="absolute top-6 right-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-indigo-600/95 text-white font-black border-2 border-indigo-300 shadow-2xl shadow-indigo-950/60 backdrop-blur-md transform rotate-12"
+                  >
+                    <RotateCw size={22} className="stroke-[3]" />
+                    <span className="text-sm tracking-wider">📖 翻到背面</span>
+                  </motion.div>
+                )}
               </>
             )}
 
-            {/* Mode: rewind (Viewing Previous Word: Swipe Right -> Return to Current) */}
+            {/* Mode: rewind (Viewing history: Swipe Left -> Forward towards current, Swipe Right -> earlier history) */}
             {overlayMode === 'rewind' && (
-              <motion.div
-                style={{ opacity: rightAgainOpacity }}
-                className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-emerald-600/95 text-white font-black border-2 border-emerald-300 shadow-2xl shadow-emerald-950/60 backdrop-blur-md transform -rotate-12"
-              >
-                <ArrowRight size={22} className="stroke-[3]" />
-                <span className="text-sm tracking-wider">➔ 返回當前題目</span>
-              </motion.div>
+              <>
+                {/* Right Swipe: ↺ 回看更早 (if canSwipeRight) */}
+                {canSwipeRight && (
+                  <motion.div
+                    style={{ opacity: rightAgainOpacity }}
+                    className="absolute top-6 left-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-amber-600/95 text-white font-black border-2 border-amber-300 shadow-2xl shadow-amber-950/60 backdrop-blur-md transform -rotate-12"
+                  >
+                    <RotateCcw size={22} className="stroke-[3]" />
+                    <span className="text-sm tracking-wider">↺ 回看更早</span>
+                  </motion.div>
+                )}
+
+                {/* Left Swipe: ➔ 返回題目 */}
+                {canSwipeLeft && (
+                  <motion.div
+                    style={{ opacity: leftGoodOpacity }}
+                    className="absolute top-6 right-6 z-30 pointer-events-none flex items-center space-x-2 px-4 py-2 rounded-2xl bg-emerald-600/95 text-white font-black border-2 border-emerald-300 shadow-2xl shadow-emerald-950/60 backdrop-blur-md transform rotate-12"
+                  >
+                    <ArrowRight size={22} className="stroke-[3]" />
+                    <span className="text-sm tracking-wider">➔ 返回題目</span>
+                  </motion.div>
+                )}
+              </>
             )}
           </>
         )}

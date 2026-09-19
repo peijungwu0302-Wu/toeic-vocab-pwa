@@ -213,6 +213,17 @@ export interface RuntimeManifestData {
   images: Record<string, { v: number; h: string; w?: number; ht?: number }>;
 }
 
+export function isValidManifest(data: any): data is RuntimeManifestData {
+  return Boolean(
+    data &&
+    typeof data === 'object' &&
+    typeof data.count === 'number' &&
+    typeof data.images === 'object' &&
+    data.images !== null &&
+    !Array.isArray(data.images)
+  );
+}
+
 let runtimeManifest: RuntimeManifestData | null = null;
 let isFetchingManifest = false;
 
@@ -233,14 +244,21 @@ export function onManifestLoaded(listener: ManifestListener): () => void {
 
 const MANIFEST_STORAGE_KEY = 'toeic_runtime_manifest_cache';
 
-// Load cached manifest instantly if available in localStorage
+// Load cached manifest instantly if available in localStorage (with schema validation)
 if (typeof window !== 'undefined') {
   try {
     const cached = localStorage.getItem(MANIFEST_STORAGE_KEY);
     if (cached) {
-      runtimeManifest = JSON.parse(cached);
+      const parsed = JSON.parse(cached);
+      if (isValidManifest(parsed)) {
+        runtimeManifest = parsed;
+      } else {
+        localStorage.removeItem(MANIFEST_STORAGE_KEY);
+      }
     }
-  } catch {}
+  } catch {
+    try { localStorage.removeItem(MANIFEST_STORAGE_KEY); } catch {}
+  }
 }
 
 export async function initRuntimeManifest(): Promise<RuntimeManifestData | null> {
@@ -250,17 +268,27 @@ export async function initRuntimeManifest(): Promise<RuntimeManifestData | null>
     const res = await fetch(`${R2_MEDIA_BASE_URL}/api/manifest/current`);
     if (res.ok) {
       const freshManifest = await res.json();
-      runtimeManifest = freshManifest;
-      try {
-        localStorage.setItem(MANIFEST_STORAGE_KEY, JSON.stringify(freshManifest));
-      } catch {}
-      manifestListeners.forEach((fn) => {
+      if (isValidManifest(freshManifest)) {
+        const hasChanged =
+          !runtimeManifest ||
+          runtimeManifest.manifestUri !== freshManifest.manifestUri ||
+          runtimeManifest.count !== freshManifest.count;
+
+        runtimeManifest = freshManifest;
         try {
-          fn(runtimeManifest!);
-        } catch (e) {
-          console.error(e);
+          localStorage.setItem(MANIFEST_STORAGE_KEY, JSON.stringify(freshManifest));
+        } catch {}
+
+        if (hasChanged) {
+          manifestListeners.forEach((fn) => {
+            try {
+              fn(runtimeManifest!);
+            } catch (e) {
+              console.error(e);
+            }
+          });
         }
-      });
+      }
     }
   } catch (err) {
     console.warn('[imageService] Could not fetch R2 manifest:', err);
@@ -278,21 +306,35 @@ if (typeof window !== 'undefined') {
 }
 
 /**
- * React hook: Automatically reactive to R2 runtime manifest async arrival!
- * Ensures that if manifest loads after initial render, the UI immediately re-renders with the R2 image.
+ * Preloads an image into browser memory cache.
  */
-export function useWordImage(headword?: string | null, category = '辦公日常', wordId?: string | null): { url: string; tag: string } {
-  const [imgInfo, setImgInfo] = useState(() => imageService.getImageForWord(headword, category, wordId));
+export function preloadImage(url?: string | null): void {
+  if (typeof window === 'undefined' || !url || url.startsWith('data:')) return;
+  const img = new Image();
+  img.src = url;
+}
+
+/**
+ * React hook: Instant synchronous first-frame resolution from cached manifest +
+ * reactive auto-update when background manifest arrives.
+ */
+export function useWordImage(
+  headword?: string | null,
+  category = '辦公日常',
+  wordId?: string | null
+): { url: string; tag: string } {
+  // Re-render when fresh manifest arrives from network
+  const [, setManifestTick] = useState(0);
 
   useEffect(() => {
-    setImgInfo(imageService.getImageForWord(headword, category, wordId));
     const unsubscribe = onManifestLoaded(() => {
-      setImgInfo(imageService.getImageForWord(headword, category, wordId));
+      setManifestTick((t) => t + 1);
     });
     return unsubscribe;
-  }, [headword, category, wordId]);
+  }, []);
 
-  return imgInfo;
+  // Synchronous resolution on frame 1 without state-lag or fallback-flash
+  return imageService.getImageForWord(headword, category, wordId);
 }
 
 export const imageService = {

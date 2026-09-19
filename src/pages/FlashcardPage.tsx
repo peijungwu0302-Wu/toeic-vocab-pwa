@@ -28,7 +28,7 @@ import { progressRepository } from '../repositories/progressRepository';
 import { courseRepository } from '../repositories/courseRepository';
 import { fsrsService } from '../services/fsrsService';
 import { audioService } from '../services/audioService';
-import { useWordImage, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
+import { useWordImage, OFFLINE_PLACEHOLDER_URL, imageService, preloadImage } from '../services/imageService';
 import { morphologyService, MorphologyInfo } from '../services/morphologyService';
 import { geminiService, SentenceEvaluationResult, NuanceExplanationResult, MnemonicResult, InstantQuizResult } from '../services/geminiService';
 import { Word, Progress } from '../types/db';
@@ -120,7 +120,9 @@ export const FlashcardPage: React.FC = () => {
 
   const [queue, setQueue] = useState<StudyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isViewingPrevious, setIsViewingPrevious] = useState(false);
+  const [historyOffset, setHistoryOffset] = useState<number>(0);
+  const isViewingPrevious = historyOffset > 0;
+  const activeCardFlippedRef = useRef<boolean>(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isStarred, setIsStarred] = useState(false);
   const [intervalPreviews, setIntervalPreviews] = useState<IntervalPreviewItem[]>([]);
@@ -400,18 +402,23 @@ export const FlashcardPage: React.FC = () => {
       try { localStorage.removeItem(sessionKey); } catch {}
     }
     setCurrentIndex(0);
+    setHistoryOffset(0);
+    activeCardFlippedRef.current = false;
     setIsFlipped(false);
-    setIsViewingPrevious(false);
     setResumedNotice(null);
   };
 
-  const activeStudyIndex = isViewingPrevious && currentIndex > 0 ? currentIndex - 1 : currentIndex;
+  const activeStudyIndex = Math.max(0, currentIndex - historyOffset);
   const currentItem = queue[activeStudyIndex];
 
   useEffect(() => {
     if (currentItem && activeProfile) {
       setIsStarred(Boolean(currentItem.progress.isStarred));
-      setIsFlipped(false);
+      if (historyOffset === 0) {
+        setIsFlipped(activeCardFlippedRef.current);
+      } else {
+        setIsFlipped(false);
+      }
       setShowFullExamTips(false);
       setPreConfidence(null);
       setImgFailed(false);
@@ -452,7 +459,7 @@ export const FlashcardPage: React.FC = () => {
         window.scrollTo({ top: 0, behavior: 'instant' });
       });
     }
-  }, [activeStudyIndex, queue, activeProfile, currentItem]);
+  }, [activeStudyIndex, queue, activeProfile, currentItem, historyOffset]);
 
   const handleToggleStar = async () => {
     if (!currentItem || !activeProfile) return;
@@ -485,7 +492,7 @@ export const FlashcardPage: React.FC = () => {
   };
 
   const handleRate = useCallback(async (rating: FSRSRating) => {
-    if (isViewingPrevious || !currentItem || !activeProfile) return;
+    if (historyOffset > 0 || !currentItem || !activeProfile) return;
 
     const totalElapsedMs = Date.now() - cardStartTimeRef.current;
     const durationMs = Math.max(500, totalElapsedMs - hiddenTimeAccumulatorRef.current);
@@ -509,7 +516,8 @@ export const FlashcardPage: React.FC = () => {
       }));
 
       // Next card immediately without flipping back
-      setIsViewingPrevious(false);
+      setHistoryOffset(0);
+      activeCardFlippedRef.current = false;
       if (currentIndex < queue.length - 1) {
         if (cardBackScrollRef.current) {
           cardBackScrollRef.current.scrollTop = 0;
@@ -531,67 +539,100 @@ export const FlashcardPage: React.FC = () => {
     } catch (err) {
       console.error('[FlashcardPage] Rating error:', err);
     }
-  }, [currentItem, activeProfile, syncState.cloudUserEmail, currentIndex, queue.length, isViewingPrevious]);
+  }, [currentItem, activeProfile, syncState.cloudUserEmail, currentIndex, queue.length, historyOffset]);
 
   // Horizontal Swipe Handlers
-  const handleSwipeLeft = () => {
-    if (isViewingPrevious) {
-      return;
-    }
-    if (isFlipped) {
-      // 👈 Left Swipe on BACK = 💡 掌握 (Good - 3)
-      handleRate(3);
-    } else {
-      // 👈 Left Swipe on FRONT = ↺ 回看上一詞 (Rewind to previous word)
-      if (currentIndex > 0) {
-        setIsViewingPrevious(true);
+  const handleSwipeLeft = useCallback(() => {
+    if (historyOffset > 0) {
+      // In history: 👈 Left Swipe = ➔ 返回題目 (Step forward towards active card)
+      const nextOffset = historyOffset - 1;
+      setHistoryOffset(nextOffset);
+      if (nextOffset === 0) {
+        setIsFlipped(activeCardFlippedRef.current);
+      } else {
         setIsFlipped(false);
-        try { navigator.vibrate?.([15]); } catch {}
       }
-    }
-  };
-
-  const handleSwipeRight = () => {
-    if (isViewingPrevious) {
-      // 👉 Right Swipe on PREVIOUS CARD = ➔ 返回當前題目
-      setIsViewingPrevious(false);
-      setIsFlipped(false);
       try { navigator.vibrate?.([15]); } catch {}
       return;
     }
     if (isFlipped) {
-      // 👉 Right Swipe on BACK = 💥 忘記 (Again - 1)
-      handleRate(1);
+      // 👈 Left Swipe on BACK = 💡 掌握 (Good - 3)
+      if (reviewStyle === 'swipe') {
+        handleRate(3);
+      }
     } else {
-      // 👉 Right Swipe on FRONT = 📖 翻到背面 (Flip card to back)
+      // 👈 Left Swipe on FRONT = 📖 翻到背面 (Flip card to back)
       handleFlipCard();
     }
-  };
+  }, [historyOffset, isFlipped, reviewStyle, handleRate, handleFlipCard]);
+
+  const handleSwipeRight = useCallback(() => {
+    if (historyOffset > 0) {
+      // In history: 👉 Right Swipe = ↺ 回看更早 (Step backward into deeper history)
+      if (activeStudyIndex > 0) {
+        setHistoryOffset(h => h + 1);
+        setIsFlipped(false);
+        try { navigator.vibrate?.([15]); } catch {}
+      }
+      return;
+    }
+    if (isFlipped) {
+      // 👉 Right Swipe on BACK = 💥 忘記 (Again - 1)
+      if (reviewStyle === 'swipe') {
+        handleRate(1);
+      }
+    } else {
+      // 👉 Right Swipe on FRONT = ↺ 回看上一詞 (Rewind to previous word)
+      if (currentIndex > 0) {
+        activeCardFlippedRef.current = isFlipped;
+        setHistoryOffset(1);
+        setIsFlipped(false);
+        try { navigator.vibrate?.([15]); } catch {}
+      }
+    }
+  }, [historyOffset, activeStudyIndex, isFlipped, reviewStyle, currentIndex, handleRate]);
 
   // Keyboard shortcut listener (Space to flip, 1-3 for ratings, arrows for navigation)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isViewingPrevious) {
+      if (historyOffset > 0) {
         if (e.code === 'Space') {
           e.preventDefault();
           handleFlipCard();
-        } else if (e.code === 'ArrowRight' || e.code === 'Escape') {
+        } else if (e.code === 'ArrowLeft') {
           e.preventDefault();
-          setIsViewingPrevious(false);
-          setIsFlipped(false);
+          handleSwipeLeft();
+        } else if (e.code === 'ArrowRight') {
+          e.preventDefault();
+          handleSwipeRight();
+        } else if (e.code === 'Escape') {
+          e.preventDefault();
+          setHistoryOffset(0);
+          setIsFlipped(activeCardFlippedRef.current);
         }
         return;
       }
       if (e.code === 'Space') {
         e.preventDefault();
         handleFlipCard();
-      } else if (e.code === 'ArrowLeft' && !isFlipped && currentIndex > 0) {
-        e.preventDefault();
-        setIsViewingPrevious(true);
-        setIsFlipped(false);
-      } else if (e.code === 'ArrowRight' && !isFlipped) {
-        e.preventDefault();
-        handleFlipCard();
+      } else if (e.code === 'ArrowLeft') {
+        if (!isFlipped) {
+          e.preventDefault();
+          handleFlipCard();
+        } else if (reviewStyle === 'swipe') {
+          e.preventDefault();
+          handleRate(3);
+        }
+      } else if (e.code === 'ArrowRight') {
+        if (!isFlipped && currentIndex > 0) {
+          e.preventDefault();
+          activeCardFlippedRef.current = isFlipped;
+          setHistoryOffset(1);
+          setIsFlipped(false);
+        } else if (isFlipped && reviewStyle === 'swipe') {
+          e.preventDefault();
+          handleRate(1);
+        }
       } else if (isFlipped) {
         if (e.key === '1') handleRate(1);
         else if (e.key === '2') handleRate(2);
@@ -600,7 +641,7 @@ export const FlashcardPage: React.FC = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isFlipped, isViewingPrevious, currentIndex, handleRate, handleFlipCard]);
+  }, [isFlipped, historyOffset, currentIndex, reviewStyle, handleRate, handleFlipCard, handleSwipeLeft, handleSwipeRight]);
 
   // Initial API Key load
   useEffect(() => {
@@ -702,6 +743,32 @@ export const FlashcardPage: React.FC = () => {
       setEvaluatingNuance(false);
     }
   };
+
+  // Preload current, next, and previous card images into browser cache
+  useEffect(() => {
+    if (queue.length === 0) return;
+
+    // 1. Current card
+    const current = queue[activeStudyIndex];
+    if (current?.word) {
+      const curImg = imageService.getImageForWord(current.word.headword, current.word.category, current.word.id);
+      preloadImage(curImg.url);
+    }
+    // 2. Next card
+    const next = queue[activeStudyIndex + 1];
+    if (next?.word) {
+      const nextImg = imageService.getImageForWord(next.word.headword, next.word.category, next.word.id);
+      preloadImage(nextImg.url);
+    }
+    // 3. Previous card
+    if (activeStudyIndex > 0) {
+      const prev = queue[activeStudyIndex - 1];
+      if (prev?.word) {
+        const prevImg = imageService.getImageForWord(prev.word.headword, prev.word.category, prev.word.id);
+        preloadImage(prevImg.url);
+      }
+    }
+  }, [queue, activeStudyIndex]);
 
   // High-associative business imagery (Reactive to async R2 manifest arrival!)
   // Placed at component top-level before early returns to preserve strict hook execution order (#310 guard)
@@ -1035,13 +1102,13 @@ export const FlashcardPage: React.FC = () => {
           <div className="mb-1.5 flex items-center justify-between px-3 py-1.5 rounded-xl bg-amber-950/85 border border-amber-500/60 text-amber-200 text-xs font-bold shadow-lg shrink-0">
             <span className="flex items-center space-x-1.5">
               <RotateCcw size={14} className="text-amber-400" />
-              <span>剛剛看過的單字（唯讀複習）</span>
+              <span>剛剛看過的單字（唯讀複習 -{historyOffset} 詞）</span>
             </span>
             <button
               type="button"
               onClick={() => {
-                setIsViewingPrevious(false);
-                setIsFlipped(false);
+                setHistoryOffset(0);
+                setIsFlipped(activeCardFlippedRef.current);
               }}
               className="px-2.5 py-0.5 rounded-lg bg-amber-500/25 hover:bg-amber-500/40 text-amber-100 text-[11px] font-bold border border-amber-400/50 cursor-pointer transition-colors active:scale-95"
             >
@@ -1066,6 +1133,7 @@ export const FlashcardPage: React.FC = () => {
           <SwipeableCard
             onSwipeLeft={handleSwipeLeft}
             onSwipeRight={handleSwipeRight}
+            onClick={handleFlipCard}
             disabled={isFlipped && reviewStyle === 'button' && !isViewingPrevious}
             handPreference={handPreference}
             overlayMode={
@@ -1077,7 +1145,8 @@ export const FlashcardPage: React.FC = () => {
                 ? 'none'
                 : 'review'
             }
-            canSwipeLeft={isViewingPrevious ? false : !isFlipped ? currentIndex > 0 : true}
+            canSwipeLeft={isViewingPrevious ? true : !isFlipped ? true : reviewStyle === 'swipe'}
+            canSwipeRight={isViewingPrevious ? activeStudyIndex > 0 : !isFlipped ? currentIndex > 0 : reviewStyle === 'swipe'}
           >
           <motion.div
             animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -1175,10 +1244,10 @@ export const FlashcardPage: React.FC = () => {
                   <AudioButton headword={word.headword} audioUrl={word.audioUSUrl} size="md" />
                   <div className="flex items-center justify-center space-x-3 text-[10px] font-medium text-slate-400">
                     {currentIndex > 0 && !isViewingPrevious && (
-                      <span className="text-amber-400/90 font-bold">← 左滑回看上一詞</span>
+                      <span className="text-amber-400/90 font-bold">右滑回看上一詞 →</span>
                     )}
                     <span className="text-emerald-400/90 font-bold">
-                      {isViewingPrevious ? '👆 點擊翻面 · 右滑返回 ➔' : '點擊或右滑翻面 →'}
+                      {isViewingPrevious ? '👆 點擊翻面 · 左滑返回 ➔' : '← 左滑或點擊翻面'}
                     </span>
                   </div>
                 </div>
@@ -1188,8 +1257,8 @@ export const FlashcardPage: React.FC = () => {
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setIsViewingPrevious(false);
-                      setIsFlipped(false);
+                      setHistoryOffset(0);
+                      setIsFlipped(activeCardFlippedRef.current);
                     }}
                     className="w-full py-2.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 text-xs font-bold flex items-center justify-center space-x-1.5 transition-all active:scale-98 cursor-pointer shadow-sm"
                   >
@@ -1227,14 +1296,20 @@ export const FlashcardPage: React.FC = () => {
               <div className="text-center pt-1 border-t border-slate-800 text-[10px] text-slate-400 flex items-center justify-between">
                 <span>{progress.reps > 0 ? `複習第 ${progress.reps} 次` : '新單字'}</span>
                 <span className="text-emerald-400 font-medium">
-                  {isViewingPrevious ? '唯讀模式 · 不重複記錄排程' : '點擊或右滑翻面查看詳解'}
+                  {isViewingPrevious ? '唯讀模式 · 不重複記錄排程' : '點擊或左滑翻面查看詳解'}
                 </span>
               </div>
             </div>
 
-            {/* Card BACK (Clicking inside will NEVER flip back to front!) */}
+            {/* Card BACK (Clicking inside will NEVER flip back to front unless in history mode!) */}
             <div
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                if (historyOffset > 0) {
+                  handleFlipCard();
+                } else {
+                  e.stopPropagation();
+                }
+              }}
               className={`absolute inset-0 w-full h-full bg-slate-900 border ${
                 isStarred ? 'border-amber-500/50' : 'border-emerald-500/40'
               } rounded-3xl shadow-2xl flex flex-col justify-between [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden cursor-default`}
@@ -1765,8 +1840,8 @@ export const FlashcardPage: React.FC = () => {
           <button
             type="button"
             onClick={() => {
-              setIsViewingPrevious(false);
-              setIsFlipped(false);
+              setHistoryOffset(0);
+              setIsFlipped(activeCardFlippedRef.current);
             }}
             className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-98 text-white font-bold text-sm shadow-xl flex items-center justify-center space-x-2 transition-all cursor-pointer"
           >
