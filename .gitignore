@@ -63,3 +63,7 @@ GEMINI.md
 public/assets/images/words/
 public/assets/images/originals/
 scripts/*checkpoint*.json
+scripts/*forensic*
+scripts/*dry_run*
+scripts/*inventory*
+scripts/reauthor_cinematic_storyboards.py

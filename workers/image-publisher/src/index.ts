@@ -92,6 +92,7 @@ function jsonResponse(data: unknown, status = 200, corsHeaders: HeadersInit = {}
     status,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
       ...corsHeaders,
     },
   });
@@ -117,7 +118,7 @@ export default {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
 
-    // 2. Route: GET /api/manifest/current (Public or Authenticated)
+    // 2. Route: GET /api/manifest/current (Publication/Auth API - STRICT NO-STORE)
     if (request.method === 'GET' && url.pathname === '/api/manifest/current') {
       const manifestObj = await env.PUBLIC_BUCKET.get('manifests/current.json');
       if (!manifestObj) {
@@ -135,13 +136,10 @@ export default {
         );
       }
       const data = await manifestObj.json();
-      return jsonResponse(data, 200, {
-        ...corsHeaders,
-        'Cache-Control': 'public, max-age=60, stale-while-revalidate=86400',
-      });
+      return jsonResponse(data, 200, corsHeaders);
     }
 
-    // 2.05 Route: GET/HEAD /manifests/* (Public manifest snapshot delivery)
+    // 2.05 Route: GET/HEAD /manifests/* (Public manifest delivery)
     if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname.startsWith('/manifests/')) {
       const objectKey = url.pathname.slice(1);
       const object = await env.PUBLIC_BUCKET.get(objectKey);
@@ -151,15 +149,21 @@ export default {
       const headers = new Headers();
       headers.set('Content-Type', 'application/json; charset=utf-8');
       headers.set('etag', object.httpEtag);
-      headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+      if (url.pathname === '/manifests/current.json') {
+        headers.set('Cache-Control', 'no-cache, must-revalidate');
+      } else {
+        // Immutable snapshot manifests (e.g. /manifests/manifest-*.json)
+        headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+      }
       Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v as string));
+
       if (request.method === 'HEAD') {
         return new Response(null, { headers });
       }
       return new Response(object.body, { headers });
     }
 
-    // 2.1 Route: GET/HEAD /words/* (Public image delivery route)
+    // 2.1 Route: GET/HEAD /words/* (Public image delivery route - Workers Caching)
     if ((request.method === 'GET' || request.method === 'HEAD') && url.pathname.startsWith('/words/')) {
       const objectKey = url.pathname.slice(1);
       const object = await env.PUBLIC_BUCKET.get(objectKey);
@@ -171,6 +175,7 @@ export default {
       headers.set('etag', object.httpEtag);
       headers.set('Cache-Control', 'public, max-age=31536000, immutable');
       Object.entries(corsHeaders).forEach(([k, v]) => headers.set(k, v as string));
+
       if (request.method === 'HEAD') {
         return new Response(null, { headers });
       }
@@ -522,7 +527,7 @@ export default {
                 onlyIf: manifestEtag ? { etagMatches: manifestEtag } : { etagDoesNotMatch: '*' },
                 httpMetadata: {
                   contentType: 'application/json',
-                  cacheControl: 'public, max-age=60, stale-while-revalidate=86400',
+                  cacheControl: 'no-cache, must-revalidate',
                 },
               }
             );
@@ -656,7 +661,7 @@ export default {
               onlyIf: manifestEtag ? { etagMatches: manifestEtag } : { etagDoesNotMatch: '*' },
               httpMetadata: {
                 contentType: 'application/json',
-                cacheControl: 'public, max-age=60, stale-while-revalidate=86400',
+                cacheControl: 'no-cache, must-revalidate',
               },
             }
           );
@@ -772,7 +777,7 @@ export default {
               onlyIf: { etagMatches: manifestEtag },
               httpMetadata: {
                 contentType: 'application/json',
-                cacheControl: 'public, max-age=60, stale-while-revalidate=86400',
+                cacheControl: 'no-cache, must-revalidate',
               },
             }
           );
@@ -819,6 +824,115 @@ export default {
           200,
           corsHeaders
         );
+      }
+
+      // Route: POST /api/archive/original (Private R2 Original JPG Archival)
+      if (url.pathname === '/api/archive/original') {
+        const contentType = request.headers.get('content-type') || '';
+        if (!contentType.includes('multipart/form-data')) {
+          return jsonResponse({ error: 'Multipart form-data required' }, 415, corsHeaders);
+        }
+
+        try {
+          const formData = await request.formData();
+          const file = formData.get('file');
+          const metaRaw = formData.get('metadata');
+          if (!file || typeof file === 'string' || !metaRaw || typeof metaRaw !== 'string') {
+            return jsonResponse({ error: 'Missing file or metadata field' }, 400, corsHeaders);
+          }
+
+          const meta = JSON.parse(metaRaw) as {
+            originalFilename: string;
+            sha256: string;
+            fileSize: number;
+            isOrphan: boolean;
+            matchedWordId?: string | null;
+            auditProvenance?: any | null;
+          };
+
+          const arrayBuf = await file.arrayBuffer();
+          const fileBytes = new Uint8Array(arrayBuf);
+
+          // Verify SHA-256
+          const hashBuf = await crypto.subtle.digest('SHA-256', fileBytes);
+          const hexSha = Array.from(new Uint8Array(hashBuf))
+            .map((b) => b.toString(16).padStart(2, '0'))
+            .join('');
+
+          if (hexSha.toLowerCase() !== meta.sha256.toLowerCase()) {
+            return jsonResponse(
+              { error: 'SHA256 mismatch', expected: meta.sha256, actual: hexSha },
+              400,
+              corsHeaders
+            );
+          }
+
+          const archiveKey = `archive/legacy-originals/${meta.originalFilename}`;
+          await env.PRIVATE_BUCKET.put(archiveKey, fileBytes, {
+            httpMetadata: { contentType: 'image/jpeg' },
+            customMetadata: {
+              sha256: hexSha,
+              fileSize: String(fileBytes.length),
+              matchedWordId: meta.matchedWordId || '',
+              isOrphan: String(meta.isOrphan),
+            },
+          });
+
+          const latencyMs = Math.round(performance.now() - startTime);
+          return jsonResponse(
+            {
+              success: true,
+              key: archiveKey,
+              originalFilename: meta.originalFilename,
+              sha256: hexSha,
+              fileSize: fileBytes.length,
+              latencyMs,
+            },
+            200,
+            corsHeaders
+          );
+        } catch (err: any) {
+          return jsonResponse({ error: `Archive failed: ${err.message}` }, 500, corsHeaders);
+        }
+      }
+
+      // Route: POST /api/archive/verify-batch (Batch existence & SHA verification)
+      if (url.pathname === '/api/archive/verify-batch') {
+        let body: { filenames: string[] };
+        try {
+          body = await request.json();
+          if (!body || !Array.isArray(body.filenames)) {
+            return jsonResponse({ error: 'Invalid body: filenames array required' }, 400, corsHeaders);
+          }
+        } catch {
+          return jsonResponse({ error: 'Invalid JSON body' }, 400, corsHeaders);
+        }
+
+        const results: Record<
+          string,
+          { exists: boolean; size?: number; sha256?: string; matchedWordId?: string; isOrphan?: boolean }
+        > = {};
+
+        await Promise.all(
+          body.filenames.map(async (fn) => {
+            const archiveKey = `archive/legacy-originals/${fn}`;
+            const obj = await env.PRIVATE_BUCKET.head(archiveKey);
+            if (!obj) {
+              results[fn] = { exists: false };
+            } else {
+              results[fn] = {
+                exists: true,
+                size: obj.size,
+                sha256: obj.customMetadata?.sha256 || '',
+                matchedWordId: obj.customMetadata?.matchedWordId || undefined,
+                isOrphan: obj.customMetadata?.isOrphan === 'true',
+              };
+            }
+          })
+        );
+
+        const latencyMs = Math.round(performance.now() - startTime);
+        return jsonResponse({ success: true, count: body.filenames.length, results, latencyMs }, 200, corsHeaders);
       }
     }
 

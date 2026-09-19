@@ -5,6 +5,9 @@ compatibility_date = "2024-09-01"
 [vars]
 ALLOWED_ORIGINS = "*"
 
+[cache]
+enabled = true
+
 [[r2_buckets]]
 binding = "PUBLIC_BUCKET"
 bucket_name = "toeic-vocab-media-public"
