@@ -155,7 +155,7 @@ export const courseRepository = {
   },
 
   async downloadAndValidateCourse(
-    _courseId: string,
+    expectedCourseId: string,
     fileName: string,
     expectedChecksum?: string
   ): Promise<ValidatedCourseData> {
@@ -177,6 +177,13 @@ export const courseRepository = {
 
     const rawData = JSON.parse(rawText);
     const courseDetail = CourseDetailSchema.parse(rawData);
+
+    // Course ID guard: courseDetail.id MUST match expectedCourseId
+    if (expectedCourseId && courseDetail.id !== expectedCourseId) {
+      throw new Error(
+        `Course identity mismatch for ${fileName}: expected ID '${expectedCourseId}', got '${courseDetail.id}'`
+      );
+    }
 
     const courseRecord: Course = {
       id: courseDetail.id,

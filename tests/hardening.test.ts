@@ -14,6 +14,10 @@ import {
 } from '../src/services/imageService';
 import { computeSha256Hex } from '../src/utils/crypto';
 import { Word, Course, Profile, Progress, ReviewLog } from '../src/types/db';
+import { studySessionService } from '../src/services/studySessionService';
+import { searchService } from '../src/services/searchService';
+import { NextGenQuestion } from '../src/services/quizService';
+import { TodaySession } from '../src/types/today';
 
 describe('Release Candidate Hardening & Acceptance Audit', () => {
   beforeEach(async () => {
@@ -637,6 +641,365 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       const courseEst = await getCourseMediaEstimate('course-alpha');
       expect(courseEst).toBeDefined();
       expect(typeof courseEst.estimatedBytes).toBe('number');
+    });
+  });
+
+  // =========================================================================
+  // 6. RELEASE CANDIDATE REVIEW BLOCKERS REGRESSION SUITE (9 Invariants)
+  // =========================================================================
+  describe('Audit 9: Release Candidate Review Blockers Regression Suite', () => {
+    // Regression 1: Workbox URL pattern matcher
+    it('Regression 1: Workbox URL pattern strictly matches /words/* and rejects /api/* and /manifests/*', () => {
+      const R2_ORIGIN = 'https://toeic-image-publisher.peijungwu0302.workers.dev';
+      const workboxMatcher = ({ url }: { url: URL }) =>
+        url.origin === R2_ORIGIN && url.pathname.startsWith('/words/');
+
+      expect(workboxMatcher({ url: new URL('https://toeic-image-publisher.peijungwu0302.workers.dev/words/w1/v1.webp') })).toBe(true);
+      expect(workboxMatcher({ url: new URL('https://toeic-image-publisher.peijungwu0302.workers.dev/words/advance/v2.webp') })).toBe(true);
+      expect(workboxMatcher({ url: new URL('https://toeic-image-publisher.peijungwu0302.workers.dev/api/manifest/current') })).toBe(false);
+      expect(workboxMatcher({ url: new URL('https://toeic-image-publisher.peijungwu0302.workers.dev/api/publish') })).toBe(false);
+      expect(workboxMatcher({ url: new URL('https://toeic-image-publisher.peijungwu0302.workers.dev/manifests/current.json') })).toBe(false);
+      expect(workboxMatcher({ url: new URL('https://external-cdn.com/words/w1/v1.webp') })).toBe(false);
+    });
+
+    // Regression 2: Search with partial local DB
+    it('Regression 2: Search returns all catalog items from search-index.json even if local DB is empty or partial', async () => {
+      searchService.invalidateIndex();
+
+      const dummyWords: Word[] = Array.from({ length: 10 }).map((_, i) => ({
+        id: `local_word_${i}`,
+        headword: `localword${i}`,
+        normalizedHeadword: `localword${i}`,
+        entryType: 'word',
+        definitionZh: `本地單字${i}`,
+        starRating: 1,
+        toeicScoreRange: '400',
+        category: '商務',
+        partsOfSpeech: ['n'],
+        wordForms: [],
+        phoneticUS: null,
+        phoneticUK: null,
+        examples: [],
+        examTips: [],
+        audioUSUrl: null,
+        audioUKUrl: null
+      }));
+      await db.words.bulkPut(dummyWords);
+      expect(await db.words.count()).toBe(10);
+
+      const mockIndex = [
+        {
+          id: 'unloaded_word_999',
+          headword: 'negotiate',
+          normalizedHeadword: 'negotiate',
+          definitionZh: '談判，協商',
+          category: '商業洽談',
+          toeicScoreRange: '750-900',
+          partsOfSpeech: ['v'],
+          phoneticUS: '/nɪˈɡoʊ.ʃi.eɪt/',
+          sourceCourseId: 'course-expert-high-part1',
+          sourceFileName: 'course-expert-high-part1.json'
+        },
+        ...dummyWords.map(w => ({
+          id: w.id,
+          headword: w.headword,
+          normalizedHeadword: w.normalizedHeadword,
+          definitionZh: w.definitionZh,
+          category: w.category,
+          toeicScoreRange: w.toeicScoreRange,
+          partsOfSpeech: w.partsOfSpeech,
+          phoneticUS: null
+        }))
+      ];
+
+      vi.spyOn(global, 'fetch').mockImplementation(async (url: any) => {
+        if (String(url).includes('search-index.json')) {
+          return {
+            ok: true,
+            status: 200,
+            json: async () => mockIndex
+          } as any;
+        }
+        return { ok: false, status: 404 } as any;
+      });
+
+      const index = await searchService.getIndex();
+      expect(index.length).toBe(11);
+
+      const results = await searchService.search('negotiate');
+      expect(results.length).toBeGreaterThan(0);
+      expect(results[0].id).toBe('unloaded_word_999');
+      expect(results[0].headword).toBe('negotiate');
+    });
+
+    // Regression 3: Flashcard normal review session and manual session are strictly isolated
+    it('Regression 3: Flashcard normal review session and manual session are strictly isolated', () => {
+      const profileId = 'user_isolation_test';
+
+      studySessionService.saveFlashcardSession({
+        sessionId: 'session_normal',
+        profileId,
+        courseId: 'all',
+        sessionWordIds: ['word_norm_1', 'word_norm_2'],
+        currentIndex: 1,
+        sessionConfig: { batchSize: 20, isShuffle: false, selectedCategory: 'all' },
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      studySessionService.saveFlashcardSession({
+        sessionId: 'session_manual',
+        profileId,
+        courseId: 'manual',
+        sessionWordIds: ['word_man_1'],
+        currentIndex: 0,
+        sessionConfig: { batchSize: 10, isShuffle: false, selectedCategory: 'all' },
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      const loadedNormal = studySessionService.loadFlashcardSession(profileId, 'all');
+      const loadedManual = studySessionService.loadFlashcardSession(profileId, 'manual');
+
+      expect(loadedNormal?.sessionId).toBe('session_normal');
+      expect(loadedNormal?.currentIndex).toBe(1);
+      expect(loadedManual?.sessionId).toBe('session_manual');
+      expect(loadedManual?.currentIndex).toBe(0);
+
+      studySessionService.clearFlashcardSession(profileId, 'manual');
+
+      expect(studySessionService.loadFlashcardSession(profileId, 'manual')).toBeNull();
+      const refreshedNormal = studySessionService.loadFlashcardSession(profileId, 'all');
+      expect(refreshedNormal?.sessionId).toBe('session_normal');
+      expect(refreshedNormal?.currentIndex).toBe(1);
+    });
+
+    // Regression 4: Today quiz resume hydrates exact snapshot
+    it('Regression 4: Today quiz resume hydrates exact snapshot without re-shuffling or resetting index', async () => {
+      const profileId = 'quiz_snapshot_user';
+      const mockWord1: Word = {
+        id: 'w_impl', headword: 'implement', normalizedHeadword: 'implement',
+        entryType: 'word', definitionZh: '實施', starRating: 3, toeicScoreRange: '700',
+        category: '管理', partsOfSpeech: ['v'], wordForms: [], phoneticUS: null, phoneticUK: null,
+        examples: [], examTips: [], audioUSUrl: null, audioUKUrl: null
+      };
+      const mockWord2: Word = {
+        id: 'w_achieve', headword: 'achieve', normalizedHeadword: 'achieve',
+        entryType: 'word', definitionZh: '達成', starRating: 3, toeicScoreRange: '700',
+        category: '管理', partsOfSpeech: ['v'], wordForms: [], phoneticUS: null, phoneticUK: null,
+        examples: [], examTips: [], audioUSUrl: null, audioUKUrl: null
+      };
+
+      const mockQuestions: NextGenQuestion[] = [
+        {
+          id: 'q1',
+          word: mockWord1,
+          mode: 'part5_mcq',
+          stem: 'The manager decided to _____ the new policy.',
+          options: ['implement', 'refuse', 'cancel', 'delay'],
+          correctAnswer: 'implement',
+          correctIndex: 0,
+          explanation: 'Explanation 1'
+        },
+        {
+          id: 'q2',
+          word: mockWord2,
+          mode: 'part5_mcq',
+          stem: 'We need to _____ our quarterly goals.',
+          options: ['achieve', 'ignore', 'fail', 'deny'],
+          correctAnswer: 'achieve',
+          correctIndex: 0,
+          explanation: 'Explanation 2'
+        }
+      ];
+
+      const session: TodaySession = {
+        sessionId: 'session_test_quiz',
+        profileId,
+        dateStr: '2026-09-20',
+        activeCourseId: 'course-core-1200',
+        phase: 'quiz',
+        dueWordIds: [],
+        newWordIds: ['w_impl', 'w_achieve'],
+        currentReviewIndex: 0,
+        currentPreviewIndex: 0,
+        currentLearnIndex: 0,
+        quizUserAnswers: { 0: 0 },
+        quizQuestionsSnapshot: mockQuestions,
+        quizCurrentIndex: 1,
+        wrongWordIds: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isCompleted: false
+      };
+
+      todayService.saveTodaySession(session);
+
+      const restored = todayService.loadTodaySession(profileId);
+      expect(restored).not.toBeNull();
+      expect(restored?.phase).toBe('quiz');
+      expect(restored?.quizCurrentIndex).toBe(1);
+      expect(restored?.quizQuestionsSnapshot).toEqual(mockQuestions);
+      expect(restored?.quizQuestionsSnapshot?.[0].options).toEqual(['implement', 'refuse', 'cancel', 'delay']);
+      expect(restored?.quizQuestionsSnapshot?.[1].options).toEqual(['achieve', 'ignore', 'fail', 'deny']);
+    });
+
+    // Regression 5: Setting activeCourseId isolates Profile A vs Profile B
+    it('Regression 5: Setting activeCourseId isolates Profile A vs Profile B', async () => {
+      const profileA = await profileRepository.create({ displayName: 'Profile A' });
+      const profileB = await profileRepository.create({ displayName: 'Profile B' });
+
+      await profileRepository.setActiveCourseId(profileA.id, 'course-alpha');
+      await profileRepository.setActiveCourseId(profileB.id, 'course-beta');
+
+      let curA = await profileRepository.getById(profileA.id);
+      let curB = await profileRepository.getById(profileB.id);
+      expect(curA?.activeCourseId).toBe('course-alpha');
+      expect(curB?.activeCourseId).toBe('course-beta');
+
+      await profileRepository.setActiveCourseId(profileA.id, 'course-gamma');
+
+      curA = await profileRepository.getById(profileA.id);
+      curB = await profileRepository.getById(profileB.id);
+      expect(curA?.activeCourseId).toBe('course-gamma');
+      expect(curB?.activeCourseId).toBe('course-beta');
+    });
+
+    // Regression 6: Dataset courseId mismatch throws and aborts without corrupting database
+    it('Regression 6: Dataset courseId mismatch throws and aborts without corrupting database', async () => {
+      const mismatchedPayload = JSON.stringify({
+        id: 'course-evil',
+        title: 'Evil Course',
+        description: 'Mismatch',
+        toeicScoreRange: '400',
+        category: '測試',
+        level: '基礎',
+        wordCount: 1,
+        version: 1,
+        words: []
+      });
+
+      const checksum = await computeSha256Hex(mismatchedPayload);
+
+      vi.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+        status: 200,
+        text: async () => mismatchedPayload
+      } as any);
+
+      const initialCourseCount = await db.courses.count();
+
+      await expect(
+        courseRepository.downloadAndValidateCourse(
+          'course-expected',
+          'course-expected.json',
+          checksum
+        )
+      ).rejects.toThrow(/Course identity mismatch.*expected ID 'course-expected', got 'course-evil'/);
+
+      expect(await db.courses.count()).toBe(initialCourseCount);
+      expect(await db.courses.get('course-evil')).toBeUndefined();
+      expect(await db.courses.get('course-expected')).toBeUndefined();
+    });
+
+    // Regression 7: forceRefreshAllCourses aborts and throws if any downloaded course is missing from catalog
+    it('Regression 7: forceRefreshAllCourses aborts and throws if any downloaded course is missing from catalog', async () => {
+      await db.courses.put({
+        id: 'course-orphan',
+        title: 'Orphaned Course',
+        description: 'Not in catalog',
+        toeicScoreRange: '500',
+        category: '測試',
+        level: '基礎',
+        wordCount: 1,
+        version: 1,
+        isDownloaded: true
+      });
+
+      const catalog = {
+        version: 99,
+        generatedAt: new Date().toISOString(),
+        totalWords: 10,
+        totalCourses: 1,
+        courses: [
+          {
+            id: 'course-regular',
+            title: 'Regular Course',
+            description: '',
+            toeicScoreRange: '600',
+            category: '',
+            level: '',
+            wordCount: 10,
+            fileName: 'regular.json',
+            version: 99,
+            checksum: '',
+            checksumSha256: ''
+          }
+        ]
+      };
+
+      vi.spyOn(courseRepository, 'fetchCatalog').mockResolvedValue(catalog);
+
+      await expect(datasetMigrationService.forceRefreshAllCourses()).rejects.toThrow(
+        'not found in catalog, aborting refresh'
+      );
+    });
+
+    // Regression 8: Today handleSkipPhase produces zero FSRS progress or reviewLog mutations
+    it('Regression 8: Today handleSkipPhase produces zero FSRS progress or reviewLog mutations', async () => {
+      const profile = await profileRepository.create({ displayName: 'Skip Tester' });
+      const session = await todayService.createTodaySession(profile.id, 'course-core-1200');
+
+      expect(await db.progress.count()).toBe(0);
+      expect(await db.reviewLogs.count()).toBe(0);
+
+      session.phase = 'preview';
+      todayService.saveTodaySession(session);
+      expect(await db.progress.count()).toBe(0);
+      expect(await db.reviewLogs.count()).toBe(0);
+
+      session.phase = 'learn';
+      todayService.saveTodaySession(session);
+      expect(await db.progress.count()).toBe(0);
+      expect(await db.reviewLogs.count()).toBe(0);
+
+      session.phase = 'quiz';
+      todayService.saveTodaySession(session);
+      expect(await db.progress.count()).toBe(0);
+      expect(await db.reviewLogs.count()).toBe(0);
+
+      session.phase = 'summary';
+      session.isCompleted = true;
+      todayService.saveTodaySession(session);
+      expect(await db.progress.count()).toBe(0);
+      expect(await db.reviewLogs.count()).toBe(0);
+    });
+
+    // Regression 9: Profile deletion thoroughly removes manualQueue records and profile localStorage keys
+    it('Regression 9: Profile deletion thoroughly removes manualQueue records and profile localStorage keys', async () => {
+      const profile = await profileRepository.create({ displayName: 'To Be Deleted' });
+      const pid = profile.id;
+
+      await db.manualQueue.bulkPut([
+        { profileId: pid, wordId: 'w1', source: 'manual', createdAt: new Date().toISOString() },
+        { profileId: pid, wordId: 'w2', source: 'search', createdAt: new Date().toISOString() }
+      ]);
+
+      localStorage.setItem(`toeic_active_review_v2_${pid}_all`, JSON.stringify({ test: 1 }));
+      localStorage.setItem(`toeic_active_skim_v2_${pid}_manual`, JSON.stringify({ test: 2 }));
+      localStorage.setItem(`toeic_today_session_${pid}`, JSON.stringify({ test: 3 }));
+      localStorage.setItem(`toeic_unrelated_key`, 'keep_me');
+
+      expect(await db.manualQueue.where('profileId').equals(pid).count()).toBe(2);
+      expect(localStorage.getItem(`toeic_today_session_${pid}`)).not.toBeNull();
+
+      await profileRepository.delete(pid);
+
+      expect(await db.manualQueue.where('profileId').equals(pid).count()).toBe(0);
+      expect(localStorage.getItem(`toeic_active_review_v2_${pid}_all`)).toBeNull();
+      expect(localStorage.getItem(`toeic_active_skim_v2_${pid}_manual`)).toBeNull();
+      expect(localStorage.getItem(`toeic_today_session_${pid}`)).toBeNull();
+      expect(localStorage.getItem('toeic_unrelated_key')).toBe('keep_me');
     });
   });
 });

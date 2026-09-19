@@ -28,6 +28,7 @@ import { Modal } from '../components/ui/Modal';
 import { audioService } from '../services/audioService';
 import { imageService, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
 import { studySessionService } from '../services/studySessionService';
+import { manualQueueService } from '../services/manualQueueService';
 import { db } from '../db';
 
 export const FastSkimPage: React.FC = () => {
@@ -37,6 +38,16 @@ export const FastSkimPage: React.FC = () => {
   const { settings, updateSettings, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass, zoomIn, zoomOut, currentPreset } = useTypography();
 
   const courseId = searchParams.get('courseId');
+  const queueParam = searchParams.get('queue');
+  const isManualQueue = courseId === 'manual' || queueParam === 'manual';
+  const isStarredQueue = courseId === 'starred' || searchParams.get('starred') === 'true';
+  const skimScope = isManualQueue
+    ? 'manual'
+    : isStarredQueue
+    ? 'starred'
+    : courseId
+    ? `course:${courseId}`
+    : 'all';
 
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [activeWords, setActiveWords] = useState<Word[]>([]);
@@ -74,11 +85,11 @@ export const FastSkimPage: React.FC = () => {
     if (!activeProfile) return;
     try {
       setIsLoading(true);
-      const targetCourseId = courseId || 'all';
+      const profileId = activeProfile.id;
 
       // 1. Check saved session in studySessionService unless forceFresh is requested
       if (!forceFresh) {
-        const saved = studySessionService.loadFastSkimSession(activeProfile.id, targetCourseId);
+        const saved = studySessionService.loadFastSkimSession(profileId, skimScope);
         if (saved && saved.sessionWordIds && saved.sessionWordIds.length > 0) {
           const words = await db.words.where('id').anyOf(saved.sessionWordIds).toArray();
           const wordMap = new Map(words.map(w => [w.id, w]));
@@ -101,42 +112,22 @@ export const FastSkimPage: React.FC = () => {
       }
 
       let loadedWords: Word[] = [];
-
-      if (courseId) {
-        loadedWords = await courseRepository.getWordsForCourse(courseId, {
-          category: selectedCategory,
-          shuffle: isShuffle
-        });
+      if (courseId === 'starred') {
+        const starredItems = await progressRepository.getStarredWords(profileId);
+        loadedWords = starredItems.map(i => i.word);
+      } else if (courseId === 'manual' || searchParams.get('queue') === 'manual') {
+        loadedWords = await manualQueueService.getQueueWords(profileId);
       } else {
-        loadedWords = await courseRepository.getAllDownloadedWords({
+        loadedWords = await courseRepository.getWordsForCourse(courseId || 'all', {
           category: selectedCategory,
           shuffle: isShuffle
         });
-      }
-
-      // Fallback: Auto-download course-core-1200 if local DB is clean
-      if (loadedWords.length === 0) {
-        try {
-          await courseRepository.downloadAndSaveCourse('course-core-1200', 'course-core-1200.json');
-          if (courseId) {
-            loadedWords = await courseRepository.getWordsForCourse(courseId, {
-              category: selectedCategory,
-              shuffle: isShuffle
-            });
-          } else {
-            loadedWords = await courseRepository.getAllDownloadedWords({
-              category: selectedCategory,
-              shuffle: isShuffle
-            });
-          }
-        } catch (autoErr) {
-          console.warn('[FastSkim] Auto-download fallback error:', autoErr);
-        }
       }
 
       setAllWords(loadedWords);
 
-      const batchStart = 0;
+      // Micro-session batching
+      const batchStart = currentBatchIndex * batchSize;
       const initialBatch = batchSize >= 999 ? loadedWords : loadedWords.slice(batchStart, batchStart + batchSize);
       setActiveWords(initialBatch);
       setCurrentIndex(0);
@@ -147,7 +138,7 @@ export const FastSkimPage: React.FC = () => {
         studySessionService.saveFastSkimSession({
           sessionId: `skim_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
           profileId: activeProfile.id,
-          courseId: targetCourseId,
+          courseId: skimScope,
           sessionWordIds: initialBatch.map(w => w.id),
           currentIndex: 0,
           currentBatchIndex: 0,
@@ -166,7 +157,7 @@ export const FastSkimPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [courseId, activeProfile, selectedCategory, isShuffle, batchSize]);
+  }, [skimScope, courseId, activeProfile, selectedCategory, isShuffle, batchSize]);
 
   useEffect(() => {
     loadWords();
@@ -186,7 +177,7 @@ export const FastSkimPage: React.FC = () => {
   // Auto-save session progress
   useEffect(() => {
     if (activeWords.length > 0 && !isLoading && activeProfile) {
-      const existing = studySessionService.loadFastSkimSession(activeProfile.id, courseId || 'all');
+      const existing = studySessionService.loadFastSkimSession(activeProfile.id, skimScope);
       if (existing) {
         studySessionService.saveFastSkimSession({
           ...existing,
@@ -196,11 +187,11 @@ export const FastSkimPage: React.FC = () => {
         });
       }
     }
-  }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, courseId, activeProfile]);
+  }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, skimScope, activeProfile]);
 
   const handleRestartFromBeginning = () => {
     if (activeProfile) {
-      studySessionService.clearFastSkimSession(activeProfile.id, courseId || 'all');
+      studySessionService.clearFastSkimSession(activeProfile.id, skimScope);
     }
     setCurrentIndex(0);
     setRemainingTime(durationSec);
@@ -210,11 +201,11 @@ export const FastSkimPage: React.FC = () => {
 
   const handleBatchComplete = useCallback(() => {
     if (activeProfile) {
-      studySessionService.clearFastSkimSession(activeProfile.id, courseId || 'all');
+      studySessionService.clearFastSkimSession(activeProfile.id, skimScope);
     }
     setIsPaused(true);
     setShowRecapModal(true);
-  }, [courseId, activeProfile]);
+  }, [skimScope, activeProfile]);
 
   const goToNext = useCallback(() => {
     if (activeWords.length === 0) return;

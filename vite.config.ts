@@ -67,7 +67,9 @@ export default defineConfig({
             }
           },
           {
-            urlPattern: ({ url }) => url.origin === 'https://toeic-image-publisher.peijungwu0302.workers.dev',
+            urlPattern: ({ url }) =>
+              url.origin === 'https://toeic-image-publisher.peijungwu0302.workers.dev' &&
+              url.pathname.startsWith('/words/'),
             handler: 'CacheFirst',
             options: {
               cacheName: 'toeic-offline-media-v1',

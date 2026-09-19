@@ -159,13 +159,14 @@ export const datasetMigrationService = {
     if (downloadedCourses.length > 0) {
       for (const downloaded of downloadedCourses) {
         const entry = allCatalogCourses.find(c => c.id === downloaded.id);
-        if (entry) {
-          requiredTargets.push({
-            id: entry.id,
-            fileName: entry.fileName,
-            checksum: entry.checksumSha256 || entry.sha256 || entry.checksum
-          });
+        if (!entry) {
+          throw new Error(`[DatasetMigration] Downloaded course ${downloaded.id} not found in catalog, aborting refresh.`);
         }
+        requiredTargets.push({
+          id: entry.id,
+          fileName: entry.fileName,
+          checksum: entry.checksumSha256 || entry.sha256 || entry.checksum
+        });
       }
     } else if (allCatalogCourses.length > 0) {
       const defaultCourse = allCatalogCourses.find(c => c.id === 'course-core-1200') || allCatalogCourses[0];

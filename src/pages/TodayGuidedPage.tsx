@@ -89,18 +89,38 @@ export const TodayGuidedPage: React.FC = () => {
         setNewWords(nWords.map(n => n.word));
       }
 
-      // If at quiz phase, generate quiz questions
-      if (curSession.phase === 'quiz' && curSession.newWordIds.length > 0) {
-        const nWords = await progressRepository.getStudyItemsByWordIds(
-          activeProfile.id,
-          curSession.newWordIds
-        );
-        const generated = quizService.generateNextGenQuestions(
-          nWords.map(n => n.word),
-          'part5_mcq',
-          Math.min(5, nWords.length)
-        );
-        setQuizQuestions(generated);
+      // If at quiz phase, restore from snapshot or generate once
+      if (curSession.phase === 'quiz') {
+        let qs = curSession.quizQuestionsSnapshot;
+        if (!qs || qs.length === 0) {
+          if (curSession.newWordIds.length > 0) {
+            const nWords = await progressRepository.getStudyItemsByWordIds(
+              activeProfile.id,
+              curSession.newWordIds
+            );
+            qs = quizService.generateNextGenQuestions(
+              nWords.map(n => n.word),
+              'part5_mcq',
+              Math.min(5, nWords.length)
+            );
+            curSession.quizQuestionsSnapshot = qs;
+            curSession.quizCurrentIndex = curSession.quizCurrentIndex ?? 0;
+            todayService.saveTodaySession(curSession);
+          }
+        }
+        if (qs && qs.length > 0) {
+          setQuizQuestions(qs);
+          const savedQIdx = curSession.quizCurrentIndex ?? 0;
+          const safeQIdx = Math.min(Math.max(0, savedQIdx), qs.length - 1);
+          setQuizCurrentIdx(safeQIdx);
+          if (curSession.quizUserAnswers && curSession.quizUserAnswers[safeQIdx] !== undefined) {
+            setSelectedOption(curSession.quizUserAnswers[safeQIdx]);
+            setIsQuizAnswered(true);
+          } else {
+            setSelectedOption(null);
+            setIsQuizAnswered(false);
+          }
+        }
       }
     } catch (err) {
       console.error('[TodayGuidedPage] Init failed:', err);
@@ -201,11 +221,14 @@ export const TodayGuidedPage: React.FC = () => {
       });
     } else {
       // Learn complete -> Transition to Quiz!
-      const questions = quizService.generateNextGenQuestions(
-        newWords,
-        'part5_mcq',
-        Math.min(5, newWords.length)
-      );
+      let questions = session.quizQuestionsSnapshot;
+      if (!questions || questions.length === 0) {
+        questions = quizService.generateNextGenQuestions(
+          newWords,
+          'part5_mcq',
+          Math.min(5, newWords.length)
+        );
+      }
       setQuizQuestions(questions);
       setQuizCurrentIdx(0);
       setSelectedOption(null);
@@ -214,6 +237,8 @@ export const TodayGuidedPage: React.FC = () => {
       updateSession({
         ...session,
         currentLearnIndex: nextIdx,
+        quizQuestionsSnapshot: questions,
+        quizCurrentIndex: 0,
         phase: questions.length > 0 ? 'quiz' : 'summary',
         isCompleted: questions.length === 0
       });
@@ -253,9 +278,14 @@ export const TodayGuidedPage: React.FC = () => {
   const handleNextQuizQuestion = () => {
     if (!session) return;
     if (quizCurrentIdx < quizQuestions.length - 1) {
-      setQuizCurrentIdx(quizCurrentIdx + 1);
+      const nextQIdx = quizCurrentIdx + 1;
+      setQuizCurrentIdx(nextQIdx);
       setSelectedOption(null);
       setIsQuizAnswered(false);
+      updateSession({
+        ...session,
+        quizCurrentIndex: nextQIdx
+      });
     } else {
       // Quiz complete -> Summary!
       updateSession({
@@ -264,6 +294,60 @@ export const TodayGuidedPage: React.FC = () => {
         isCompleted: true
       });
       confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+    }
+  };
+
+  // Skip Phase Handler (Produces ZERO FSRS mutations)
+  const handleSkipPhase = () => {
+    if (!session) return;
+    setIsFlipped(false);
+
+    if (session.phase === 'review') {
+      const nextPhase: TodayPhase = session.newWordIds.length > 0 ? 'preview' : 'summary';
+      updateSession({
+        ...session,
+        phase: nextPhase,
+        isCompleted: nextPhase === 'summary'
+      });
+      if (nextPhase === 'summary') {
+        confetti({ particleCount: 60, spread: 60 });
+      }
+    } else if (session.phase === 'preview') {
+      updateSession({
+        ...session,
+        phase: 'learn'
+      });
+    } else if (session.phase === 'learn') {
+      let questions = session.quizQuestionsSnapshot;
+      if (!questions || questions.length === 0) {
+        questions = quizService.generateNextGenQuestions(
+          newWords,
+          'part5_mcq',
+          Math.min(5, newWords.length)
+        );
+      }
+      setQuizQuestions(questions);
+      setQuizCurrentIdx(0);
+      setSelectedOption(null);
+      setIsQuizAnswered(false);
+
+      updateSession({
+        ...session,
+        quizQuestionsSnapshot: questions,
+        quizCurrentIndex: 0,
+        phase: questions.length > 0 ? 'quiz' : 'summary',
+        isCompleted: questions.length === 0
+      });
+      if (questions.length === 0) {
+        confetti({ particleCount: 70, spread: 70 });
+      }
+    } else if (session.phase === 'quiz') {
+      updateSession({
+        ...session,
+        phase: 'summary',
+        isCompleted: true
+      });
+      confetti({ particleCount: 80, spread: 70 });
     }
   };
 
@@ -294,13 +378,25 @@ export const TodayGuidedPage: React.FC = () => {
               </span>
             )}
           </div>
-          <button
-            onClick={() => navigate('/')}
-            className="p-1 text-slate-400 hover:text-slate-200"
-            title="暫存並退出"
-          >
-            <X size={16} />
-          </button>
+          <div className="flex items-center space-x-1">
+            {session.phase !== 'summary' && (
+              <button
+                type="button"
+                onClick={handleSkipPhase}
+                className="px-2 py-0.5 rounded text-[10px] font-bold text-slate-400 hover:text-amber-300 hover:bg-slate-800/80 transition-colors"
+                title="跳過此階段"
+              >
+                跳過階段 ⏭
+              </button>
+            )}
+            <button
+              onClick={() => navigate('/')}
+              className="p-1 text-slate-400 hover:text-slate-200"
+              title="暫存並退出"
+            >
+              <X size={16} />
+            </button>
+          </div>
         </div>
 
         {/* Phase progress chips */}

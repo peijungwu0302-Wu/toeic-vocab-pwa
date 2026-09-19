@@ -31,7 +31,7 @@ import { audioService } from '../services/audioService';
 import { imageService } from '../services/imageService';
 
 export const CatalogPage: React.FC = () => {
-  const { activeProfile } = useProfile();
+  const { activeProfile, setActiveCourseId } = useProfile();
   const navigate = useNavigate();
 
   const [catalog, setCatalog] = useState<DatasetCatalog | null>(null);
@@ -478,9 +478,24 @@ export const CatalogPage: React.FC = () => {
                     <span className="text-emerald-400 font-medium">{c.wordCount * 6} 題測驗</span>
                   </div>
 
-                  <div className="flex items-center space-x-1.5">
+                  <div className="flex items-center space-x-1.5 flex-wrap gap-y-1">
                     {isDownloaded ? (
                       <>
+                        {activeProfile?.activeCourseId === c.id ? (
+                          <span className="text-[11px] font-bold text-teal-400 bg-teal-950/80 border border-teal-700/60 px-2.5 py-1 rounded-lg inline-flex items-center shrink-0">
+                            <CheckCircle size={12} className="mr-1 text-teal-400" /> 今日課程 ✓
+                          </span>
+                        ) : (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setActiveCourseId(c.id)}
+                            className="text-xs px-2.5 text-teal-300 border-teal-700/60 hover:bg-teal-950/40"
+                            title="設為今日課程"
+                          >
+                            <Sparkles size={12} className="mr-1 text-teal-400" /> 設為今日課程
+                          </Button>
+                        )}
                         <button
                           type="button"
                           onClick={() => handleCacheImages(c.id)}

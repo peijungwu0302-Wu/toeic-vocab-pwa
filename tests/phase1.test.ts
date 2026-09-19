@@ -190,8 +190,16 @@ describe('Phase 1: Data Integrity & Session Correctness', () => {
         }]
       });
 
-      vi.spyOn(courseRepository, 'downloadAndSaveCourse').mockImplementation(async (_id, _fileName) => {
-        await db.words.put({
+      const corePayload = JSON.stringify({
+        id: 'course-core-1200',
+        title: 'Core 1200',
+        description: 'Core course',
+        toeicScoreRange: '400-750',
+        category: '高頻核心',
+        level: '核心',
+        wordCount: 1,
+        version: CURRENT_DATASET_VERSION,
+        words: [{
           id: 'w_migrated_1',
           headword: 'negotiate',
           normalizedHeadword: 'negotiate',
@@ -208,7 +216,16 @@ describe('Phase 1: Data Integrity & Session Correctness', () => {
           examTips: [],
           audioUSUrl: null,
           audioUKUrl: null
-        });
+        }]
+      });
+
+      global.fetch = vi.fn().mockImplementation((_url: string) => {
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          text: () => Promise.resolve(corePayload),
+          json: () => Promise.resolve(JSON.parse(corePayload))
+        } as any);
       });
 
       const result = await datasetMigrationService.autoMigrateIfOutdated();

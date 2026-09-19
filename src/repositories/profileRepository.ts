@@ -70,12 +70,13 @@ export const profileRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    await db.transaction('rw', [db.profiles, db.progress, db.reviewLogs, db.dailyStats, db.syncQueue, db.appSettings], async () => {
+    await db.transaction('rw', [db.profiles, db.progress, db.reviewLogs, db.dailyStats, db.syncQueue, db.appSettings, db.manualQueue], async () => {
       await db.profiles.delete(id);
       await db.progress.where('profileId').equals(id).delete();
       await db.reviewLogs.where('profileId').equals(id).delete();
       await db.dailyStats.where('profileId').equals(id).delete();
       await db.syncQueue.where('profileId').equals(id).delete();
+      await db.manualQueue.where('profileId').equals(id).delete();
 
       const activeId = await this.getActiveProfileId();
       if (activeId === id) {
@@ -87,5 +88,21 @@ export const profileRepository = {
         }
       }
     });
+
+    // Clean up all profile-scoped localStorage sessions (Flashcard, FastSkim, Today)
+    if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        const keysToRemove: string[] = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.includes(id)) {
+            keysToRemove.push(key);
+          }
+        }
+        keysToRemove.forEach(k => localStorage.removeItem(k));
+      } catch (storageErr) {
+        console.warn('[profileRepository] Failed to clean localStorage for deleted profile:', storageErr);
+      }
+    }
   }
 };

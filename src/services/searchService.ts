@@ -26,6 +26,8 @@ export interface SearchIndexItem {
   toeicScoreRange: string;
   partsOfSpeech: string[];
   phoneticUS: string | null;
+  sourceCourseId?: string;
+  sourceFileName?: string;
 }
 
 let indexCache: SearchIndexItem[] | null = null;
@@ -42,6 +44,8 @@ export const searchService = {
 
   /**
    * Build or retrieve the singleton lightweight search index.
+   * Single Source of Truth: public/data/v1/search-index.json (10,304 words across 35 courses).
+   * Does NOT restrict index universe based on local db.words count.
    */
   async getIndex(): Promise<SearchIndexItem[]> {
     if (indexCache && indexCache.length > 0) {
@@ -53,64 +57,86 @@ export const searchService = {
 
     indexPromise = (async () => {
       try {
-        const localWordCount = await db.words.count();
-        if (localWordCount > 0) {
-          // Query local IndexedDB words directly
-          const allWords = await db.words.toArray();
-          const items: SearchIndexItem[] = allWords.map(w => ({
-            id: w.id,
-            headword: w.headword,
-            normalizedHeadword: (w.normalizedHeadword || w.headword).toLowerCase(),
-            definitionZh: w.definitionZh || '',
-            category: w.category || '',
-            toeicScoreRange: w.toeicScoreRange || '',
-            partsOfSpeech: w.partsOfSpeech || [],
-            phoneticUS: w.phoneticUS || null
-          }));
-          indexCache = items;
-          return items;
+        // 1. Primary Source of Truth: lightweight pre-compiled catalog search-index.json
+        try {
+          const res = await fetch(`${getBaseDataUrl('data/v1/search-index.json')}?t=${Date.now()}`);
+          if (res.ok) {
+            const data: SearchIndexItem[] = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+              indexCache = data;
+              return data;
+            }
+          }
+        } catch (fetchErr) {
+          console.warn('[searchService] Failed to fetch pre-compiled search-index.json, falling back:', fetchErr);
         }
 
-        // If local DB is not populated yet, dynamically fetch courses declared in current catalog.json
-        const catalog = await courseRepository.fetchCatalog();
-        const courseItems: SearchIndexItem[] = [];
-        const seenWords = new Set<string>();
+        // 2. Fallback: load dynamically from catalog.json courses
+        try {
+          const catalog = await courseRepository.fetchCatalog();
+          const courseItems: SearchIndexItem[] = [];
+          const seenWords = new Set<string>();
 
-        const fetchPromises = catalog.courses.map(async (c: CourseSummary) => {
-          try {
-            const res = await fetch(getBaseDataUrl(`data/v1/courses/${c.fileName}`));
-            if (!res.ok) return [];
-            const data = await res.json();
-            return Array.isArray(data?.words) ? data.words : [];
-          } catch {
-            return [];
-          }
-        });
+          const fetchPromises = catalog.courses.map(async (c: CourseSummary) => {
+            try {
+              const res = await fetch(getBaseDataUrl(`data/v1/courses/${c.fileName}`));
+              if (!res.ok) return [];
+              const data = await res.json();
+              return Array.isArray(data?.words)
+                ? data.words.map((w: any) => ({ ...w, sourceCourseId: c.id, sourceFileName: c.fileName }))
+                : [];
+            } catch {
+              return [];
+            }
+          });
 
-        const courseResults = await Promise.allSettled(fetchPromises);
-        for (const res of courseResults) {
-          if (res.status === 'fulfilled' && Array.isArray(res.value)) {
-            for (const w of res.value) {
-              const norm = (w.normalizedHeadword || w.headword || '').toLowerCase();
-              if (norm && !seenWords.has(norm)) {
-                seenWords.add(norm);
-                courseItems.push({
-                  id: w.id,
-                  headword: w.headword,
-                  normalizedHeadword: norm,
-                  definitionZh: w.definitionZh || '',
-                  category: w.category || '',
-                  toeicScoreRange: w.toeicScoreRange || '',
-                  partsOfSpeech: w.partsOfSpeech || [],
-                  phoneticUS: w.phoneticUS || null
-                });
+          const courseResults = await Promise.allSettled(fetchPromises);
+          for (const res of courseResults) {
+            if (res.status === 'fulfilled' && Array.isArray(res.value)) {
+              for (const w of res.value) {
+                const norm = (w.normalizedHeadword || w.headword || '').toLowerCase();
+                if (norm && !seenWords.has(norm)) {
+                  seenWords.add(norm);
+                  courseItems.push({
+                    id: w.id,
+                    headword: w.headword,
+                    normalizedHeadword: norm,
+                    definitionZh: w.definitionZh || '',
+                    category: w.category || '',
+                    toeicScoreRange: w.toeicScoreRange || '',
+                    partsOfSpeech: w.partsOfSpeech || [],
+                    phoneticUS: w.phoneticUS || null,
+                    sourceCourseId: w.sourceCourseId,
+                    sourceFileName: w.sourceFileName
+                  });
+                }
               }
             }
           }
+
+          if (courseItems.length > 0) {
+            indexCache = courseItems;
+            return courseItems;
+          }
+        } catch (catalogErr) {
+          console.warn('[searchService] Failed to load catalog fallback, using local DB:', catalogErr);
         }
 
-        indexCache = courseItems;
-        return courseItems;
+        // 3. Last-resort fallback: local IndexedDB
+        const localWords = await db.words.toArray();
+        const fallbackItems: SearchIndexItem[] = localWords.map(w => ({
+          id: w.id,
+          headword: w.headword,
+          normalizedHeadword: (w.normalizedHeadword || w.headword).toLowerCase(),
+          definitionZh: w.definitionZh || '',
+          category: w.category || '',
+          toeicScoreRange: w.toeicScoreRange || '',
+          partsOfSpeech: w.partsOfSpeech || [],
+          phoneticUS: w.phoneticUS || null
+        }));
+
+        indexCache = fallbackItems;
+        return fallbackItems;
       } catch (err) {
         console.warn('[searchService] Failed to build search index:', err);
         indexCache = [];
@@ -181,15 +207,26 @@ export const searchService = {
   },
 
   /**
-   * Retrieve full Word details by ID from db.words or course data.
+   * Retrieve full Word details by ID from db.words or lazy-load from course file.
    */
   async getFullWord(wordId: string): Promise<Word | null> {
     try {
       const local = await db.words.get(wordId);
       if (local) return local;
+
+      // Lazy-load from course file if not in local db
+      const index = await this.getIndex();
+      const entry = index.find(item => item.id === wordId);
+      if (entry?.sourceFileName) {
+        const res = await fetch(getBaseDataUrl(`data/v1/courses/${entry.sourceFileName}`));
+        if (res.ok) {
+          const courseData = await res.json();
+          const found = courseData.words?.find((w: Word) => w.id === wordId);
+          if (found) return found;
+        }
+      }
     } catch {}
 
-    // Fallback search by normalized term if not by exact ID
     return null;
   }
 };

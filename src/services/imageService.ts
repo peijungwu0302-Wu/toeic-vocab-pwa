@@ -454,15 +454,18 @@ export async function getStorageEstimate(): Promise<StorageEstimateResult | null
   return null;
 }
 
-export async function getCourseMediaEstimate(courseId: string): Promise<{ estimatedBytes: number; imageCount: number }> {
+export async function getCourseMediaEstimate(
+  courseId: string
+): Promise<{ estimatedBytes: number; imageCount: number; isEstimate: boolean }> {
   await initRuntimeManifest();
   const words = await courseRepository.getWordsForCourse(courseId);
   const validImages = words.filter(w => runtimeManifest?.images?.[w.id]);
-  // Average optimized WebP is ~45 KB (46,080 bytes)
-  const estimatedBytes = validImages.length * 46080;
+  // Conservative estimate: 140 KB per WebP image (empirical average measured at 136.5 KB)
+  const estimatedBytes = validImages.length * 140 * 1024;
   return {
     estimatedBytes,
-    imageCount: validImages.length
+    imageCount: validImages.length,
+    isEstimate: true
   };
 }
 

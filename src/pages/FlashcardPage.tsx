@@ -119,6 +119,16 @@ export const FlashcardPage: React.FC = () => {
   const { reviewStyle, setReviewStyle, handPreference, setHandPreference } = useReviewStyle();
 
   const courseId = searchParams.get('courseId');
+  const queueParam = searchParams.get('queue');
+  const isManualQueue = courseId === 'manual' || queueParam === 'manual';
+  const isStarredQueue = courseId === 'starred' || searchParams.get('starred') === 'true';
+  const reviewScope = isManualQueue
+    ? 'manual'
+    : isStarredQueue
+    ? 'starred'
+    : courseId
+    ? `course:${courseId}`
+    : 'all';
 
   const [queue, setQueue] = useState<StudyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -282,11 +292,10 @@ export const FlashcardPage: React.FC = () => {
     try {
       setIsLoading(true);
       const profileId = activeProfile.id;
-      const targetCourseId = courseId || 'all';
 
       // 1. Check saved review session in studySessionService unless forceFresh is requested
       if (!forceFresh) {
-        const savedSession = studySessionService.loadFlashcardSession(profileId, targetCourseId);
+        const savedSession = studySessionService.loadFlashcardSession(profileId, reviewScope);
         if (savedSession && savedSession.sessionWordIds && savedSession.sessionWordIds.length > 0) {
           const restoredItems = await progressRepository.getStudyItemsByWordIds(profileId, savedSession.sessionWordIds);
           if (restoredItems.length > 0) {
@@ -369,7 +378,7 @@ export const FlashcardPage: React.FC = () => {
         studySessionService.saveFlashcardSession({
           sessionId: `fs_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
           profileId,
-          courseId: targetCourseId,
+          courseId: reviewScope,
           sessionWordIds: items.map(it => it.word.id),
           currentIndex: 0,
           sessionConfig: {
@@ -394,7 +403,7 @@ export const FlashcardPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [activeProfile, courseId, batchSize, selectedCategory, isShuffle]);
+  }, [activeProfile, reviewScope, courseId, batchSize, selectedCategory, isShuffle]);
 
   useEffect(() => {
     loadStudyQueue();
@@ -414,7 +423,7 @@ export const FlashcardPage: React.FC = () => {
   // Auto-save review session progress (updating exact session index without re-shuffling)
   useEffect(() => {
     if (queue.length > 0 && !isLoading && activeProfile) {
-      const existing = studySessionService.loadFlashcardSession(activeProfile.id, courseId || 'all');
+      const existing = studySessionService.loadFlashcardSession(activeProfile.id, reviewScope);
       if (existing) {
         studySessionService.saveFlashcardSession({
           ...existing,
@@ -423,11 +432,11 @@ export const FlashcardPage: React.FC = () => {
         });
       }
     }
-  }, [currentIndex, queue.length, isLoading, activeProfile, courseId]);
+  }, [currentIndex, queue.length, isLoading, activeProfile, reviewScope]);
 
   const handleRestartReviewFromBeginning = () => {
     if (activeProfile) {
-      studySessionService.clearFlashcardSession(activeProfile.id, courseId || 'all');
+      studySessionService.clearFlashcardSession(activeProfile.id, reviewScope);
     }
     setCurrentIndex(0);
     setHistoryOffset(0);
@@ -555,7 +564,7 @@ export const FlashcardPage: React.FC = () => {
       } else {
         // Session completed!
         if (activeProfile) {
-          studySessionService.clearFlashcardSession(activeProfile.id, courseId || 'all');
+          studySessionService.clearFlashcardSession(activeProfile.id, reviewScope);
         }
         confetti({
           particleCount: 90,

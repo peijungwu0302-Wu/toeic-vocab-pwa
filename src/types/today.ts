@@ -3,6 +3,8 @@
  * Types for the structured, resumable Today Guided Learning session.
  */
 
+import type { NextGenQuestion } from '../services/quizService';
+
 export type TodayPhase = 'review' | 'preview' | 'learn' | 'quiz' | 'summary';
 
 export interface TodaySession {
@@ -16,6 +18,8 @@ export interface TodaySession {
   currentReviewIndex: number;
   currentPreviewIndex: number;
   currentLearnIndex: number;
+  quizQuestionsSnapshot?: NextGenQuestion[];
+  quizCurrentIndex?: number;
   quizUserAnswers: Record<number, number>;
   wrongWordIds: string[];
   createdAt: string;
