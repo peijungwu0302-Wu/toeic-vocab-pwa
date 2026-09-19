@@ -19,7 +19,7 @@ import { progressRepository } from '../../repositories/progressRepository';
 import { fsrsService } from '../../services/fsrsService';
 import { audioService } from '../../services/audioService';
 import { morphologyService, MorphologyInfo } from '../../services/morphologyService';
-import { imageService } from '../../services/imageService';
+import { imageService, OFFLINE_PLACEHOLDER_URL } from '../../services/imageService';
 import { Word, Progress } from '../../types/db';
 import { db } from '../../db';
 import { useProfile } from '../../contexts/ProfileContext';
@@ -201,6 +201,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                   <img
                     src={imgInfo.url}
                     alt={selectedWord.headword}
+                    onError={(e) => {
+                      if (e.currentTarget.src !== OFFLINE_PLACEHOLDER_URL) {
+                        e.currentTarget.src = OFFLINE_PLACEHOLDER_URL;
+                      }
+                    }}
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />

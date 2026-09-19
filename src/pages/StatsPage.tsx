@@ -15,7 +15,7 @@ import { statsRepository } from '../repositories/statsRepository';
 import { progressRepository } from '../repositories/progressRepository';
 import { audioService } from '../services/audioService';
 import { fsrsService } from '../services/fsrsService';
-import { imageService } from '../services/imageService';
+import { imageService, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
 import { DailyStat, Word } from '../types/db';
 import { db } from '../db';
 import { Badge } from '../components/ui/Badge';
@@ -374,6 +374,11 @@ export const StatsPage: React.FC = () => {
               <img
                 src={imageService.getImageForWord(previewWord.headword, previewWord.category, previewWord.id).url}
                 alt={previewWord.headword}
+                onError={(e) => {
+                  if (e.currentTarget.src !== OFFLINE_PLACEHOLDER_URL) {
+                    e.currentTarget.src = OFFLINE_PLACEHOLDER_URL;
+                  }
+                }}
                 className="w-full h-32 object-cover"
               />
               <div className="absolute bottom-1.5 left-2 bg-slate-900/90 border border-slate-700/80 rounded-md px-2 py-0.5 text-[10px] font-semibold text-emerald-300">

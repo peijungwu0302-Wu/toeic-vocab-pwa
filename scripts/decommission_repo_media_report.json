@@ -1,0 +1,35 @@
+{
+  "status": "SUCCESS",
+  "timestamp": "2026-09-19T09:12:57Z",
+  "externalArchiveLocation": "C:\\TOEIC-Vocab-Media-Archive",
+  "counts": {
+    "totalFiles": 14267,
+    "webpImages": 7165,
+    "jpgImages": 7093,
+    "jsonAndDataBackups": 9,
+    "totalMediaImages": 14258
+  },
+  "directoryBreakdown": {
+    "words": {
+      "totalFiles": 7178,
+      "webp": 7165,
+      "historicalJpg": 13,
+      "totalBytes": 973455238
+    },
+    "originals": {
+      "totalFiles": 7080,
+      "jpg": 7080,
+      "totalBytes": 2614005191
+    },
+    "dataBackups": {
+      "totalFiles": 9,
+      "totalBytes": 355847429
+    }
+  },
+  "totalBytes": 3943307858,
+  "totalGiB": 3.672,
+  "repoWorkingTreeCleaned": {
+    "wordsDirRemoved": true,
+    "originalsDirRemoved": true
+  }
+}

@@ -26,7 +26,7 @@ import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { audioService } from '../services/audioService';
-import { imageService } from '../services/imageService';
+import { imageService, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
 
 export const FastSkimPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -728,7 +728,13 @@ export const FastSkimPage: React.FC = () => {
                 <img
                   src={imageService.getImageForWord(currentWord.headword, currentWord.category, currentWord.id).url}
                   alt={currentWord.headword}
-                  onError={() => setImgFailed(true)}
+                  onError={(e) => {
+                    if (e.currentTarget.src !== OFFLINE_PLACEHOLDER_URL) {
+                      e.currentTarget.src = OFFLINE_PLACEHOLDER_URL;
+                    } else {
+                      setImgFailed(true);
+                    }
+                  }}
                   className="w-full h-full object-cover object-center brightness-90 contrast-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />

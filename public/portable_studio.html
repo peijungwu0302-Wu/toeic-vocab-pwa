@@ -225,6 +225,57 @@
     let selectedWord = null;
     const stagedImages = new Map(); // slug -> { base64, ext, headword }
     const R2_WORKER_URL = "https://toeic-image-publisher.peijungwu0302.workers.dev";
+    let runtimeManifest = null;
+    const MANIFEST_CACHE_KEY = 'TOEIC_PORTABLE_STUDIO_MANIFEST_CACHE';
+    try {
+      const cached = localStorage.getItem(MANIFEST_CACHE_KEY);
+      if (cached) runtimeManifest = JSON.parse(cached);
+    } catch (e) {}
+
+    function getWordImageInfo(w) {
+      if (!w) return { isDone: false, isStaged: false, url: null, version: null, filename: null };
+      if (stagedImages.has(w.slug)) {
+        const item = stagedImages.get(w.slug);
+        return { isDone: true, isStaged: true, url: item.base64, version: null, filename: `${w.slug}.${item.ext} (本次貼圖暫存)` };
+      }
+      if (w.cloudImageUrl) {
+        return { isDone: true, isStaged: false, url: w.cloudImageUrl, version: null, filename: `${w.headword} ✅ 雲端圖檔` };
+      }
+      if (w.id && runtimeManifest && runtimeManifest.images && runtimeManifest.images[w.id]) {
+        const entry = runtimeManifest.images[w.id];
+        const ver = entry.v || 1;
+        return {
+          isDone: true,
+          isStaged: false,
+          url: `${R2_WORKER_URL}/words/${w.id}/v${ver}.webp`,
+          version: ver,
+          filename: `${w.headword} (R2 v${ver}) ✅ 完工圖檔`
+        };
+      }
+      return { isDone: false, isStaged: false, url: null, version: null, filename: null };
+    }
+
+    async function loadRuntimeManifest() {
+      try {
+        const res = await fetch(`${R2_WORKER_URL}/api/manifest/current`);
+        if (res.ok) {
+          const data = await res.json();
+          runtimeManifest = data;
+          try {
+            localStorage.setItem(MANIFEST_CACHE_KEY, JSON.stringify(data));
+          } catch (e) {}
+          if (lastSyncLabel) {
+            lastSyncLabel.textContent = `☁️ R2 Manifest 已同步 (${data.count || 0} 字)`;
+          }
+          updateTabCounts();
+          renderList();
+          if (selectedWord) selectWord(selectedWord);
+        }
+      } catch (err) {
+        console.warn('Could not load R2 manifest:', err);
+      }
+    }
+    loadRuntimeManifest();
 
     // ==========================================
     // ☁️ Supabase 雲端中繼站直連配置
@@ -307,7 +358,7 @@
       let pendingNum = 0;
       let completedNum = 0;
       all.forEach(w => {
-        const isDone = w.hasImage || stagedImages.has(w.slug);
+        const isDone = getWordImageInfo(w).isDone;
         if (isDone) completedNum++;
         else pendingNum++;
       });
@@ -389,7 +440,8 @@
       updateTabCounts();
 
       let filtered = all.filter(w => {
-        const isDone = w.hasImage || stagedImages.has(w.slug);
+        const info = getWordImageInfo(w);
+        const isDone = info.isDone;
         if (activeTab === 'pending' && isDone) return false;
         if (activeTab === 'completed' && !isDone) return false;
         if (query) {
@@ -412,9 +464,10 @@
       }
 
       currentWords.forEach(w => {
-        const isStaged = stagedImages.has(w.slug);
-        const isDone = w.hasImage || isStaged;
-        const isSelected = selectedWord && selectedWord.slug === w.slug;
+        const info = getWordImageInfo(w);
+        const isStaged = info.isStaged;
+        const isDone = info.isDone;
+        const isSelected = selectedWord && (selectedWord.id ? selectedWord.id === w.id : selectedWord.slug === w.slug);
         const timeBadge = w.completedAt ? formatTime(w.completedAt) : '';
 
         const card = document.createElement('div');
@@ -461,37 +514,36 @@
       }
       focusPrompt.value = w.prompt || '';
 
-      // 時間戳與來源資訊列
-      const isDone = w.hasImage || stagedImages.has(w.slug);
-      if (isDone) {
+      const info = getWordImageInfo(w);
+      if (info.isDone) {
         focusStatusBadge.classList.remove('hidden');
         focusStatusBadge.classList.add('flex');
-        const timeStr = w.completedAt ? formatFullTime(w.completedAt) : '時間記錄於本機';
+        const timeStr = w.completedAt ? formatFullTime(w.completedAt) : (info.version ? `R2 v${info.version}` : '已完工');
         focusCompletedAt.textContent = `完工時間: ${timeStr}`;
-        focusSource.textContent = w.source || (stagedImages.has(w.slug) ? '🎨 圖書館手動暫存' : '🤖 GCP 自動管線');
+        focusSource.textContent = w.source || (info.isStaged ? '🎨 圖書館手動暫存' : (info.version ? `☁️ R2 v${info.version}` : '☁️ Cloudflare R2'));
       } else {
         focusStatusBadge.classList.add('hidden');
         focusStatusBadge.classList.remove('flex');
       }
 
-      if (stagedImages.has(w.slug)) {
-        const item = stagedImages.get(w.slug);
+      if (info.isStaged) {
         pasteZoneNormal.classList.add('hidden');
         pasteZonePreview.classList.remove('hidden');
         pasteZonePreview.classList.add('flex');
-        previewImg.src = item.base64;
-        previewFilename.textContent = `${w.slug}.${item.ext} (本次貼圖暫存)`;
-      } else if (w.hasImage) {
+        previewImg.src = info.url;
+        previewFilename.textContent = info.filename;
+      } else if (info.isDone && info.url) {
         pasteZoneNormal.classList.add('hidden');
         pasteZonePreview.classList.remove('hidden');
         pasteZonePreview.classList.add('flex');
-        const imgUrl = w.cloudImageUrl || `./assets/images/words/${w.slug}.webp`;
-        previewImg.src = imgUrl;
-        previewFilename.textContent = `${w.slug} ✅ 完工圖檔 (可重新貼圖覆蓋)`;
+        previewImg.src = info.url;
+        previewFilename.textContent = info.filename || `${w.headword} ✅ 完工圖檔 (可重新貼圖覆蓋)`;
       } else {
+        // 沒有 Runtime Manifest entry：乾淨顯示「尚未發布圖片」/ placeholder
         pasteZoneNormal.classList.remove('hidden');
         pasteZonePreview.classList.add('hidden');
         pasteZonePreview.classList.remove('flex');
+        previewImg.src = '';
       }
     }
 
@@ -644,6 +696,23 @@
           selectedWord.cloudImageUrl = `${R2_WORKER_URL}/words/${selectedWord.id}/v${data.version}.webp`;
           selectedWord.source = `☁️ R2 v${data.version}`;
           selectedWord.completedAt = new Date().toISOString();
+
+          if (!runtimeManifest) {
+            runtimeManifest = { manifestVersion: 1, count: 0, images: {} };
+          }
+          if (!runtimeManifest.images) {
+            runtimeManifest.images = {};
+          }
+          runtimeManifest.images[selectedWord.id] = {
+            v: data.version,
+            sha256: item.sha256,
+            uploadedAt: new Date().toISOString()
+          };
+          runtimeManifest.count = Object.keys(runtimeManifest.images).length;
+          try {
+            localStorage.setItem(MANIFEST_CACHE_KEY, JSON.stringify(runtimeManifest));
+          } catch (e) {}
+
           stagedImages.delete(key);
           stagedCount.textContent = stagedImages.size;
           zipCount.textContent = stagedImages.size;
@@ -720,6 +789,7 @@
     async function syncFromCloud(showFeedback = true) {
       try {
         if (showFeedback) showToast('⏳ 正在同步最新雲端出圖進度...', false);
+        await loadRuntimeManifest();
         let cloudRecordsCount = 0;
 
         if (supabaseClient) {

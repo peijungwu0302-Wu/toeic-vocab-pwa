@@ -4,40 +4,35 @@
  */
 
 import { useState, useEffect } from 'react';
-import localImageWords from '../data/localImageWords.json';
-
 export interface ImageInfo {
   url: string;
   tag: string;
 }
 
-const LOCAL_IMAGE_SET = new Set<string>(localImageWords);
-
-// Highly curated high-resolution associative business photos from Unsplash & Antigravity Bespoke Suite
+// Highly curated high-resolution associative business photos from Unsplash
 const KEYWORD_IMAGE_MAP: Record<string, { url: string; tag: string }> = {
-  // 🌟 Antigravity 專屬精準出圖庫 (100% 絕對切題)
-  'arm in arm': { url: '/assets/images/words/arm_in_arm_1788252689563.jpg', tag: '兩位商務人士在辦公走廊挽手齊行（arm in arm 緊密合作）' },
-  cleaner: { url: '/assets/images/words/cleaner_1788252707326.jpg', tag: '專業清潔人員穿制服打掃現代會議室（cleaner 清潔工）' },
-  inbox: { url: '/assets/images/words/email_inbox_1788253218364.jpg', tag: '現代辦公桌電腦螢幕顯示整齊收件匣（inbox 收件匣）' },
-  'at a time': { url: '/assets/images/words/at_a_time_1788253237445.jpg', tag: '商務旅客依序逐一通過機場安檢閘門（at a time 一次/逐一）' },
-  'on schedule': { url: '/assets/images/words/on_schedule_1788253257675.jpg', tag: '現代高鐵發車顯示幕綠色標示 ON TIME（on schedule 按時/如期）' },
-  contract: { url: '/assets/images/words/contract_signing_1788254483587.jpg', tag: '商務主管簽署正式併購合約並握手（contract 合約）' },
-  agreement: { url: '/assets/images/words/contract_signing_1788254483587.jpg', tag: '雙方代表簽署雙邊協議（agreement 協議）' },
-  signature: { url: '/assets/images/words/contract_signing_1788254483587.jpg', tag: '鋼筆正式簽名落款（signature 簽名）' },
-  boarding: { url: '/assets/images/words/boarding_gate_1788254499900.jpg', tag: '國際機場登機門旅客掃描登機證（boarding 登機）' },
-  warehouse: { url: '/assets/images/words/warehouse_logistics_1788254515192.jpg', tag: '現代高科技物流倉儲與條碼掃描主管（warehouse 倉儲）' },
-  logistics: { url: '/assets/images/words/warehouse_logistics_1788254515192.jpg', tag: '智慧物流倉儲與堆高機運作（logistics 物流）' },
-  presentation: { url: '/assets/images/words/business_presentation_1788254534156.jpg', tag: '講者於大型講台發表季度收益成長簡報（presentation 簡報）' },
-  keynote: { url: '/assets/images/words/business_presentation_1788254534156.jpg', tag: '年會主題演講與數據圖表（keynote 主題演講）' },
-  interview: { url: '/assets/images/words/job_interview_1788254552793.jpg', tag: '主管審閱應徵者履歷進行求職面試（interview 面試）' },
-  applicant: { url: '/assets/images/words/job_interview_1788254552793.jpg', tag: '求職應徵者於現代會議室面試（applicant 應徵者）' },
-  candidate: { url: '/assets/images/words/job_interview_1788254552793.jpg', tag: '優秀職缺候選人進行面談（candidate 候選人）' },
-  commute: { url: '/assets/images/words/commute_transit_1788254678913.jpg', tag: '商務人士於捷運月台通勤等候列車（commute 通勤）' },
-  transit: { url: '/assets/images/words/commute_transit_1788254678913.jpg', tag: '大眾捷運與都會商務交通網絡（transit 運輸）' },
-  brainstorming: { url: '/assets/images/words/brainstorming_ideas_1788254696120.jpg', tag: '跨國團隊於玻璃牆貼便利貼腦力激盪（brainstorming 腦力激盪）' },
-  idea: { url: '/assets/images/words/brainstorming_ideas_1788254696120.jpg', tag: '創新策略提案與點子匯集（idea 創意）' },
-  deadline: { url: '/assets/images/words/deadline_calendar_1788254713935.jpg', tag: '辦公桌行事曆紅圈標註緊急專案截止日（deadline 截止日）' },
-  calendar: { url: '/assets/images/words/deadline_calendar_1788254713935.jpg', tag: '商務專案進度與時程規劃行事曆（calendar 日曆）' },
+  'arm in arm': { url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80', tag: '兩位商務人士在辦公走廊挽手齊行（arm in arm 緊密合作）' },
+  cleaner: { url: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80', tag: '專業清潔人員穿制服打掃現代會議室（cleaner 清潔工）' },
+  inbox: { url: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?auto=format&fit=crop&w=600&q=80', tag: '現代辦公桌電腦螢幕顯示整齊收件匣（inbox 收件匣）' },
+  'at a time': { url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', tag: '商務旅客依序逐一通過機場安檢閘門（at a time 一次/逐一）' },
+  'on schedule': { url: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80', tag: '現代高鐵發車顯示幕綠色標示 ON TIME（on schedule 按時/如期）' },
+  contract: { url: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80', tag: '商務主管簽署正式併購合約並握手（contract 合約）' },
+  agreement: { url: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80', tag: '雙方代表簽署雙邊協議（agreement 協議）' },
+  signature: { url: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80', tag: '鋼筆正式簽名落款（signature 簽名）' },
+  boarding: { url: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80', tag: '國際機場登機門旅客掃描登機證（boarding 登機）' },
+  warehouse: { url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80', tag: '現代高科技物流倉儲與條碼掃描主管（warehouse 倉儲）' },
+  logistics: { url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80', tag: '智慧物流倉儲與堆高機運作（logistics 物流）' },
+  presentation: { url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80', tag: '講者於大型講台發表季度收益成長簡報（presentation 簡報）' },
+  keynote: { url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80', tag: '年會主題演講與數據圖表（keynote 主題演講）' },
+  interview: { url: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?auto=format&fit=crop&w=600&q=80', tag: '主管審閱應徵者履歷進行求職面試（interview 面試）' },
+  applicant: { url: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=600&q=80', tag: '求職應徵者於現代會議室面試（applicant 應徵者）' },
+  candidate: { url: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?auto=format&fit=crop&w=600&q=80', tag: '優秀職缺候選人進行面談（candidate 候選人）' },
+  commute: { url: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80', tag: '商務人士於捷運月台通勤等候列車（commute 通勤）' },
+  transit: { url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80', tag: '大眾捷運與都會商務交通網絡（transit 運輸）' },
+  brainstorming: { url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80', tag: '跨國團隊於玻璃牆貼便利貼腦力激盪（brainstorming 腦力激盪）' },
+  idea: { url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80', tag: '創新策略提案與點子匯集（idea 創意）' },
+  deadline: { url: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80', tag: '辦公桌行事曆紅圈標註緊急專案截止日（deadline 截止日）' },
+  calendar: { url: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=600&q=80', tag: '商務專案進度與時程規劃行事曆（calendar 日曆）' },
 
   // 1. 核心高頻抽象詞（優勢、倡議、合規、可行性、共識、誘因、責任、先例）
   advantage: { url: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?auto=format&fit=crop&w=600&q=80', tag: '西洋棋殘局將死勝出（優勢）' },
@@ -182,6 +177,35 @@ function simpleHash(str: string): number {
   return Math.abs(hash);
 }
 
+export const OFFLINE_PLACEHOLDER_URL = `data:image/svg+xml;utf8,${encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <radialGradient id="pglow" cx="50%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#pgrad)" />
+  <circle cx="300" cy="240" r="180" fill="url(#pglow)" />
+  <g transform="translate(240, 180) scale(1.5)" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+    <circle cx="8.5" cy="8.5" r="1.5"/>
+    <polyline points="21 15 16 10 5 21"/>
+  </g>
+  <text x="300" y="325" fill="#94a3b8" font-size="22" font-family="system-ui, -apple-system, sans-serif" font-weight="600" text-anchor="middle" letter-spacing="1">
+    TOEIC 速記 · 視覺記憶
+  </text>
+  <text x="300" y="360" fill="#64748b" font-size="15" font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">
+    連網即刻同步商務實景圖解
+  </text>
+</svg>
+`)}`;
+
 export interface RuntimeManifestData {
   schemaVersion: string;
   manifestUri: string | null;
@@ -207,14 +231,29 @@ export function onManifestLoaded(listener: ManifestListener): () => void {
   };
 }
 
+const MANIFEST_STORAGE_KEY = 'toeic_runtime_manifest_cache';
+
+// Load cached manifest instantly if available in localStorage
+if (typeof window !== 'undefined') {
+  try {
+    const cached = localStorage.getItem(MANIFEST_STORAGE_KEY);
+    if (cached) {
+      runtimeManifest = JSON.parse(cached);
+    }
+  } catch {}
+}
+
 export async function initRuntimeManifest(): Promise<RuntimeManifestData | null> {
-  if (runtimeManifest) return runtimeManifest;
-  if (isFetchingManifest) return null;
+  if (isFetchingManifest) return runtimeManifest;
   isFetchingManifest = true;
   try {
     const res = await fetch(`${R2_MEDIA_BASE_URL}/api/manifest/current`);
     if (res.ok) {
-      runtimeManifest = await res.json();
+      const freshManifest = await res.json();
+      runtimeManifest = freshManifest;
+      try {
+        localStorage.setItem(MANIFEST_STORAGE_KEY, JSON.stringify(freshManifest));
+      } catch {}
       manifestListeners.forEach((fn) => {
         try {
           fn(runtimeManifest!);
@@ -235,7 +274,7 @@ export async function initRuntimeManifest(): Promise<RuntimeManifestData | null>
 if (typeof window !== 'undefined') {
   setTimeout(() => {
     initRuntimeManifest();
-  }, 50);
+  }, 20);
 }
 
 /**
@@ -258,10 +297,14 @@ export function useWordImage(headword: string, category = '辦公日常', wordId
 
 export const imageService = {
   /**
-   * Get semantic, highly associative business photo object for any TOEIC word
+   * Get semantic, highly associative business photo object for any TOEIC word.
+   * Priority:
+   * 1. R2 Production Image (if wordId is active in Runtime Manifest)
+   * 2. Curated Unsplash associative business photo
+   * 3. Deterministic Category Pool matching (100% stable, zero 404s)
    */
   getImageForWord(headword: string, category = '辦公日常', wordId?: string): { url: string; tag: string } {
-    // Priority -1: R2 Runtime Manifest match (if wordId provided and active in R2 manifest)
+    // 1. R2 Runtime Manifest match (Primary production source of truth)
     if (wordId && runtimeManifest?.images?.[wordId]) {
       const entry = runtimeManifest.images[wordId];
       return {
@@ -270,74 +313,33 @@ export const imageService = {
       };
     }
 
-    const cleanWord = headword.trim().toLowerCase();
-    const slugWord = cleanWord.replace(/[^a-z0-9_-]/g, '_');
-
-    const resolveImageUrl = (url: string): string => {
-      if (url.startsWith('http://') || url.startsWith('https://')) return url;
-      const base = import.meta.env.BASE_URL || '/';
-      const prefix = base.endsWith('/') ? base : base + '/';
-      return `${prefix}${url.replace(/^\//, '')}`;
-    };
-
-    // 0. Primary: 100% Offline Local WebP Image from Core 1,200 Suite
-    if (LOCAL_IMAGE_SET.has(cleanWord)) {
-      return { url: resolveImageUrl(`/assets/images/words/${cleanWord}.webp`), tag: `${headword} 商務實景` };
-    }
-    if (LOCAL_IMAGE_SET.has(slugWord)) {
-      return { url: resolveImageUrl(`/assets/images/words/${slugWord}.webp`), tag: `${headword} 商務實景` };
-    }
-
-    // 0.5 🌟 Visual Sharing: 屈折變體無縫繼承原型 WebP 實景圖（0 API 耗損、100% 視覺共享）
-    const findRootLemma = (word: string): string | null => {
-      if (word.length > 3 && word.endsWith('s') && !['ss', 'us', 'is', 'as'].some(x => word.endsWith(x))) {
-        if (LOCAL_IMAGE_SET.has(word.slice(0, -1))) return word.slice(0, -1);
-        if (word.endsWith('es') && LOCAL_IMAGE_SET.has(word.slice(0, -2))) return word.slice(0, -2);
-        if (word.endsWith('ies') && LOCAL_IMAGE_SET.has(word.slice(0, -3) + 'y')) return word.slice(0, -3) + 'y';
-      }
-      if (word.length > 4 && word.endsWith('ed')) {
-        if (LOCAL_IMAGE_SET.has(word.slice(0, -1))) return word.slice(0, -1);
-        if (LOCAL_IMAGE_SET.has(word.slice(0, -2))) return word.slice(0, -2);
-        if (word.endsWith('ied') && LOCAL_IMAGE_SET.has(word.slice(0, -3) + 'y')) return word.slice(0, -3) + 'y';
-        if (word.length > 5 && word[word.length - 3] === word[word.length - 4] && LOCAL_IMAGE_SET.has(word.slice(0, -3))) {
-          return word.slice(0, -3);
-        }
-      }
-      if (word.length > 5 && word.endsWith('ing')) {
-        if (LOCAL_IMAGE_SET.has(word.slice(0, -3))) return word.slice(0, -3);
-        if (LOCAL_IMAGE_SET.has(word.slice(0, -3) + 'e')) return word.slice(0, -3) + 'e';
-        if (word.length > 6 && word[word.length - 4] === word[word.length - 5] && LOCAL_IMAGE_SET.has(word.slice(0, -4))) {
-          return word.slice(0, -4);
-        }
-      }
-      return null;
-    };
-
-    const sharedRoot = findRootLemma(cleanWord);
-    if (sharedRoot) {
+    // 2. If browser is offline and image not in cache, deliver bundled offline placeholder
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
       return {
-        url: resolveImageUrl(`/assets/images/words/${sharedRoot}.webp`),
-        tag: `${headword} 商務實景（視覺共享自 ${sharedRoot}）`
+        url: OFFLINE_PLACEHOLDER_URL,
+        tag: `${headword} (離線預設圖)`
       };
     }
 
-    // 1. Direct exact word match
+    const cleanWord = headword.trim().toLowerCase();
+
+    // 2. Direct exact word match from curated Unsplash business collection
     if (KEYWORD_IMAGE_MAP[cleanWord]) {
       const item = KEYWORD_IMAGE_MAP[cleanWord];
-      return { url: resolveImageUrl(item.url), tag: item.tag };
+      return { url: item.url, tag: item.tag };
     }
 
-    // 2. Keyword substring matching (e.g. 'arm in arm' matches 'arm', 'a copy of' matches 'copy')
+    // 3. Keyword substring matching (e.g. 'arm in arm' matches 'arm')
     for (const [kw, info] of Object.entries(KEYWORD_IMAGE_MAP)) {
       if (cleanWord.includes(kw)) {
-        return { url: resolveImageUrl(info.url), tag: info.tag };
+        return { url: info.url, tag: info.tag };
       }
     }
 
-    // 3. Deterministic Category Pool matching so words in the same category have distinct photos!
+    // 4. Deterministic Category Pool matching so words in the same category have distinct photos!
     const pool = CATEGORY_POOLS[category] || CATEGORY_POOLS['辦公日常'];
     const idx = simpleHash(cleanWord) % pool.length;
     const poolItem = pool[idx];
-    return { url: resolveImageUrl(poolItem.url), tag: poolItem.tag };
+    return { url: poolItem.url, tag: poolItem.tag };
   }
 };

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "timestamp": "2026-09-19T08:59:41Z",
+  "totalOriginals": 7080,
+  "matchedOriginals": 7079,
+  "orphanOriginals": 1,
+  "totalLocalBytes": 2614005191,
+  "totalVerifiedR2Bytes": 2614005191,
+  "totalGiB": 2.434,
+  "totalMiB": 2492.91,
+  "verification": {
+    "objectsChecked": 7080,
+    "missingCount": 0,
+    "sizeMismatchCount": 0,
+    "shaMismatchCount": 0,
+    "byteParityMatch": true
+  }
+}

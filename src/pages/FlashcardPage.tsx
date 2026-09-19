@@ -28,7 +28,7 @@ import { progressRepository } from '../repositories/progressRepository';
 import { courseRepository } from '../repositories/courseRepository';
 import { fsrsService } from '../services/fsrsService';
 import { audioService } from '../services/audioService';
-import { useWordImage } from '../services/imageService';
+import { useWordImage, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
 import { morphologyService, MorphologyInfo } from '../services/morphologyService';
 import { geminiService, SentenceEvaluationResult, NuanceExplanationResult, MnemonicResult, InstantQuizResult } from '../services/geminiService';
 import { Word, Progress } from '../types/db';
@@ -1090,7 +1090,13 @@ export const FlashcardPage: React.FC = () => {
                   <img
                     src={finalImageUrl}
                     alt={word.headword}
-                    onError={() => setImgFailed(true)}
+                    onError={(e) => {
+                      if (e.currentTarget.src !== OFFLINE_PLACEHOLDER_URL) {
+                        e.currentTarget.src = OFFLINE_PLACEHOLDER_URL;
+                      } else {
+                        setImgFailed(true);
+                      }
+                    }}
                     className="w-full h-full object-cover object-center brightness-90 contrast-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
@@ -1241,7 +1247,13 @@ export const FlashcardPage: React.FC = () => {
                     <img
                       src={finalImageUrl}
                       alt={word.headword}
-                      onError={() => setImgFailed(true)}
+                      onError={(e) => {
+                        if (e.currentTarget.src !== OFFLINE_PLACEHOLDER_URL) {
+                          e.currentTarget.src = OFFLINE_PLACEHOLDER_URL;
+                        } else {
+                          setImgFailed(true);
+                        }
+                      }}
                       className="w-full h-full object-cover object-center brightness-90 contrast-105 pointer-events-none"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
