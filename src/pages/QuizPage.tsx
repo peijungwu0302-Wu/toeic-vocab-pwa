@@ -442,7 +442,7 @@ export const QuizPage: React.FC = () => {
                 onClick={handleEnqueueWrongAnswers}
                 className="mt-2"
               >
-                {enqueuedSuccess ? '✅ 已成功加入複習佇列' : isEnqueuing ? '加入中...' : '📥 一鍵將錯題加入 FSRS 複習隊列'}
+                {enqueuedSuccess ? '✅ 已成功加入重點練習隊列' : isEnqueuing ? '加入中...' : '📥 一鍵將錯題加入重點練習隊列'}
               </Button>
             </div>
           )}

@@ -2,6 +2,7 @@ import { db } from '../db';
 import { Course, CourseWord, Word } from '../types/db';
 import { CourseDetailSchema, DatasetCatalog, DatasetCatalogSchema } from '../types/vocab';
 import { computeSha256Hex } from '../utils/crypto';
+import { searchService } from '../services/searchService';
 
 function shuffleList<T>(array: T[]): T[] {
   const arr = [...array];
@@ -91,71 +92,42 @@ export const courseRepository = {
     return Array.from(categories);
   },
 
-  // 🌟 Global Master Dictionary Search (All 11,154 Words)
-  _masterCache: [] as Word[],
+  // 🌟 Global Master Dictionary Search (Powered by searchService)
   async searchGlobalMasterWords(query: string, limit = 50): Promise<Word[]> {
-    if (!this._masterCache || this._masterCache.length === 0) {
-      try {
-        const localWords = await db.words.toArray();
-        if (localWords.length >= 10000) {
-          this._masterCache = localWords;
-        } else {
-          // Fetch master datasets in parallel
-          const [coreRes, advRes, exp1Res, exp2Res, exp3Res] = await Promise.allSettled([
-            fetch(getBaseDataUrl('data/v1/core-1200.json')).then(r => r.json()),
-            fetch(getBaseDataUrl('data/v1/advanced-2500.json')).then(r => r.json()),
-            fetch(getBaseDataUrl('data/v1/expert-high-part1.json')).then(r => r.json()),
-            fetch(getBaseDataUrl('data/v1/expert-high-part2.json')).then(r => r.json()),
-            fetch(getBaseDataUrl('data/v1/expert-high-part3.json')).then(r => r.json())
-          ]);
+    const searchResults = await searchService.search(query, { limit });
+    if (searchResults.length === 0) return [];
 
-          const combined: Word[] = [...localWords];
-          const seen = new Set(localWords.map(w => w.headword.toLowerCase()));
+    const wordIds = searchResults.map(r => r.id);
+    const localWords = await db.words.where('id').anyOf(wordIds).toArray();
+    const map = new Map(localWords.map(w => [w.id, w]));
 
-          [coreRes, advRes, exp1Res, exp2Res, exp3Res].forEach(res => {
-            if (res.status === 'fulfilled' && Array.isArray(res.value?.words)) {
-              res.value.words.forEach((w: Word) => {
-                if (!seen.has(w.headword.toLowerCase())) {
-                  seen.add(w.headword.toLowerCase());
-                  combined.push(w);
-                }
-              });
-            }
-          });
-
-          this._masterCache = combined;
-        }
-      } catch (err) {
-        console.warn('Failed to load full master dictionary for search:', err);
-        this._masterCache = await db.words.toArray();
+    const result: Word[] = [];
+    for (const r of searchResults) {
+      const full = map.get(r.id);
+      if (full) {
+        result.push(full);
+      } else {
+        result.push({
+          id: r.id,
+          headword: r.headword,
+          normalizedHeadword: r.normalizedHeadword,
+          entryType: 'word',
+          definitionZh: r.definitionZh,
+          starRating: 3,
+          toeicScoreRange: r.toeicScoreRange || '600-750',
+          category: r.category || '高頻核心',
+          partsOfSpeech: r.partsOfSpeech || [],
+          wordForms: [],
+          phoneticUS: r.phoneticUS,
+          phoneticUK: null,
+          examples: [],
+          examTips: [],
+          audioUSUrl: null,
+          audioUKUrl: null
+        });
       }
     }
-
-    if (!query.trim()) {
-      return this._masterCache.slice(0, limit);
-    }
-
-    const q = query.trim().toLowerCase();
-    const exactMatches: Word[] = [];
-    const prefixMatches: Word[] = [];
-    const containsMatches: Word[] = [];
-
-    for (const w of this._masterCache) {
-      const hw = w.headword.toLowerCase();
-      const zh = w.definitionZh || '';
-      if (hw === q) {
-        exactMatches.push(w);
-      } else if (hw.startsWith(q)) {
-        prefixMatches.push(w);
-      } else if (hw.includes(q) || zh.includes(q)) {
-        containsMatches.push(w);
-      }
-      if (exactMatches.length + prefixMatches.length + containsMatches.length >= limit * 2) {
-        break;
-      }
-    }
-
-    return [...exactMatches, ...prefixMatches, ...containsMatches].slice(0, limit);
+    return result;
   },
 
   async findGlobalMasterWord(term: string): Promise<Word | null> {

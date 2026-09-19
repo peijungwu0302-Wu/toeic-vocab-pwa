@@ -42,6 +42,7 @@ import { WordQuickPeekModal } from '../components/ui/WordQuickPeekModal';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { useReviewStyle } from '../contexts/ReviewStyleContext';
 import { studySessionService } from '../services/studySessionService';
+import { manualQueueService } from '../services/manualQueueService';
 import { db } from '../db';
 
 interface StudyItem {
@@ -310,6 +311,9 @@ export const FlashcardPage: React.FC = () => {
 
       if (courseId === 'starred') {
         items = await progressRepository.getStarredWords(profileId);
+      } else if (courseId === 'manual' || searchParams.get('queue') === 'manual') {
+        const queueWords = await manualQueueService.getQueueWords(profileId);
+        items = await progressRepository.getStudyItemsByWordIds(profileId, queueWords.map(w => w.id));
       } else {
         // 1. Get due cards
         const dueItems = await progressRepository.getDueWords(
@@ -813,6 +817,28 @@ export const FlashcardPage: React.FC = () => {
 
   // Empty queue screen (No words in queue)
   if (queue.length === 0) {
+    if (courseId === 'manual' || searchParams.get('queue') === 'manual') {
+      return (
+        <div className="min-h-[70dvh] flex flex-col justify-center items-center max-w-sm mx-auto text-center space-y-4 px-4">
+          <div className="w-16 h-16 rounded-3xl bg-purple-500/20 text-purple-400 flex items-center justify-center">
+            <Sparkles size={32} />
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-slate-100">重點練習隊列目前是空的</h2>
+            <p className="text-xs text-slate-400 mt-1">您可以從「字典搜尋」或「測驗錯題」中將生詞加入重點練習隊列！</p>
+          </div>
+          <div className="w-full space-y-2 pt-2">
+            <Button size="lg" fullWidth variant="primary" onClick={() => navigate('/catalog')}>
+              前往課程單元
+            </Button>
+            <Button size="md" fullWidth variant="outline" onClick={() => navigate('/')}>
+              返回首頁
+            </Button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="min-h-[70dvh] flex flex-col justify-center items-center max-w-sm mx-auto text-center space-y-4 px-4">
         <div className="w-16 h-16 rounded-3xl bg-amber-500/20 text-amber-400 flex items-center justify-center">

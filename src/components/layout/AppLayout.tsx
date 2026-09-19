@@ -73,29 +73,32 @@ export const AppLayout: React.FC = () => {
               <Search size={13} />
             </button>
 
-            {/* Cloud Sync Status */}
+            {/* Cloud Backup Status */}
             {syncState.status === 'syncing' ? (
               <button
                 onClick={() => triggerSync()}
                 className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-blue-950/60 border border-blue-800 text-[10px] text-blue-300"
-                title="雲端同步中..."
+                title="正在備份進度至雲端..."
               >
                 <RefreshCw size={11} className="animate-spin text-blue-400" />
-                <span>同步中</span>
+                <span>備份中</span>
               </button>
             ) : syncState.status === 'error' ? (
               <button
                 onClick={() => triggerSync()}
                 className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-rose-950/60 border border-rose-800 text-[10px] text-rose-300"
-                title={syncState.lastError || '同步失敗，點擊重試'}
+                title={syncState.lastError || '備份失敗，點擊重試'}
               >
                 <CloudOff size={11} className="text-rose-400" />
-                <span>重試</span>
+                <span>重試備份</span>
               </button>
             ) : syncState.cloudUserEmail ? (
-              <div className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800 text-[10px] text-emerald-300">
+              <div
+                className="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800 text-[10px] text-emerald-300"
+                title="本機優先，進度已備份至雲端"
+              >
                 <Cloud size={11} className="text-emerald-400" />
-                <span>已同步</span>
+                <span>已備份</span>
               </div>
             ) : null}
 

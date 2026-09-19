@@ -5,8 +5,8 @@
 
 import { Word, QuizItem } from '../types/db';
 import { QuizQuestion, QuizSessionSummary } from '../types/quiz';
-import { progressRepository } from '../repositories/progressRepository';
 import { geminiService } from './geminiService';
+import { manualQueueService } from './manualQueueService';
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -461,40 +461,36 @@ export const quizService = {
   },
 
   /**
-   * Evaluate a single answer for progress recording
+   * Evaluate a single answer for progress recording.
+   * Note: Invariant - Quizzes do not artificially distort FSRS spaced repetition schedules.
+   * Wrong answers are diverted to the manual practice queue.
    */
   async recordQuizAnswer(
     profileId: string,
     wordId: string,
     isCorrect: boolean,
-    durationMs: number
+    _durationMs = 0
   ): Promise<void> {
-    const rating = isCorrect ? 3 : 1;
-    try {
-      await progressRepository.recordReviewTransaction({
-        profileId,
-        wordId,
-        rating,
-        durationMs,
-        desiredRetention: 0.9,
-        enableCloudSync: false
-      });
-    } catch (err) {
-      console.warn('[QuizService] Progress record failed:', err);
+    if (!isCorrect && profileId && wordId) {
+      await manualQueueService.enqueueWords(profileId, [wordId], 'quiz');
     }
   },
 
   /**
-   * Record multiple wrong answers into SRS queue
+   * Divert multiple quiz wrong answers directly into manual practice queue
+   * with ZERO FSRS mutations.
    */
   async recordQuizWrongAnswers(
     profileId: string,
     wrongWords: Word[],
-    durationMsPerWord = 2000
+    _durationMsPerWord = 0
   ): Promise<void> {
-    for (const w of wrongWords) {
-      await this.recordQuizAnswer(profileId, w.id, false, durationMsPerWord);
-    }
+    if (!profileId || !wrongWords || wrongWords.length === 0) return;
+    await manualQueueService.enqueueWords(
+      profileId,
+      wrongWords.map(w => w.id),
+      'quiz'
+    );
   },
 
   /**

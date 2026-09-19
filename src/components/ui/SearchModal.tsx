@@ -16,7 +16,8 @@ import {
 } from 'lucide-react';
 import { courseRepository } from '../../repositories/courseRepository';
 import { progressRepository } from '../../repositories/progressRepository';
-import { fsrsService } from '../../services/fsrsService';
+import { manualQueueService } from '../../services/manualQueueService';
+import { searchService, SearchIndexItem } from '../../services/searchService';
 import { audioService } from '../../services/audioService';
 import { morphologyService, MorphologyInfo } from '../../services/morphologyService';
 import { imageService, OFFLINE_PLACEHOLDER_URL } from '../../services/imageService';
@@ -32,37 +33,77 @@ interface SearchModalProps {
 
 export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
   const { activeProfile } = useProfile();
-  const [searchResults, setSearchResults] = useState<Word[]>([]);
+  const [searchResults, setSearchResults] = useState<(Word | SearchIndexItem)[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [selectedWord, setSelectedWord] = useState<Word | null>(null);
   const [isStarred, setIsStarred] = useState(false);
-  const [addedMessage, setAddedMessage] = useState(false);
+  const [isInManualQueue, setIsInManualQueue] = useState(false);
   const [morphology, setMorphology] = useState<MorphologyInfo | null>(null);
+  const [totalIndexedCount, setTotalIndexedCount] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Load index count and manage mobile popstate back-button handling
   useEffect(() => {
-    if (isOpen) {
-      let isMounted = true;
-      setIsLoading(true);
-      courseRepository.searchGlobalMasterWords(query).then(words => {
-        if (isMounted) {
-          setSearchResults(words);
-          setIsLoading(false);
-        }
-      });
-      setTimeout(() => inputRef.current?.focus(), 100);
-      return () => { isMounted = false; };
-    } else {
+    if (!isOpen) {
       setQuery('');
       setSelectedWord(null);
+      return;
     }
+
+    searchService.getIndexCount().then(cnt => setTotalIndexedCount(cnt));
+    setTimeout(() => inputRef.current?.focus(), 100);
+
+    // Push history state to intercept Android hardware back button / iOS swipe-back
+    window.history.pushState({ searchModalOpen: true }, '');
+
+    const handlePopState = () => {
+      onClose();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [isOpen, onClose]);
+
+  // Debounced search with AbortController cancellation
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const controller = new AbortController();
+    setIsLoading(true);
+
+    const timer = setTimeout(async () => {
+      try {
+        const results = await searchService.search(query, {
+          limit: 50,
+          signal: controller.signal
+        });
+        if (!controller.signal.aborted) {
+          setSearchResults(results);
+          setIsLoading(false);
+        }
+      } catch {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      }
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
   }, [isOpen, query]);
 
   useEffect(() => {
     if (selectedWord && activeProfile) {
       progressRepository.getByWordId(activeProfile.id, selectedWord.id).then((p: Progress | undefined) => {
         setIsStarred(Boolean(p?.isStarred));
+      });
+      manualQueueService.isInQueue(activeProfile.id, selectedWord.id).then(inQueue => {
+        setIsInManualQueue(inQueue);
       });
       const morph = morphologyService.getMorphology(selectedWord.headword, selectedWord.category);
       setMorphology(morph);
@@ -76,16 +117,26 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
     setIsStarred(newStarred);
   };
 
-  const handleAddToTodayReview = async () => {
+  const handleToggleManualQueue = async () => {
     if (!selectedWord || !activeProfile) return;
-    await db.words.put(selectedWord);
-    const existing = await progressRepository.getByWordId(activeProfile.id, selectedWord.id);
-    if (!existing) {
-      const init = fsrsService.createInitialProgress(activeProfile.id, selectedWord.id);
-      await db.progress.put(init);
+    if (isInManualQueue) {
+      await manualQueueService.dequeueWord(activeProfile.id, selectedWord.id);
+      setIsInManualQueue(false);
+    } else {
+      await manualQueueService.enqueueWords(activeProfile.id, [selectedWord.id], 'search');
+      setIsInManualQueue(true);
     }
-    setAddedMessage(true);
-    setTimeout(() => setAddedMessage(false), 2000);
+  };
+
+  const handleSelectWord = async (item: Word | SearchIndexItem) => {
+    setIsLoading(true);
+    try {
+      const full = await searchService.getFullWord(item.id)
+        || await courseRepository.findGlobalMasterWord(item.headword);
+      setSelectedWord(full || (item as Word));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
@@ -146,7 +197,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="搜尋 11,154 個單字、中文釋義或主題..."
+              placeholder="搜尋多益單字、中文釋義或主題..."
               className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 text-xs focus:outline-none focus:border-emerald-500 font-medium"
             />
             {query && (
@@ -184,11 +235,15 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                   <Star size={15} className={isStarred ? 'fill-amber-400 text-amber-400' : ''} />
                 </button>
                 <button
-                  onClick={handleAddToTodayReview}
-                  className="flex items-center space-x-1 px-2.5 py-1.5 rounded-lg bg-emerald-950/60 border border-emerald-700/60 text-emerald-300 font-bold"
+                  onClick={handleToggleManualQueue}
+                  className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border font-bold text-xs transition-colors ${
+                    isInManualQueue
+                      ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300'
+                      : 'bg-slate-800 border-slate-700 text-slate-300 hover:text-emerald-400'
+                  }`}
                 >
-                  {addedMessage ? <Check size={13} /> : <Plus size={13} />}
-                  <span>{addedMessage ? '已加入複習' : '加入複習'}</span>
+                  {isInManualQueue ? <Check size={13} /> : <Plus size={13} />}
+                  <span>{isInManualQueue ? '已在練習隊列' : '加入重點練習'}</span>
                 </button>
               </div>
             </div>
@@ -418,7 +473,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
             {isLoading ? (
               <div className="text-center py-12 text-slate-400 text-xs flex items-center justify-center space-x-2">
                 <span className="inline-block w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-                <span>正在全庫 11,154 詞庫中檢索...</span>
+                <span>正在檢索中...</span>
               </div>
             ) : searchResults.length > 0 ? (
               searchResults.map((w) => {
@@ -426,7 +481,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 return (
                   <div
                     key={w.id}
-                    onClick={() => setSelectedWord(w)}
+                    onClick={() => handleSelectWord(w)}
                     className="p-2.5 hover:bg-slate-800/60 cursor-pointer flex items-center justify-between rounded-xl transition-colors group"
                   >
                     {/* Thumbnail */}
@@ -480,7 +535,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
 
         {/* Footer info */}
         <div className="p-3 border-t border-slate-800 bg-slate-900/90 text-center text-[10px] text-slate-500 shrink-0">
-          全庫共 11,154 個多益單字 · 離線本機秒級檢索
+          {totalIndexedCount > 0
+            ? `全庫共 ${totalIndexedCount.toLocaleString()} 個多益單字 · 離線本機秒級檢索`
+            : '離線本機秒級檢索 · 點擊單字可加入重點練習隊列'}
         </div>
       </div>
     </div>

@@ -1265,11 +1265,11 @@ export const SettingsPage: React.FC = () => {
             <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-700 flex items-center justify-between">
               <div>
                 <p className="text-xs font-bold text-slate-100">{syncState.cloudUserEmail}</p>
-                <p className="text-[10px] text-emerald-400 mt-0.5">跨裝置進度已即時同步</p>
+                <p className="text-[10px] text-emerald-400 mt-0.5">本機學習進度已備份至雲端</p>
               </div>
               <div className="flex space-x-1.5">
                 <Button size="sm" variant="outline" onClick={() => triggerSync()}>
-                  立即同步
+                  立即備份
                 </Button>
                 <Button size="sm" variant="danger" onClick={handleLogout}>
                   <LogOut size={13} className="mr-1" /> 登出
@@ -1280,7 +1280,7 @@ export const SettingsPage: React.FC = () => {
         ) : (
           <div className="space-y-2.5">
             <p className="text-[11px] text-slate-400 leading-relaxed">
-              輸入 Email 即可接收<strong>「免密碼網路登入連結 (Magic Link)」</strong>，點擊信件連結即可無縫跨手機、平板與電腦同步學習進度。
+              輸入 Email 即可接收<strong>「免密碼網路登入連結 (Magic Link)」</strong>，點擊信件連結即可無縫跨裝置備份學習進度。
             </p>
 
             <form onSubmit={handleSendMagicLink} className="space-y-2">

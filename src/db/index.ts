@@ -10,7 +10,8 @@ import {
   DailyStat,
   AppSettings,
   SyncQueueItem,
-  DatasetMeta
+  DatasetMeta,
+  ManualQueueItem
 } from '../types/db';
 
 export class AppDatabase extends Dexie {
@@ -25,6 +26,7 @@ export class AppDatabase extends Dexie {
   appSettings!: Table<AppSettings, string>;
   syncQueue!: Table<SyncQueueItem, string>;
   datasetMeta!: Table<DatasetMeta, number>;
+  manualQueue!: Table<ManualQueueItem, number>;
 
   constructor() {
     super('ToeicVocabDB');
@@ -47,6 +49,11 @@ export class AppDatabase extends Dexie {
     this.version(2).stores({
       words: 'id, normalizedHeadword, entryType, starRating, toeicScoreRange, category, frequencyTier',
       quizzes: 'id, wordId, type, subType, frequencyTier'
+    });
+
+    // Version 3 (Manual Practice Queue)
+    this.version(3).stores({
+      manualQueue: '++id, [profileId+wordId], profileId, wordId, createdAt'
     });
   }
 }

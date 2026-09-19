@@ -15,6 +15,7 @@ import { useProfile } from '../contexts/ProfileContext';
 import { progressRepository } from '../repositories/progressRepository';
 import { statsRepository } from '../repositories/statsRepository';
 import { courseRepository } from '../repositories/courseRepository';
+import { manualQueueService } from '../services/manualQueueService';
 import { freeApiService, DailyQuote } from '../services/freeApiService';
 import { Course, DailyStat } from '../types/db';
 import { Button } from '../components/ui/Button';
@@ -30,6 +31,7 @@ export const DashboardPage: React.FC = () => {
   const [todayStat, setTodayStat] = useState<DailyStat | null>(null);
   const [downloadedCourses, setDownloadedCourses] = useState<Course[]>([]);
   const [dailyQuote, setDailyQuote] = useState<DailyQuote | null>(null);
+  const [manualQueueCount, setManualQueueCount] = useState<number>(0);
 
   const loadDashboardData = useCallback(async () => {
     if (!activeProfile) return;
@@ -57,7 +59,11 @@ export const DashboardPage: React.FC = () => {
       const downloaded = courses.filter(c => c.isDownloaded);
       setDownloadedCourses(downloaded);
 
-      // 5. Free daily quote
+      // 5. Manual practice queue count
+      const qCount = await manualQueueService.getQueueCount(profileId);
+      setManualQueueCount(qCount);
+
+      // 6. Free daily quote
       freeApiService.getDailyQuote().then(setDailyQuote);
     } catch (err) {
       console.error('[Dashboard] Failed to load data:', err);
@@ -172,6 +178,32 @@ export const DashboardPage: React.FC = () => {
             <p className="text-slate-300 italic text-[11px] leading-relaxed">"{dailyQuote.quote}"</p>
             <p className="text-[10px] text-slate-500">— {dailyQuote.author}</p>
           </div>
+        </div>
+      )}
+
+      {/* Manual Practice Queue Banner */}
+      {manualQueueCount > 0 && (
+        <div className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/70 via-indigo-950/70 to-slate-900 border border-purple-500/50 shadow-lg flex items-center justify-between">
+          <div className="flex items-center space-x-2.5 min-w-0 mr-2">
+            <div className="p-2 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30 shrink-0">
+              <Sparkles size={16} />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs font-bold text-slate-100">重點練習隊列</span>
+                <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-purple-900/60 text-purple-300 border border-purple-700/50 font-bold">
+                  {manualQueueCount} 詞
+                </span>
+              </div>
+              <p className="text-[10px] text-slate-400 truncate mt-0.5">來自字典搜尋與測驗錯題，可隨時專項複習</p>
+            </div>
+          </div>
+          <button
+            onClick={() => handleStartReview('manual')}
+            className="px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shrink-0 shadow-md shadow-purple-950/50 transition-colors"
+          >
+            開始練習
+          </button>
         </div>
       )}
 

@@ -114,3 +114,11 @@ export interface DatasetMeta {
   appliedAt: string;
   totalWords: number;
 }
+
+export interface ManualQueueItem {
+  id?: number;
+  profileId: string;
+  wordId: string;
+  source: 'search' | 'quiz' | 'manual';
+  createdAt: string; // ISO UTC
+}
