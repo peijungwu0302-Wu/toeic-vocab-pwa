@@ -295,7 +295,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          Google AI Studio 提供每日 <strong className="text-slate-200">1,500 次免費請求</strong>。填入個人 API Key 可享受零等待 AI 造句批改與對話模擬，資料純存本機絕不外流。
+          Google AI Studio 提供<strong className="text-slate-200">免費調用額度</strong>。填入個人 API Key 可享受零等待 AI 造句批改與對話模擬，資料純存本機絕不外流。
         </p>
 
         <div className="space-y-2 pt-1">
@@ -1361,7 +1361,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          收錄全量 <strong className="text-emerald-400">11,154 詞</strong> 之「不背單詞 VIP 級」<strong className="text-teal-300">3 階梯商務例句、8K生圖提示詞、字根字首拆解、多益考點陷阱、詞族衍生樹與同反義微辨析</strong>。手機端若有快取延遲，可點擊下方按鈕一鍵熱升級（個人學習進度與 FSRS 曲線 100% 完整保留）。
+          收錄全量多益精編詞庫之「VIP 級」<strong className="text-teal-300">3 階梯商務例句、生圖提示詞、字根字首拆解、多益考點陷阱、詞族衍生樹與同反義微辨析</strong>。手機端若有快取延遲，可點擊下方按鈕一鍵熱升級（個人學習進度與 FSRS 曲線 100% 完整保留）。
         </p>
 
         <Button

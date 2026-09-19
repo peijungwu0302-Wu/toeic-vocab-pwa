@@ -17,7 +17,8 @@ import {
   BookOpen,
   Sparkles,
   RefreshCw,
-  Zap
+  Zap,
+  Image as ImageIcon
 } from 'lucide-react';
 import { courseRepository } from '../repositories/courseRepository';
 import { progressRepository } from '../repositories/progressRepository';
@@ -27,6 +28,7 @@ import { Course, Word } from '../types/db';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { audioService } from '../services/audioService';
+import { imageService } from '../services/imageService';
 
 export const CatalogPage: React.FC = () => {
   const { activeProfile } = useProfile();
@@ -44,6 +46,9 @@ export const CatalogPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSyncingAll, setIsSyncingAll] = useState(false);
   const [syncSuccessMsg, setSyncSuccessMsg] = useState(false);
+  const [cachingImagesCourseId, setCachingImagesCourseId] = useState<string | null>(null);
+  const [cachingProgress, setCachingProgress] = useState<{ current: number; total: number } | null>(null);
+  const [cachingSuccessMsg, setCachingSuccessMsg] = useState<string | null>(null);
 
   // Expanded Unit Words state
   const [expandedCourseId, setExpandedCourseId] = useState<string | null>(null);
@@ -182,6 +187,24 @@ export const CatalogPage: React.FC = () => {
     }
   };
 
+  const handleCacheImages = async (courseId: string) => {
+    setCachingImagesCourseId(courseId);
+    setCachingProgress({ current: 0, total: 0 });
+    setCachingSuccessMsg(null);
+    try {
+      const res = await imageService.cacheCourseImages(courseId, (cached, total) => {
+        setCachingProgress({ current: cached, total });
+      });
+      setCachingSuccessMsg(`已成功快取 ${res.cached} 張單字實景圖至離線快取包！`);
+      setTimeout(() => setCachingSuccessMsg(null), 4000);
+    } catch (err) {
+      setErrorMessage((err as Error).message || '快取圖片失敗');
+    } finally {
+      setCachingImagesCourseId(null);
+      setCachingProgress(null);
+    }
+  };
+
   // Filter courses by mode
   const displayedCourses = allCourses.filter(c => {
     const isHighFreq =
@@ -217,7 +240,7 @@ export const CatalogPage: React.FC = () => {
           </span>
         </div>
         <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-          收錄全庫 <strong className="text-emerald-400">11,154 字</strong> 與 <strong className="text-amber-400">66,924 題大模型全真測驗</strong> ＋ <strong className="text-teal-300">33,462 句商務例句與視覺生圖錨點</strong>，全面通過 7 重語法門禁質檢與 1:1 繁中中譯。
+          收錄多益全量核心分級題庫與全真測驗，搭配高頻商務例句與視覺概念生圖，全面通過嚴格語法質檢與 1:1 繁中解析。
         </p>
       </div>
 
@@ -259,6 +282,12 @@ export const CatalogPage: React.FC = () => {
         </div>
       )}
 
+      {cachingSuccessMsg && (
+        <div className="bg-teal-950/90 border border-teal-500 rounded-xl p-2.5 text-xs text-teal-200 text-center font-bold animate-in fade-in duration-200">
+          🖼️ {cachingSuccessMsg}
+        </div>
+      )}
+
       {/* Dual-Track Mode Toggle */}
       <div className="flex rounded-2xl bg-slate-800/90 p-1 border border-slate-700">
         <button
@@ -284,7 +313,7 @@ export const CatalogPage: React.FC = () => {
           }`}
         >
           <Layers size={15} />
-          <span>📚 11,154 字全量分級庫</span>
+          <span>📚 多益全量分級庫</span>
         </button>
       </div>
 
@@ -452,6 +481,25 @@ export const CatalogPage: React.FC = () => {
                   <div className="flex items-center space-x-1.5">
                     {isDownloaded ? (
                       <>
+                        <button
+                          type="button"
+                          onClick={() => handleCacheImages(c.id)}
+                          disabled={cachingImagesCourseId === c.id}
+                          title="下載離線圖片包"
+                          aria-label="下載離線圖片包"
+                          className="p-2 text-slate-400 hover:text-teal-300 rounded-lg hover:bg-slate-700/50 transition-colors flex items-center space-x-1"
+                        >
+                          {cachingImagesCourseId === c.id ? (
+                            <>
+                              <Loader2 size={13} className="animate-spin text-teal-400" />
+                              <span className="text-[10px] text-teal-300 font-mono">
+                                {cachingProgress ? `${cachingProgress.current}/${cachingProgress.total}` : '...'}
+                              </span>
+                            </>
+                          ) : (
+                            <ImageIcon size={14} />
+                          )}
+                        </button>
                         <button
                           type="button"
                           onClick={() => handleDelete(c.id)}

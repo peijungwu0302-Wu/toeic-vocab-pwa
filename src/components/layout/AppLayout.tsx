@@ -3,11 +3,9 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   BookOpen,
-  Zap,
   Repeat,
   HelpCircle,
   BarChart2,
-  Settings,
   Cloud,
   CloudOff,
   RefreshCw,
@@ -41,9 +39,7 @@ export const AppLayout: React.FC = () => {
     { to: '/catalog', label: '課程', icon: BookOpen },
     { to: '/review', label: '複習', icon: Repeat },
     { to: '/quiz', label: '測驗', icon: HelpCircle },
-    { to: '/speedrun', label: '衝刺', icon: Zap },
-    { to: '/stats', label: '統計', icon: BarChart2 },
-    { to: '/settings', label: '設定', icon: Settings }
+    { to: '/stats', label: '統計', icon: BarChart2 }
   ];
 
   return (

@@ -1,9 +1,10 @@
 /**
  * src/services/imageService.ts
- * 專為多益高頻核心 1200 單字全集設計的語意具象圖片映射庫（0 API 消耗，100% 離線秒開）
+ * 專為多益高頻核心單字全集設計的語意具象圖片映射庫（0 API 消耗，本機優先高速渲染）
  */
 
 import { useState, useEffect } from 'react';
+import { courseRepository } from '../repositories/courseRepository';
 export interface ImageInfo {
   url: string;
   tag: string;
@@ -262,6 +263,18 @@ if (typeof window !== 'undefined') {
 }
 
 export async function initRuntimeManifest(): Promise<RuntimeManifestData | null> {
+  if (!runtimeManifest && typeof window !== 'undefined') {
+    try {
+      const cached = localStorage.getItem(MANIFEST_STORAGE_KEY);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (isValidManifest(parsed)) {
+          runtimeManifest = parsed;
+        }
+      }
+    } catch {}
+  }
+
   if (isFetchingManifest) return runtimeManifest;
   isFetchingManifest = true;
   try {
@@ -390,5 +403,167 @@ export const imageService = {
     const idx = simpleHash(cleanWord) % pool.length;
     const poolItem = pool[idx];
     return { url: poolItem.url, tag: poolItem.tag };
-  }
+  },
+
+  isOfflineMediaCacheSupported,
+  getCourseOfflineMediaStatus,
+  cacheCourseImages,
+  clearCourseOfflineMedia
 };
+
+export const OFFLINE_MEDIA_CACHE_NAME = 'toeic-offline-media-v1';
+
+export function getCacheStorage(): CacheStorage | null {
+  if (typeof window !== 'undefined' && window.caches) {
+    return window.caches;
+  }
+  if (typeof caches !== 'undefined') {
+    return caches;
+  }
+  return null;
+}
+
+export function isOfflineMediaCacheSupported(): boolean {
+  return getCacheStorage() !== null;
+}
+
+export async function getCourseOfflineMediaStatus(
+  courseId: string,
+  wordIds?: string[]
+): Promise<{ total: number; cached: number; isFullyCached: boolean }> {
+  const cacheStorage = getCacheStorage();
+  if (!cacheStorage) {
+    return { total: 0, cached: 0, isFullyCached: false };
+  }
+  try {
+    await initRuntimeManifest();
+    let ids = wordIds;
+    if (!ids) {
+      const words = await courseRepository.getWordsForCourse(courseId);
+      ids = words.map((w) => w.id);
+    }
+    const targetUrls = ids
+      .map((id) => {
+        const entry = runtimeManifest?.images?.[id];
+        return entry ? `${R2_MEDIA_BASE_URL}/words/${id}/v${entry.v}.webp` : null;
+      })
+      .filter((u): u is string => Boolean(u));
+
+    if (targetUrls.length === 0) {
+      return { total: 0, cached: 0, isFullyCached: false };
+    }
+
+    const cache = await cacheStorage.open(OFFLINE_MEDIA_CACHE_NAME);
+    let cachedCount = 0;
+    for (const url of targetUrls) {
+      const match = await cache.match(url);
+      if (match) cachedCount++;
+    }
+
+    return {
+      total: targetUrls.length,
+      cached: cachedCount,
+      isFullyCached: cachedCount >= targetUrls.length && targetUrls.length > 0
+    };
+  } catch (err) {
+    console.warn('[imageService] Failed to check offline media status:', err);
+    return { total: 0, cached: 0, isFullyCached: false };
+  }
+}
+
+export async function cacheCourseImages(
+  courseId: string,
+  onProgress?: (cached: number, total: number) => void
+): Promise<{ cached: number; failed: number }> {
+  const cacheStorage = getCacheStorage();
+  if (!cacheStorage) {
+    throw new Error('當前環境不支援 CacheStorage 離線快取');
+  }
+
+  await initRuntimeManifest();
+  const words = await courseRepository.getWordsForCourse(courseId);
+  const targetUrls = Array.from(
+    new Set(
+      words
+        .map((w) => {
+          const entry = runtimeManifest?.images?.[w.id];
+          return entry ? `${R2_MEDIA_BASE_URL}/words/${w.id}/v${entry.v}.webp` : null;
+        })
+        .filter((u): u is string => Boolean(u))
+    )
+  );
+
+  const total = targetUrls.length;
+  if (total === 0) {
+    onProgress?.(0, 0);
+    return { cached: 0, failed: 0 };
+  }
+
+  const cache = await cacheStorage.open(OFFLINE_MEDIA_CACHE_NAME);
+  let cached = 0;
+  let failed = 0;
+
+  // Bounded concurrency pool (concurrency = 6)
+  const CONCURRENCY = 6;
+  let index = 0;
+
+  async function worker() {
+    while (index < targetUrls.length) {
+      const currentIdx = index++;
+      const url = targetUrls[currentIdx];
+      try {
+        const existing = await cache.match(url);
+        if (existing) {
+          cached++;
+        } else {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
+          try {
+            const resp = await fetch(url, { signal: controller.signal, mode: 'cors' });
+            if (resp.ok) {
+              await cache.put(url, resp.clone());
+              cached++;
+            } else {
+              failed++;
+            }
+          } finally {
+            clearTimeout(timeoutId);
+          }
+        }
+      } catch (err) {
+        failed++;
+      }
+      onProgress?.(cached + failed, total);
+    }
+  }
+
+  const workers = Array.from({ length: Math.min(CONCURRENCY, targetUrls.length) }, () => worker());
+  await Promise.all(workers);
+
+  return { cached, failed };
+}
+
+export async function clearCourseOfflineMedia(courseId: string): Promise<number> {
+  const cacheStorage = getCacheStorage();
+  if (!cacheStorage) return 0;
+  try {
+    const words = await courseRepository.getWordsForCourse(courseId);
+    const targetUrls = words
+      .map((w) => {
+        const entry = runtimeManifest?.images?.[w.id];
+        return entry ? `${R2_MEDIA_BASE_URL}/words/${w.id}/v${entry.v}.webp` : null;
+      })
+      .filter((u): u is string => Boolean(u));
+
+    const cache = await cacheStorage.open(OFFLINE_MEDIA_CACHE_NAME);
+    let deletedCount = 0;
+    for (const url of targetUrls) {
+      const deleted = await cache.delete(url);
+      if (deleted) deletedCount++;
+    }
+    return deletedCount;
+  } catch (err) {
+    console.warn('[imageService] Failed to clear offline media:', err);
+    return 0;
+  }
+}

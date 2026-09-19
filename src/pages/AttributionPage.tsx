@@ -95,7 +95,7 @@ export const AttributionPage: React.FC = () => {
             <strong>FSRS (Free Spaced Repetition Scheduler)：</strong> 採用 <code className="text-emerald-300">ts-fsrs</code>（MIT 授權）計算個人化難度 (D)、穩定度 (S) 與可提取度 (R)，實現科學化的長效記憶曲線。
           </p>
           <p>
-            <strong>Dexie.js：</strong> 採用 <code className="text-emerald-300">dexie</code>（Apache-2.0 授權）封裝瀏覽器 IndexedDB 本機資料庫，提供 100% 離線可用與原子性評分交易。
+            <strong>Dexie.js：</strong> 採用 <code className="text-emerald-300">dexie</code>（Apache-2.0 授權）封裝瀏覽器 IndexedDB 本機資料庫，提供離線可用與原子性評分交易。
           </p>
         </div>
       </div>

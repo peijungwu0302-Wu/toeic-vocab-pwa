@@ -100,7 +100,7 @@ export const OnboardingPage: React.FC = () => {
 
       <div className="mt-8 flex items-center space-x-2 text-xs text-slate-500">
         <CheckCircle2 size={14} className="text-emerald-500" />
-        <span>100% 離線可用 · 零強制廣告 · 隱私無虞</span>
+        <span>支援離線學習與本機記憶 · 零強制廣告 · 隱私無虞</span>
       </div>
     </div>
   );

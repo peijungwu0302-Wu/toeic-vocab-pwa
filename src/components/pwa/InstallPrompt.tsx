@@ -7,7 +7,7 @@ export const InstallPrompt: React.FC = () => {
   useEffect(() => {
     // Detect iOS Safari and non-standalone
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as unknown as { MSStream: unknown }).MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as unknown as { standalone?: boolean }).standalone;
+    const isStandalone = Boolean(window.matchMedia?.('(display-mode: standalone)')?.matches || (window.navigator as unknown as { standalone?: boolean }).standalone);
     const hasDismissed = localStorage.getItem('ios_pwa_prompt_dismissed');
 
     if (isIOS && !isStandalone && !hasDismissed) {

@@ -1,6 +1,6 @@
 /**
  * src/services/quizService.ts
- * 3-Tier High-Precision TOEIC Part 5 & Part 6 Dynamic Quiz Engine for 11,154 Vocabulary Words
+ * 3-Tier High-Precision TOEIC Part 5 & Part 6 Dynamic Quiz Engine for Master Vocabulary Catalog
  */
 
 import { Word, QuizItem } from '../types/db';

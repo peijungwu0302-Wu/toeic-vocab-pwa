@@ -296,7 +296,7 @@ export const QuizPage: React.FC = () => {
                     Gemini 3.6
                   </span>
                 </h3>
-                <p className="text-[11px] text-slate-300">由 AI 即時生成 ETS 官方風格長難句與原創干擾項</p>
+                <p className="text-[11px] text-slate-300">由 AI 即時生成多益真題風格長難句與原創干擾項</p>
               </div>
             </div>
           </div>

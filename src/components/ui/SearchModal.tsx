@@ -455,7 +455,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
               <div className="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-2">
                 <div className="text-[11px] font-bold text-slate-200 flex items-center">
                   <HelpCircle size={13} className="mr-1.5 text-emerald-400" />
-                  ETS 多益解題關鍵秘笈
+                  多益解題關鍵秘笈
                 </div>
                 <div className="space-y-1.5 text-[11px] text-slate-300">
                   {selectedWord.examTips.map((tip, idx) => (

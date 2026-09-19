@@ -188,7 +188,7 @@ export const FlashcardPage: React.FC = () => {
       let found = await db.words.where('normalizedHeadword').equals(target).first()
         || await db.words.filter(w => w.headword.toLowerCase() === target).first();
 
-      // 2. Cross-Course Master Dictionary Lookup (All 11,154 Words)
+      // 2. Cross-Course Master Dictionary Lookup
       if (!found) {
         found = (await courseRepository.findGlobalMasterWord(target)) || undefined;
       }
@@ -1505,7 +1505,7 @@ export const FlashcardPage: React.FC = () => {
                           <Sparkles size={14} className="mr-1.5 text-amber-400" />
                           Part 7 閱讀雙語換句話說 (Paraphrase Matrix)
                         </span>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 font-bold">ETS 990 命題核心</span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 font-bold">多益 990 命題核心</span>
                       </div>
                       
                       <div className="space-y-2">
@@ -1827,7 +1827,7 @@ export const FlashcardPage: React.FC = () => {
                     </div>
                   )}
 
-                  {/* 📖 7. 多益名師 5 大官方出題分析與解題秘笈 (可折疊收納) */}
+                  {/* 📖 7. 多益名師 5 大出題分析與解題秘笈 (可折疊收納) */}
                   {word.examTips && word.examTips.length > 0 && (
                     <div className="rounded-2xl bg-slate-900/90 border border-slate-800 text-xs shadow-sm overflow-hidden touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
                       <button
@@ -1841,7 +1841,7 @@ export const FlashcardPage: React.FC = () => {
                       >
                         <span className="flex items-center text-slate-200" style={{ fontSize: `${Math.max(13, pixelMetrics.supportingPx)}px` }}>
                           <HelpCircle size={14} className="mr-1.5 text-emerald-400" />
-                          多益官方考點深度拆解與解題秘笈 ({word.examTips.length} 條)
+                          多益考點深度拆解與解題秘笈 ({word.examTips.length} 條)
                         </span>
                         <span className="text-emerald-400 flex items-center space-x-0.5 text-[11px]">
                           <span>{showFullExamTips ? '收起' : '展開秘笈'}</span>
@@ -2043,7 +2043,7 @@ export const FlashcardPage: React.FC = () => {
             {showApiKeyInput && (
               <div className="pt-2 border-t border-slate-800/80 space-y-2 animate-in fade-in duration-150">
                 <p className="text-[10px] text-slate-400">
-                  Google AI Studio 每日提供 1,500 次免費請求。貼上您的 Key 即可啟用 Gemini 2.0 大模型即時運算：
+                  Google AI Studio 提供免費調用額度。貼上您的 Key 即可啟用 Gemini 2.0 大模型即時運算：
                 </p>
                 <div className="flex space-x-1.5">
                   <input

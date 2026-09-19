@@ -65,6 +65,20 @@ export default defineConfig({
                 statuses: [0, 200]
               }
             }
+          },
+          {
+            urlPattern: ({ url }) => url.origin === 'https://toeic-image-publisher.peijungwu0302.workers.dev',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'toeic-offline-media-v1',
+              expiration: {
+                maxEntries: 5000,
+                maxAgeSeconds: 90 * 24 * 60 * 60 // 90 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
           }
         ],
         navigateFallback: '/index.html',
