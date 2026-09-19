@@ -11,6 +11,7 @@ export interface Profile {
   preferredAccent: 'US' | 'UK';
   autoPlayAudio: boolean;
   isMuted: boolean;
+  activeCourseId?: string | null;
   createdAt: string; // ISO UTC
   updatedAt: string; // ISO UTC
   cloudUserId?: string | null;

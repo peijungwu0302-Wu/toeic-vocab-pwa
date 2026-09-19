@@ -16,6 +16,8 @@ import { progressRepository } from '../repositories/progressRepository';
 import { statsRepository } from '../repositories/statsRepository';
 import { courseRepository } from '../repositories/courseRepository';
 import { manualQueueService } from '../services/manualQueueService';
+import { todayService } from '../services/todayService';
+import { TodaySession } from '../types/today';
 import { freeApiService, DailyQuote } from '../services/freeApiService';
 import { Course, DailyStat } from '../types/db';
 import { Button } from '../components/ui/Button';
@@ -32,6 +34,7 @@ export const DashboardPage: React.FC = () => {
   const [downloadedCourses, setDownloadedCourses] = useState<Course[]>([]);
   const [dailyQuote, setDailyQuote] = useState<DailyQuote | null>(null);
   const [manualQueueCount, setManualQueueCount] = useState<number>(0);
+  const [todaySession, setTodaySession] = useState<TodaySession | null>(null);
 
   const loadDashboardData = useCallback(async () => {
     if (!activeProfile) return;
@@ -39,9 +42,9 @@ export const DashboardPage: React.FC = () => {
     try {
       const profileId = activeProfile.id;
 
-      // 1. Due words count
-      const dueWords = await progressRepository.getDueWords(profileId, undefined, 200);
-      setDueCount(dueWords.length);
+      // 1. Exact uncapped due words count
+      const exactDueCount = await progressRepository.getDueWordsCount(profileId);
+      setDueCount(exactDueCount);
 
       // 2. Streak
       const streak = await statsRepository.getStreakDays(profileId);
@@ -63,7 +66,11 @@ export const DashboardPage: React.FC = () => {
       const qCount = await manualQueueService.getQueueCount(profileId);
       setManualQueueCount(qCount);
 
-      // 6. Free daily quote
+      // 6. Resumable Today Guided Session
+      const curSession = todayService.loadTodaySession(profileId);
+      setTodaySession(curSession);
+
+      // 7. Free daily quote
       freeApiService.getDailyQuote().then(setDailyQuote);
     } catch (err) {
       console.error('[Dashboard] Failed to load data:', err);
@@ -206,6 +213,48 @@ export const DashboardPage: React.FC = () => {
           </button>
         </div>
       )}
+
+      {/* 🌟 1-Click Today Guided Learning Hero Card */}
+      <div className="p-4 rounded-3xl bg-gradient-to-r from-emerald-950/80 via-slate-900 to-teal-950/80 border border-emerald-500/60 shadow-xl space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5 min-w-0">
+            <div className="p-2.5 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shrink-0">
+              <Sparkles size={20} />
+            </div>
+            <div>
+              <h3 className="text-sm font-black text-slate-100 flex items-center space-x-1.5">
+                <span>今日導引學習計畫</span>
+                {todaySession?.isCompleted ? (
+                  <Badge variant="emerald">今日已達成 🎉</Badge>
+                ) : (
+                  <Badge variant="blue">5 步閉環</Badge>
+                )}
+              </h3>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                {todaySession?.isCompleted
+                  ? '您已完成今日複習、新詞學習與課後測驗！'
+                  : '複習舊詞 ➔ 預覽新詞 ➔ 深度學習 ➔ 驗收測驗'}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <Button
+          size="md"
+          variant="primary"
+          fullWidth
+          onClick={() => navigate('/today')}
+          className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs py-2.5 shadow-lg shadow-emerald-950/40"
+        >
+          {todaySession?.isCompleted ? (
+            <>查看今日學習成果 📊</>
+          ) : todaySession ? (
+            <>繼續今日計畫（當前進度：{todaySession.phase === 'review' ? '複習' : todaySession.phase === 'preview' ? '預覽' : todaySession.phase === 'learn' ? '學習' : '測驗'}） ➔</>
+          ) : (
+            <>一鍵開始今日學習計畫 🚀</>
+          )}
+        </Button>
+      </div>
 
       {/* Next-Gen 4 Core Action Hub */}
       <div className="grid grid-cols-2 gap-2.5">

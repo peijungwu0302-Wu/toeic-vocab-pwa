@@ -50,6 +50,25 @@ export const progressRepository = {
     return result;
   },
 
+  async getDueWordsCount(profileId: string, courseId?: string): Promise<number> {
+    const nowIso = new Date().toISOString();
+
+    let dueList = await db.progress
+      .where('[profileId+due]')
+      .between([profileId, Dexie.minKey], [profileId, nowIso], true, true)
+      .toArray();
+
+    dueList = dueList.filter(p => !p.isSuspended);
+
+    if (courseId && courseId !== 'all') {
+      const courseWords = await db.courseWords.where('courseId').equals(courseId).toArray();
+      const courseWordIdSet = new Set(courseWords.map(cw => cw.wordId));
+      return dueList.filter(p => courseWordIdSet.has(p.wordId)).length;
+    }
+
+    return dueList.length;
+  },
+
   async getDueWords(
     profileId: string,
     courseId?: string,

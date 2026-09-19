@@ -18,6 +18,7 @@ import { PrintableCramPage } from './pages/PrintableCramPage';
 import { StatsPage } from './pages/StatsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AttributionPage } from './pages/AttributionPage';
+import { TodayGuidedPage } from './pages/TodayGuidedPage';
 import { db } from './db';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { datasetMigrationService } from './services/datasetMigrationService';
@@ -67,6 +68,8 @@ const AppRoutes: React.FC = () => {
         <Route path="stats" element={<StatsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="attribution" element={<AttributionPage />} />
+        <Route path="today" element={<TodayGuidedPage />} />
+        <Route path="today/session/:sessionId" element={<TodayGuidedPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
