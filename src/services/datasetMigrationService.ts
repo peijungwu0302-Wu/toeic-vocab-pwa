@@ -1,5 +1,5 @@
 import { db } from '../db';
-import { courseRepository } from '../repositories/courseRepository';
+import { courseRepository, type ValidatedCourseData } from '../repositories/courseRepository';
 
 export const CURRENT_DATASET_VERSION = 17;
 export const DATASET_RELEASE_TAG = 'v7.3.0-flagship-all-tiers-consolidated';
@@ -107,21 +107,33 @@ export const datasetMigrationService = {
         });
       }
 
-      // 4. Download and atomically upsert each course without wiping words globally
+      // 4. Download and validate ALL required courses in memory first.
+      // If ANY single course download or checksum fails, abort immediately without touching DB!
+      const validatedList: ValidatedCourseData[] = [];
       for (const target of requiredTargets) {
         try {
-          await courseRepository.downloadAndSaveCourse(target.id, target.fileName, target.checksum);
+          const validated = await courseRepository.downloadAndValidateCourse(target.id, target.fileName, target.checksum);
+          validatedList.push(validated);
         } catch (courseErr) {
-          console.error(`[DatasetMigration] Failed to migrate course ${target.id}:`, courseErr);
-          // Halt upgrade immediately: preserve existing valid words and do NOT bump dataset_version
+          console.error(`[DatasetMigration] Failed to download/validate course ${target.id}:`, courseErr);
+          // Halt upgrade immediately: ZERO database writes have taken place!
           return false;
         }
       }
 
-      // 5. Only mark dataset as upgraded if ALL required courses succeeded
-      await db.appSettings.put({
-        key: 'dataset_version',
-        value: String(CURRENT_DATASET_VERSION)
+      // 5. Commit all validated courses and update version in a SINGLE atomic Dexie transaction
+      await db.transaction('rw', [db.courses, db.words, db.courseWords, db.appSettings], async () => {
+        for (const item of validatedList) {
+          await db.courses.put(item.courseRecord);
+          await db.words.bulkPut(item.words);
+          await db.courseWords.where('courseId').equals(item.courseRecord.id).delete();
+          await db.courseWords.bulkAdd(item.courseWords);
+        }
+
+        await db.appSettings.put({
+          key: 'dataset_version',
+          value: String(CURRENT_DATASET_VERSION)
+        });
       });
 
       console.log(`[DatasetMigration] Successfully updated all local courses to v${CURRENT_DATASET_VERSION}!`);
@@ -134,7 +146,7 @@ export const datasetMigrationService = {
 
   /**
    * Force refresh all local courses to the latest dataset version.
-   * Does NOT wipe words before successful download to prevent corrupted/empty state.
+   * True all-or-nothing: pre-validates in memory, then writes in single Dexie transaction.
    */
   async forceRefreshAllCourses(): Promise<void> {
     const catalog = await courseRepository.fetchCatalog();
@@ -166,14 +178,26 @@ export const datasetMigrationService = {
       }
     }
 
-    // Atomic per-course update
+    // Pre-validate all courses in memory
+    const validatedList: ValidatedCourseData[] = [];
     for (const target of requiredTargets) {
-      await courseRepository.downloadAndSaveCourse(target.id, target.fileName, target.checksum);
+      const validated = await courseRepository.downloadAndValidateCourse(target.id, target.fileName, target.checksum);
+      validatedList.push(validated);
     }
 
-    await db.appSettings.put({
-      key: 'dataset_version',
-      value: String(CURRENT_DATASET_VERSION)
+    // Atomic all-or-nothing transaction commit
+    await db.transaction('rw', [db.courses, db.words, db.courseWords, db.appSettings], async () => {
+      for (const item of validatedList) {
+        await db.courses.put(item.courseRecord);
+        await db.words.bulkPut(item.words);
+        await db.courseWords.where('courseId').equals(item.courseRecord.id).delete();
+        await db.courseWords.bulkAdd(item.courseWords);
+      }
+
+      await db.appSettings.put({
+        key: 'dataset_version',
+        value: String(CURRENT_DATASET_VERSION)
+      });
     });
   }
 };

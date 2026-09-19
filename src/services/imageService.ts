@@ -408,7 +408,9 @@ export const imageService = {
   isOfflineMediaCacheSupported,
   getCourseOfflineMediaStatus,
   cacheCourseImages,
-  clearCourseOfflineMedia
+  clearCourseOfflineMedia,
+  getStorageEstimate,
+  getCourseMediaEstimate
 };
 
 export const OFFLINE_MEDIA_CACHE_NAME = 'toeic-offline-media-v1';
@@ -425,6 +427,43 @@ export function getCacheStorage(): CacheStorage | null {
 
 export function isOfflineMediaCacheSupported(): boolean {
   return getCacheStorage() !== null;
+}
+
+export interface StorageEstimateResult {
+  usageBytes: number;
+  quotaBytes: number;
+  usagePercent: number;
+}
+
+export async function getStorageEstimate(): Promise<StorageEstimateResult | null> {
+  if (typeof navigator !== 'undefined' && navigator.storage && navigator.storage.estimate) {
+    try {
+      const estimate = await navigator.storage.estimate();
+      const usage = estimate.usage || 0;
+      const quota = estimate.quota || 1;
+      return {
+        usageBytes: usage,
+        quotaBytes: quota,
+        usagePercent: Math.min(100, Math.round((usage / quota) * 100))
+      };
+    } catch (err) {
+      console.warn('[imageService] Failed to get storage estimate:', err);
+      return null;
+    }
+  }
+  return null;
+}
+
+export async function getCourseMediaEstimate(courseId: string): Promise<{ estimatedBytes: number; imageCount: number }> {
+  await initRuntimeManifest();
+  const words = await courseRepository.getWordsForCourse(courseId);
+  const validImages = words.filter(w => runtimeManifest?.images?.[w.id]);
+  // Average optimized WebP is ~45 KB (46,080 bytes)
+  const estimatedBytes = validImages.length * 46080;
+  return {
+    estimatedBytes,
+    imageCount: validImages.length
+  };
 }
 
 export async function getCourseOfflineMediaStatus(
@@ -547,6 +586,24 @@ export async function clearCourseOfflineMedia(courseId: string): Promise<number>
   const cacheStorage = getCacheStorage();
   if (!cacheStorage) return 0;
   try {
+    await initRuntimeManifest();
+
+    // 1. Gather all URLs needed by OTHER currently downloaded courses to prevent breaking them
+    const allCourses = await courseRepository.getAll();
+    const otherDownloadedCourses = allCourses.filter(c => c.isDownloaded && c.id !== courseId);
+    const preserveUrls = new Set<string>();
+
+    for (const other of otherDownloadedCourses) {
+      const otherWords = await courseRepository.getWordsForCourse(other.id);
+      for (const w of otherWords) {
+        const entry = runtimeManifest?.images?.[w.id];
+        if (entry) {
+          preserveUrls.add(`${R2_MEDIA_BASE_URL}/words/${w.id}/v${entry.v}.webp`);
+        }
+      }
+    }
+
+    // 2. Target URLs of the course being cleared
     const words = await courseRepository.getWordsForCourse(courseId);
     const targetUrls = words
       .map((w) => {
@@ -558,8 +615,11 @@ export async function clearCourseOfflineMedia(courseId: string): Promise<number>
     const cache = await cacheStorage.open(OFFLINE_MEDIA_CACHE_NAME);
     let deletedCount = 0;
     for (const url of targetUrls) {
-      const deleted = await cache.delete(url);
-      if (deleted) deletedCount++;
+      // Only delete if NOT shared by another downloaded course
+      if (!preserveUrls.has(url)) {
+        const deleted = await cache.delete(url);
+        if (deleted) deletedCount++;
+      }
     }
     return deletedCount;
   } catch (err) {

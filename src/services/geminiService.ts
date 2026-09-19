@@ -283,7 +283,7 @@ Return strict JSON:
 
     if (apiKey) {
       const prompt = `
-You are a senior TOEIC test writer and ETS examiner.
+You are a senior TOEIC test writer and business English exam specialist.
 Create an authentic, challenging Part 5 business sentence fill-in-the-blank question for the target word "${headword}" (Meaning: "${definition}", Part of Speech: "${pos}").
 Requirements:
 1. The stem MUST be a realistic 15-25 word corporate sentence with a "_____" blank where "${headword}" is the only correct answer grammatically and semantically.
@@ -437,7 +437,7 @@ Return strict JSON:
       "word2Usage": "Grammar & preposition patterns of ${word2}"
     }
   ],
-  "toeicTrapTip": "1 key TOEIC exam trap hint in Traditional Chinese explaining how ETS tests the distinction"
+  "toeicTrapTip": "1 key TOEIC exam trap hint in Traditional Chinese explaining common test pitfalls and distinctions"
 }
 `;
       try {
@@ -491,7 +491,7 @@ Return strict JSON:
     const apiKey = await this.getApiKey();
     if (apiKey) {
       const prompt = `
-You are a 990 Full-Score TOEIC Master Instructor and ETS Senior Test Specialist.
+You are a 990 Full-Score TOEIC Master Instructor and business English test specialist.
 Analyze the following TOEIC Part 5 / Part 6 question with rich human-teacher pedagogy in Traditional Chinese (繁體中文).
 
 Question Stem: ${params.stem}
@@ -509,7 +509,7 @@ Return strict JSON:
       "explanation": "詳細剖析：標明詞性與中文意思，說明為什麼正確或為什麼是干擾陷阱"
     }
   ],
-  "examTrapTip": "多益考場避坑指南（考生最容易犯的直覺錯誤與 ETS 出題陷阱）",
+  "examTrapTip": "多益考場避坑指南（考生最容易犯的直覺錯誤與常見出題陷阱）",
   "collocations": ["2~3 high-yield business collocations related to the target word, e.g. accommodate a request"]
 }
 `;

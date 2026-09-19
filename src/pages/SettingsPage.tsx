@@ -100,7 +100,7 @@ export const SettingsPage: React.FC = () => {
       setDatasetRefreshMsg(null);
       await datasetMigrationService.forceRefreshAllCourses();
       await loadDiagnostics();
-      setDatasetRefreshMsg('✅ 題庫已成功刷新至最新 v6.0.0！不背單詞 VIP 級 3 階梯例句、詞根字首、同反義微辨析與搭配語塊已更新完畢。');
+      setDatasetRefreshMsg('✅ 題庫已成功刷新至最新版本！商務 3 階梯例句、詞根字首、同反義微辨析與搭配語塊已更新完畢。');
       setTimeout(() => setDatasetRefreshMsg(null), 5000);
     } catch (err) {
       alert(`刷新題庫失敗：${(err as Error).message}`);
@@ -1346,7 +1346,7 @@ export const SettingsPage: React.FC = () => {
           </div>
           <div>
             <span className="text-slate-500 block">👑 題庫架構規格：</span>
-            <span className="font-bold text-emerald-400">{diagnostics?.datasetReleaseTag || 'v6.0.0-bbword-vip'}</span>
+            <span className="font-bold text-emerald-400">{diagnostics?.datasetReleaseTag || 'v7.3.0-flagship'}</span>
           </div>
           <div className="pt-1.5 border-t border-slate-800/80">
             <span className="text-slate-500 block">💾 本機已快取單字：</span>
@@ -1361,7 +1361,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          收錄全量多益精編詞庫之「VIP 級」<strong className="text-teal-300">3 階梯商務例句、生圖提示詞、字根字首拆解、多益考點陷阱、詞族衍生樹與同反義微辨析</strong>。手機端若有快取延遲，可點擊下方按鈕一鍵熱升級（個人學習進度與 FSRS 曲線 100% 完整保留）。
+          收錄全量多益精編詞庫之<strong className="text-teal-300">3 階梯商務例句、生圖提示詞、字根字首拆解、多益考點陷阱、詞族衍生樹與同反義微辨析</strong>。手機端若有快取延遲，可點擊下方按鈕一鍵熱升級（個人學習進度與 FSRS 曲線 100% 完整保留）。
         </p>
 
         <Button

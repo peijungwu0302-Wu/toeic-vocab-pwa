@@ -392,7 +392,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                       key={idx}
                       onClick={() => audioService.speakSentence(c.en)}
                       className="p-2 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-700/60 cursor-pointer transition-colors flex items-center justify-between group"
-                      title="點擊播放片語真人發音"
+                      title="點擊播放片語標準發音"
                     >
                       <div className="min-w-0 pr-1">
                         <p className="text-emerald-300 text-[11px] font-bold truncate">{c.en}</p>

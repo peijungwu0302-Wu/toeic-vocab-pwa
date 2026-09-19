@@ -72,8 +72,7 @@ export default defineConfig({
             options: {
               cacheName: 'toeic-offline-media-v1',
               expiration: {
-                maxEntries: 5000,
-                maxAgeSeconds: 90 * 24 * 60 * 60 // 90 days
+                maxAgeSeconds: 90 * 24 * 60 * 60 // 90 days (no arbitrary maxEntries cap to prevent silent LRU eviction of downloaded packs)
               },
               cacheableResponse: {
                 statuses: [0, 200]

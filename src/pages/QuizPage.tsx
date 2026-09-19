@@ -296,7 +296,7 @@ export const QuizPage: React.FC = () => {
                     Gemini 3.6
                   </span>
                 </h3>
-                <p className="text-[11px] text-slate-300">由 AI 即時生成多益真題風格長難句與原創干擾項</p>
+                <p className="text-[11px] text-slate-300">由 AI 即時生成多益題型風格長難句與原創干擾項</p>
               </div>
             </div>
           </div>
@@ -310,7 +310,7 @@ export const QuizPage: React.FC = () => {
             className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xs py-2.5 shadow-lg shadow-indigo-950/50"
           >
             {isAiGenerating ? (
-              <><Loader2 size={15} className="animate-spin mr-1.5" /> AI 名師正在出題中...</>
+              <><Loader2 size={15} className="animate-spin mr-1.5" /> AI 系統正在出題中...</>
             ) : (
               <><Sparkles size={15} className="mr-1.5" /> 立即生成 AI 擬真測驗 (5 題)</>
             )}
@@ -327,7 +327,7 @@ export const QuizPage: React.FC = () => {
             {[
               { id: 'part5_mcq', label: 'Part 5 選擇', desc: '4 個商務單字語意辨析' },
               { id: 'cloze_fill', label: '克漏字填空', desc: '商務語境情境填空' },
-              { id: 'listening', label: '聽力詞義選答', desc: '美英真人發音辨識' },
+              { id: 'listening', label: '聽力詞義選答', desc: '美英雙口音語音辨識' },
               { id: 'meaning', label: '中英字義速配', desc: '瞬時記憶快速檢驗' }
             ].map((m) => (
               <button

@@ -9,6 +9,7 @@ interface ProfileContextValue {
   createProfile: (name: string, dailyTarget?: number) => Promise<Profile>;
   switchProfile: (id: string) => Promise<void>;
   updateProfile: (updates: Partial<Profile>) => Promise<void>;
+  setActiveCourseId: (courseId: string | null) => Promise<void>;
   deleteProfile: (id: string) => Promise<void>;
   refreshProfiles: () => Promise<void>;
 }
@@ -86,6 +87,12 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
     await refreshProfiles();
   };
 
+  const setActiveCourseId = async (courseId: string | null) => {
+    if (!activeProfile) return;
+    await profileRepository.setActiveCourseId(activeProfile.id, courseId);
+    await refreshProfiles();
+  };
+
   const deleteProfile = async (id: string) => {
     await profileRepository.delete(id);
     await refreshProfiles();
@@ -100,6 +107,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
         createProfile,
         switchProfile,
         updateProfile,
+        setActiveCourseId,
         deleteProfile,
         refreshProfiles
       }}

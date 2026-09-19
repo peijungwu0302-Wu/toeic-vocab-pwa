@@ -19,6 +19,12 @@ const getBaseDataUrl = (relPath: string): string => {
   return `${prefix}${relPath.replace(/^\//, '')}`;
 };
 
+export interface ValidatedCourseData {
+  courseRecord: Course;
+  words: Word[];
+  courseWords: CourseWord[];
+}
+
 export const courseRepository = {
   async fetchCatalog(): Promise<DatasetCatalog> {
     const res = await fetch(`${getBaseDataUrl('data/v1/catalog.json')}?t=${Date.now()}`, { cache: 'no-cache' });
@@ -148,7 +154,11 @@ export const courseRepository = {
     return prefix || null;
   },
 
-  async downloadAndSaveCourse(courseId: string, fileName: string, expectedChecksum?: string): Promise<void> {
+  async downloadAndValidateCourse(
+    _courseId: string,
+    fileName: string,
+    expectedChecksum?: string
+  ): Promise<ValidatedCourseData> {
     const res = await fetch(`${getBaseDataUrl(`data/v1/courses/${fileName}`)}?t=${Date.now()}`, { cache: 'no-cache' });
     if (!res.ok) {
       throw new Error(`Failed to download course file ${fileName}: HTTP ${res.status}`);
@@ -168,35 +178,40 @@ export const courseRepository = {
     const rawData = JSON.parse(rawText);
     const courseDetail = CourseDetailSchema.parse(rawData);
 
+    const courseRecord: Course = {
+      id: courseDetail.id,
+      title: courseDetail.title,
+      description: courseDetail.description,
+      toeicScoreRange: courseDetail.toeicScoreRange,
+      category: courseDetail.category,
+      level: courseDetail.level,
+      wordCount: courseDetail.wordCount,
+      version: courseDetail.version,
+      isDownloaded: true,
+      downloadedAt: new Date().toISOString()
+    };
+
+    const courseWords: CourseWord[] = courseDetail.words.map((w, index) => ({
+      courseId: courseDetail.id,
+      wordId: w.id,
+      orderIndex: index
+    }));
+
+    return {
+      courseRecord,
+      words: courseDetail.words as Word[],
+      courseWords
+    };
+  },
+
+  async downloadAndSaveCourse(courseId: string, fileName: string, expectedChecksum?: string): Promise<void> {
+    const validated = await this.downloadAndValidateCourse(courseId, fileName, expectedChecksum);
+
     await db.transaction('rw', [db.courses, db.words, db.courseWords], async () => {
-      // Upsert course
-      const courseRecord: Course = {
-        id: courseDetail.id,
-        title: courseDetail.title,
-        description: courseDetail.description,
-        toeicScoreRange: courseDetail.toeicScoreRange,
-        category: courseDetail.category,
-        level: courseDetail.level,
-        wordCount: courseDetail.wordCount,
-        version: courseDetail.version,
-        isDownloaded: true,
-        downloadedAt: new Date().toISOString()
-      };
-      await db.courses.put(courseRecord);
-
-      // Upsert words
-      await db.words.bulkPut(courseDetail.words);
-
-      // Delete existing courseWords for this course and re-insert
+      await db.courses.put(validated.courseRecord);
+      await db.words.bulkPut(validated.words);
       await db.courseWords.where('courseId').equals(courseId).delete();
-
-      const courseWords: CourseWord[] = courseDetail.words.map((w, index) => ({
-        courseId: courseDetail.id,
-        wordId: w.id,
-        orderIndex: index
-      }));
-
-      await db.courseWords.bulkAdd(courseWords);
+      await db.courseWords.bulkAdd(validated.courseWords);
     });
   },
 

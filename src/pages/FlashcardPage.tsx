@@ -1445,7 +1445,7 @@ export const FlashcardPage: React.FC = () => {
                         onClick={() => audioService.speakSentence(currentExamples[0]?.en || currentExamples[0]?.english || '')}
                         className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group touch-pan-y"
                         style={{ touchAction: 'pan-y' }}
-                        title="點擊播放例句真人朗讀"
+                        title="點擊播放例句標準朗讀"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <p className={`text-slate-100 ${exampleEnClass} flex-1`}>
@@ -1804,7 +1804,7 @@ export const FlashcardPage: React.FC = () => {
                             style={{ touchAction: 'pan-y' }}
                             onClick={() => audioService.speakSentence(ex.en || ex.english || '')}
                             className="cursor-pointer hover:bg-slate-800/70 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 transition-colors group touch-pan-y"
-                            title="點擊播放例句真人朗讀"
+                            title="點擊播放例句標準朗讀"
                           >
                             <div className="flex items-start justify-between gap-2 mb-1">
                               <span className="px-1.5 py-0.5 rounded bg-teal-950/80 text-[9px] text-teal-300 border border-teal-800/50 font-semibold">
@@ -2021,7 +2021,7 @@ export const FlashcardPage: React.FC = () => {
                 <span className="text-[11px] font-bold text-slate-300">AI 運算引擎：</span>
                 {quickApiKey.trim() ? (
                   <span className="inline-flex items-center text-[10px] font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-700/60 px-2 py-0.5 rounded-full">
-                    🟢 Google Gemini Live API 連線中
+                    🟢 Google Gemini API 直連模式
                   </span>
                 ) : (
                   <span className="inline-flex items-center text-[10px] font-bold text-blue-400 bg-blue-950/60 border border-blue-800/60 px-2 py-0.5 rounded-full">

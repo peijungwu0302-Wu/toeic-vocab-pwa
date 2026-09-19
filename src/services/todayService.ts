@@ -5,8 +5,9 @@
 
 import { TodaySession, TodayPhase } from '../types/today';
 import { progressRepository } from '../repositories/progressRepository';
-import { courseRepository } from '../repositories/courseRepository';
 import { profileRepository } from '../repositories/profileRepository';
+
+export const DEFAULT_APP_COURSE_ID = 'course-core-1200';
 
 export const todayService = {
   getTodayDateStr(): string {
@@ -54,17 +55,11 @@ export const todayService = {
     const dateStr = customDateStr || this.getTodayDateStr();
     const profile = await profileRepository.getById(profileId);
 
-    // Resolve active course id:
-    // 1. preferredCourseId parameter
+    // Resolve active course id strictly:
+    // 1. preferredCourseId parameter (if explicitly provided)
     // 2. profile.activeCourseId
-    // 3. first downloaded course in database
-    // 4. fallback to 'course-core-1200'
-    let resolvedCourseId = preferredCourseId || profile?.activeCourseId || null;
-    if (!resolvedCourseId) {
-      const allCourses = await courseRepository.getAll();
-      const firstDownloaded = allCourses.find(c => c.isDownloaded);
-      resolvedCourseId = firstDownloaded ? firstDownloaded.id : 'course-core-1200';
-    }
+    // 3. Fallback to standard DEFAULT_APP_COURSE_ID
+    const resolvedCourseId = preferredCourseId || profile?.activeCourseId || DEFAULT_APP_COURSE_ID;
 
     const reviewBatchTarget = profile?.dailyReviewTarget || 30;
     const newCardsTarget = profile?.dailyNewCardsTarget || 15;
@@ -120,6 +115,9 @@ export const todayService = {
   ): Promise<TodaySession> {
     const existing = this.loadTodaySession(profileId);
     if (existing && !existing.isCompleted) {
+      if (preferredCourseId && existing.activeCourseId && existing.activeCourseId !== preferredCourseId) {
+        return this.createTodaySession(profileId, preferredCourseId);
+      }
       return existing;
     }
     return this.createTodaySession(profileId, preferredCourseId);

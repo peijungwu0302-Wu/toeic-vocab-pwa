@@ -40,6 +40,7 @@ export const profileRepository = {
       preferredAccent: data.preferredAccent ?? 'US',
       autoPlayAudio: true,
       isMuted: false,
+      activeCourseId: 'course-core-1200',
       createdAt: now,
       updatedAt: now,
       cloudUserId: null
@@ -62,6 +63,10 @@ export const profileRepository = {
       ...updates,
       updatedAt: now
     });
+  },
+
+  async setActiveCourseId(profileId: string, courseId: string | null): Promise<void> {
+    await this.update(profileId, { activeCourseId: courseId ?? null });
   },
 
   async delete(id: string): Promise<void> {
