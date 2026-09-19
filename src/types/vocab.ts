@@ -204,6 +204,8 @@ export interface CourseSummary {
   checksum: string;
   sizeBytes?: number;
   version?: number;
+  sha256?: string;
+  checksumSha256?: string;
 }
 
 export const CourseSummarySchema = z.object({
@@ -217,7 +219,9 @@ export const CourseSummarySchema = z.object({
   fileName: z.string(),
   checksum: z.string().optional().default(''),
   sizeBytes: z.number().optional(),
-  version: z.number().optional().default(3)
+  version: z.number().optional().default(3),
+  sha256: z.string().optional(),
+  checksumSha256: z.string().optional()
 });
 
 export interface CourseDetail {

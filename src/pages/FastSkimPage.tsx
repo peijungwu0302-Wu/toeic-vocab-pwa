@@ -27,6 +27,8 @@ import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { audioService } from '../services/audioService';
 import { imageService, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
+import { studySessionService } from '../services/studySessionService';
+import { db } from '../db';
 
 export const FastSkimPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -67,11 +69,37 @@ export const FastSkimPage: React.FC = () => {
 
   const timerRef = useRef<number | null>(null);
 
-  // Load words & categories with Session Persistence
-  const loadWords = useCallback(async () => {
+  // Load words & categories with Profile-Scoped Session Persistence
+  const loadWords = useCallback(async (forceFresh = false) => {
     if (!activeProfile) return;
     try {
       setIsLoading(true);
+      const targetCourseId = courseId || 'all';
+
+      // 1. Check saved session in studySessionService unless forceFresh is requested
+      if (!forceFresh) {
+        const saved = studySessionService.loadFastSkimSession(activeProfile.id, targetCourseId);
+        if (saved && saved.sessionWordIds && saved.sessionWordIds.length > 0) {
+          const words = await db.words.where('id').anyOf(saved.sessionWordIds).toArray();
+          const wordMap = new Map(words.map(w => [w.id, w]));
+          const restored = saved.sessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
+
+          if (restored.length > 0) {
+            setActiveWords(restored);
+            const safeIdx = Math.min(Math.max(0, saved.currentIndex), restored.length - 1);
+            setCurrentIndex(safeIdx);
+            setCurrentBatchIndex(saved.currentBatchIndex || 0);
+            setResumedNotice(`已為您恢復進度：第 ${safeIdx + 1} / ${restored.length} 詞 ↩️`);
+            setShowProgressPopover(true);
+            setShowRecapModal(false);
+
+            const cats = await courseRepository.getDownloadedCategories();
+            setAvailableCategories(cats);
+            return;
+          }
+        }
+      }
+
       let loadedWords: Word[] = [];
 
       if (courseId) {
@@ -108,35 +136,28 @@ export const FastSkimPage: React.FC = () => {
 
       setAllWords(loadedWords);
 
-      // Check saved session in localStorage (valid for 24 hours)
-      const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
-      let restoredIndex = 0;
-      let restoredBatch = 0;
-      try {
-        const raw = localStorage.getItem(sessionKey);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Date.now() - parsed.timestamp < 24 * 60 * 60 * 1000) {
-            restoredIndex = parsed.currentIndex || 0;
-            restoredBatch = parsed.currentBatchIndex || 0;
-          }
-        }
-      } catch {}
-
-      const batchStart = restoredBatch * batchSize;
+      const batchStart = 0;
       const initialBatch = batchSize >= 999 ? loadedWords : loadedWords.slice(batchStart, batchStart + batchSize);
       setActiveWords(initialBatch);
-
-      if (restoredIndex > 0 && restoredIndex < initialBatch.length) {
-        setCurrentIndex(restoredIndex);
-        setCurrentBatchIndex(restoredBatch);
-        setResumedNotice(`已為您恢復進度：第 ${restoredIndex + 1} / ${initialBatch.length} 詞 ↩️`);
-        setShowProgressPopover(true);
-      } else {
-        setCurrentIndex(0);
-        setCurrentBatchIndex(0);
-      }
+      setCurrentIndex(0);
+      setCurrentBatchIndex(0);
       setShowRecapModal(false);
+
+      if (initialBatch.length > 0) {
+        studySessionService.saveFastSkimSession({
+          sessionId: `skim_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+          profileId: activeProfile.id,
+          courseId: targetCourseId,
+          sessionWordIds: initialBatch.map(w => w.id),
+          currentIndex: 0,
+          currentBatchIndex: 0,
+          batchSize,
+          selectedCategory,
+          isShuffle,
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        });
+      }
 
       const cats = await courseRepository.getDownloadedCategories();
       setAvailableCategories(cats);
@@ -164,32 +185,36 @@ export const FastSkimPage: React.FC = () => {
 
   // Auto-save session progress
   useEffect(() => {
-    if (activeWords.length > 0 && !isLoading) {
-      const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
-      try {
-        localStorage.setItem(sessionKey, JSON.stringify({
+    if (activeWords.length > 0 && !isLoading && activeProfile) {
+      const existing = studySessionService.loadFastSkimSession(activeProfile.id, courseId || 'all');
+      if (existing) {
+        studySessionService.saveFastSkimSession({
+          ...existing,
           currentIndex,
           currentBatchIndex,
-          timestamp: Date.now()
-        }));
-      } catch {}
+          updatedAt: Date.now()
+        });
+      }
     }
-  }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, courseId]);
+  }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, courseId, activeProfile]);
 
   const handleRestartFromBeginning = () => {
-    const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
-    try { localStorage.removeItem(sessionKey); } catch {}
+    if (activeProfile) {
+      studySessionService.clearFastSkimSession(activeProfile.id, courseId || 'all');
+    }
     setCurrentIndex(0);
     setRemainingTime(durationSec);
     setResumedNotice(null);
+    loadWords(true);
   };
 
   const handleBatchComplete = useCallback(() => {
-    const sessionKey = `toeic_active_skim_${courseId || 'all'}`;
-    try { localStorage.removeItem(sessionKey); } catch {}
+    if (activeProfile) {
+      studySessionService.clearFastSkimSession(activeProfile.id, courseId || 'all');
+    }
     setIsPaused(true);
     setShowRecapModal(true);
-  }, [courseId]);
+  }, [courseId, activeProfile]);
 
   const goToNext = useCallback(() => {
     if (activeWords.length === 0) return;

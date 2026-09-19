@@ -41,6 +41,7 @@ import { SwipeableCard } from '../components/ui/SwipeableCard';
 import { WordQuickPeekModal } from '../components/ui/WordQuickPeekModal';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { useReviewStyle } from '../contexts/ReviewStyleContext';
+import { studySessionService } from '../services/studySessionService';
 import { db } from '../db';
 
 interface StudyItem {
@@ -275,11 +276,36 @@ export const FlashcardPage: React.FC = () => {
   }, []);
 
   // Load study items
-  const loadStudyQueue = useCallback(async () => {
+  const loadStudyQueue = useCallback(async (forceFresh = false) => {
     if (!activeProfile) return;
     try {
       setIsLoading(true);
       const profileId = activeProfile.id;
+      const targetCourseId = courseId || 'all';
+
+      // 1. Check saved review session in studySessionService unless forceFresh is requested
+      if (!forceFresh) {
+        const savedSession = studySessionService.loadFlashcardSession(profileId, targetCourseId);
+        if (savedSession && savedSession.sessionWordIds && savedSession.sessionWordIds.length > 0) {
+          const restoredItems = await progressRepository.getStudyItemsByWordIds(profileId, savedSession.sessionWordIds);
+          if (restoredItems.length > 0) {
+            setQueue(restoredItems);
+            const safeIndex = Math.min(Math.max(0, savedSession.currentIndex), restoredItems.length - 1);
+            setCurrentIndex(safeIndex);
+            setResumedNotice(`已為您恢復進度：第 ${safeIndex + 1} / ${restoredItems.length} 詞 ↩️`);
+            setShowProgressPopover(true);
+            setIsFlipped(false);
+            setPreConfidence(null);
+            cardStartTimeRef.current = Date.now();
+            hiddenTimeAccumulatorRef.current = 0;
+
+            const cats = await courseRepository.getDownloadedCategories();
+            setAvailableCategories(cats);
+            return;
+          }
+        }
+      }
+
       let items: StudyItem[] = [];
 
       if (courseId === 'starred') {
@@ -296,17 +322,17 @@ export const FlashcardPage: React.FC = () => {
 
         // 2. Add new cards up to batch limit
         if (items.length < batchSize) {
-          let targetCourseId = courseId;
-          if (!targetCourseId) {
+          let resolvedCourseId = courseId;
+          if (!resolvedCourseId) {
             const downloaded = await courseRepository.getAll();
             const firstDownloaded = downloaded.find(c => c.isDownloaded);
-            if (firstDownloaded) targetCourseId = firstDownloaded.id;
+            if (firstDownloaded) resolvedCourseId = firstDownloaded.id;
           }
 
-          if (targetCourseId) {
+          if (resolvedCourseId) {
             const newWords = await progressRepository.getNewWordsForCourse(
               profileId,
-              targetCourseId,
+              resolvedCourseId,
               batchSize - items.length,
               { category: selectedCategory, shuffle: isShuffle }
             );
@@ -331,27 +357,25 @@ export const FlashcardPage: React.FC = () => {
         }
       }
 
-      // Check saved review session in localStorage (valid for 24 hours)
-      const sessionKey = `toeic_active_review_${profileId}_${courseId || 'all'}`;
-      let restoredIndex = 0;
-      try {
-        const raw = localStorage.getItem(sessionKey);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Date.now() - parsed.timestamp < 24 * 60 * 60 * 1000) {
-            restoredIndex = parsed.currentIndex || 0;
-          }
-        }
-      } catch {}
-
       setQueue(items);
+      setCurrentIndex(0);
 
-      if (restoredIndex > 0 && restoredIndex < items.length) {
-        setCurrentIndex(restoredIndex);
-        setResumedNotice(`已為您恢復進度：第 ${restoredIndex + 1} / ${items.length} 詞 ↩️`);
-        setShowProgressPopover(true);
-      } else {
-        setCurrentIndex(0);
+      // Persist exact session identity with full word sequence
+      if (items.length > 0) {
+        studySessionService.saveFlashcardSession({
+          sessionId: `fs_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+          profileId,
+          courseId: targetCourseId,
+          sessionWordIds: items.map(it => it.word.id),
+          currentIndex: 0,
+          sessionConfig: {
+            batchSize,
+            isShuffle,
+            selectedCategory
+          },
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        });
       }
 
       setIsFlipped(false);
@@ -383,29 +407,30 @@ export const FlashcardPage: React.FC = () => {
     }
   }, [resumedNotice, showProgressPopover]);
 
-  // Auto-save review session progress
+  // Auto-save review session progress (updating exact session index without re-shuffling)
   useEffect(() => {
     if (queue.length > 0 && !isLoading && activeProfile) {
-      const sessionKey = `toeic_active_review_${activeProfile.id}_${courseId || 'all'}`;
-      try {
-        localStorage.setItem(sessionKey, JSON.stringify({
+      const existing = studySessionService.loadFlashcardSession(activeProfile.id, courseId || 'all');
+      if (existing) {
+        studySessionService.saveFlashcardSession({
+          ...existing,
           currentIndex,
-          timestamp: Date.now()
-        }));
-      } catch {}
+          updatedAt: Date.now()
+        });
+      }
     }
   }, [currentIndex, queue.length, isLoading, activeProfile, courseId]);
 
   const handleRestartReviewFromBeginning = () => {
     if (activeProfile) {
-      const sessionKey = `toeic_active_review_${activeProfile.id}_${courseId || 'all'}`;
-      try { localStorage.removeItem(sessionKey); } catch {}
+      studySessionService.clearFlashcardSession(activeProfile.id, courseId || 'all');
     }
     setCurrentIndex(0);
     setHistoryOffset(0);
     activeCardFlippedRef.current = false;
     setIsFlipped(false);
     setResumedNotice(null);
+    loadStudyQueue(true); // force fresh new queue
   };
 
   const activeStudyIndex = Math.max(0, currentIndex - historyOffset);
@@ -526,8 +551,7 @@ export const FlashcardPage: React.FC = () => {
       } else {
         // Session completed!
         if (activeProfile) {
-          const sessionKey = `toeic_active_review_${activeProfile.id}_${courseId || 'all'}`;
-          try { localStorage.removeItem(sessionKey); } catch {}
+          studySessionService.clearFlashcardSession(activeProfile.id, courseId || 'all');
         }
         confetti({
           particleCount: 90,

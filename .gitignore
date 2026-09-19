@@ -47,6 +47,10 @@ scripts/__pycache__/
 sample_*
 *sample*
 *test*
+!tests/
+!tests/**
+!tests/*.test.ts
+!tests/*.test.tsx
 applicant.jpg
 a_copy_of*
 pollinations_vs_imagen3_preview.html

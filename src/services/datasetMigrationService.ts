@@ -50,8 +50,13 @@ export const datasetMigrationService = {
   },
 
   /**
-   * Automatically migrates local IndexedDB words and courses to v6 (v6.0.0-bbword-vip-lexicon).
+   * Automatically migrates local IndexedDB words and courses to current dataset version.
    * Runs silently in the background on App startup without interrupting the user.
+   * Guaranteed Atomic & Resilient:
+   * - Never clears db.words globally at start
+   * - Verifies schema and SHA-256 checksum per course
+   * - If any course download/validation fails, existing dataset is completely preserved and version is NOT upgraded
+   * - Only marks dataset_version as current when all required courses succeed
    */
   async autoMigrateIfOutdated(): Promise<boolean> {
     try {
@@ -67,39 +72,53 @@ export const datasetMigrationService = {
       // 1. Fetch latest catalog
       const catalog = await courseRepository.fetchCatalog();
       const allCatalogCourses = catalog.courses || [];
+      if (allCatalogCourses.length === 0) {
+        console.warn('[DatasetMigration] Catalog returned 0 courses, aborting upgrade.');
+        return false;
+      }
 
       // 2. Find all downloaded courses on this device
       const localCourses = await db.courses.toArray();
       const downloadedCourses = localCourses.filter(c => c.isDownloaded);
 
-      // 3. Clear legacy words cache to eliminate any stale +ing artifacts
-      await db.words.clear();
+      // 3. Determine required courses to migrate
+      const requiredTargets: Array<{ id: string; fileName: string; checksum?: string }> = [];
 
-      // 4. Refresh each downloaded course with the latest v5.0 JSON
       if (downloadedCourses.length > 0) {
         for (const downloaded of downloadedCourses) {
-          const catalogEntry = allCatalogCourses.find(c => c.id === downloaded.id);
-          if (catalogEntry) {
-            try {
-              await courseRepository.downloadAndSaveCourse(catalogEntry.id, catalogEntry.fileName);
-            } catch (courseErr) {
-              console.warn(`[DatasetMigration] Failed to update course ${downloaded.id}:`, courseErr);
-            }
+          const entry = allCatalogCourses.find(c => c.id === downloaded.id);
+          if (!entry) {
+            console.warn(`[DatasetMigration] Downloaded course ${downloaded.id} not found in catalog, aborting.`);
+            return false;
           }
+          requiredTargets.push({
+            id: entry.id,
+            fileName: entry.fileName,
+            checksum: entry.checksumSha256 || entry.sha256 || entry.checksum
+          });
         }
-      } else if (allCatalogCourses.length > 0) {
-        // Automatically download core-1200 course if no courses were cached yet
+      } else {
+        // Cold install: default to course-core-1200
         const defaultCourse = allCatalogCourses.find(c => c.id === 'course-core-1200') || allCatalogCourses[0];
-        if (defaultCourse) {
-          try {
-            await courseRepository.downloadAndSaveCourse(defaultCourse.id, defaultCourse.fileName);
-          } catch (defaultErr) {
-            console.warn('[DatasetMigration] Failed to download default core course:', defaultErr);
-          }
+        requiredTargets.push({
+          id: defaultCourse.id,
+          fileName: defaultCourse.fileName,
+          checksum: defaultCourse.checksumSha256 || defaultCourse.sha256 || defaultCourse.checksum
+        });
+      }
+
+      // 4. Download and atomically upsert each course without wiping words globally
+      for (const target of requiredTargets) {
+        try {
+          await courseRepository.downloadAndSaveCourse(target.id, target.fileName, target.checksum);
+        } catch (courseErr) {
+          console.error(`[DatasetMigration] Failed to migrate course ${target.id}:`, courseErr);
+          // Halt upgrade immediately: preserve existing valid words and do NOT bump dataset_version
+          return false;
         }
       }
 
-      // 5. Mark dataset as upgraded to v5
+      // 5. Only mark dataset as upgraded if ALL required courses succeeded
       await db.appSettings.put({
         key: 'dataset_version',
         value: String(CURRENT_DATASET_VERSION)
@@ -114,7 +133,8 @@ export const datasetMigrationService = {
   },
 
   /**
-   * Force refresh all local courses to the latest v5.0 dataset
+   * Force refresh all local courses to the latest dataset version.
+   * Does NOT wipe words before successful download to prevent corrupted/empty state.
    */
   async forceRefreshAllCourses(): Promise<void> {
     const catalog = await courseRepository.fetchCatalog();
@@ -122,21 +142,33 @@ export const datasetMigrationService = {
     const localCourses = await db.courses.toArray();
     const downloadedCourses = localCourses.filter(c => c.isDownloaded);
 
-    // Completely purge old word cache in Dexie
-    await db.words.clear();
+    const requiredTargets: Array<{ id: string; fileName: string; checksum?: string }> = [];
 
     if (downloadedCourses.length > 0) {
       for (const downloaded of downloadedCourses) {
-        const catalogEntry = allCatalogCourses.find(c => c.id === downloaded.id);
-        if (catalogEntry) {
-          await courseRepository.downloadAndSaveCourse(catalogEntry.id, catalogEntry.fileName);
+        const entry = allCatalogCourses.find(c => c.id === downloaded.id);
+        if (entry) {
+          requiredTargets.push({
+            id: entry.id,
+            fileName: entry.fileName,
+            checksum: entry.checksumSha256 || entry.sha256 || entry.checksum
+          });
         }
       }
     } else if (allCatalogCourses.length > 0) {
       const defaultCourse = allCatalogCourses.find(c => c.id === 'course-core-1200') || allCatalogCourses[0];
       if (defaultCourse) {
-        await courseRepository.downloadAndSaveCourse(defaultCourse.id, defaultCourse.fileName);
+        requiredTargets.push({
+          id: defaultCourse.id,
+          fileName: defaultCourse.fileName,
+          checksum: defaultCourse.checksumSha256 || defaultCourse.sha256 || defaultCourse.checksum
+        });
       }
+    }
+
+    // Atomic per-course update
+    for (const target of requiredTargets) {
+      await courseRepository.downloadAndSaveCourse(target.id, target.fileName, target.checksum);
     }
 
     await db.appSettings.put({

@@ -30,6 +30,26 @@ export const progressRepository = {
     return db.progress.where('profileId').equals(profileId).toArray();
   },
 
+  async getStudyItemsByWordIds(profileId: string, wordIds: string[]): Promise<{ word: Word; progress: Progress }[]> {
+    if (wordIds.length === 0) return [];
+    const words = await db.words.where('id').anyOf(wordIds).toArray();
+    const wordMap = new Map(words.map(w => [w.id, w]));
+
+    const progressList = await db.progress.where('profileId').equals(profileId).toArray();
+    const progressMap = new Map(progressList.map(p => [p.wordId, p]));
+
+    const now = new Date();
+    const result: { word: Word; progress: Progress }[] = [];
+    for (const id of wordIds) {
+      const w = wordMap.get(id);
+      if (w) {
+        const p = progressMap.get(id) || fsrsService.createInitialProgress(profileId, w.id, now);
+        result.push({ word: w, progress: p });
+      }
+    }
+    return result;
+  },
+
   async getDueWords(
     profileId: string,
     courseId?: string,

@@ -1,6 +1,7 @@
 import { db } from '../db';
 import { Course, CourseWord, Word } from '../types/db';
 import { CourseDetailSchema, DatasetCatalog, DatasetCatalogSchema } from '../types/vocab';
+import { computeSha256Hex } from '../utils/crypto';
 
 function shuffleList<T>(array: T[]): T[] {
   const arr = [...array];
@@ -175,12 +176,24 @@ export const courseRepository = {
     return prefix || null;
   },
 
-  async downloadAndSaveCourse(courseId: string, fileName: string): Promise<void> {
+  async downloadAndSaveCourse(courseId: string, fileName: string, expectedChecksum?: string): Promise<void> {
     const res = await fetch(`${getBaseDataUrl(`data/v1/courses/${fileName}`)}?t=${Date.now()}`, { cache: 'no-cache' });
     if (!res.ok) {
       throw new Error(`Failed to download course file ${fileName}: HTTP ${res.status}`);
     }
-    const rawData = await res.json();
+    const rawText = await res.text();
+
+    // Checksum verification if expectedChecksum is provided
+    if (expectedChecksum && expectedChecksum.trim()) {
+      const calculatedHash = await computeSha256Hex(rawText);
+      if (calculatedHash.toLowerCase() !== expectedChecksum.trim().toLowerCase()) {
+        throw new Error(
+          `Course checksum verification failed for ${fileName}: expected ${expectedChecksum}, got ${calculatedHash}`
+        );
+      }
+    }
+
+    const rawData = JSON.parse(rawText);
     const courseDetail = CourseDetailSchema.parse(rawData);
 
     await db.transaction('rw', [db.courses, db.words, db.courseWords], async () => {

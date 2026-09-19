@@ -10,6 +10,7 @@ import {
   XCircle
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useProfile } from '../contexts/ProfileContext';
 import { courseRepository } from '../repositories/courseRepository';
 import { audioService } from '../services/audioService';
 import { Word } from '../types/db';
@@ -25,6 +26,8 @@ interface SpeedRunQuestion {
 
 export const SpeedRunPage: React.FC = () => {
   const navigate = useNavigate();
+  const { activeProfile } = useProfile();
+  const highscoreKey = activeProfile ? `toeic_speedrun_highscore_${activeProfile.id}` : 'toeic_speedrun_highscore_guest';
 
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'gameover'>('idle');
   const [timeLeft, setTimeLeft] = useState<number>(60);
@@ -40,11 +43,15 @@ export const SpeedRunPage: React.FC = () => {
 
   const timerRef = useRef<number | null>(null);
 
-  // Load local highscore
+  // Load local highscore scoped by profile
   useEffect(() => {
-    const saved = localStorage.getItem('toeic_speedrun_highscore');
-    if (saved) setHighScore(Number(saved));
-  }, []);
+    const saved = localStorage.getItem(highscoreKey);
+    if (saved) {
+      setHighScore(Number(saved));
+    } else {
+      setHighScore(0);
+    }
+  }, [highscoreKey]);
 
   const prepareQuestions = useCallback(async () => {
     const downloadedWords = await courseRepository.getAllDownloadedWords({ shuffle: true });
@@ -113,7 +120,7 @@ export const SpeedRunPage: React.FC = () => {
     if (gameState === 'gameover') {
       if (score > highScore) {
         setHighScore(score);
-        localStorage.setItem('toeic_speedrun_highscore', String(score));
+        localStorage.setItem(highscoreKey, String(score));
         confetti({
           particleCount: 100,
           spread: 80,
@@ -121,7 +128,7 @@ export const SpeedRunPage: React.FC = () => {
         });
       }
     }
-  }, [gameState, score, highScore]);
+  }, [gameState, score, highScore, highscoreKey]);
 
   const handleOptionSelect = (optionIdx: number) => {
     if (isAnswered || gameState !== 'playing') return;
