@@ -1281,14 +1281,16 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       const filesToCheck = [
         path.resolve(process.cwd(), 'src/pages/CatalogPage.tsx'),
         path.resolve(process.cwd(), 'src/pages/QuizPage.tsx'),
-        path.resolve(process.cwd(), 'src/pages/SettingsPage.tsx')
+        path.resolve(process.cwd(), 'src/pages/SettingsPage.tsx'),
+        path.resolve(process.cwd(), 'src/pages/VocabAssessmentPage.tsx')
       ];
 
       const forbiddenPhrases = [
         'v5.0.0',
         'v3 最新版',
         '真題',
-        '全真'
+        '全真',
+        'Gemini 3.6'
       ];
 
       for (const filePath of filesToCheck) {
@@ -1306,6 +1308,225 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       expect(settingsContent.includes('100% 免費')).toBe(false);
       expect(settingsContent.includes('100% 杜絕')).toBe(false);
       expect(settingsContent.includes('100% 完整保留')).toBe(false);
+      expect(settingsContent.includes('v6.0.0')).toBe(false);
+      expect(settingsContent.includes('v7.3.0-flagship')).toBe(false);
+      expect(settingsContent.includes('絕不外流')).toBe(false);
+    });
+
+    // Regression 16: Catalog offline media delete removes CacheStorage entries
+    it('Regression 16: Catalog offline media delete removes CacheStorage entries', async () => {
+      const memoryCache = new Map<string, Response>();
+      const mockCacheInstance = {
+        match: vi.fn(async (url: string) => memoryCache.get(url)),
+        put: vi.fn(async (url: string, resp: Response) => memoryCache.set(url, resp)),
+        delete: vi.fn(async (url: string) => memoryCache.delete(url))
+      };
+
+      const originalCaches = (global as any).caches;
+      (global as any).caches = {
+        open: vi.fn(async (name: string) => {
+          if (name === OFFLINE_MEDIA_CACHE_NAME) return mockCacheInstance;
+          throw new Error('Unknown cache');
+        }),
+        delete: vi.fn(async () => true),
+        has: vi.fn(async () => true),
+        keys: vi.fn(async () => [OFFLINE_MEDIA_CACHE_NAME])
+      };
+
+      try {
+        await db.courses.put({
+          id: 'course-del-test',
+          title: 'Delete Media Test Course',
+          description: '',
+          toeicScoreRange: '600',
+          category: '商業',
+          level: '中階',
+          wordCount: 2,
+          version: 17,
+          isDownloaded: true
+        });
+
+        await db.words.bulkPut([
+          { id: 'del_w1', headword: 'del1', normalizedHeadword: 'del1', entryType: 'word', definitionZh: '刪除一', starRating: 1, toeicScoreRange: '600', category: '', partsOfSpeech: [], wordForms: [], phoneticUS: null, phoneticUK: null, examples: [], examTips: [], audioUSUrl: null, audioUKUrl: null },
+          { id: 'del_w2', headword: 'del2', normalizedHeadword: 'del2', entryType: 'word', definitionZh: '刪除二', starRating: 1, toeicScoreRange: '600', category: '', partsOfSpeech: [], wordForms: [], phoneticUS: null, phoneticUK: null, examples: [], examTips: [], audioUSUrl: null, audioUKUrl: null }
+        ]);
+
+        await db.courseWords.bulkPut([
+          { courseId: 'course-del-test', wordId: 'del_w1', orderIndex: 0 },
+          { courseId: 'course-del-test', wordId: 'del_w2', orderIndex: 1 }
+        ]);
+
+        const manifest = {
+          schemaVersion: '1.0',
+          manifestUri: null,
+          count: 2,
+          images: {
+            del_w1: { v: 1, h: 'h1' },
+            del_w2: { v: 1, h: 'h2' }
+          }
+        };
+        _setRuntimeManifestForTesting(manifest);
+
+        const url1 = `${R2_MEDIA_BASE_URL}/words/del_w1/v1.webp`;
+        const url2 = `${R2_MEDIA_BASE_URL}/words/del_w2/v1.webp`;
+        memoryCache.set(url1, new Response('img1'));
+        memoryCache.set(url2, new Response('img2'));
+
+        // Initial status: fully cached
+        let status = await getCourseOfflineMediaStatus('course-del-test');
+        expect(status.cached).toBe(2);
+        expect(status.isFullyCached).toBe(true);
+
+        // Perform clearCourseOfflineMedia
+        const deleted = await clearCourseOfflineMedia('course-del-test');
+        expect(deleted).toBe(2);
+        expect(memoryCache.has(url1)).toBe(false);
+        expect(memoryCache.has(url2)).toBe(false);
+
+        // Updated status: 0 cached, isFullyCached = false
+        status = await getCourseOfflineMediaStatus('course-del-test');
+        expect(status.cached).toBe(0);
+        expect(status.isFullyCached).toBe(false);
+      } finally {
+        (global as any).caches = originalCaches;
+      }
+    });
+
+    // Regression 17: Course A/B shared image preservation when deleting Course A pack
+    it('Regression 17: Course A/B shared image preservation when deleting Course A pack', async () => {
+      const memoryCache = new Map<string, Response>();
+      const mockCacheInstance = {
+        match: vi.fn(async (url: string) => memoryCache.get(url)),
+        put: vi.fn(async (url: string, resp: Response) => memoryCache.set(url, resp)),
+        delete: vi.fn(async (url: string) => memoryCache.delete(url))
+      };
+
+      const originalCaches = (global as any).caches;
+      (global as any).caches = {
+        open: vi.fn(async (name: string) => {
+          if (name === OFFLINE_MEDIA_CACHE_NAME) return mockCacheInstance;
+          throw new Error('Unknown cache');
+        }),
+        delete: vi.fn(async () => true),
+        has: vi.fn(async () => true),
+        keys: vi.fn(async () => [OFFLINE_MEDIA_CACHE_NAME])
+      };
+
+      try {
+        await db.courses.bulkPut([
+          { id: 'course-shared-a', title: 'Course A', description: '', toeicScoreRange: '700', category: '', level: '', wordCount: 2, version: 17, isDownloaded: true },
+          { id: 'course-shared-b', title: 'Course B', description: '', toeicScoreRange: '800', category: '', level: '', wordCount: 2, version: 17, isDownloaded: true }
+        ]);
+
+        await db.words.bulkPut([
+          { id: 'shared_w1', headword: 'shared1', normalizedHeadword: 'shared1', entryType: 'word', definitionZh: '一', starRating: 1, toeicScoreRange: '700', category: '', partsOfSpeech: [], wordForms: [], phoneticUS: null, phoneticUK: null, examples: [], examTips: [], audioUSUrl: null, audioUKUrl: null },
+          { id: 'shared_w2', headword: 'shared2', normalizedHeadword: 'shared2', entryType: 'word', definitionZh: '二', starRating: 1, toeicScoreRange: '700', category: '', partsOfSpeech: [], wordForms: [], phoneticUS: null, phoneticUK: null, examples: [], examTips: [], audioUSUrl: null, audioUKUrl: null },
+          { id: 'shared_w3', headword: 'shared3', normalizedHeadword: 'shared3', entryType: 'word', definitionZh: '三', starRating: 1, toeicScoreRange: '800', category: '', partsOfSpeech: [], wordForms: [], phoneticUS: null, phoneticUK: null, examples: [], examTips: [], audioUSUrl: null, audioUKUrl: null }
+        ]);
+
+        // Course A: w1, w2 (w2 is shared!)
+        // Course B: w2, w3
+        await db.courseWords.bulkPut([
+          { courseId: 'course-shared-a', wordId: 'shared_w1', orderIndex: 0 },
+          { courseId: 'course-shared-a', wordId: 'shared_w2', orderIndex: 1 },
+          { courseId: 'course-shared-b', wordId: 'shared_w2', orderIndex: 0 },
+          { courseId: 'course-shared-b', wordId: 'shared_w3', orderIndex: 1 }
+        ]);
+
+        const manifest = {
+          schemaVersion: '1.0',
+          manifestUri: null,
+          count: 3,
+          images: {
+            shared_w1: { v: 1, h: 'h1' },
+            shared_w2: { v: 1, h: 'h2' },
+            shared_w3: { v: 1, h: 'h3' }
+          }
+        };
+        _setRuntimeManifestForTesting(manifest);
+
+        const url1 = `${R2_MEDIA_BASE_URL}/words/shared_w1/v1.webp`;
+        const url2 = `${R2_MEDIA_BASE_URL}/words/shared_w2/v1.webp`;
+        const url3 = `${R2_MEDIA_BASE_URL}/words/shared_w3/v1.webp`;
+        memoryCache.set(url1, new Response('img1'));
+        memoryCache.set(url2, new Response('img2'));
+        memoryCache.set(url3, new Response('img3'));
+
+        // Both are fully cached initially
+        expect((await getCourseOfflineMediaStatus('course-shared-a')).isFullyCached).toBe(true);
+        expect((await getCourseOfflineMediaStatus('course-shared-b')).isFullyCached).toBe(true);
+
+        // Delete Course A's offline media pack
+        const deletedFromA = await clearCourseOfflineMedia('course-shared-a');
+
+        // Only url1 (unique to A) was deleted; url2 (shared with B) was preserved!
+        expect(deletedFromA).toBe(1);
+        expect(memoryCache.has(url1)).toBe(false);
+        expect(memoryCache.has(url2)).toBe(true); // PRESERVED for Course B!
+        expect(memoryCache.has(url3)).toBe(true);
+
+        // Course B remains 100% complete and fully cached!
+        const bStatus = await getCourseOfflineMediaStatus('course-shared-b');
+        expect(bStatus.cached).toBe(2);
+        expect(bStatus.total).toBe(2);
+        expect(bStatus.isFullyCached).toBe(true);
+      } finally {
+        (global as any).caches = originalCaches;
+      }
+    });
+
+    // Regression 18: Search index request uses stable URL without Date.now timestamp variants
+    it('Regression 18: Search index request uses stable URL without Date.now timestamp variants', async () => {
+      const requestedUrls: string[] = [];
+      const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation((input: any) => {
+        const urlStr = typeof input === 'string' ? input : input.url;
+        requestedUrls.push(urlStr);
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          json: async () => [{ id: 'w_test', headword: 'test', normalizedHeadword: 'test', definitionZh: '測試', category: '商務', toeicScoreRange: '500', partsOfSpeech: [], phoneticUS: null, sourceCourseId: 'c1', sourceFileName: 'c1.json' }]
+        } as any);
+      });
+
+      // Simulate 10 sequential index accesses (resetting local cache to force fetch simulation)
+      for (let i = 0; i < 10; i++) {
+        searchService.invalidateIndex();
+        await searchService.getIndex();
+      }
+
+      // Assert all requested search-index URLs are identical and stable (no ?t= or Date.now)
+      const indexRequests = requestedUrls.filter(u => u.includes('search-index.json'));
+      expect(indexRequests.length).toBeGreaterThan(0);
+      for (const reqUrl of indexRequests) {
+        expect(reqUrl).not.toContain('?t=');
+        expect(reqUrl.endsWith('/data/v1/search-index.json') || reqUrl.endsWith('data/v1/search-index.json')).toBe(true);
+      }
+
+      // Exactly 1 unique cache key across all 10 fetches
+      const uniqueKeys = new Set(indexRequests);
+      expect(uniqueKeys.size).toBe(1);
+
+      fetchSpy.mockRestore();
+    });
+
+    // Regression 19: Offline image Workbox config matches only /words/* and has no automatic expiration
+    it('Regression 19: Offline image Workbox config matches only /words/* and has no automatic expiration', () => {
+      const viteConfigPath = path.resolve(process.cwd(), 'vite.config.ts');
+      expect(fs.existsSync(viteConfigPath)).toBe(true);
+      const content = fs.readFileSync(viteConfigPath, 'utf-8');
+
+      // 1. Must contain dedicated NetworkFirst rule for search-index.json
+      expect(content).toContain("url.pathname === '/data/v1/search-index.json'");
+      expect(content).toContain("handler: 'NetworkFirst'");
+      expect(content).toContain("cacheName: 'toeic-search-index-v1'");
+
+      // 2. Offline media rule must strictly match /words/
+      expect(content).toContain("url.pathname.startsWith('/words/')");
+
+      // 3. No maxAgeSeconds in offline media rule (confirming user-managed retention without 90-day silent eviction)
+      const offlineMediaConfigMatch = content.match(/cacheName:\s*'toeic-offline-media-v1'[\s\S]*?\}/);
+      expect(offlineMediaConfigMatch).not.toBeNull();
+      expect(offlineMediaConfigMatch![0]).not.toContain('maxAgeSeconds');
     });
   });
 });

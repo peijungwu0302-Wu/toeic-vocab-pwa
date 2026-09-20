@@ -18,7 +18,8 @@ import {
   Sparkles,
   RefreshCw,
   Zap,
-  Image as ImageIcon
+  Image as ImageIcon,
+  ImageOff
 } from 'lucide-react';
 import { courseRepository } from '../repositories/courseRepository';
 import { progressRepository } from '../repositories/progressRepository';
@@ -59,7 +60,14 @@ export const CatalogPage: React.FC = () => {
     estimatedBytes: number;
     storageEstimate: { usageBytes: number; quotaBytes: number; usagePercent: number } | null;
   } | null>(null);
+  const [deleteMediaModal, setDeleteMediaModal] = useState<{
+    courseId: string;
+    courseTitle: string;
+    cached: number;
+    total: number;
+  } | null>(null);
   const [isPreparingEstimate, setIsPreparingEstimate] = useState<string | null>(null);
+  const [isDeletingMedia, setIsDeletingMedia] = useState<string | null>(null);
 
   // Offline status map for downloaded courses: courseId -> { total, cached, isFullyCached }
   const [offlineStatusMap, setOfflineStatusMap] = useState<Map<string, { total: number; cached: number; isFullyCached: boolean }>>(new Map());
@@ -256,6 +264,33 @@ export const CatalogPage: React.FC = () => {
     } finally {
       setCachingImagesCourseId(null);
       setCachingProgress(null);
+    }
+  };
+
+  const handleRequestDeleteMedia = (courseId: string, courseTitle: string) => {
+    const status = offlineStatusMap.get(courseId);
+    if (!status || status.cached === 0) return;
+    setDeleteMediaModal({
+      courseId,
+      courseTitle,
+      cached: status.cached,
+      total: status.total
+    });
+  };
+
+  const executeDeleteMedia = async (courseId: string) => {
+    setDeleteMediaModal(null);
+    setIsDeletingMedia(courseId);
+    try {
+      const deletedCount = await imageService.clearCourseOfflineMedia(courseId);
+      const updatedStatus = await imageService.getCourseOfflineMediaStatus(courseId);
+      setOfflineStatusMap(prev => new Map(prev).set(courseId, updatedStatus));
+      setCachingSuccessMsg(`已成功移除 ${deletedCount} 張離線快取圖片，本機單字與學習進度均完整保留！`);
+      setTimeout(() => setCachingSuccessMsg(null), 5000);
+    } catch (err) {
+      setErrorMessage(`刪除圖片包失敗：${(err as Error).message}`);
+    } finally {
+      setIsDeletingMedia(null);
     }
   };
 
@@ -581,11 +616,27 @@ export const CatalogPage: React.FC = () => {
                             <ImageIcon size={14} />
                           )}
                         </button>
+                        {(offlineStatusMap.get(c.id)?.cached ?? 0) > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => handleRequestDeleteMedia(c.id, c.title)}
+                            disabled={isDeletingMedia === c.id || cachingImagesCourseId === c.id}
+                            title={`刪除離線圖片包 (已快取 ${offlineStatusMap.get(c.id)?.cached}/${offlineStatusMap.get(c.id)?.total} 張)`}
+                            aria-label="刪除離線圖片包"
+                            className="p-2 text-slate-400 hover:text-amber-400 rounded-lg hover:bg-slate-700/50 transition-colors"
+                          >
+                            {isDeletingMedia === c.id ? (
+                              <Loader2 size={13} className="animate-spin text-amber-400" />
+                            ) : (
+                              <ImageOff size={14} />
+                            )}
+                          </button>
+                        )}
                         <button
                           type="button"
                           onClick={() => handleDelete(c.id)}
-                          title="清除快取"
-                          aria-label="清除快取"
+                          title="清除課程資料快取"
+                          aria-label="清除課程資料快取"
                           className="p-2 text-slate-400 hover:text-rose-400 rounded-lg hover:bg-slate-700/50 transition-colors"
                         >
                           <Trash2 size={14} />
@@ -694,6 +745,58 @@ export const CatalogPage: React.FC = () => {
                 className="bg-teal-600 hover:bg-teal-500 text-white font-bold"
               >
                 確認下載
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* Offline Media Pack Delete Confirmation Modal */}
+      {deleteMediaModal && (
+        <Modal
+          isOpen={Boolean(deleteMediaModal)}
+          onClose={() => setDeleteMediaModal(null)}
+          title="刪除離線圖片包"
+          maxWidth="sm"
+        >
+          <div className="p-5 space-y-4 text-slate-300 text-xs leading-relaxed">
+            <div className="bg-slate-800/80 rounded-xl p-3.5 border border-slate-700/60 space-y-2">
+              <div className="text-sm font-bold text-slate-100 truncate">
+                {deleteMediaModal.courseTitle}
+              </div>
+              <div className="flex justify-between items-center text-slate-300">
+                <span>目前已快取圖片：</span>
+                <span className="font-mono font-bold text-amber-400">
+                  {deleteMediaModal.cached} / {deleteMediaModal.total} 張
+                </span>
+              </div>
+            </div>
+
+            <div className="text-xs space-y-2 text-slate-300">
+              <p className="font-semibold text-amber-300">⚠️ 確認事項：</p>
+              <ul className="list-disc pl-4 space-y-1 text-slate-400">
+                <li>僅釋放本課程已下載之離線圖庫快取空間。</li>
+                <li><span className="text-emerald-400 font-medium">絕不刪除</span> 您的任何學習進度、複習紀錄或測驗成績。</li>
+                <li><span className="text-emerald-400 font-medium">絕不刪除</span> 本機課程單字資料（仍可正常學習與查閱）。</li>
+                <li>若其他已下載課程共用相同單字圖片，共用圖片將自動完整保留。</li>
+              </ul>
+            </div>
+
+            <div className="flex items-center justify-end space-x-2 pt-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setDeleteMediaModal(null)}
+              >
+                取消
+              </Button>
+              <Button
+                size="sm"
+                variant="danger"
+                onClick={() => executeDeleteMedia(deleteMediaModal.courseId)}
+                className="bg-rose-600 hover:bg-rose-500 text-white font-bold"
+              >
+                確認刪除圖片包
               </Button>
             </div>
           </div>

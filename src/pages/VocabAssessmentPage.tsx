@@ -703,7 +703,7 @@ export const VocabAssessmentPage: React.FC = () => {
     const listening = Math.min(495, Math.round(predictedScore * 0.515 / 5) * 5);
     const reading = Math.max(100, predictedScore - listening);
 
-    // Call Live Gemini 3.6 Diagnostic
+    // Call Live Gemini AI Diagnostic
     try {
       const apiKey = await geminiService.getApiKey();
       if (apiKey) {
@@ -779,7 +779,7 @@ Return strict JSON:
         <div>
           <h2 className="text-2xl font-black text-slate-100">AI 多益自適應詞彙評測</h2>
           <p className="text-xs text-slate-400 mt-2 leading-relaxed max-w-xs mx-auto">
-            採用 <strong className="text-emerald-400">CAT 電腦自適應演算法</strong> ＋ <strong className="text-amber-400">Gemini 3.6-Flash 深度診斷</strong>，3 分鐘精準推算您的詞彙量與多益落點！
+            採用 <strong className="text-emerald-400">CAT 電腦自適應演算法</strong> ＋ <strong className="text-amber-400">Gemini AI 深度診斷</strong>，3 分鐘精準推算您的詞彙量與多益落點！
           </p>
         </div>
 
@@ -814,7 +814,7 @@ Return strict JSON:
           <div className="w-16 h-16 rounded-full border-4 border-emerald-500/20 border-t-emerald-400 animate-spin" />
           <Bot size={24} className="absolute inset-0 m-auto text-emerald-400 animate-pulse" />
         </div>
-        <h3 className="text-base font-black text-slate-100">Gemini 3.6-Flash 正在生成多益診斷報告...</h3>
+        <h3 className="text-base font-black text-slate-100">Gemini AI 正在生成多益診斷報告...</h3>
         <p className="text-xs text-slate-400">正在分析您的答題軌跡、詞彙等級與商務能力雷達...</p>
       </div>
     );
@@ -832,7 +832,7 @@ Return strict JSON:
               </div>
               <div>
                 <h3 className="text-base font-black text-slate-100">AI 多益自適應評測報告</h3>
-                <p className="text-[10px] text-slate-400">CAT 演算法 ＋ Gemini 3.6 綜合評定</p>
+                <p className="text-[10px] text-slate-400">CAT 演算法 ＋ Gemini AI 綜合評定</p>
               </div>
             </div>
             {aiReport.isAiLive && (

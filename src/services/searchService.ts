@@ -59,7 +59,7 @@ export const searchService = {
       try {
         // 1. Primary Source of Truth: lightweight pre-compiled catalog search-index.json
         try {
-          const res = await fetch(`${getBaseDataUrl('data/v1/search-index.json')}?t=${Date.now()}`);
+          const res = await fetch(getBaseDataUrl('data/v1/search-index.json'), { cache: 'no-cache' });
           if (res.ok) {
             const data: SearchIndexItem[] = await res.json();
             if (Array.isArray(data) && data.length > 0) {

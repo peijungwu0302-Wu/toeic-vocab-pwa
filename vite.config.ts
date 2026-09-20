@@ -53,6 +53,16 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 15 * 1024 * 1024,
         runtimeCaching: [
           {
+            urlPattern: ({ url }) => url.pathname === '/data/v1/search-index.json',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'toeic-search-index-v1',
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
             urlPattern: ({ url }) => url.pathname.startsWith('/data/v1/'),
             handler: 'StaleWhileRevalidate',
             options: {
@@ -73,9 +83,6 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'toeic-offline-media-v1',
-              expiration: {
-                maxAgeSeconds: 90 * 24 * 60 * 60 // 90 days (no arbitrary maxEntries cap to prevent silent LRU eviction of downloaded packs)
-              },
               cacheableResponse: {
                 statuses: [0, 200]
               }

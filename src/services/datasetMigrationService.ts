@@ -2,7 +2,7 @@ import { db } from '../db';
 import { courseRepository, type ValidatedCourseData } from '../repositories/courseRepository';
 
 export const CURRENT_DATASET_VERSION = 17;
-export const DATASET_RELEASE_TAG = 'v7.3.0-flagship-all-tiers-consolidated';
+export const DATASET_RELEASE_TAG = 'v17-master-syllabus';
 export const APP_RELEASE_VERSION = 'v1.3.4 (Rewind Peek & Front Gestures)';
 
 export interface DatasetDiagnostics {

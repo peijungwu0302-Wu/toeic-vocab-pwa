@@ -293,7 +293,7 @@ export const QuizPage: React.FC = () => {
                 <h3 className="text-sm font-black text-slate-100 flex items-center">
                   <span>🤖 AI 名師即時擬真出題</span>
                   <span className="ml-1.5 px-1.5 py-0.2 rounded text-[9px] bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/40">
-                    Gemini 3.6
+                    Gemini API
                   </span>
                 </h3>
                 <p className="text-[11px] text-slate-300">由 AI 即時生成多益題型風格長難句與原創干擾項</p>
@@ -473,7 +473,7 @@ export const QuizPage: React.FC = () => {
               第 {currentIdx + 1} / {questions.length} 題
             </span>
             <Badge variant={currentQ.isAiLive ? 'purple' : 'blue'}>
-              {currentQ.isAiLive ? '🤖 Gemini 3.6 AI 出題' : selectedMode === 'part5_mcq' ? 'Part 5 選擇' : selectedMode === 'cloze_fill' ? '克漏字' : selectedMode === 'listening' ? '聽力' : '字義'}
+              {currentQ.isAiLive ? '🤖 Gemini AI 出題' : selectedMode === 'part5_mcq' ? 'Part 5 選擇' : selectedMode === 'cloze_fill' ? '克漏字' : selectedMode === 'listening' ? '聽力' : '字義'}
             </Badge>
           </div>
 

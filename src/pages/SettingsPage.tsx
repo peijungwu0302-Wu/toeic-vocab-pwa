@@ -297,7 +297,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          Google AI Studio 提供<strong className="text-slate-200">免費調用額度</strong>。填入個人 API Key 可享受零等待 AI 造句批改與對話模擬，資料純存本機絕不外流。
+          Google AI Studio 提供<strong className="text-slate-200">免費調用額度</strong>。API Key 儲存於本機資料庫（IndexedDB）；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。
         </p>
 
         <div className="space-y-2 pt-1">
@@ -1336,7 +1336,7 @@ export const SettingsPage: React.FC = () => {
             <span>系統版本與題庫診斷面板</span>
           </h3>
           <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-teal-500/20 text-teal-300 border border-teal-500/40">
-            {diagnostics?.appVersion || 'v6.0.0'}
+            {diagnostics?.appVersion || '讀取中…'}
           </span>
         </div>
 
@@ -1344,11 +1344,13 @@ export const SettingsPage: React.FC = () => {
         <div className="grid grid-cols-2 gap-2 bg-slate-950/70 p-3 rounded-xl border border-slate-800 text-[11px]">
           <div>
             <span className="text-slate-500 block">📱 應用程式版本：</span>
-            <span className="font-bold text-slate-200">{diagnostics?.appVersion || 'v6.0.0'}</span>
+            <span className="font-bold text-slate-200">{diagnostics?.appVersion || '讀取中…'}</span>
           </div>
           <div>
-            <span className="text-slate-500 block">👑 題庫架構規格：</span>
-            <span className="font-bold text-emerald-400">{diagnostics?.datasetReleaseTag || 'v7.3.0-flagship'}</span>
+            <span className="text-slate-500 block">📚 題庫資料版本：</span>
+            <span className="font-bold text-emerald-400">
+              {diagnostics ? `Dataset v${diagnostics.indexedDbMigrationVersion}` : '讀取中…'}
+            </span>
           </div>
           <div className="pt-1.5 border-t border-slate-800/80">
             <span className="text-slate-500 block">💾 本機已快取單字：</span>
@@ -1380,7 +1382,7 @@ export const SettingsPage: React.FC = () => {
             </>
           ) : (
             <>
-              <span>🔄 立即刷新本機題庫至最新 v6.0.0 (保留學習進度)</span>
+              <span>🔄 立即刷新本機題庫至最新資料版本 (保留學習進度)</span>
             </>
           )}
         </Button>
