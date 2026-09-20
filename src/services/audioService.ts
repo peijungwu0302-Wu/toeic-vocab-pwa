@@ -22,10 +22,31 @@ class AudioService {
   }
 
   /**
+   * Best-effort configuration for iOS Safari to play learning audio even when
+   * the iPhone hardware silent switch is ON.
+   * Safely probes navigator.audioSession (WebKit iOS 16.4+) and sets type = 'playback'.
+   */
+  public configurePlaybackAudioSession(): boolean {
+    try {
+      if (typeof navigator !== 'undefined' && 'audioSession' in navigator) {
+        const navAudioSession = (navigator as unknown as { audioSession: { type: string } }).audioSession;
+        if (navAudioSession && navAudioSession.type !== 'playback') {
+          navAudioSession.type = 'playback';
+        }
+        return true;
+      }
+    } catch (e) {
+      console.warn('[AudioService] Failed to configure audioSession type to playback:', e);
+    }
+    return false;
+  }
+
+  /**
    * Must be called during a direct user touch/click gesture (e.g. "開始學習")
    * to unlock AudioContext on iOS Safari.
    */
   public async unlockAudio(): Promise<boolean> {
+    this.configurePlaybackAudioSession();
     if (this.isUnlocked) return true;
 
     try {
@@ -82,6 +103,7 @@ class AudioService {
       return false;
     }
 
+    this.configurePlaybackAudioSession();
     this.stopAll();
 
     const textToSpeak = params.headword.trim();
@@ -107,6 +129,8 @@ class AudioService {
   public async speakSentence(text: string, accent: 'US' | 'UK' = 'US'): Promise<boolean> {
     const cleanText = text.trim();
     if (!cleanText) return false;
+
+    this.configurePlaybackAudioSession();
 
     this.stopAll();
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Play,
@@ -52,8 +52,28 @@ export const QuizPage: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isAnswered, setIsAnswered] = useState<boolean>(false);
 
-  // Collapsible Answer Drawer State
+  // Collapsible Answer Drawer State & Gestures
   const [isDrawerExpanded, setIsDrawerExpanded] = useState<boolean>(false);
+  const drawerScrollRef = useRef<HTMLDivElement>(null);
+  const drawerTouchStartYRef = useRef<number>(0);
+
+  const handleDrawerTouchStart = (e: React.TouchEvent) => {
+    drawerTouchStartYRef.current = e.touches[0].clientY;
+  };
+
+  const handleDrawerTouchEnd = (e: React.TouchEvent) => {
+    const deltaY = e.changedTouches[0].clientY - drawerTouchStartYRef.current;
+    const scrollTop = drawerScrollRef.current?.scrollTop || 0;
+
+    // Swipe up to expand
+    if (deltaY < -40 && !isDrawerExpanded) {
+      setIsDrawerExpanded(true);
+    }
+    // Swipe down to collapse (only if scroll container is at top)
+    else if (deltaY > 40 && isDrawerExpanded && scrollTop <= 0) {
+      setIsDrawerExpanded(false);
+    }
+  };
 
   // Streak & Timer
   const [streak, setStreak] = useState<number>(0);
@@ -611,19 +631,40 @@ export const QuizPage: React.FC = () => {
 
       {/* 🌟 Post-Answer Collapsible Bottom Drawer (伸縮抽屜) */}
       {isAnswered && (
-        <div className={`shrink-0 space-y-2 pt-1 border-t border-slate-800 bg-slate-900/95 z-30 transition-all duration-300 ease-out ${
-          isDrawerExpanded ? 'max-h-[60dvh]' : 'max-h-[170px]'
-        } flex flex-col justify-between`}>
-          <div className="p-3 rounded-2xl bg-slate-850 border border-slate-700/80 text-xs space-y-2 shadow-lg overflow-y-auto flex-1">
-            {/* Header with Expand / Collapse Button */}
-            <div className="flex items-center justify-between text-[11px] font-bold">
+        <div
+          onTouchStart={handleDrawerTouchStart}
+          onTouchEnd={handleDrawerTouchEnd}
+          className={`shrink-0 space-y-2 pt-1 border-t border-slate-800 bg-slate-900/95 z-30 transition-all duration-300 ease-out ${
+            isDrawerExpanded ? 'max-h-[60dvh]' : 'max-h-[170px]'
+          } flex flex-col justify-between`}
+        >
+          {/* Top Grab Handle */}
+          <div
+            onClick={() => setIsDrawerExpanded(prev => !prev)}
+            className="w-full flex flex-col items-center pt-1 pb-0.5 cursor-pointer select-none active:opacity-70"
+          >
+            <div className="w-8 h-1 rounded-full bg-slate-600/70" />
+          </div>
+
+          <div
+            ref={drawerScrollRef}
+            className="p-3 rounded-2xl bg-slate-850 border border-slate-700/80 text-xs space-y-2 shadow-lg overflow-y-auto flex-1 overscroll-contain"
+          >
+            {/* Header with Expand / Collapse Button (entire header clickable) */}
+            <div
+              onClick={() => setIsDrawerExpanded(prev => !prev)}
+              className="flex items-center justify-between text-[11px] font-bold cursor-pointer select-none py-0.5 hover:opacity-90 transition-opacity"
+            >
               <span className="text-emerald-400">
                 正確答案：【{String.fromCharCode(65 + currentQ.correctIndex)}】{currentQ.correctAnswer}
               </span>
 
               <button
                 type="button"
-                onClick={() => setIsDrawerExpanded(prev => !prev)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsDrawerExpanded(prev => !prev);
+                }}
                 className="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-750 text-slate-300 text-[10px] font-bold flex items-center space-x-1 border border-slate-700"
               >
                 <span>{isDrawerExpanded ? '收合精簡' : '🔍 展開完整 ABCD 剖析'}</span>

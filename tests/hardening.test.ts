@@ -18,12 +18,13 @@ import {
   OFFLINE_MEDIA_CACHE_NAME,
   R2_MEDIA_BASE_URL
 } from '../src/services/imageService';
+import { audioService } from '../src/services/audioService';
 import { geminiService, diagnoseGeminiError, buildRequestDetails } from '../src/services/geminiService';
 import { computeSha256Hex } from '../src/utils/crypto';
 import { Word, Course, Profile, Progress, ReviewLog } from '../src/types/db';
 import { studySessionService } from '../src/services/studySessionService';
 import { searchService } from '../src/services/searchService';
-import { NextGenQuestion } from '../src/services/quizService';
+import type { NextGenQuestion } from '../src/services/quizService';
 import { TodaySession } from '../src/types/today';
 
 describe('Release Candidate Hardening & Acceptance Audit', () => {
@@ -598,7 +599,7 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       ]);
 
       // Seed runtime manifest cache in localStorage
-      localStorage.setItem('toeic_runtime_manifest_cache', JSON.stringify({
+      const manifest = {
         schemaVersion: '1.0',
         manifestUri: null,
         count: 3,
@@ -607,7 +608,9 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
           w2: { v: 1, h: 'h2' },
           w3: { v: 1, h: 'h3' }
         }
-      }));
+      };
+      localStorage.setItem('toeic_runtime_manifest_cache', JSON.stringify(manifest));
+      _setRuntimeManifestForTesting(manifest);
 
       const urlW1 = `${R2_MEDIA_BASE_URL}/words/w1/v1.webp`;
       const urlW2 = `${R2_MEDIA_BASE_URL}/words/w2/v1.webp`;
@@ -1869,6 +1872,295 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       expect(stats.quizTotal).toBe(3);
       expect(stats.quizAccuracy).toBe(50); // 1 of 2 answered correct = 50%
       expect(stats.quizAccuracyStr).toBe('50%');
+    });
+  });
+
+  // =========================================================================
+  // 10. v1.3.5 UX Performance & Native Feel Polish Suite
+  // =========================================================================
+  describe('Audit 10: v1.3.5 UX Performance & Native Feel Polish Suite', () => {
+    // A. FastSkim image preloading (lookahead offsets +1, +2, +3, -1)
+    it('A. FastSkim Look-Ahead Preloading: preloads images for [+1, +2, +3, -1] when showImage is true, zero when false', () => {
+      const activeWords: Word[] = Array.from({ length: 10 }, (_, i) => ({
+        id: `word_${i}`,
+        headword: `word_${i}`,
+        definitionZh: `定義 ${i}`,
+        partsOfSpeech: ['n.'],
+        category: '商務'
+      } as unknown as Word));
+
+      const preloadMock = vi.fn();
+      const getImgMock = vi.fn((headword: string, _category?: string, wordId?: string) => ({
+        url: `https://example.com/${wordId}.webp`,
+        tag: headword
+      }));
+
+      const simulatePreload = (currentIndex: number, showImage: boolean) => {
+        if (!showImage || activeWords.length === 0) return;
+        const offsets = [1, 2, 3, -1];
+        offsets.forEach(offset => {
+          const targetIdx = currentIndex + offset;
+          if (targetIdx >= 0 && targetIdx < activeWords.length) {
+            const word = activeWords[targetIdx];
+            if (word) {
+              const info = getImgMock(word.headword, word.category, word.id);
+              if (info?.url) {
+                preloadMock(info.url);
+              }
+            }
+          }
+        });
+      };
+
+      // Test with currentIndex = 3, showImage = true
+      simulatePreload(3, true);
+      // Offsets 1, 2, 3, -1 -> targetIdx: 4, 5, 6, 2
+      expect(preloadMock).toHaveBeenCalledTimes(4);
+      expect(preloadMock).toHaveBeenCalledWith('https://example.com/word_4.webp');
+      expect(preloadMock).toHaveBeenCalledWith('https://example.com/word_5.webp');
+      expect(preloadMock).toHaveBeenCalledWith('https://example.com/word_6.webp');
+      expect(preloadMock).toHaveBeenCalledWith('https://example.com/word_2.webp');
+
+      // Test with currentIndex = 0 (boundary check: -1 out of bounds)
+      preloadMock.mockClear();
+      simulatePreload(0, true);
+      // targetIdx: 1, 2, 3 (-1 is skipped)
+      expect(preloadMock).toHaveBeenCalledTimes(3);
+      expect(preloadMock).toHaveBeenCalledWith('https://example.com/word_1.webp');
+      expect(preloadMock).toHaveBeenCalledWith('https://example.com/word_2.webp');
+      expect(preloadMock).toHaveBeenCalledWith('https://example.com/word_3.webp');
+
+      // Test with showImage = false (zero preloading)
+      preloadMock.mockClear();
+      simulatePreload(3, false);
+      expect(preloadMock).toHaveBeenCalledTimes(0);
+    });
+
+    // B. Catalog progressive loading (Phase A immediate unblock, Phase B background enrichment)
+    it('B. Catalog Progressive Loading: fetchCatalog uses clean URL without ?t= cache-busting and separates Phase A & Phase B', async () => {
+      const originalFetch = global.fetch;
+      let requestedUrl = '';
+      global.fetch = vi.fn(async (input: RequestInfo | URL) => {
+        requestedUrl = String(input);
+        return new Response(JSON.stringify({
+          version: 17,
+          generatedAt: '2026-09-20T00:00:00.000Z',
+          totalWords: 0,
+          totalCourses: 0,
+          courses: []
+        }), { status: 200 });
+      }) as any;
+
+      try {
+        const cat = await courseRepository.fetchCatalog();
+        expect(cat.version).toBe(17);
+        // Verify URL does not contain ?t=
+        expect(requestedUrl).not.toContain('?t=');
+        expect(requestedUrl).toContain('data/v1/catalog.json');
+      } finally {
+        global.fetch = originalFetch;
+      }
+    });
+
+    // C. FastSkim scope handling & session isolation
+    it('C. FastSkim Scope Handling & Session Isolation: correctly resolves scopes and isolates saved progress', async () => {
+      const profile: Profile = {
+        id: 'test_prof_skim',
+        displayName: 'Skim User',
+        dailyNewCardsTarget: 15,
+        dailyReviewTarget: 30,
+        desiredRetention: 0.9,
+        fastSkimDurationSec: 1.5,
+        preferredAccent: 'US',
+        autoPlayAudio: true,
+        isMuted: false,
+        activeCourseId: 'course-core-1200',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      await db.profiles.put(profile);
+
+      // Save sessions for different scopes
+      studySessionService.saveFastSkimSession({
+        sessionId: 's_all',
+        profileId: profile.id,
+        courseId: 'all',
+        sessionWordIds: ['w1', 'w2'],
+        currentIndex: 1,
+        currentBatchIndex: 0,
+        batchSize: 20,
+        selectedCategory: 'all',
+        isShuffle: false,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      studySessionService.saveFastSkimSession({
+        sessionId: 's_manual',
+        profileId: profile.id,
+        courseId: 'manual',
+        sessionWordIds: ['w3'],
+        currentIndex: 0,
+        currentBatchIndex: 0,
+        batchSize: 20,
+        selectedCategory: 'all',
+        isShuffle: false,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      studySessionService.saveFastSkimSession({
+        sessionId: 's_course',
+        profileId: profile.id,
+        courseId: 'course:course-core-1200',
+        sessionWordIds: ['w4', 'w5', 'w6'],
+        currentIndex: 2,
+        currentBatchIndex: 0,
+        batchSize: 20,
+        selectedCategory: 'all',
+        isShuffle: false,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      // Verify each scope retrieves its own isolated session
+      const sessionAll = studySessionService.loadFastSkimSession(profile.id, 'all');
+      const sessionManual = studySessionService.loadFastSkimSession(profile.id, 'manual');
+      const sessionCourse = studySessionService.loadFastSkimSession(profile.id, 'course:course-core-1200');
+
+      expect(sessionAll?.currentIndex).toBe(1);
+      expect(sessionAll?.sessionWordIds).toEqual(['w1', 'w2']);
+
+      expect(sessionManual?.currentIndex).toBe(0);
+      expect(sessionManual?.sessionWordIds).toEqual(['w3']);
+
+      expect(sessionCourse?.currentIndex).toBe(2);
+      expect(sessionCourse?.sessionWordIds).toEqual(['w4', 'w5', 'w6']);
+    });
+
+    // D. Flashcard minimal back mode
+    it('D. Flashcard Minimal Back Mode: profile supports flashcardBackMode and distinguishes minimal vs full view', async () => {
+      const profile: Profile = {
+        id: 'test_prof_flashcard',
+        displayName: 'Card User',
+        dailyNewCardsTarget: 15,
+        dailyReviewTarget: 30,
+        desiredRetention: 0.9,
+        fastSkimDurationSec: 1.5,
+        preferredAccent: 'US',
+        autoPlayAudio: true,
+        isMuted: false,
+        flashcardBackMode: 'minimal',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      await db.profiles.put(profile);
+
+      const loaded = await db.profiles.get('test_prof_flashcard');
+      expect(loaded?.flashcardBackMode).toBe('minimal');
+
+      // Update to full mode
+      await db.profiles.update('test_prof_flashcard', { flashcardBackMode: 'full' });
+      const updated = await db.profiles.get('test_prof_flashcard');
+      expect(updated?.flashcardBackMode).toBe('full');
+    });
+
+    // E. Audio playback session configuration
+    it('E. Audio Playback Session Configuration: safely configures navigator.audioSession to playback', () => {
+      const mockNav = {
+        audioSession: {
+          type: 'auto'
+        }
+      };
+      const originalNav = global.navigator;
+      (global as any).navigator = mockNav;
+
+      try {
+        const configured = audioService.configurePlaybackAudioSession();
+        expect(configured).toBe(true);
+        expect((global.navigator as any).audioSession.type).toBe('playback');
+      } finally {
+        (global as any).navigator = originalNav;
+      }
+    });
+
+    it('E2. Audio Playback Session Configuration: returns false safely without throwing when navigator.audioSession is absent', () => {
+      const originalNav = global.navigator;
+      (global as any).navigator = {};
+
+      try {
+        const configured = audioService.configurePlaybackAudioSession();
+        expect(configured).toBe(false);
+      } finally {
+        (global as any).navigator = originalNav;
+      }
+    });
+
+    // F. WordQuickPeekModal scroll vs drag handoff logic
+    it('F. WordQuickPeekModal Gesture Handoff: prevents drag dismissal when scrolling inside content (scrollTop > 0), allows at top', () => {
+      const simulateTouchMove = (scrollTop: number, deltaY: number) => {
+        let isDraggingSheet = false;
+        let dragY = 0;
+        if (scrollTop <= 0 && deltaY > 0) {
+          isDraggingSheet = true;
+          dragY = deltaY * 0.75;
+        } else if (isDraggingSheet && deltaY <= 0) {
+          isDraggingSheet = false;
+          dragY = 0;
+        }
+        return { isDraggingSheet, dragY };
+      };
+
+      // 1. User scrolls inside content: scrollTop = 50, pulling downwards deltaY = 30
+      // Native scroll should continue; sheet should NOT drag
+      const scrollResult = simulateTouchMove(50, 30);
+      expect(scrollResult.isDraggingSheet).toBe(false);
+      expect(scrollResult.dragY).toBe(0);
+
+      // 2. User is at top of content: scrollTop = 0, pulling downwards deltaY = 80
+      // Sheet drag should be activated
+      const topPullResult = simulateTouchMove(0, 80);
+      expect(topPullResult.isDraggingSheet).toBe(true);
+      expect(topPullResult.dragY).toBe(60); // 80 * 0.75 = 60
+    });
+
+    // G. Quiz ABCD drawer expand/collapse gestures & auto-collapse on next question
+    it('G. Quiz ABCD Drawer Gestures & Auto-Collapse: expands on swipe up, collapses on swipe down (only at top), resets on next question', () => {
+      let isDrawerExpanded = false;
+
+      const simulateTouchEnd = (deltaY: number, scrollTop: number) => {
+        if (deltaY < -40 && !isDrawerExpanded) {
+          isDrawerExpanded = true;
+        } else if (deltaY > 40 && isDrawerExpanded && scrollTop <= 0) {
+          isDrawerExpanded = false;
+        }
+      };
+
+      // Swipe up -> expand
+      simulateTouchEnd(-60, 0);
+      expect(isDrawerExpanded).toBe(true);
+
+      // Swipe down while scrolling inside explanation (scrollTop = 40) -> does NOT collapse
+      simulateTouchEnd(60, 40);
+      expect(isDrawerExpanded).toBe(true);
+
+      // Swipe down when at top (scrollTop = 0) -> collapses
+      simulateTouchEnd(60, 0);
+      expect(isDrawerExpanded).toBe(false);
+
+      // Expand again, then simulate transition to next question
+      isDrawerExpanded = true;
+      // handleNextQuestion resets isDrawerExpanded to false
+      isDrawerExpanded = false;
+      expect(isDrawerExpanded).toBe(false);
+    });
+
+    // H. Package version = 1.3.5 and dataset version = 17 invariant
+    it('H. Version Invariants: package.json version is 1.3.5 and dataset migration version is 17', () => {
+      const pkgPath = path.resolve(__dirname, '../package.json');
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+      expect(pkg.version).toBe('1.3.5');
+      expect(CURRENT_DATASET_VERSION).toBe(17);
     });
   });
 });

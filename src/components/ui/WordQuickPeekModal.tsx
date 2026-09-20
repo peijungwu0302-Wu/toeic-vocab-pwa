@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Volume2, Star, Sparkles, X, BookOpen, Plus, Check, BookmarkCheck } from 'lucide-react';
-import { motion, PanInfo } from 'framer-motion';
+import { motion, useMotionValue, animate } from 'framer-motion';
 import { Word, Progress } from '../../types/db';
 import { audioService } from '../../services/audioService';
 import { progressRepository } from '../../repositories/progressRepository';
@@ -23,6 +23,85 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
   const { activeProfile } = useProfile();
   const [isStarred, setIsStarred] = useState(false);
   const [addedMessage, setAddedMessage] = useState(false);
+
+  const dragY = useMotionValue(0);
+  const contentScrollRef = useRef<HTMLDivElement>(null);
+  const grabberStartYRef = useRef(0);
+  const grabberStartTimeRef = useRef(0);
+  const isGrabberDraggingRef = useRef(false);
+
+  const contentStartYRef = useRef(0);
+  const contentStartTimeRef = useRef(0);
+  const isContentDraggingRef = useRef(false);
+
+  useEffect(() => {
+    dragY.set(0);
+  }, [word, isOpen, dragY]);
+
+  // Grabber / Header Touch Handlers (always drags sheet down)
+  const handleGrabberTouchStart = (e: React.TouchEvent) => {
+    grabberStartYRef.current = e.touches[0].clientY;
+    grabberStartTimeRef.current = Date.now();
+    isGrabberDraggingRef.current = true;
+  };
+
+  const handleGrabberTouchMove = (e: React.TouchEvent) => {
+    if (!isGrabberDraggingRef.current) return;
+    const delta = e.touches[0].clientY - grabberStartYRef.current;
+    if (delta > 0) {
+      dragY.set(delta);
+    }
+  };
+
+  const handleGrabberTouchEnd = (e: React.TouchEvent) => {
+    if (!isGrabberDraggingRef.current) return;
+    isGrabberDraggingRef.current = false;
+    const delta = e.changedTouches[0].clientY - grabberStartYRef.current;
+    const duration = (Date.now() - grabberStartTimeRef.current) / 1000;
+    const velocity = delta / (duration || 0.001);
+
+    if (delta > 70 || velocity > 300) {
+      onClose();
+    } else {
+      animate(dragY, 0, { type: 'spring', damping: 25, stiffness: 300 });
+    }
+  };
+
+  // Content Body Scroll-to-Drag Handoff
+  const handleContentTouchStart = (e: React.TouchEvent) => {
+    contentStartYRef.current = e.touches[0].clientY;
+    contentStartTimeRef.current = Date.now();
+    isContentDraggingRef.current = false;
+  };
+
+  const handleContentTouchMove = (e: React.TouchEvent) => {
+    const scrollTop = contentScrollRef.current?.scrollTop ?? 0;
+    const delta = e.touches[0].clientY - contentStartYRef.current;
+
+    // Only initiate drag when at the very top of content and pulling downwards
+    if (scrollTop <= 0 && delta > 0) {
+      isContentDraggingRef.current = true;
+      dragY.set(delta * 0.75); // Slight resistance
+    } else if (isContentDraggingRef.current && delta <= 0) {
+      isContentDraggingRef.current = false;
+      dragY.set(0);
+    }
+  };
+
+  const handleContentTouchEnd = (e: React.TouchEvent) => {
+    if (isContentDraggingRef.current) {
+      isContentDraggingRef.current = false;
+      const delta = e.changedTouches[0].clientY - contentStartYRef.current;
+      const duration = (Date.now() - contentStartTimeRef.current) / 1000;
+      const velocity = delta / (duration || 0.001);
+
+      if (delta > 70 || velocity > 300) {
+        onClose();
+      } else {
+        animate(dragY, 0, { type: 'spring', damping: 25, stiffness: 300 });
+      }
+    }
+  };
 
   useEffect(() => {
     if (word && activeProfile) {
@@ -66,24 +145,27 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in select-none cursor-pointer"
     >
       <motion.div
-        drag="y"
-        dragConstraints={{ top: 0, bottom: 0 }}
-        dragElastic={{ top: 0, bottom: 0.5 }}
-        onDragEnd={(_: unknown, info: PanInfo) => {
-          if (info.offset.y > 60 || info.velocity.y > 300) {
-            onClose();
-          }
-        }}
+        style={{ y: dragY }}
         className="w-full max-w-lg max-h-[82dvh] bg-slate-900 border border-slate-700/80 rounded-t-[32px] sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top iOS Grabber Bar with pull-down gesture affordance */}
-        <div className="w-full flex flex-col items-center pt-2.5 pb-1 cursor-grab active:cursor-grabbing">
+        <div
+          onTouchStart={handleGrabberTouchStart}
+          onTouchMove={handleGrabberTouchMove}
+          onTouchEnd={handleGrabberTouchEnd}
+          className="w-full flex flex-col items-center pt-2.5 pb-1 cursor-grab active:cursor-grabbing touch-none select-none"
+        >
           <div className="w-10 h-1.5 rounded-full bg-slate-500/80" />
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-2 border-b border-slate-800">
+        <div
+          onTouchStart={handleGrabberTouchStart}
+          onTouchMove={handleGrabberTouchMove}
+          onTouchEnd={handleGrabberTouchEnd}
+          className="flex items-center justify-between px-5 py-2 border-b border-slate-800 touch-none select-none"
+        >
           <div className="flex items-center space-x-2">
             <BookOpen size={16} className="text-emerald-400" />
             <span className="text-xs font-bold text-slate-300">多益關聯詞速查 (Word Peek)</span>
@@ -98,8 +180,14 @@ export const WordQuickPeekModal: React.FC<WordQuickPeekModalProps> = ({
           </button>
         </div>
 
-        {/* Content Body (Scrollable) */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4 text-slate-100">
+        {/* Content Body (Scrollable with scroll-to-drag handoff) */}
+        <div
+          ref={contentScrollRef}
+          onTouchStart={handleContentTouchStart}
+          onTouchMove={handleContentTouchMove}
+          onTouchEnd={handleContentTouchEnd}
+          className="flex-1 overflow-y-auto p-5 space-y-4 text-slate-100 overscroll-contain touch-pan-y"
+        >
           {/* Headword & Pronunciation (Click anywhere on word to play audio) */}
           <div className="flex items-start justify-between">
             <div

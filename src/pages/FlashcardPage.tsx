@@ -113,10 +113,13 @@ const formatWordFamilyItem = (raw: any): { head: string; zh: string; examTip?: s
 export const FlashcardPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { activeProfile } = useProfile();
+  const { activeProfile, updateProfile } = useProfile();
   const { syncState } = useSync();
   const { zoomIn, zoomOut, currentPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass } = useTypography();
   const { reviewStyle, setReviewStyle, handPreference, setHandPreference } = useReviewStyle();
+
+  const backMode = activeProfile?.flashcardBackMode || 'full';
+  const [showFullAnalysisTemp, setShowFullAnalysisTemp] = useState(false);
 
   const courseId = searchParams.get('courseId');
   const queueParam = searchParams.get('queue');
@@ -133,6 +136,10 @@ export const FlashcardPage: React.FC = () => {
   const [queue, setQueue] = useState<StudyItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [historyOffset, setHistoryOffset] = useState<number>(0);
+
+  useEffect(() => {
+    setShowFullAnalysisTemp(false);
+  }, [currentIndex, historyOffset]);
   const isViewingPrevious = historyOffset > 0;
   const activeCardFlippedRef = useRef<boolean>(false);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -1132,6 +1139,24 @@ export const FlashcardPage: React.FC = () => {
             <span>{handPreference === 'left' ? '🖐️ 左手' : '✋ 右手'}</span>
           </button>
 
+          {/* Backside Mode Toggle (Minimal vs Full) */}
+          <button
+            type="button"
+            onClick={() => {
+              const nextMode = backMode === 'minimal' ? 'full' : 'minimal';
+              updateProfile({ flashcardBackMode: nextMode });
+            }}
+            aria-label={backMode === 'minimal' ? '切換為完整解析模式' : '切換為極簡背面模式'}
+            className={`px-1.5 py-1 rounded-lg text-xs font-semibold transition-all flex items-center space-x-0.5 ${
+              backMode === 'minimal'
+                ? 'bg-purple-950/70 text-purple-300 border border-purple-700/60 hover:bg-purple-900/70'
+                : 'bg-slate-900/90 text-slate-400 border border-slate-700/70 hover:bg-slate-800'
+            }`}
+            title={backMode === 'minimal' ? '當前背面：⚡ 極簡模式（大圖＋單字＋例句，快速沉浸）' : '當前背面：📚 完整解析模式（考點＋搭配＋衍生詞全覽）'}
+          >
+            <span>{backMode === 'minimal' ? '⚡ 極簡' : '📚 詳解'}</span>
+          </button>
+
           {/* Star Button */}
           <button
             type="button"
@@ -1472,8 +1497,25 @@ export const FlashcardPage: React.FC = () => {
                     </div>
                   )}
 
-                  {/* 🎯 2. 多益考點與避坑提醒 (examFocus) */}
-                  {word.examFocus && (
+                  {/* Minimal Backside Expansion Toggle or Full Analysis */}
+                  {backMode === 'minimal' && !showFullAnalysisTemp ? (
+                    <div className="pt-2 text-center">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowFullAnalysisTemp(true);
+                        }}
+                        className="w-full py-2.5 px-3 rounded-2xl bg-slate-900/90 hover:bg-slate-850 border border-slate-700/80 text-emerald-400 text-xs font-bold flex items-center justify-center space-x-1.5 transition-colors cursor-pointer active:scale-98 shadow-sm"
+                      >
+                        <Sparkles size={13} className="text-amber-400" />
+                        <span>查看完整解析 ▾</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      {/* 🎯 2. 多益考點與避坑提醒 (examFocus) */}
+                      {word.examFocus && (
                     <div className="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-700/50 space-y-2 shadow-sm touch-pan-y select-none" style={{ touchAction: 'pan-y' }}>
                       <div className="text-indigo-300 font-bold" style={{ fontSize: `${Math.max(14, pixelMetrics.supportingPx + 1)}px` }}>
                         <span>🎯 多益核心考點：{word.examFocus.primaryBusinessSense}</span>
@@ -1868,7 +1910,25 @@ export const FlashcardPage: React.FC = () => {
                       )}
                     </div>
                   )}
-                </div>
+
+                  {/* Collapse button if temporarily expanded in minimal mode */}
+                  {backMode === 'minimal' && showFullAnalysisTemp && (
+                    <div className="pt-2 text-center">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowFullAnalysisTemp(false);
+                        }}
+                        className="w-full py-2 px-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 text-slate-400 text-xs font-medium flex items-center justify-center space-x-1 transition-colors"
+                      >
+                        <span>收起精簡解析 ▴</span>
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
               </div>
 
               {/* Downgrade '記錯了' option if pre-confidence was confident */}

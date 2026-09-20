@@ -12,6 +12,7 @@ export interface Profile {
   autoPlayAudio: boolean;
   isMuted: boolean;
   activeCourseId?: string | null;
+  flashcardBackMode?: 'minimal' | 'full';
   createdAt: string; // ISO UTC
   updatedAt: string; // ISO UTC
   cloudUserId?: string | null;
