@@ -46,8 +46,8 @@ export const FastSkimPage: React.FC = () => {
   const isStarredQueue = courseIdParam === 'starred' || starredParam === 'true';
   const isScopeAll = scopeParam === 'all' || courseIdParam === 'all';
 
-  // Resolved scope with clear priority and session isolation
-  const skimScope = isManualQueue
+  // Raw requested scope from URL / active profile
+  const requestedScope = isManualQueue
     ? 'manual'
     : isStarredQueue
     ? 'starred'
@@ -59,17 +59,34 @@ export const FastSkimPage: React.FC = () => {
     ? `course:${activeProfile.activeCourseId}`
     : 'all';
 
-  const currentScopeType: 'today' | 'all' | 'starred' | 'manual' | 'custom_course' = isManualQueue
-    ? 'manual'
-    : isStarredQueue
-    ? 'starred'
-    : isScopeAll
-    ? 'all'
-    : courseIdParam && activeProfile?.activeCourseId && courseIdParam === activeProfile.activeCourseId
-    ? 'today'
-    : courseIdParam
-    ? 'custom_course'
-    : 'today';
+  // Defensive validation: ensure requested course is actually downloaded, fallback to 'all'
+  const resolveEffectiveScope = useCallback(async (scope: string): Promise<string> => {
+    if (scope.startsWith('course:')) {
+      const targetCourseId = scope.slice('course:'.length);
+      const targetCourse = await courseRepository.getById(targetCourseId);
+      if (!targetCourse || !targetCourse.isDownloaded) {
+        return 'all';
+      }
+    }
+    return scope;
+  }, []);
+
+  // Effective scope state that dictates session storage key, content, and UI selector
+  const [effectiveScope, setEffectiveScope] = useState<string>(requestedScope);
+
+  const currentScopeType: 'today' | 'all' | 'starred' | 'manual' | 'custom_course' = (() => {
+    if (effectiveScope === 'manual') return 'manual';
+    if (effectiveScope === 'starred') return 'starred';
+    if (effectiveScope === 'all') return 'all';
+    if (effectiveScope.startsWith('course:')) {
+      const targetCourseId = effectiveScope.slice('course:'.length);
+      if (targetCourseId && activeProfile?.activeCourseId && targetCourseId === activeProfile.activeCourseId) {
+        return 'today';
+      }
+      return 'custom_course';
+    }
+    return 'all';
+  })();
 
   const handleScopeChange = (newScope: string) => {
     if (newScope === 'today') {
@@ -124,39 +141,87 @@ export const FastSkimPage: React.FC = () => {
     try {
       setIsLoading(true);
       const profileId = activeProfile.id;
+      const resolvedScope = await resolveEffectiveScope(requestedScope);
+      setEffectiveScope(resolvedScope);
 
       // 1. Check saved session in studySessionService unless forceFresh is requested
       if (!forceFresh) {
-        const saved = studySessionService.loadFastSkimSession(profileId, skimScope);
+        const saved = studySessionService.loadFastSkimSession(profileId, resolvedScope);
         if (saved && saved.sessionWordIds && saved.sessionWordIds.length > 0) {
-          const words = await db.words.where('id').anyOf(saved.sessionWordIds).toArray();
-          const wordMap = new Map(words.map(w => [w.id, w]));
-          const restored = saved.sessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
+          // If saved has allSessionWordIds, restore both full ordering and active batch deterministically
+          if (saved.allSessionWordIds && saved.allSessionWordIds.length > 0) {
+            const allWordsFromDb = await db.words.where('id').anyOf(saved.allSessionWordIds).toArray();
+            const wordMap = new Map(allWordsFromDb.map(w => [w.id, w]));
+            const restoredAll = saved.allSessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
+            const restoredActive = saved.sessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
 
-          if (restored.length > 0) {
-            setActiveWords(restored);
-            const safeIdx = Math.min(Math.max(0, saved.currentIndex), restored.length - 1);
-            setCurrentIndex(safeIdx);
-            setCurrentBatchIndex(saved.currentBatchIndex || 0);
-            setResumedNotice(`已為您恢復進度：第 ${safeIdx + 1} / ${restored.length} 詞 ↩️`);
-            setShowProgressPopover(true);
-            setShowRecapModal(false);
+            if (restoredAll.length > 0 && restoredActive.length > 0) {
+              setAllWords(restoredAll);
+              setActiveWords(restoredActive);
+              const safeIdx = Math.min(Math.max(0, saved.currentIndex), restoredActive.length - 1);
+              setCurrentIndex(safeIdx);
+              setCurrentBatchIndex(saved.currentBatchIndex || 0);
+              setResumedNotice(`已為您恢復進度：第 ${safeIdx + 1} / ${restoredActive.length} 詞 ↩️`);
+              setShowProgressPopover(true);
+              setShowRecapModal(false);
 
-            const cats = await courseRepository.getDownloadedCategories();
-            setAvailableCategories(cats);
-            return;
+              const cats = await courseRepository.getDownloadedCategories();
+              setAvailableCategories(cats);
+              return;
+            }
+          } else {
+            // Legacy session without allSessionWordIds: backward compatibility fallback
+            const words = await db.words.where('id').anyOf(saved.sessionWordIds).toArray();
+            const wordMap = new Map(words.map(w => [w.id, w]));
+            const restored = saved.sessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
+
+            if (restored.length > 0) {
+              // Populate full scope words for allWords so handleNextBatch won't be empty
+              let scopeWords: Word[] = [];
+              if (resolvedScope === 'starred') {
+                const starredItems = await progressRepository.getStarredWords(profileId);
+                scopeWords = starredItems.map(i => i.word);
+              } else if (resolvedScope === 'manual') {
+                scopeWords = await manualQueueService.getQueueWords(profileId);
+              } else if (resolvedScope.startsWith('course:')) {
+                const targetCourseId = resolvedScope.slice('course:'.length);
+                scopeWords = await courseRepository.getWordsForCourse(targetCourseId, {
+                  category: selectedCategory,
+                  shuffle: isShuffle
+                });
+              } else {
+                scopeWords = await courseRepository.getAllDownloadedWords({
+                  category: selectedCategory,
+                  shuffle: isShuffle
+                });
+              }
+
+              setAllWords(scopeWords.length > 0 ? scopeWords : restored);
+              setActiveWords(restored);
+              const safeIdx = Math.min(Math.max(0, saved.currentIndex), restored.length - 1);
+              setCurrentIndex(safeIdx);
+              setCurrentBatchIndex(saved.currentBatchIndex || 0);
+              setResumedNotice(`已為您恢復進度：第 ${safeIdx + 1} / ${restored.length} 詞 ↩️`);
+              setShowProgressPopover(true);
+              setShowRecapModal(false);
+
+              const cats = await courseRepository.getDownloadedCategories();
+              setAvailableCategories(cats);
+              return;
+            }
           }
         }
       }
 
+      // 2. Fresh session creation
       let loadedWords: Word[] = [];
-      if (skimScope === 'starred') {
+      if (resolvedScope === 'starred') {
         const starredItems = await progressRepository.getStarredWords(profileId);
         loadedWords = starredItems.map(i => i.word);
-      } else if (skimScope === 'manual') {
+      } else if (resolvedScope === 'manual') {
         loadedWords = await manualQueueService.getQueueWords(profileId);
-      } else if (skimScope.startsWith('course:')) {
-        const targetCourseId = skimScope.slice('course:'.length);
+      } else if (resolvedScope.startsWith('course:')) {
+        const targetCourseId = resolvedScope.slice('course:'.length);
         loadedWords = await courseRepository.getWordsForCourse(targetCourseId, {
           category: selectedCategory,
           shuffle: isShuffle
@@ -168,7 +233,7 @@ export const FastSkimPage: React.FC = () => {
           });
         }
       } else {
-        // skimScope === 'all'
+        // resolvedScope === 'all'
         loadedWords = await courseRepository.getAllDownloadedWords({
           category: selectedCategory,
           shuffle: isShuffle
@@ -177,9 +242,8 @@ export const FastSkimPage: React.FC = () => {
 
       setAllWords(loadedWords);
 
-      // Micro-session batching
-      const batchStart = currentBatchIndex * batchSize;
-      const initialBatch = batchSize >= 999 ? loadedWords : loadedWords.slice(batchStart, batchStart + batchSize);
+      // Micro-session batching: start at batch 0
+      const initialBatch = batchSize >= 999 ? loadedWords : loadedWords.slice(0, batchSize);
       setActiveWords(initialBatch);
       setCurrentIndex(0);
       setCurrentBatchIndex(0);
@@ -189,8 +253,9 @@ export const FastSkimPage: React.FC = () => {
         studySessionService.saveFastSkimSession({
           sessionId: `skim_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
           profileId: activeProfile.id,
-          courseId: skimScope,
+          courseId: resolvedScope,
           sessionWordIds: initialBatch.map(w => w.id),
+          allSessionWordIds: loadedWords.map(w => w.id),
           currentIndex: 0,
           currentBatchIndex: 0,
           batchSize,
@@ -208,7 +273,7 @@ export const FastSkimPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [skimScope, activeProfile, selectedCategory, isShuffle, batchSize, currentBatchIndex]);
+  }, [requestedScope, activeProfile, selectedCategory, isShuffle, batchSize, resolveEffectiveScope]);
 
   useEffect(() => {
     loadWords();
@@ -228,7 +293,7 @@ export const FastSkimPage: React.FC = () => {
   // Auto-save session progress
   useEffect(() => {
     if (activeWords.length > 0 && !isLoading && activeProfile) {
-      const existing = studySessionService.loadFastSkimSession(activeProfile.id, skimScope);
+      const existing = studySessionService.loadFastSkimSession(activeProfile.id, effectiveScope);
       if (existing) {
         studySessionService.saveFastSkimSession({
           ...existing,
@@ -238,7 +303,7 @@ export const FastSkimPage: React.FC = () => {
         });
       }
     }
-  }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, skimScope, activeProfile]);
+  }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, effectiveScope, activeProfile]);
 
   // Look-Ahead Preloading for FastSkim (P0)
   useEffect(() => {
@@ -265,21 +330,19 @@ export const FastSkimPage: React.FC = () => {
 
   const handleRestartFromBeginning = () => {
     if (activeProfile) {
-      studySessionService.clearFastSkimSession(activeProfile.id, skimScope);
+      studySessionService.clearFastSkimSession(activeProfile.id, effectiveScope);
     }
     setCurrentIndex(0);
+    setCurrentBatchIndex(0);
     setRemainingTime(durationSec);
     setResumedNotice(null);
     loadWords(true);
   };
 
   const handleBatchComplete = useCallback(() => {
-    if (activeProfile) {
-      studySessionService.clearFastSkimSession(activeProfile.id, skimScope);
-    }
     setIsPaused(true);
     setShowRecapModal(true);
-  }, [skimScope, activeProfile]);
+  }, []);
 
   const goToNext = useCallback(() => {
     if (activeWords.length === 0) return;
@@ -378,19 +441,35 @@ export const FastSkimPage: React.FC = () => {
   };
 
   const handleNextBatch = () => {
-    const nextStart = (currentBatchIndex + 1) * batchSize;
-    if (nextStart >= allWords.length) {
-      // Reached total end, restart from beginning
-      setCurrentBatchIndex(0);
-      setActiveWords(allWords.slice(0, batchSize));
-    } else {
-      setCurrentBatchIndex(prev => prev + 1);
-      setActiveWords(allWords.slice(nextStart, nextStart + batchSize));
-    }
+    if (allWords.length === 0) return;
+    const totalBatches = Math.ceil(allWords.length / batchSize) || 1;
+    const nextBatchIndex = (currentBatchIndex + 1) >= totalBatches ? 0 : currentBatchIndex + 1;
+    const nextStart = nextBatchIndex * batchSize;
+    const nextWords = batchSize >= 999 ? allWords : allWords.slice(nextStart, nextStart + batchSize);
+
+    setCurrentBatchIndex(nextBatchIndex);
+    setActiveWords(nextWords);
     setCurrentIndex(0);
     setRemainingTime(durationSec);
     setShowRecapModal(false);
     setIsPaused(false);
+
+    if (activeProfile && nextWords.length > 0) {
+      studySessionService.saveFastSkimSession({
+        sessionId: `skim_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        profileId: activeProfile.id,
+        courseId: effectiveScope,
+        sessionWordIds: nextWords.map(w => w.id),
+        allSessionWordIds: allWords.map(w => w.id),
+        currentIndex: 0,
+        currentBatchIndex: nextBatchIndex,
+        batchSize,
+        selectedCategory,
+        isShuffle,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+    }
   };
 
   const handleToggleStarWord = async (wordId: string) => {

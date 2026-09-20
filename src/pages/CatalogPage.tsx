@@ -37,6 +37,7 @@ export const CatalogPage: React.FC = () => {
   const navigate = useNavigate();
 
   const isMountedRef = useRef(true);
+  const loadGenerationRef = useRef(0);
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -87,6 +88,7 @@ export const CatalogPage: React.FC = () => {
   const [loadingWordsCourseId, setLoadingWordsCourseId] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
+    const generation = ++loadGenerationRef.current;
     try {
       setIsLoading(true);
       setErrorMessage(null);
@@ -97,7 +99,7 @@ export const CatalogPage: React.FC = () => {
         courseRepository.getAll()
       ]);
 
-      if (!isMountedRef.current) return;
+      if (!isMountedRef.current || generation !== loadGenerationRef.current) return;
 
       setCatalog(cat);
 
@@ -113,42 +115,50 @@ export const CatalogPage: React.FC = () => {
       // Phase B: Asynchronous Background Enrichment
       if (activeProfile) {
         const currentProfileId = activeProfile.id;
+        // Immediately clear old progressCountMap so Profile B never displays Profile A's old numbers
+        setProgressCountMap(new Map());
         setIsEnriching(true);
 
         (async () => {
           try {
             const studentProgress = await progressRepository.getAllForProfile(currentProfileId);
-            if (!isMountedRef.current || activeProfile?.id !== currentProfileId) return;
+            if (!isMountedRef.current || generation !== loadGenerationRef.current) return;
 
             const learnedWordIds = new Set(studentProgress.map(p => p.wordId));
-            const countMap = new Map<string, number>();
+            const downloadedCourses = localCourses.filter(c => c.isDownloaded);
 
-            for (const c of localCourses) {
-              if (c.isDownloaded) {
-                const courseWords = await courseRepository.getWordsForCourse(c.id);
-                const learnedCount = courseWords.filter(w => learnedWordIds.has(w.id)).length;
-                countMap.set(c.id, learnedCount);
-              }
+            // Progressive per-course enrichment for progress counts
+            for (const c of downloadedCourses) {
+              if (!isMountedRef.current || generation !== loadGenerationRef.current) return;
+              const courseWords = await courseRepository.getWordsForCourse(c.id);
+              if (!isMountedRef.current || generation !== loadGenerationRef.current) return;
+              const learnedCount = courseWords.filter(w => learnedWordIds.has(w.id)).length;
+
+              setProgressCountMap(prev => {
+                if (!isMountedRef.current || generation !== loadGenerationRef.current) return prev;
+                const next = new Map(prev);
+                next.set(c.id, learnedCount);
+                return next;
+              });
             }
 
-            if (!isMountedRef.current || activeProfile?.id !== currentProfileId) return;
-            setProgressCountMap(countMap);
+            // Progressive per-course enrichment for offline media statuses
+            for (const c of downloadedCourses) {
+              if (!isMountedRef.current || generation !== loadGenerationRef.current) return;
+              const status = await imageService.getCourseOfflineMediaStatus(c.id);
+              if (!isMountedRef.current || generation !== loadGenerationRef.current) return;
 
-            // Populate offline media statuses for downloaded courses
-            const statusMap = new Map<string, { total: number; cached: number; isFullyCached: boolean }>();
-            for (const c of localCourses) {
-              if (c.isDownloaded) {
-                const status = await imageService.getCourseOfflineMediaStatus(c.id);
-                statusMap.set(c.id, status);
-              }
+              setOfflineStatusMap(prev => {
+                if (!isMountedRef.current || generation !== loadGenerationRef.current) return prev;
+                const next = new Map(prev);
+                next.set(c.id, status);
+                return next;
+              });
             }
-
-            if (!isMountedRef.current || activeProfile?.id !== currentProfileId) return;
-            setOfflineStatusMap(statusMap);
           } catch (enrichErr) {
             console.warn('[CatalogPage] Background enrichment non-critical warning:', enrichErr);
           } finally {
-            if (isMountedRef.current) {
+            if (isMountedRef.current && generation === loadGenerationRef.current) {
               setIsEnriching(false);
             }
           }
@@ -156,7 +166,7 @@ export const CatalogPage: React.FC = () => {
       }
     } catch (err) {
       console.error('[CatalogPage] Load error:', err);
-      if (isMountedRef.current) {
+      if (isMountedRef.current && generation === loadGenerationRef.current) {
         setErrorMessage('無法載入課程清單，請確認網路連線或靜態檔案。');
         setIsLoading(false);
       }

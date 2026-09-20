@@ -23,6 +23,7 @@ export interface FastSkimSessionState {
   profileId: string;
   courseId: string;
   sessionWordIds: string[];
+  allSessionWordIds?: string[];
   currentIndex: number;
   currentBatchIndex: number;
   batchSize: number;

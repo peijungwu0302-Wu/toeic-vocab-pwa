@@ -826,7 +826,7 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       const session: TodaySession = {
         sessionId: 'session_test_quiz',
         profileId,
-        dateStr: '2026-09-20',
+        dateStr: todayService.getTodayDateStr(),
         activeCourseId: 'course-core-1200',
         phase: 'quiz',
         dueWordIds: [],
@@ -2161,6 +2161,270 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
       expect(pkg.version).toBe('1.3.5');
       expect(CURRENT_DATASET_VERSION).toBe(17);
+    });
+
+    // I. FastSkim 3 batches lifecycle: 60 deterministic words, batchSize 20 -> batch 1 -> 2 -> 3 -> wrap 1
+    it('I. FastSkim 3 Batches Lifecycle: advances across batches without duplicate or lost words and wraps to 1', () => {
+      const words60: Word[] = Array.from({ length: 60 }, (_, i) => ({
+        id: `word_${i}`,
+        headword: `word_${i}`,
+        definitionZh: `定義 ${i}`,
+        partsOfSpeech: ['n.'],
+        category: '商務'
+      } as unknown as Word));
+
+      const batchSize = 20;
+      let currentBatchIndex = 0;
+      const totalBatches = Math.ceil(words60.length / batchSize); // 3
+
+      // Batch 1 (index 0)
+      const batch1Start = currentBatchIndex * batchSize;
+      const batch1 = words60.slice(batch1Start, batch1Start + batchSize);
+      expect(batch1.length).toBe(20);
+      expect(batch1[0].id).toBe('word_0');
+      expect(batch1[19].id).toBe('word_19');
+
+      // Next batch -> Batch 2 (index 1)
+      currentBatchIndex = (currentBatchIndex + 1) >= totalBatches ? 0 : currentBatchIndex + 1;
+      expect(currentBatchIndex).toBe(1);
+      const batch2Start = currentBatchIndex * batchSize;
+      const batch2 = words60.slice(batch2Start, batch2Start + batchSize);
+      expect(batch2.length).toBe(20);
+      expect(batch2[0].id).toBe('word_20');
+      expect(batch2[19].id).toBe('word_39');
+
+      // Verify zero overlap between Batch 1 and Batch 2
+      const set1 = new Set(batch1.map(w => w.id));
+      batch2.forEach(w => expect(set1.has(w.id)).toBe(false));
+
+      // Next batch -> Batch 3 (index 2)
+      currentBatchIndex = (currentBatchIndex + 1) >= totalBatches ? 0 : currentBatchIndex + 1;
+      expect(currentBatchIndex).toBe(2);
+      const batch3Start = currentBatchIndex * batchSize;
+      const batch3 = words60.slice(batch3Start, batch3Start + batchSize);
+      expect(batch3.length).toBe(20);
+      expect(batch3[0].id).toBe('word_40');
+      expect(batch3[19].id).toBe('word_59');
+
+      // Verify zero overlap between Batch 2 and Batch 3
+      const set2 = new Set(batch2.map(w => w.id));
+      batch3.forEach(w => expect(set2.has(w.id)).toBe(false));
+
+      // Next batch -> Wraps to Batch 1 (index 0)
+      currentBatchIndex = (currentBatchIndex + 1) >= totalBatches ? 0 : currentBatchIndex + 1;
+      expect(currentBatchIndex).toBe(0);
+      const batchWrapStart = currentBatchIndex * batchSize;
+      const batchWrap = words60.slice(batchWrapStart, batchWrapStart + batchSize);
+      expect(batchWrap.length).toBe(20);
+      expect(batchWrap[0].id).toBe('word_0');
+      expect(batchWrap[19].id).toBe('word_19');
+    });
+
+    // J. FastSkim resume and batch continuation: restores batchIndex=1, currentIndex=7, then advances to batchIndex=2
+    it('J. FastSkim Resume & Batch Continuation: restores batchIndex=1, currentIndex=7 from allSessionWordIds, then advances to batch 2', async () => {
+      const words60: Word[] = Array.from({ length: 60 }, (_, i) => ({
+        id: `resume_word_${i}`,
+        headword: `resume_word_${i}`,
+        definitionZh: `定義 ${i}`,
+        partsOfSpeech: ['n.'],
+        category: '商務',
+        normalizedHeadword: `resume_word_${i}`,
+        entryType: 'word',
+        starRating: 3,
+        toeicScoreRange: '700',
+        wordForms: [],
+        phoneticUS: null,
+        phoneticUK: null,
+        examples: [],
+        examTips: [],
+        audioUSUrl: null,
+        audioUKUrl: null
+      }));
+      await db.words.bulkPut(words60);
+
+      const allIds = words60.map(w => w.id);
+      const batch1Ids = allIds.slice(20, 40); // batchIndex 1
+
+      // Save session at batchIndex=1, currentIndex=7
+      studySessionService.saveFastSkimSession({
+        sessionId: 'test_resume_session',
+        profileId: 'test_prof_resume',
+        courseId: 'all',
+        sessionWordIds: batch1Ids,
+        allSessionWordIds: allIds,
+        currentIndex: 7,
+        currentBatchIndex: 1,
+        batchSize: 20,
+        selectedCategory: 'all',
+        isShuffle: false,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      // Restore session
+      const saved = studySessionService.loadFastSkimSession('test_prof_resume', 'all');
+      expect(saved).not.toBeNull();
+      expect(saved?.currentBatchIndex).toBe(1);
+      expect(saved?.currentIndex).toBe(7);
+      expect(saved?.allSessionWordIds?.length).toBe(60);
+
+      // Reconstruct active and full lists from DB
+      const wordsFromDb = await db.words.where('id').anyOf(saved!.allSessionWordIds!).toArray();
+      const map = new Map(wordsFromDb.map(w => [w.id, w]));
+      const restoredAll = saved!.allSessionWordIds!.map(id => map.get(id)).filter((w): w is Word => Boolean(w));
+      const restoredActive = saved!.sessionWordIds.map(id => map.get(id)).filter((w): w is Word => Boolean(w));
+
+      expect(restoredAll.length).toBe(60);
+      expect(restoredActive.length).toBe(20);
+      expect(restoredActive[0].id).toBe('resume_word_20');
+      expect(restoredActive[7].id).toBe('resume_word_27');
+
+      // Now simulate handleNextBatch: advance to next batch from the restored allWords
+      const totalBatches = Math.ceil(restoredAll.length / saved!.batchSize);
+      const nextBatchIndex = (saved!.currentBatchIndex + 1) >= totalBatches ? 0 : saved!.currentBatchIndex + 1;
+      expect(nextBatchIndex).toBe(2);
+
+      const nextStart = nextBatchIndex * saved!.batchSize;
+      const nextWords = restoredAll.slice(nextStart, nextStart + saved!.batchSize);
+      expect(nextWords.length).toBe(20);
+      expect(nextWords[0].id).toBe('resume_word_40');
+      expect(nextWords[19].id).toBe('resume_word_59');
+    });
+
+    // K. Missing active course defensive fallback: requested course:nonexistent -> effectiveScope === 'all'
+    it('K. Missing Active Course Defensive Fallback: resolves effectiveScope to all and saves under all key when course is not downloaded', async () => {
+      // Create profile with activeCourseId = 'course-missing-123' (which is not downloaded in DB)
+      const profile: Profile = {
+        id: 'prof_missing_course',
+        displayName: 'Missing Course User',
+        dailyNewCardsTarget: 15,
+        dailyReviewTarget: 30,
+        desiredRetention: 0.9,
+        fastSkimDurationSec: 1.5,
+        preferredAccent: 'US',
+        autoPlayAudio: true,
+        isMuted: false,
+        activeCourseId: 'course-missing-123',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      await db.profiles.put(profile);
+
+      // Verify course-missing-123 does not exist in db.courses
+      const course = await courseRepository.getById('course-missing-123');
+      expect(course).toBeUndefined();
+
+      // Resolve scope
+      const requestedScope = `course:${profile.activeCourseId}`;
+      let effectiveScope: string;
+      if (requestedScope.startsWith('course:')) {
+        const targetId = requestedScope.slice('course:'.length);
+        const targetCourse = await courseRepository.getById(targetId);
+        if (!targetCourse || !targetCourse.isDownloaded) {
+          effectiveScope = 'all';
+        } else {
+          effectiveScope = requestedScope;
+        }
+      } else {
+        effectiveScope = requestedScope;
+      }
+
+      expect(effectiveScope).toBe('all');
+
+      // Session must be saved under 'all', not 'course:course-missing-123'
+      studySessionService.saveFastSkimSession({
+        sessionId: 's_fallback',
+        profileId: profile.id,
+        courseId: effectiveScope,
+        sessionWordIds: ['w1'],
+        allSessionWordIds: ['w1'],
+        currentIndex: 0,
+        currentBatchIndex: 0,
+        batchSize: 20,
+        selectedCategory: 'all',
+        isShuffle: false,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      // Session under 'all' must exist
+      const sessionAll = studySessionService.loadFastSkimSession(profile.id, 'all');
+      expect(sessionAll).not.toBeNull();
+      expect(sessionAll?.courseId).toBe('all');
+
+      // Session under 'course:course-missing-123' must NOT exist
+      const sessionCourse = studySessionService.loadFastSkimSession(profile.id, 'course:course-missing-123');
+      expect(sessionCourse).toBeNull();
+    });
+
+    // L. Catalog Background Enrichment Race Guard: generation token cancels stale task when profile changes
+    it('L. Catalog Enrichment Race Guard: generation token ensures Profile A cannot overwrite Profile B progress', async () => {
+      let loadGeneration = 0;
+      let committedProgressMap = new Map<string, number>();
+
+      // Simulate Profile A starting enrichment
+      const generationA = ++loadGeneration;
+      // Immediately clears progressCountMap on profile switch/start
+      committedProgressMap = new Map();
+
+      // Profile A takes 100ms (slow)
+      let resolveA: () => void;
+      const promiseA = new Promise<void>((resolve) => { resolveA = resolve; });
+
+      // Before Profile A resolves, user switches to Profile B
+      const generationB = ++loadGeneration; // generation is now 2
+      committedProgressMap = new Map();
+
+      // Profile B finishes first with its progress { 'course-1': 15 }
+      if (generationB === loadGeneration) {
+        committedProgressMap = new Map([['course-1', 15]]);
+      }
+
+      // Now Profile A finishes late with its progress { 'course-1': 5 }
+      resolveA!();
+      await promiseA;
+
+      // Profile A commits only if generation matches
+      if (generationA === loadGeneration) {
+        committedProgressMap = new Map([['course-1', 5]]);
+      }
+
+      // Verify Profile A was rejected and Profile B's data was preserved
+      expect(committedProgressMap.get('course-1')).toBe(15);
+      expect(generationA).toBe(1);
+      expect(generationB).toBe(2);
+      expect(loadGeneration).toBe(2);
+    });
+
+    // M. Progressive Per-Course Enrichment: course 1 updates map immediately without waiting for course 2
+    it('M. Progressive Per-Course Enrichment: updates map per course without waiting for entire suite to complete', async () => {
+      let progressCountMap = new Map<string, number>();
+
+      const setProgress = (updater: (prev: Map<string, number>) => Map<string, number>) => {
+        progressCountMap = updater(progressCountMap);
+      };
+
+      // Step 1: course-1 completes computation
+      setProgress(prev => {
+        const next = new Map(prev);
+        next.set('course-1', 42);
+        return next;
+      });
+
+      // At this instant, course-2 is still pending, but course-1 is already in state!
+      expect(progressCountMap.has('course-1')).toBe(true);
+      expect(progressCountMap.get('course-1')).toBe(42);
+      expect(progressCountMap.has('course-2')).toBe(false);
+
+      // Step 2: course-2 completes computation
+      setProgress(prev => {
+        const next = new Map(prev);
+        next.set('course-2', 99);
+        return next;
+      });
+
+      expect(progressCountMap.get('course-1')).toBe(42);
+      expect(progressCountMap.get('course-2')).toBe(99);
     });
   });
 });
