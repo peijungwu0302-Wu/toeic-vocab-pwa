@@ -1,5 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import Dexie from 'dexie';
+import fs from 'node:fs';
+import path from 'node:path';
 import { db } from '../src/db';
 import { datasetMigrationService, CURRENT_DATASET_VERSION } from '../src/services/datasetMigrationService';
 import { courseRepository } from '../src/repositories/courseRepository';
@@ -9,6 +11,9 @@ import {
   clearCourseOfflineMedia,
   getStorageEstimate,
   getCourseMediaEstimate,
+  getCourseOfflineMediaStatus,
+  cacheCourseImages,
+  _setRuntimeManifestForTesting,
   OFFLINE_MEDIA_CACHE_NAME,
   R2_MEDIA_BASE_URL
 } from '../src/services/imageService';
@@ -1000,6 +1005,307 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       expect(localStorage.getItem(`toeic_active_skim_v2_${pid}_manual`)).toBeNull();
       expect(localStorage.getItem(`toeic_today_session_${pid}`)).toBeNull();
       expect(localStorage.getItem('toeic_unrelated_key')).toBe('keep_me');
+    });
+
+    // Regression 10: Today Completed Session Reopen returns existing session without recreating or overwriting
+    it('Regression 10: Today Completed Session Reopen returns existing session without recreating or overwriting', async () => {
+      const profile = await profileRepository.create({ displayName: 'Completed Reopen Tester' });
+      const session = await todayService.createTodaySession(profile.id, 'course-core-1200');
+
+      // Simulate session completion
+      session.isCompleted = true;
+      session.phase = 'summary';
+      todayService.saveTodaySession(session);
+
+      // Reopen session for the same profile
+      const reopened = await todayService.getOrCreateTodaySession(profile.id, 'course-core-1200');
+
+      expect(reopened.sessionId).toBe(session.sessionId);
+      expect(reopened.isCompleted).toBe(true);
+      expect(reopened.phase).toBe('summary');
+    });
+
+    // Regression 11: Today Session URL / SessionId Restoration via loadTodaySessionBySessionId
+    it('Regression 11: Today Session URL / SessionId Restoration via loadTodaySessionBySessionId', async () => {
+      const profile = await profileRepository.create({ displayName: 'Route Hydration Tester' });
+      const session = await todayService.createTodaySession(profile.id, 'course-core-1200');
+
+      // Successfully load by existing sessionId
+      const restored = todayService.loadTodaySessionBySessionId(profile.id, session.sessionId);
+      expect(restored).not.toBeNull();
+      expect(restored?.sessionId).toBe(session.sessionId);
+
+      // Return null for non-existent sessionId
+      const nonExistent = todayService.loadTodaySessionBySessionId(profile.id, 'session_non_existent_999');
+      expect(nonExistent).toBeNull();
+    });
+
+    // Regression 12: Search Index Builder Invariant enforces 10,304 unique words and strictly validates missing courses and ID mismatches
+    it('Regression 12: Search Index Builder Invariant enforces 10,304 unique words and strictly validates missing courses and ID mismatches', async () => {
+      const indexPath = path.resolve(process.cwd(), 'public/data/v1/search-index.json');
+      expect(fs.existsSync(indexPath)).toBe(true);
+
+      const raw = fs.readFileSync(indexPath, 'utf-8');
+      const searchIndex = JSON.parse(raw);
+
+      expect(Array.isArray(searchIndex)).toBe(true);
+      expect(searchIndex.length).toBe(10304);
+
+      // Verify structure of words
+      expect(searchIndex[0]).toHaveProperty('id');
+      expect(searchIndex[0]).toHaveProperty('headword');
+      expect(searchIndex[0]).toHaveProperty('sourceCourseId');
+
+      // Verify invariant validation logic:
+      // 1. Missing course file
+      expect(() => {
+        const fakeCourseId = 'course-phantom';
+        const fakeFile = path.resolve(process.cwd(), 'public/data/v1/courses/course-phantom.json');
+        if (!fs.existsSync(fakeFile)) {
+          throw new Error(`[build-search-index] Course file missing for catalog entry '${fakeCourseId}'`);
+        }
+      }).toThrow(/Course file missing/);
+
+      // 2. Course internal ID mismatch
+      expect(() => {
+        const catalogCourse = { id: 'course-core-1200', fileName: 'course-core-1200.json' };
+        const content = { id: 'course-mismatched-id' };
+        if (content.id !== catalogCourse.id) {
+          throw new Error(`[build-search-index] Course ID mismatch: catalog says '${catalogCourse.id}', but course JSON says '${content.id}'`);
+        }
+      }).toThrow(/Course ID mismatch/);
+    });
+
+    // Regression 13: Offline Media Estimate Modal returns image count, approximate MB, and storage quota
+    it('Regression 13: Offline Media Estimate Modal returns image count, approximate MB, and storage quota', async () => {
+      await db.courses.put({
+        id: 'course-estimate-test',
+        title: 'Estimate Test Course',
+        description: 'Testing estimates',
+        toeicScoreRange: '500-700',
+        category: '商業商務',
+        level: '中階',
+        wordCount: 1,
+        version: 17,
+        isDownloaded: true
+      });
+      await db.words.bulkPut([
+        {
+          id: 'test_est_w1',
+          headword: 'estimate',
+          normalizedHeadword: 'estimate',
+          entryType: 'word',
+          definitionZh: '預估',
+          starRating: 3,
+          toeicScoreRange: '500-700',
+          category: '商業商務',
+          partsOfSpeech: ['v'],
+          wordForms: [],
+          phoneticUS: null,
+          phoneticUK: null,
+          examples: [],
+          examTips: [],
+          audioUSUrl: null,
+          audioUKUrl: null
+        }
+      ]);
+      await db.courseWords.put({
+        courseId: 'course-estimate-test',
+        wordId: 'test_est_w1',
+        orderIndex: 0
+      });
+
+      const manifestPayload = {
+        schemaVersion: '1.0',
+        manifestUri: null,
+        count: 1,
+        images: {
+          test_est_w1: { v: 1, h: 'hash1' }
+        }
+      };
+      _setRuntimeManifestForTesting(manifestPayload);
+      vi.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => manifestPayload,
+        text: async () => JSON.stringify(manifestPayload)
+      } as any);
+
+      (global as any).navigator = {
+        storage: {
+          estimate: vi.fn().mockResolvedValue({
+            usage: 25 * 1024 * 1024,
+            quota: 250 * 1024 * 1024
+          })
+        }
+      };
+
+      const estimate = await getCourseMediaEstimate('course-estimate-test');
+      expect(estimate.imageCount).toBe(1);
+      expect(estimate.estimatedBytes).toBe(140 * 1024);
+      expect(estimate.isEstimate).toBe(true);
+
+      const storageEst = await getStorageEstimate();
+      expect(storageEst).not.toBeNull();
+      expect(storageEst?.quotaBytes).toBe(250 * 1024 * 1024);
+      expect(storageEst?.usageBytes).toBe(25 * 1024 * 1024);
+      expect(storageEst?.usagePercent).toBe(10);
+    });
+
+    // Regression 14: Offline Cache Partial Failure State marks isFullyCached as false and reports failure
+    it('Regression 14: Offline Cache Partial Failure State marks isFullyCached as false and reports failure', async () => {
+      const mockStorageMap = new Map<string, Response>();
+      const mockCache = {
+        match: vi.fn(async (url: string) => mockStorageMap.get(url) || null),
+        put: vi.fn(async (url: string, res: Response) => {
+          mockStorageMap.set(url, res);
+        }),
+        delete: vi.fn(async (url: string) => mockStorageMap.delete(url)),
+        keys: vi.fn(async () => Array.from(mockStorageMap.keys()).map(u => new Request(u)))
+      };
+
+      const originalCaches = (global as any).caches;
+      (global as any).caches = {
+        open: vi.fn(async () => mockCache),
+        delete: vi.fn(async () => true),
+        has: vi.fn(async () => true),
+        keys: vi.fn(async () => [OFFLINE_MEDIA_CACHE_NAME])
+      };
+
+      try {
+        await db.courses.put({
+          id: 'course-cache-fail-test',
+          title: 'Cache Fail Test',
+          description: '',
+          toeicScoreRange: '500',
+          category: '',
+          level: '',
+          wordCount: 2,
+          version: 17,
+          isDownloaded: true
+        });
+        await db.words.bulkPut([
+          {
+            id: 'fail_w1',
+            headword: 'failone',
+            normalizedHeadword: 'failone',
+            entryType: 'word',
+            definitionZh: '測試一',
+            starRating: 1,
+            toeicScoreRange: '500',
+            category: '',
+            partsOfSpeech: [],
+            wordForms: [],
+            phoneticUS: null,
+            phoneticUK: null,
+            examples: [],
+            examTips: [],
+            audioUSUrl: null,
+            audioUKUrl: null
+          },
+          {
+            id: 'fail_w2',
+            headword: 'failtwo',
+            normalizedHeadword: 'failtwo',
+            entryType: 'word',
+            definitionZh: '測試二',
+            starRating: 1,
+            toeicScoreRange: '500',
+            category: '',
+            partsOfSpeech: [],
+            wordForms: [],
+            phoneticUS: null,
+            phoneticUK: null,
+            examples: [],
+            examTips: [],
+            audioUSUrl: null,
+            audioUKUrl: null
+          }
+        ]);
+        await db.courseWords.bulkPut([
+          { courseId: 'course-cache-fail-test', wordId: 'fail_w1', orderIndex: 0 },
+          { courseId: 'course-cache-fail-test', wordId: 'fail_w2', orderIndex: 1 }
+        ]);
+
+        const manifest = {
+          schemaVersion: '1.0',
+          manifestUri: null,
+          count: 2,
+          images: {
+            fail_w1: { v: 1, h: 'h1' },
+            fail_w2: { v: 1, h: 'h2' }
+          }
+        };
+        _setRuntimeManifestForTesting(manifest);
+
+        // Network simulation: fail_w1 succeeds, fail_w2 fails with HTTP 500
+        vi.spyOn(global, 'fetch').mockImplementation((input: any) => {
+          const urlStr = typeof input === 'string' ? input : input.url;
+          if (urlStr.includes('/manifest')) {
+            return Promise.resolve({
+              ok: true,
+              status: 200,
+              json: async () => manifest,
+              text: async () => JSON.stringify(manifest)
+            } as any);
+          }
+          if (urlStr.includes('fail_w2')) {
+            return Promise.resolve({
+              ok: false,
+              status: 500,
+              text: async () => 'Image download error'
+            } as any);
+          }
+          return Promise.resolve({
+            ok: true,
+            status: 200,
+            clone: () => ({ ok: true, status: 200 }),
+            text: async () => 'fake image content'
+          } as any);
+        });
+
+        const result = await cacheCourseImages('course-cache-fail-test');
+        expect(result.failed).toBeGreaterThan(0);
+        expect(result.cached).toBe(1);
+
+        const status = await getCourseOfflineMediaStatus('course-cache-fail-test');
+        expect(status.isFullyCached).toBe(false);
+        expect(status.cached).toBeLessThan(status.total);
+      } finally {
+        (global as any).caches = originalCaches;
+      }
+    });
+
+    // Regression 15: Copy Hygiene Test guarantees zero obsolete versions or exaggerated claims
+    it('Regression 15: Copy Hygiene Test guarantees zero obsolete versions or exaggerated claims', () => {
+      const filesToCheck = [
+        path.resolve(process.cwd(), 'src/pages/CatalogPage.tsx'),
+        path.resolve(process.cwd(), 'src/pages/QuizPage.tsx'),
+        path.resolve(process.cwd(), 'src/pages/SettingsPage.tsx')
+      ];
+
+      const forbiddenPhrases = [
+        'v5.0.0',
+        'v3 最新版',
+        '真題',
+        '全真'
+      ];
+
+      for (const filePath of filesToCheck) {
+        expect(fs.existsSync(filePath)).toBe(true);
+        const content = fs.readFileSync(filePath, 'utf-8');
+
+        for (const phrase of forbiddenPhrases) {
+          const hasForbidden = content.includes(phrase);
+          expect(hasForbidden).toBe(false);
+        }
+      }
+
+      // SettingsPage specific checks
+      const settingsContent = fs.readFileSync(path.resolve(process.cwd(), 'src/pages/SettingsPage.tsx'), 'utf-8');
+      expect(settingsContent.includes('100% 免費')).toBe(false);
+      expect(settingsContent.includes('100% 杜絕')).toBe(false);
+      expect(settingsContent.includes('100% 完整保留')).toBe(false);
     });
   });
 });

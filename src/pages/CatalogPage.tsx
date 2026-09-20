@@ -27,6 +27,7 @@ import { CourseSummary, DatasetCatalog } from '../types/vocab';
 import { Course, Word } from '../types/db';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
+import { Modal } from '../components/ui/Modal';
 import { audioService } from '../services/audioService';
 import { imageService } from '../services/imageService';
 
@@ -49,6 +50,19 @@ export const CatalogPage: React.FC = () => {
   const [cachingImagesCourseId, setCachingImagesCourseId] = useState<string | null>(null);
   const [cachingProgress, setCachingProgress] = useState<{ current: number; total: number } | null>(null);
   const [cachingSuccessMsg, setCachingSuccessMsg] = useState<string | null>(null);
+
+  // Media estimate confirmation modal
+  const [mediaEstimateModal, setMediaEstimateModal] = useState<{
+    courseId: string;
+    courseTitle: string;
+    imageCount: number;
+    estimatedBytes: number;
+    storageEstimate: { usageBytes: number; quotaBytes: number; usagePercent: number } | null;
+  } | null>(null);
+  const [isPreparingEstimate, setIsPreparingEstimate] = useState<string | null>(null);
+
+  // Offline status map for downloaded courses: courseId -> { total, cached, isFullyCached }
+  const [offlineStatusMap, setOfflineStatusMap] = useState<Map<string, { total: number; cached: number; isFullyCached: boolean }>>(new Map());
 
   // Expanded Unit Words state
   const [expandedCourseId, setExpandedCourseId] = useState<string | null>(null);
@@ -86,6 +100,16 @@ export const CatalogPage: React.FC = () => {
           }
         }
         setProgressCountMap(countMap);
+
+        // 4. Populate offline media statuses for downloaded courses
+        const statusMap = new Map<string, { total: number; cached: number; isFullyCached: boolean }>();
+        for (const c of localCourses) {
+          if (c.isDownloaded) {
+            const status = await imageService.getCourseOfflineMediaStatus(c.id);
+            statusMap.set(c.id, status);
+          }
+        }
+        setOfflineStatusMap(statusMap);
       }
     } catch (err) {
       console.error('[CatalogPage] Load error:', err);
@@ -187,7 +211,28 @@ export const CatalogPage: React.FC = () => {
     }
   };
 
-  const handleCacheImages = async (courseId: string) => {
+  const handleRequestCacheImages = async (courseId: string, courseTitle: string) => {
+    try {
+      setIsPreparingEstimate(courseId);
+      const estimate = await imageService.getCourseMediaEstimate(courseId);
+      const storage = await imageService.getStorageEstimate();
+      setMediaEstimateModal({
+        courseId,
+        courseTitle,
+        imageCount: estimate.imageCount,
+        estimatedBytes: estimate.estimatedBytes,
+        storageEstimate: storage
+      });
+    } catch (err) {
+      console.warn('[CatalogPage] Failed to get media estimate:', err);
+      executeCacheImages(courseId);
+    } finally {
+      setIsPreparingEstimate(null);
+    }
+  };
+
+  const executeCacheImages = async (courseId: string) => {
+    setMediaEstimateModal(null);
     setCachingImagesCourseId(courseId);
     setCachingProgress({ current: 0, total: 0 });
     setCachingSuccessMsg(null);
@@ -195,8 +240,17 @@ export const CatalogPage: React.FC = () => {
       const res = await imageService.cacheCourseImages(courseId, (cached, total) => {
         setCachingProgress({ current: cached, total });
       });
-      setCachingSuccessMsg(`已成功快取 ${res.cached} 張單字實景圖至離線快取包！`);
-      setTimeout(() => setCachingSuccessMsg(null), 4000);
+      const status = await imageService.getCourseOfflineMediaStatus(courseId);
+      setOfflineStatusMap(prev => new Map(prev).set(courseId, status));
+
+      if (res.failed === 0 && status.isFullyCached) {
+        setCachingSuccessMsg(`已成功快取 ${res.cached} 張單字實景圖，離線圖片包完整！`);
+      } else if (res.failed > 0) {
+        setCachingSuccessMsg(`快取進度：${res.cached}/${res.cached + res.failed} 張，${res.failed} 張失敗，可重試`);
+      } else {
+        setCachingSuccessMsg(`已快取 ${res.cached} 張圖片（共 ${status.total} 張，離線包部分完成）`);
+      }
+      setTimeout(() => setCachingSuccessMsg(null), 5000);
     } catch (err) {
       setErrorMessage((err as Error).message || '快取圖片失敗');
     } finally {
@@ -236,11 +290,11 @@ export const CatalogPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-black text-slate-100">TOEIC 題庫與高頻專屬單元</h2>
           <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-            🟢 v5.0.0 視覺圖 ＋ 3+3 全真題庫
+            視覺圖解 ＋ 題型練習
           </span>
         </div>
         <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-          收錄多益全量核心分級題庫與全真測驗，搭配高頻商務例句與視覺概念生圖，全面通過嚴格語法質檢與 1:1 繁中解析。
+          收錄多益情境分級單字與題型練習，搭配商務例句與視覺概念生圖，提供繁中解析。
         </p>
       </div>
 
@@ -252,8 +306,8 @@ export const CatalogPage: React.FC = () => {
               <Sparkles size={16} />
             </span>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-emerald-100 truncate">發現全新精編真題庫（v3 最新版）</p>
-              <p className="text-[11px] text-emerald-300/80 truncate">包含 1:1 專屬題幹翻譯與唯一正解校正，點擊立即同步</p>
+              <p className="text-xs font-bold text-emerald-100 truncate">發現新版精編題庫</p>
+              <p className="text-[11px] text-emerald-300/80 truncate">包含專屬題幹翻譯與正解解析，點擊立即同步</p>
             </div>
           </div>
           <Button
@@ -370,14 +424,14 @@ export const CatalogPage: React.FC = () => {
                       <Badge variant="blue">{c.toeicScoreRange}</Badge>
                       <Badge variant="emerald">{c.level}</Badge>
                       <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/60">
-                        {c.version ? `v${c.version}.0 全真` : 'v5.0 全真'}
+                        {c.version ? `v${c.version}` : '最新版'}
                       </span>
                       <span className="text-[11px] text-slate-400">{c.category}</span>
                     </div>
 
                     {isDownloaded ? (
                       <span className="inline-flex items-center text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded-full shrink-0">
-                        <CheckCircle size={12} className="mr-1" /> 已就緒 (v{c.version || 5}.0)
+                        <CheckCircle size={12} className="mr-1" /> 已就緒{c.version ? ` (v${c.version})` : ''}
                       </span>
                     ) : (
                       <span className="text-[11px] text-slate-400 shrink-0">
@@ -498,11 +552,21 @@ export const CatalogPage: React.FC = () => {
                         )}
                         <button
                           type="button"
-                          onClick={() => handleCacheImages(c.id)}
-                          disabled={cachingImagesCourseId === c.id}
-                          title="下載離線圖片包"
+                          onClick={() => handleRequestCacheImages(c.id, c.title)}
+                          disabled={cachingImagesCourseId === c.id || isPreparingEstimate === c.id}
+                          title={
+                            offlineStatusMap.get(c.id)?.isFullyCached
+                              ? `離線圖片包完整 (${offlineStatusMap.get(c.id)?.cached}/${offlineStatusMap.get(c.id)?.total})`
+                              : (offlineStatusMap.get(c.id)?.cached ?? 0) > 0
+                              ? `下載離線圖片包 (已快取 ${offlineStatusMap.get(c.id)?.cached}/${offlineStatusMap.get(c.id)?.total})`
+                              : '下載離線圖片包'
+                          }
                           aria-label="下載離線圖片包"
-                          className="p-2 text-slate-400 hover:text-teal-300 rounded-lg hover:bg-slate-700/50 transition-colors flex items-center space-x-1"
+                          className={`p-2 rounded-lg transition-colors flex items-center space-x-1 ${
+                            offlineStatusMap.get(c.id)?.isFullyCached
+                              ? 'text-teal-400 hover:text-teal-300 bg-teal-500/10 hover:bg-teal-500/20'
+                              : 'text-slate-400 hover:text-teal-300 hover:bg-slate-700/50'
+                          }`}
                         >
                           {cachingImagesCourseId === c.id ? (
                             <>
@@ -511,6 +575,8 @@ export const CatalogPage: React.FC = () => {
                                 {cachingProgress ? `${cachingProgress.current}/${cachingProgress.total}` : '...'}
                               </span>
                             </>
+                          ) : isPreparingEstimate === c.id ? (
+                            <Loader2 size={13} className="animate-spin text-teal-400" />
                           ) : (
                             <ImageIcon size={14} />
                           )}
@@ -574,6 +640,64 @@ export const CatalogPage: React.FC = () => {
             );
           })}
         </div>
+      )}
+
+      {/* Offline Media Pack Download Confirmation Modal */}
+      {mediaEstimateModal && (
+        <Modal
+          isOpen={Boolean(mediaEstimateModal)}
+          onClose={() => setMediaEstimateModal(null)}
+          title="下載離線圖片包"
+          maxWidth="sm"
+        >
+          <div className="p-5 space-y-4 text-slate-300 text-xs leading-relaxed">
+            <div className="bg-slate-800/80 rounded-xl p-3.5 border border-slate-700/60 space-y-2">
+              <div className="text-sm font-bold text-slate-100 truncate">
+                {mediaEstimateModal.courseTitle}
+              </div>
+              <div className="flex justify-between items-center text-slate-300">
+                <span>單字實景圖片：</span>
+                <span className="font-mono font-bold text-teal-400">{mediaEstimateModal.imageCount} 張</span>
+              </div>
+              <div className="flex justify-between items-center text-slate-300">
+                <span>預估所需容量：</span>
+                <span className="font-mono font-bold text-amber-400">
+                  約 {(mediaEstimateModal.estimatedBytes / 1024 / 1024).toFixed(1)} MB
+                </span>
+              </div>
+              {mediaEstimateModal.storageEstimate && (
+                <div className="pt-2 border-t border-slate-700/50 flex justify-between items-center text-[11px] text-slate-400">
+                  <span>瀏覽器空間使用：</span>
+                  <span className="font-mono">
+                    約 {(mediaEstimateModal.storageEstimate.usageBytes / 1024 / 1024).toFixed(1)} MB / {(mediaEstimateModal.storageEstimate.quotaBytes / 1024 / 1024).toFixed(0)} MB ({mediaEstimateModal.storageEstimate.usagePercent}%)
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <p className="text-slate-400 text-[11px]">
+              下載完成後，無網路離線狀態下亦可正常瀏覽商務情境圖解。
+            </p>
+
+            <div className="flex items-center justify-end space-x-2 pt-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setMediaEstimateModal(null)}
+              >
+                取消
+              </Button>
+              <Button
+                size="sm"
+                variant="primary"
+                onClick={() => executeCacheImages(mediaEstimateModal.courseId)}
+                className="bg-teal-600 hover:bg-teal-500 text-white font-bold"
+              >
+                確認下載
+              </Button>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

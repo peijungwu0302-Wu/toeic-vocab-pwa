@@ -57,12 +57,12 @@ interface ClickableSentenceProps {
 }
 
 const ClickableSentence: React.FC<ClickableSentenceProps> = ({ text, className = '', onWordClick }) => {
-  const tokens = text.match(/([a-zA-Z0-9'\-]+|[^a-zA-Z0-9'\-]+)/g) || [text];
+  const tokens = text.match(/([a-zA-Z0-9'-]+|[^a-zA-Z0-9'-]+)/g) || [text];
 
   return (
     <span className={className}>
       {tokens.map((token, i) => {
-        const isWord = /^[a-zA-Z0-9'\-]+$/.test(token) && token.length > 1;
+        const isWord = /^[a-zA-Z0-9'-]+$/.test(token) && token.length > 1;
         if (!isWord) {
           return <span key={i}>{token}</span>;
         }
@@ -96,10 +96,10 @@ const formatWordFamilyItem = (raw: any): { head: string; zh: string; examTip?: s
   if (typeof raw !== 'string') {
     return { head: String(raw), zh: '' };
   }
-  const head = raw.trim().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
+  const head = raw.trim().replace(/^[•\-*\s]+/, '').split(/[\s,()（）:]+/)[0];
   let zh = '';
   if (raw.includes('(') || raw.includes('（')) {
-    const match = raw.match(/[\(（]([^\)）]+)[\)）]/);
+    const match = raw.match(/[（(]([^）)]+)[）)]/);
     if (match) zh = match[1];
   } else if (raw.includes(' ')) {
     const parts = raw.trim().split(/\s+/);
@@ -189,7 +189,7 @@ export const FlashcardPage: React.FC = () => {
   const handleOpenPeekWord = useCallback(async (rawTerm: any) => {
     if (!rawTerm) return;
     const termStr = typeof rawTerm === 'string' ? rawTerm : (rawTerm.word || rawTerm.head || String(rawTerm));
-    const clean = termStr.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
+    const clean = termStr.trim().toLowerCase().replace(/^[•\-*\s]+/, '').split(/[\s,()（）:]+/)[0];
     if (!clean) return;
 
     try {
@@ -209,7 +209,7 @@ export const FlashcardPage: React.FC = () => {
       } else {
         // Extract Chinese translation from string if available (e.g. "agendum (少用)" -> "少用")
         const extractedZh = rawTerm.includes('(') || rawTerm.includes('（') || rawTerm.includes(' ')
-          ? rawTerm.replace(/^[a-zA-Z\s\-]+/, '').replace(/^[\(（\s]+/, '').replace(/[\)）\s]+$/, '')
+          ? rawTerm.replace(/^[a-zA-Z\s-]+/, '').replace(/^[（(\s]+/, '').replace(/[）)\s]+$/, '')
           : '';
 
         setPeekWord({
@@ -403,7 +403,7 @@ export const FlashcardPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [activeProfile, reviewScope, courseId, batchSize, selectedCategory, isShuffle]);
+  }, [activeProfile, reviewScope, courseId, batchSize, selectedCategory, isShuffle, searchParams]);
 
   useEffect(() => {
     loadStudyQueue();
@@ -576,7 +576,7 @@ export const FlashcardPage: React.FC = () => {
     } catch (err) {
       console.error('[FlashcardPage] Rating error:', err);
     }
-  }, [currentItem, activeProfile, syncState.cloudUserEmail, currentIndex, queue.length, historyOffset]);
+  }, [currentItem, activeProfile, syncState.cloudUserEmail, currentIndex, queue.length, historyOffset, reviewScope]);
 
   // Horizontal Swipe Handlers
   const handleSwipeLeft = useCallback(() => {
@@ -589,7 +589,7 @@ export const FlashcardPage: React.FC = () => {
       } else {
         setIsFlipped(false);
       }
-      try { navigator.vibrate?.([15]); } catch {}
+      try { navigator.vibrate?.([15]); } catch { /* ignore */ }
       return;
     }
     if (isFlipped) {
@@ -609,7 +609,7 @@ export const FlashcardPage: React.FC = () => {
       if (activeStudyIndex > 0) {
         setHistoryOffset(h => h + 1);
         setIsFlipped(false);
-        try { navigator.vibrate?.([15]); } catch {}
+        try { navigator.vibrate?.([15]); } catch { /* ignore */ }
       }
       return;
     }
@@ -624,7 +624,7 @@ export const FlashcardPage: React.FC = () => {
         activeCardFlippedRef.current = isFlipped;
         setHistoryOffset(1);
         setIsFlipped(false);
-        try { navigator.vibrate?.([15]); } catch {}
+        try { navigator.vibrate?.([15]); } catch { /* ignore */ }
       }
     }
   }, [historyOffset, activeStudyIndex, isFlipped, reviewStyle, currentIndex, handleRate]);

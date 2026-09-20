@@ -87,7 +87,9 @@ export const SettingsPage: React.FC = () => {
     try {
       const diag = await datasetMigrationService.getDiagnostics();
       setDiagnostics(diag);
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   };
 
   useEffect(() => {
@@ -287,7 +289,7 @@ export const SettingsPage: React.FC = () => {
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-bold text-slate-200 flex items-center space-x-1.5">
             <Sparkles size={16} className="text-amber-400" />
-            <span>自訂 Gemini API Key（選填 · 100% 免費）</span>
+            <span>自訂 Gemini API Key（選填 · 提供免費額度）</span>
           </h3>
           <Badge variant={customApiKey.trim() ? 'emerald' : 'blue'}>
             {customApiKey.trim() ? '🟢 個人 Key 直連' : '🔵 預設離線模式'}
@@ -1079,7 +1081,7 @@ export const SettingsPage: React.FC = () => {
                 )}
               </div>
               <p className="text-[10px] text-slate-400 mt-1.5 leading-relaxed">
-                背面徹底關閉水平手勢，專門依賴底部【忘記 / 不熟 / 掌握】大按鈕，100% 杜絕任何誤滑，適合長文深度閱讀。
+                背面關閉水平手勢，專門依賴底部【忘記 / 不熟 / 掌握】大按鈕，徹底杜絕誤滑，適合長文深度閱讀。
               </p>
             </div>
             <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ml-2 mt-0.5 ${
@@ -1361,7 +1363,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          收錄全量多益精編詞庫之<strong className="text-teal-300">3 階梯商務例句、生圖提示詞、字根字首拆解、多益考點陷阱、詞族衍生樹與同反義微辨析</strong>。手機端若有快取延遲，可點擊下方按鈕一鍵熱升級（個人學習進度與 FSRS 曲線 100% 完整保留）。
+          收錄全量多益精編詞庫之<strong className="text-teal-300">3 階梯商務例句、生圖提示詞、字根字首拆解、多益考點陷阱、詞族衍生樹與同反義微辨析</strong>。手機端若有快取延遲，可點擊下方按鈕一鍵熱升級（個人學習進度與 FSRS 曲線完整保留）。
         </p>
 
         <Button

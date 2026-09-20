@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 export type HeadwordSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
 export type ExampleEnSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
@@ -63,14 +63,18 @@ export const TypographyProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       if (saved) {
         return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
       }
-    } catch {}
+    } catch {
+      /* ignore */
+    }
     return DEFAULT_SETTINGS;
   });
 
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }, [settings]);
 
   const updateSettings = (newSettings: Partial<TypographySettings>) => {

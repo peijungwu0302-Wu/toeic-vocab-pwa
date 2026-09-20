@@ -225,7 +225,9 @@ export const searchService = {
           if (found) return found;
         }
       }
-    } catch {}
+    } catch {
+      /* ignore */
+    }
 
     return null;
   }

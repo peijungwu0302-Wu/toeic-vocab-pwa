@@ -137,14 +137,16 @@ export const courseRepository = {
   },
 
   async findGlobalMasterWord(term: string): Promise<Word | null> {
-    const clean = term.trim().toLowerCase().replace(/^[•\-\*\s]+/, '').split(/[\s,()（）:]+/)[0];
+    const clean = term.trim().toLowerCase().replace(/^[•\-*\s]+/, '').split(/[\s,()（）:]+/)[0];
     if (!clean) return null;
 
     try {
       const local = await db.words.where('normalizedHeadword').equals(clean).first()
         || await db.words.filter(w => w.headword.toLowerCase() === clean).first();
       if (local) return local;
-    } catch {}
+    } catch {
+      /* ignore */
+    }
 
     const matches = await this.searchGlobalMasterWords(clean, 20);
     const exact = matches.find(w => w.headword.toLowerCase() === clean || w.normalizedHeadword?.toLowerCase() === clean);

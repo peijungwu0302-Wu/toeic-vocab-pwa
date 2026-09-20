@@ -34,6 +34,32 @@ export const todayService = {
     }
   },
 
+  loadTodaySessionBySessionId(profileId: string, sessionId: string): TodaySession | null {
+    if (!profileId || !sessionId) return null;
+    const current = this.loadTodaySession(profileId);
+    if (current && current.sessionId === sessionId) {
+      return current;
+    }
+    const prefix = `toeic_today_session_v1_${profileId}_`;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith(prefix)) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (raw) {
+            const parsed = JSON.parse(raw) as TodaySession;
+            if (parsed.profileId === profileId && parsed.sessionId === sessionId) {
+              return parsed;
+            }
+          }
+        } catch {
+          /* ignore */
+        }
+      }
+    }
+    return null;
+  },
+
   saveTodaySession(session: TodaySession): void {
     if (!session || !session.profileId) return;
     session.updatedAt = new Date().toISOString();
@@ -114,10 +140,7 @@ export const todayService = {
     preferredCourseId?: string | null
   ): Promise<TodaySession> {
     const existing = this.loadTodaySession(profileId);
-    if (existing && !existing.isCompleted) {
-      if (preferredCourseId && existing.activeCourseId && existing.activeCourseId !== preferredCourseId) {
-        return this.createTodaySession(profileId, preferredCourseId);
-      }
+    if (existing) {
       return existing;
     }
     return this.createTodaySession(profileId, preferredCourseId);

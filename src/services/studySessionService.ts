@@ -79,7 +79,9 @@ export const studySessionService = {
     try {
       const key = this.getFlashcardSessionKey(profileId, courseId);
       localStorage.removeItem(key);
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   },
 
   // --- FASTSKIM ---
@@ -123,6 +125,8 @@ export const studySessionService = {
     try {
       const key = this.getFastSkimSessionKey(profileId, courseId);
       localStorage.removeItem(key);
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }
 };

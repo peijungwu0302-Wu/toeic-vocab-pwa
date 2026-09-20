@@ -157,7 +157,7 @@ export const FastSkimPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [skimScope, courseId, activeProfile, selectedCategory, isShuffle, batchSize]);
+  }, [skimScope, courseId, activeProfile, selectedCategory, isShuffle, batchSize, currentBatchIndex, searchParams]);
 
   useEffect(() => {
     loadWords();
@@ -655,7 +655,7 @@ export const FastSkimPage: React.FC = () => {
                   setIsPaused(true);
                   setIsHolding(false);
                   wasHoldingRef.current = true;
-                  try { navigator.vibrate?.(20); } catch {}
+                  try { navigator.vibrate?.(20); } catch { /* ignore */ }
                 } else if (offset.y > 35 || velocity.y > 200) {
                   // 下滑 ➔ 解鎖輪播 🔓
                   setIsPaused(false);
@@ -663,7 +663,7 @@ export const FastSkimPage: React.FC = () => {
                   wasHoldingRef.current = true;
                   setShowUnlockNotice(true);
                   setTimeout(() => setShowUnlockNotice(false), 1200);
-                  try { navigator.vibrate?.([15, 30, 15]); } catch {}
+                  try { navigator.vibrate?.([15, 30, 15]); } catch { /* ignore */ }
                 }
               }
             }}

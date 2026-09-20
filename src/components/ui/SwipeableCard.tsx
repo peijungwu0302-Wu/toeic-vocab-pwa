@@ -153,7 +153,7 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
         return;
       }
       hasSwipedRef.current = true;
-      try { navigator.vibrate?.([12]); } catch {}
+      try { navigator.vibrate?.([12]); } catch { /* ignore */ }
       if (direction === 'right' && canSwipeRight && onSwipeRight) {
         onSwipeRight();
       } else if (direction === 'left' && canSwipeLeft && onSwipeLeft) {

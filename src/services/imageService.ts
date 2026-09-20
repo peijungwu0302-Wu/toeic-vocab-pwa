@@ -258,11 +258,21 @@ if (typeof window !== 'undefined') {
       }
     }
   } catch {
-    try { localStorage.removeItem(MANIFEST_STORAGE_KEY); } catch {}
+    try { localStorage.removeItem(MANIFEST_STORAGE_KEY); } catch {
+      /* ignore */
+    }
   }
 }
 
-export async function initRuntimeManifest(): Promise<RuntimeManifestData | null> {
+export function _setRuntimeManifestForTesting(manifest: RuntimeManifestData | null): void {
+  runtimeManifest = manifest;
+  isFetchingManifest = false;
+}
+
+export async function initRuntimeManifest(forceRefresh = false): Promise<RuntimeManifestData | null> {
+  if (forceRefresh) {
+    runtimeManifest = null;
+  }
   if (!runtimeManifest && typeof window !== 'undefined') {
     try {
       const cached = localStorage.getItem(MANIFEST_STORAGE_KEY);
@@ -272,10 +282,12 @@ export async function initRuntimeManifest(): Promise<RuntimeManifestData | null>
           runtimeManifest = parsed;
         }
       }
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }
 
-  if (isFetchingManifest) return runtimeManifest;
+  if (isFetchingManifest && !forceRefresh) return runtimeManifest;
   isFetchingManifest = true;
   try {
     const res = await fetch(`${R2_MEDIA_BASE_URL}/api/manifest/current`);
@@ -290,7 +302,9 @@ export async function initRuntimeManifest(): Promise<RuntimeManifestData | null>
         runtimeManifest = freshManifest;
         try {
           localStorage.setItem(MANIFEST_STORAGE_KEY, JSON.stringify(freshManifest));
-        } catch {}
+        } catch {
+          /* ignore */
+        }
 
         if (hasChanged) {
           manifestListeners.forEach((fn) => {
@@ -572,7 +586,7 @@ export async function cacheCourseImages(
             clearTimeout(timeoutId);
           }
         }
-      } catch (err) {
+      } catch {
         failed++;
       }
       onProgress?.(cached + failed, total);

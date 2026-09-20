@@ -55,12 +55,15 @@ export const TodayGuidedPage: React.FC = () => {
     try {
       let curSession: TodaySession;
       if (paramSessionId) {
-        const loaded = todayService.loadTodaySession(activeProfile.id);
-        curSession = (loaded && loaded.sessionId === paramSessionId)
-          ? loaded
-          : await todayService.getOrCreateTodaySession(activeProfile.id);
+        const loaded = todayService.loadTodaySessionBySessionId(activeProfile.id, paramSessionId);
+        curSession = loaded || (await todayService.getOrCreateTodaySession(activeProfile.id));
       } else {
         curSession = await todayService.getOrCreateTodaySession(activeProfile.id);
+      }
+
+      // Replace URL to stable session route if missing or differs
+      if (!paramSessionId || paramSessionId !== curSession.sessionId) {
+        navigate(`/today/session/${curSession.sessionId}`, { replace: true });
       }
 
       setSession(curSession);
@@ -127,7 +130,7 @@ export const TodayGuidedPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [activeProfile, paramSessionId]);
+  }, [activeProfile, paramSessionId, navigate]);
 
   useEffect(() => {
     initSession();

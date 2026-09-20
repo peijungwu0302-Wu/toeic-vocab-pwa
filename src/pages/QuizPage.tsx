@@ -256,7 +256,7 @@ export const QuizPage: React.FC = () => {
         <div>
           <h2 className="text-xl font-black text-slate-100">多益實戰模擬測驗</h2>
           <p className="text-xs text-slate-400 mt-1">
-            4 種全真題型 ＋ 支援 Gemini 3.6-Flash AI 名師即時原創出題！
+            4 種精選題型 ＋ 支援 AI 智慧即時出題！
           </p>
         </div>
 

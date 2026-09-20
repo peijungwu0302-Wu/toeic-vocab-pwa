@@ -243,7 +243,13 @@ export const DashboardPage: React.FC = () => {
           size="md"
           variant="primary"
           fullWidth
-          onClick={() => navigate('/today')}
+          onClick={() => {
+            if (todaySession?.sessionId) {
+              navigate(`/today/session/${todaySession.sessionId}`);
+            } else {
+              navigate('/today');
+            }
+          }}
           className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs py-2.5 shadow-lg shadow-emerald-950/40"
         >
           {todaySession?.isCompleted ? (
