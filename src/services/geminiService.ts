@@ -93,34 +93,44 @@ export function diagnoseGeminiError(rawError: string): string {
   return `【API 回應異常】：${rawError}`;
 }
 
-function buildRequestDetails(key: string, model: string, apiVersion = 'v1beta') {
+export function buildRequestDetails(key: string, model: string, apiVersion = 'v1beta') {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'x-goog-api-key': key
   };
 
   return {
-    url: `https://generativelanguage.googleapis.com/${apiVersion}/models/${model}:generateContent?key=${key}`,
+    url: `https://generativelanguage.googleapis.com/${apiVersion}/models/${model}:generateContent`,
     headers
   };
 }
 
 export const geminiService = {
   /**
-   * Get configured API key from local DB or environment
+   * Get configured API key from local DB or environment.
+   * IndexedDB is canonical source of truth.
+   * Transparently migrates and removes legacy localStorage key if present.
    */
   async getApiKey(): Promise<string> {
     try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        const localKey = window.localStorage.getItem('toeic_custom_gemini_api_key');
-        if (localKey && localKey.trim()) return localKey.trim();
-      }
+      // 1. IndexedDB is canonical source
       const setting = await db.appSettings.get('custom_gemini_api_key');
-      if (setting && setting.value && setting.value.trim()) {
-        if (typeof window !== 'undefined' && window.localStorage) {
-          window.localStorage.setItem('toeic_custom_gemini_api_key', setting.value.trim());
-        }
+      if (setting && typeof setting.value === 'string' && setting.value.trim()) {
         return setting.value.trim();
+      }
+
+      // 2. Check and migrate legacy localStorage key if DB does not have it
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const legacyKey = window.localStorage.getItem('toeic_custom_gemini_api_key');
+        if (legacyKey && legacyKey.trim()) {
+          const trimmed = legacyKey.trim();
+          await db.appSettings.put({
+            key: 'custom_gemini_api_key',
+            value: trimmed
+          });
+          window.localStorage.removeItem('toeic_custom_gemini_api_key');
+          return trimmed;
+        }
       }
     } catch {
       // ignore db error
@@ -129,17 +139,25 @@ export const geminiService = {
   },
 
   /**
-   * Save custom API key to local DB and localStorage
+   * Save custom API key to canonical IndexedDB and remove any legacy localStorage copy.
+   * Passing an empty string clears the custom key.
    */
   async setApiKey(key: string): Promise<void> {
-    const trimmed = key.trim();
+    const trimmed = (key || '').trim();
+
+    // Clean up any legacy localStorage entry to avoid stale keys
     if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.setItem('toeic_custom_gemini_api_key', trimmed);
+      window.localStorage.removeItem('toeic_custom_gemini_api_key');
     }
-    await db.appSettings.put({
-      key: 'custom_gemini_api_key',
-      value: trimmed
-    });
+
+    if (trimmed) {
+      await db.appSettings.put({
+        key: 'custom_gemini_api_key',
+        value: trimmed
+      });
+    } else {
+      await db.appSettings.delete('custom_gemini_api_key');
+    }
   },
 
   /**

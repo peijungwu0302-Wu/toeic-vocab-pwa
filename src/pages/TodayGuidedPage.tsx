@@ -757,8 +757,8 @@ export const TodayGuidedPage: React.FC = () => {
 
   // --- PHASE 5: SUMMARY ---
   const wrongCount = session.wrongWordIds.length;
-  const correctCount = Math.max(0, quizQuestions.length - wrongCount);
-  const quizAccuracy = quizQuestions.length > 0 ? Math.round((correctCount / quizQuestions.length) * 100) : 100;
+  const stats = todayService.calculateSummaryStats(session);
+  const totalQuizQuestions = session.quizQuestionsSnapshot?.length || quizQuestions.length;
 
   return (
     <div className="flex flex-col h-full justify-between max-w-md mx-auto pb-2">
@@ -779,15 +779,24 @@ export const TodayGuidedPage: React.FC = () => {
         <div className="grid grid-cols-3 gap-2 text-xs">
           <div className="p-3 rounded-2xl bg-slate-850 border border-slate-800">
             <div className="text-slate-400 text-[10px]">複習舊詞</div>
-            <div className="text-base font-bold text-emerald-400 mt-0.5">{session.dueWordIds.length} 詞</div>
+            <div className="text-base font-bold text-emerald-400 mt-0.5">
+              {stats.reviewedCount} / {stats.dueTotal} <span className="text-[10px] font-normal text-slate-400">詞</span>
+            </div>
           </div>
           <div className="p-3 rounded-2xl bg-slate-850 border border-slate-800">
             <div className="text-slate-400 text-[10px]">新學單字</div>
-            <div className="text-base font-bold text-emerald-400 mt-0.5">{session.newWordIds.length} 詞</div>
+            <div className="text-base font-bold text-emerald-400 mt-0.5">
+              {stats.learnedCount} / {stats.newTotal} <span className="text-[10px] font-normal text-slate-400">詞</span>
+            </div>
           </div>
           <div className="p-3 rounded-2xl bg-slate-850 border border-slate-800">
-            <div className="text-slate-400 text-[10px]">驗收正確率</div>
-            <div className="text-base font-bold text-purple-400 mt-0.5">{quizAccuracy}%</div>
+            <div className="text-slate-400 text-[10px]">驗收測驗</div>
+            <div className="text-base font-bold text-purple-400 mt-0.5">
+              {stats.quizAnsweredCount} / {totalQuizQuestions} <span className="text-[10px] font-normal text-slate-400">題</span>
+            </div>
+            <div className="text-[10px] text-slate-400 mt-0.5">
+              正確率 {stats.quizAccuracyStr}
+            </div>
           </div>
         </div>
 

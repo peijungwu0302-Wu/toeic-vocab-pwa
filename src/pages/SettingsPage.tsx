@@ -33,7 +33,7 @@ import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
 import { getSupabaseClient } from '../services/supabaseClient';
 import { datasetMigrationService } from '../services/datasetMigrationService';
-import { db } from '../db';
+import { geminiService } from '../services/geminiService';
 import { BackupDataV1, ImportPreviewSummary, ImportStrategy } from '../types/backup';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
@@ -166,9 +166,9 @@ export const SettingsPage: React.FC = () => {
       }
     }
 
-    db.appSettings.get('custom_gemini_api_key').then(setting => {
-      if (setting && setting.value) {
-        setCustomApiKey(setting.value);
+    geminiService.getApiKey().then(key => {
+      if (key) {
+        setCustomApiKey(key);
       }
     });
   }, []);
@@ -176,10 +176,7 @@ export const SettingsPage: React.FC = () => {
   const handleSaveApiKey = async () => {
     setIsSavingKey(true);
     try {
-      await db.appSettings.put({
-        key: 'custom_gemini_api_key',
-        value: customApiKey.trim()
-      });
+      await geminiService.setApiKey(customApiKey.trim());
       setKeySavedMessage(true);
       setTimeout(() => setKeySavedMessage(false), 2500);
     } finally {
@@ -297,7 +294,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          Google AI Studio 提供<strong className="text-slate-200">免費調用額度</strong>。API Key 儲存在此裝置的瀏覽器本機儲存空間；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。
+          Google AI Studio 提供<strong className="text-slate-200">免費調用額度</strong>。API Key 儲存在此裝置的瀏覽器本機資料庫；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。
         </p>
 
         <div className="space-y-2 pt-1">

@@ -6,7 +6,7 @@ import { db } from '../src/db';
 import { datasetMigrationService, CURRENT_DATASET_VERSION } from '../src/services/datasetMigrationService';
 import { courseRepository } from '../src/repositories/courseRepository';
 import { profileRepository } from '../src/repositories/profileRepository';
-import { todayService, DEFAULT_APP_COURSE_ID } from '../src/services/todayService';
+import { todayService, DEFAULT_APP_COURSE_ID, calculateTodaySummaryStats } from '../src/services/todayService';
 import {
   imageService,
   clearCourseOfflineMedia,
@@ -18,7 +18,7 @@ import {
   OFFLINE_MEDIA_CACHE_NAME,
   R2_MEDIA_BASE_URL
 } from '../src/services/imageService';
-import { diagnoseGeminiError } from '../src/services/geminiService';
+import { geminiService, diagnoseGeminiError, buildRequestDetails } from '../src/services/geminiService';
 import { computeSha256Hex } from '../src/utils/crypto';
 import { Word, Course, Profile, Progress, ReviewLog } from '../src/types/db';
 import { studySessionService } from '../src/services/studySessionService';
@@ -1689,11 +1689,11 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       expect(fs.existsSync(settingsFilePath)).toBe(true);
       const content = fs.readFileSync(settingsFilePath, 'utf-8');
 
-      // Must NOT claim key is only stored in IndexedDB
+      // Must NOT claim key is only stored in IndexedDB (old phrasing)
       expect(content.includes('API Key 儲存於本機資料庫（IndexedDB）')).toBe(false);
 
-      // Must state key is stored in browser local storage
-      expect(content.includes('API Key 儲存在此裝置的瀏覽器本機儲存空間；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。')).toBe(true);
+      // Must state key is stored in browser local database
+      expect(content.includes('API Key 儲存在此裝置的瀏覽器本機資料庫；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。')).toBe(true);
     });
 
     // Regression 24: App version in diagnostics dynamically equals package.json version
@@ -1734,6 +1734,141 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       const notFoundMsg = diagnoseGeminiError('Error: 404 NOT_FOUND Model not found');
       expect(notFoundMsg).not.toContain('最新 gemini-3.6-flash');
       expect(notFoundMsg).toContain('目前模型端點不可用或已調整，請稍後重試或更新模型設定。');
+    });
+
+    // Regression 27: API Key A -> save B -> getApiKey === B -> must not return stale A
+    it('Regression 27: API Key A -> save B -> getApiKey === B -> must not return stale A', async () => {
+      // 1. Initially set Key A
+      await geminiService.setApiKey('AIzaSy_KEY_A');
+      expect(await geminiService.getApiKey()).toBe('AIzaSy_KEY_A');
+
+      // 2. User updates key to Key B via Settings / setApiKey
+      await geminiService.setApiKey('AIzaSy_KEY_B');
+
+      // 3. getApiKey must return Key B, never stale Key A!
+      const currentKey = await geminiService.getApiKey();
+      expect(currentKey).toBe('AIzaSy_KEY_B');
+
+      // 4. Clearing key completely removes custom key
+      await geminiService.setApiKey('');
+      expect(await db.appSettings.get('custom_gemini_api_key')).toBeUndefined();
+      expect(localStorage.getItem('toeic_custom_gemini_api_key')).toBeNull();
+    });
+
+    // Regression 28: legacy localStorage key -> migrate to IndexedDB -> legacy key removed -> value preserved
+    it('Regression 28: legacy localStorage key -> migrate to IndexedDB -> legacy key removed -> value preserved', async () => {
+      // 1. Simulate legacy state: key exists in localStorage only, NOT in IndexedDB
+      await db.appSettings.delete('custom_gemini_api_key');
+      localStorage.setItem('toeic_custom_gemini_api_key', 'AIzaSy_LEGACY_KEY');
+
+      // 2. getApiKey transparently migrates to IndexedDB
+      const resolvedKey = await geminiService.getApiKey();
+      expect(resolvedKey).toBe('AIzaSy_LEGACY_KEY');
+
+      // 3. Verify IndexedDB now holds the migrated key
+      const dbSetting = await db.appSettings.get('custom_gemini_api_key');
+      expect(dbSetting?.value).toBe('AIzaSy_LEGACY_KEY');
+
+      // 4. Verify legacy localStorage key was cleanly removed
+      expect(localStorage.getItem('toeic_custom_gemini_api_key')).toBeNull();
+    });
+
+    // Regression 29: Gemini request URL -> API key only in x-goog-api-key header -> URL contains no key/query credential
+    it('Regression 29: Gemini request URL -> API key only in x-goog-api-key header -> URL contains no key/query credential', () => {
+      const secretKey = 'AIzaSy_TOP_SECRET_CREDENTIAL_123';
+      const model = 'gemini-2.5-flash';
+      const details = buildRequestDetails(secretKey, model);
+
+      // Header must contain x-goog-api-key
+      expect(details.headers['x-goog-api-key']).toBe(secretKey);
+
+      // URL must NOT contain secret key or query credential
+      expect(details.url).not.toContain(secretKey);
+      expect(details.url).not.toContain('?key=');
+      expect(details.url).not.toContain('&key=');
+      expect(details.url).toBe(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`);
+    });
+
+    // Regression 30: Today all phases skipped -> reviewedCount = 0, learnedCount = 0, quizAnsweredCount = 0, accuracy = null / dash -> never 100%
+    it('Regression 30: Today all phases skipped -> reviewedCount = 0, learnedCount = 0, quizAnsweredCount = 0, accuracy = null / dash -> never 100%', () => {
+      // Simulate session where all phases were skipped
+      const skippedSession: TodaySession = {
+        sessionId: 'session_skip_test',
+        profileId: 'prof_1',
+        dateStr: '2026-09-20',
+        activeCourseId: 'course-core-1200',
+        phase: 'summary',
+        dueWordIds: ['w1', 'w2', 'w3', 'w4', 'w5'],
+        newWordIds: ['n1', 'n2', 'n3'],
+        currentReviewIndex: 0, // 0 reviewed
+        currentPreviewIndex: 0,
+        currentLearnIndex: 0, // 0 learned
+        quizQuestionsSnapshot: [
+          { id: 'q1', word: {} as any, mode: 'part5_mcq', stem: 'Q1', options: ['A', 'B', 'C', 'D'], correctAnswer: 'B', correctIndex: 1, explanation: '' },
+          { id: 'q2', word: {} as any, mode: 'part5_mcq', stem: 'Q2', options: ['A', 'B', 'C', 'D'], correctAnswer: 'C', correctIndex: 2, explanation: '' }
+        ],
+        quizCurrentIndex: 0,
+        quizUserAnswers: {}, // 0 answered
+        wrongWordIds: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isCompleted: true
+      };
+
+      const stats = calculateTodaySummaryStats(skippedSession);
+
+      expect(stats.reviewedCount).toBe(0);
+      expect(stats.dueTotal).toBe(5);
+      expect(stats.learnedCount).toBe(0);
+      expect(stats.newTotal).toBe(3);
+      expect(stats.quizAnsweredCount).toBe(0);
+      expect(stats.quizTotal).toBe(2);
+      expect(stats.quizAccuracy).toBeNull();
+      expect(stats.quizAccuracyStr).toBe('—'); // Must NEVER claim 100%!
+      expect(stats.quizAccuracyStr).not.toBe('100%');
+    });
+
+    // Regression 31: partial Today completion -> summary reflects actual completed/answered count
+    it('Regression 31: partial Today completion -> summary reflects actual completed/answered count', () => {
+      // Simulate partial completion:
+      // 3 of 5 due reviewed, 2 of 4 new learned, 2 of 3 quiz answered (1 correct, 1 wrong)
+      const partialSession: TodaySession = {
+        sessionId: 'session_partial_test',
+        profileId: 'prof_1',
+        dateStr: '2026-09-20',
+        activeCourseId: 'course-core-1200',
+        phase: 'summary',
+        dueWordIds: ['w1', 'w2', 'w3', 'w4', 'w5'],
+        newWordIds: ['n1', 'n2', 'n3', 'n4'],
+        currentReviewIndex: 3,
+        currentPreviewIndex: 2,
+        currentLearnIndex: 2,
+        quizQuestionsSnapshot: [
+          { id: 'q1', word: {} as any, mode: 'part5_mcq', stem: 'Q1', options: ['A', 'B'], correctAnswer: 'A', correctIndex: 0, explanation: '' },
+          { id: 'q2', word: {} as any, mode: 'part5_mcq', stem: 'Q2', options: ['A', 'B'], correctAnswer: 'B', correctIndex: 1, explanation: '' },
+          { id: 'q3', word: {} as any, mode: 'part5_mcq', stem: 'Q3', options: ['A', 'B'], correctAnswer: 'A', correctIndex: 0, explanation: '' }
+        ],
+        quizCurrentIndex: 2,
+        quizUserAnswers: {
+          0: 0, // Q1 correct (selected 0, correct 0)
+          1: 0  // Q2 wrong (selected 0, correct 1)
+        },
+        wrongWordIds: ['q2_word'],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isCompleted: true
+      };
+
+      const stats = calculateTodaySummaryStats(partialSession);
+
+      expect(stats.reviewedCount).toBe(3);
+      expect(stats.dueTotal).toBe(5);
+      expect(stats.learnedCount).toBe(2);
+      expect(stats.newTotal).toBe(4);
+      expect(stats.quizAnsweredCount).toBe(2);
+      expect(stats.quizTotal).toBe(3);
+      expect(stats.quizAccuracy).toBe(50); // 1 of 2 answered correct = 50%
+      expect(stats.quizAccuracyStr).toBe('50%');
     });
   });
 });

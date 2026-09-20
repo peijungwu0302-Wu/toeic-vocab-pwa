@@ -150,5 +150,55 @@ export const todayService = {
     if (!profileId) return;
     const dateStr = customDateStr || this.getTodayDateStr();
     localStorage.removeItem(this.getSessionStorageKey(profileId, dateStr));
+  },
+
+  calculateSummaryStats(session: TodaySession): TodaySummaryStats {
+    return calculateTodaySummaryStats(session);
   }
 };
+
+export interface TodaySummaryStats {
+  reviewedCount: number;
+  dueTotal: number;
+  learnedCount: number;
+  newTotal: number;
+  quizAnsweredCount: number;
+  quizTotal: number;
+  quizAccuracy: number | null;
+  quizAccuracyStr: string;
+}
+
+export function calculateTodaySummaryStats(session: TodaySession): TodaySummaryStats {
+  const reviewedCount = Math.min(Math.max(0, session.currentReviewIndex || 0), (session.dueWordIds || []).length);
+  const learnedCount = Math.min(Math.max(0, session.currentLearnIndex || 0), (session.newWordIds || []).length);
+
+  const answeredEntries = Object.entries(session.quizUserAnswers || {});
+  const quizAnsweredCount = answeredEntries.length;
+  const quizTotal = session.quizQuestionsSnapshot?.length || 0;
+
+  let quizCorrectCount = 0;
+  for (const [idxStr, selectedOpt] of answeredEntries) {
+    const qIdx = parseInt(idxStr, 10);
+    const q = session.quizQuestionsSnapshot?.[qIdx];
+    if (q && q.correctIndex === selectedOpt) {
+      quizCorrectCount++;
+    }
+  }
+
+  const quizAccuracy = quizAnsweredCount > 0
+    ? Math.round((quizCorrectCount / quizAnsweredCount) * 100)
+    : null;
+
+  const quizAccuracyStr = quizAccuracy !== null ? `${quizAccuracy}%` : '—';
+
+  return {
+    reviewedCount,
+    dueTotal: (session.dueWordIds || []).length,
+    learnedCount,
+    newTotal: (session.newWordIds || []).length,
+    quizAnsweredCount,
+    quizTotal,
+    quizAccuracy,
+    quizAccuracyStr
+  };
+}
