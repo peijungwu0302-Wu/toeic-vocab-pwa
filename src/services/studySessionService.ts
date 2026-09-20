@@ -129,5 +129,38 @@ export const studySessionService = {
     } catch {
       /* ignore */
     }
+  },
+
+  /**
+   * Partitions words into a slice for the given batch index.
+   */
+  partitionWordsIntoBatch<T>(allWords: T[], batchIndex: number, batchSize: number): T[] {
+    if (batchSize >= 999) return allWords;
+    const start = batchIndex * batchSize;
+    return allWords.slice(start, start + batchSize);
+  },
+
+  /**
+   * Calculates the next batch index, wrapping to 0 when end is reached.
+   */
+  getNextBatchIndex(currentBatchIndex: number, totalWords: number, batchSize: number): number {
+    if (totalWords === 0) return 0;
+    const totalBatches = Math.ceil(totalWords / batchSize) || 1;
+    return (currentBatchIndex + 1) >= totalBatches ? 0 : currentBatchIndex + 1;
+  },
+
+  /**
+   * Repartitions an existing session's fixed ordering to a new batchSize starting at batch 0.
+   */
+  repartitionSession<T>(allWords: T[], newBatchSize: number): {
+    batchIndex: number;
+    activeWords: T[];
+    batchSize: number;
+  } {
+    return {
+      batchIndex: 0,
+      activeWords: this.partitionWordsIntoBatch(allWords, 0, newBatchSize),
+      batchSize: newBatchSize
+    };
   }
 };

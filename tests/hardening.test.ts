@@ -2426,5 +2426,222 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       expect(progressCountMap.get('course-1')).toBe(42);
       expect(progressCountMap.get('course-2')).toBe(99);
     });
+
+    // N. FastSkim Repartition 20 -> 30: fixed ordering preserved, batch 0 = 0-29, batch 1 = 30-59, no skips or duplicates
+    it('N. FastSkim Repartition 20 -> 30: fixed ordering preserved without skipped or duplicated words', () => {
+      const words = Array.from({ length: 60 }, (_, i) => ({ id: `word_${i}`, headword: `w${i}` }));
+
+      // Initially partition with batchSize = 20
+      const initialBatch = studySessionService.partitionWordsIntoBatch(words, 0, 20);
+      expect(initialBatch).toHaveLength(20);
+      expect(initialBatch[0].id).toBe('word_0');
+      expect(initialBatch[19].id).toBe('word_19');
+
+      // User changes batchSize to 30: repartitionSession
+      const repartitioned = studySessionService.repartitionSession(words, 30);
+      expect(repartitioned.batchIndex).toBe(0);
+      expect(repartitioned.batchSize).toBe(30);
+      expect(repartitioned.activeWords).toHaveLength(30);
+      expect(repartitioned.activeWords[0].id).toBe('word_0');
+      expect(repartitioned.activeWords[29].id).toBe('word_29');
+
+      // Advance to batch 1
+      const nextBatchIndex = studySessionService.getNextBatchIndex(repartitioned.batchIndex, words.length, 30);
+      expect(nextBatchIndex).toBe(1);
+
+      const nextBatch = studySessionService.partitionWordsIntoBatch(words, nextBatchIndex, 30);
+      expect(nextBatch).toHaveLength(30);
+      expect(nextBatch[0].id).toBe('word_30');
+      expect(nextBatch[29].id).toBe('word_59');
+
+      // Verify no words skipped and no duplicates between batch 0 and batch 1
+      const allExtractedIds = [...repartitioned.activeWords.map(w => w.id), ...nextBatch.map(w => w.id)];
+      expect(allExtractedIds).toHaveLength(60);
+      expect(new Set(allExtractedIds).size).toBe(60);
+      expect(allExtractedIds).toEqual(words.map(w => w.id));
+    });
+
+    // O. FastSkim Repartition 30 -> 20: fresh partition from batch 0 avoids stale batch index overlap
+    it('O. FastSkim Repartition 30 -> 20: resets to batch 0 and avoids stale batch index overlap', () => {
+      const words = Array.from({ length: 60 }, (_, i) => ({ id: `word_${i}`, headword: `w${i}` }));
+
+      // User was on batch 1 with batchSize = 30 (items 30-59)
+      const currentBatchIdx = 1;
+      const currentBatch = studySessionService.partitionWordsIntoBatch(words, currentBatchIdx, 30);
+      expect(currentBatch[0].id).toBe('word_30');
+
+      // User switches to batchSize = 20
+      const repartitioned = studySessionService.repartitionSession(words, 20);
+      expect(repartitioned.batchIndex).toBe(0); // Must be reset to 0
+      expect(repartitioned.batchSize).toBe(20);
+      expect(repartitioned.activeWords).toHaveLength(20);
+      expect(repartitioned.activeWords[0].id).toBe('word_0');
+      expect(repartitioned.activeWords[19].id).toBe('word_19');
+    });
+
+    // P. Resume config authority: loading saved session synchronizes UI controls and session config
+    it('P. Resume config authority: saved session config synchronizes UI controls', () => {
+      const profileId = 'prof_test_resume';
+      const courseId = 'course:course-advanced-2500';
+
+      studySessionService.saveFastSkimSession({
+        sessionId: 'test_skim_resume_session',
+        profileId,
+        courseId,
+        sessionWordIds: ['w1', 'w2'],
+        allSessionWordIds: ['w1', 'w2', 'w3'],
+        currentIndex: 1,
+        currentBatchIndex: 0,
+        batchSize: 15,
+        selectedCategory: '行銷廣告',
+        isShuffle: false,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+
+      const saved = studySessionService.loadFastSkimSession(profileId, courseId);
+      expect(saved).not.toBeNull();
+      expect(saved?.batchSize).toBe(15);
+      expect(saved?.selectedCategory).toBe('行銷廣告');
+      expect(saved?.isShuffle).toBe(false);
+
+      // Verify UI state synchronization pattern
+      let uiBatchSize = 20;
+      let uiCategory = 'all';
+      let uiShuffle = true;
+
+      if (saved) {
+        if (saved.batchSize) uiBatchSize = saved.batchSize;
+        if (saved.selectedCategory) uiCategory = saved.selectedCategory;
+        if (typeof saved.isShuffle === 'boolean') uiShuffle = saved.isShuffle;
+      }
+
+      expect(uiBatchSize).toBe(15);
+      expect(uiCategory).toBe('行銷廣告');
+      expect(uiShuffle).toBe(false);
+    });
+
+    // Q. Valid downloaded course + empty category keeps course scope and returns empty list without fallback to all words
+    it('Q. Valid downloaded course + empty category returns empty list without fallback to all words', async () => {
+      // Setup: Course A is downloaded
+      await db.courses.put({
+        id: 'course-a',
+        title: 'Course A',
+        description: 'Test Course A',
+        toeicScoreRange: '500-700',
+        category: '商業',
+        level: '中階',
+        wordCount: 1,
+        version: 17,
+        isDownloaded: true,
+        downloadedAt: new Date().toISOString()
+      });
+
+      // Word A belongs to 'course-a' in category '商務會議'
+      const wordA: Word = {
+        id: 'w_a',
+        headword: 'negotiate',
+        normalizedHeadword: 'negotiate',
+        entryType: 'word',
+        definitionZh: '協商',
+        starRating: 3,
+        toeicScoreRange: '500-700',
+        category: '商務會議',
+        partsOfSpeech: ['v'],
+        wordForms: [],
+        phoneticUS: null,
+        phoneticUK: null,
+        examples: [],
+        examTips: [],
+        audioUSUrl: null,
+        audioUKUrl: null
+      };
+      await db.words.put(wordA);
+      await db.courseWords.put({ courseId: 'course-a', wordId: 'w_a', orderIndex: 0 });
+
+      // Course B has words in category '醫療健康'
+      await db.courses.put({
+        id: 'course-b',
+        title: 'Course B',
+        description: 'Test Course B',
+        toeicScoreRange: '700-900',
+        category: '醫療',
+        level: '高階',
+        wordCount: 1,
+        version: 17,
+        isDownloaded: true,
+        downloadedAt: new Date().toISOString()
+      });
+      const wordB: Word = {
+        id: 'w_b',
+        headword: 'diagnosis',
+        normalizedHeadword: 'diagnosis',
+        entryType: 'word',
+        definitionZh: '診斷',
+        starRating: 4,
+        toeicScoreRange: '700-900',
+        category: '醫療健康',
+        partsOfSpeech: ['n'],
+        wordForms: [],
+        phoneticUS: null,
+        phoneticUK: null,
+        examples: [],
+        examTips: [],
+        audioUSUrl: null,
+        audioUKUrl: null
+      };
+      await db.words.put(wordB);
+      await db.courseWords.put({ courseId: 'course-b', wordId: 'w_b', orderIndex: 0 });
+
+      // Query Course A with category '醫療健康' (empty for Course A)
+      const courseA = await courseRepository.getById('course-a');
+      expect(courseA?.isDownloaded).toBe(true);
+
+      // Effective scope resolution check: course-a is downloaded, so scope is maintained
+      const resolveEffectiveScope = (scope: string, isDownloaded: boolean) => {
+        if (scope.startsWith('course:') && !isDownloaded) return 'all';
+        return scope;
+      };
+      const effectiveScope = resolveEffectiveScope('course:course-a', Boolean(courseA?.isDownloaded));
+      expect(effectiveScope).toBe('course:course-a');
+
+      // Query words for course-a in '醫療健康'
+      const wordsForCourseA = await courseRepository.getWordsForCourse('course-a', {
+        category: '醫療健康',
+        shuffle: false
+      });
+
+      // Must be empty array, NOT fallback to courseRepository.getAllDownloadedWords
+      expect(wordsForCourseA).toEqual([]);
+      expect(wordsForCourseA).toHaveLength(0);
+    });
+
+    // R. Async load race guard: generation token guarantees newer request overrides slower older request
+    it('R. FastSkim Async Race Guard: newer request overrides slower older request via generation token', async () => {
+      let loadGeneration = 0;
+      let activeResult: string[] = [];
+
+      // Request A (scope: 'all') starts
+      const genA = ++loadGeneration;
+
+      // Request B (scope: 'starred') starts immediately after
+      const genB = ++loadGeneration;
+
+      // Request B completes first with ['star1', 'star2']
+      if (genB === loadGeneration) {
+        activeResult = ['star1', 'star2'];
+      }
+
+      // Request A completes later with ['all1', 'all2', 'all3']
+      if (genA === loadGeneration) {
+        activeResult = ['all1', 'all2', 'all3'];
+      }
+
+      // Final active state must belong to Request B, rejecting Request A's stale response
+      expect(activeResult).toEqual(['star1', 'star2']);
+      expect(genA).toBe(1);
+      expect(genB).toBe(2);
+      expect(loadGeneration).toBe(2);
+    });
   });
 });

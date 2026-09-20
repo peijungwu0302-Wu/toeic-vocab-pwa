@@ -134,23 +134,54 @@ export const FastSkimPage: React.FC = () => {
   const wasHoldingRef = useRef<boolean>(false);
 
   const timerRef = useRef<number | null>(null);
+  const loadGenerationRef = useRef<number>(0);
+  const batchSizeRef = useRef(batchSize);
+  batchSizeRef.current = batchSize;
+  const categoryRef = useRef(selectedCategory);
+  categoryRef.current = selectedCategory;
+  const shuffleRef = useRef(isShuffle);
+  shuffleRef.current = isShuffle;
 
-  // Load words & categories with Profile-Scoped Session Persistence
-  const loadWords = useCallback(async (forceFresh = false) => {
+  // Load words & categories with Profile-Scoped Session Persistence & Generation Race Guard
+  const loadWords = useCallback(async (
+    forceFresh = false,
+    overrides?: { batchSize?: number; selectedCategory?: string; isShuffle?: boolean }
+  ) => {
     if (!activeProfile) return;
+    const generation = ++loadGenerationRef.current;
     try {
       setIsLoading(true);
       const profileId = activeProfile.id;
       const resolvedScope = await resolveEffectiveScope(requestedScope);
+      if (generation !== loadGenerationRef.current) return;
       setEffectiveScope(resolvedScope);
+
+      const effectiveBatchSize = overrides?.batchSize ?? batchSizeRef.current;
+      const effectiveCat = overrides?.selectedCategory ?? categoryRef.current;
+      const effectiveShuf = overrides?.isShuffle ?? shuffleRef.current;
 
       // 1. Check saved session in studySessionService unless forceFresh is requested
       if (!forceFresh) {
         const saved = studySessionService.loadFastSkimSession(profileId, resolvedScope);
         if (saved && saved.sessionWordIds && saved.sessionWordIds.length > 0) {
+          // Synchronize UI controls with saved session truth (Session Config Authoritative)
+          if (saved.batchSize && saved.batchSize !== batchSizeRef.current) {
+            setBatchSize(saved.batchSize);
+            batchSizeRef.current = saved.batchSize;
+          }
+          if (saved.selectedCategory && saved.selectedCategory !== categoryRef.current) {
+            setSelectedCategory(saved.selectedCategory);
+            categoryRef.current = saved.selectedCategory;
+          }
+          if (typeof saved.isShuffle === 'boolean' && saved.isShuffle !== shuffleRef.current) {
+            setIsShuffle(saved.isShuffle);
+            shuffleRef.current = saved.isShuffle;
+          }
+
           // If saved has allSessionWordIds, restore both full ordering and active batch deterministically
           if (saved.allSessionWordIds && saved.allSessionWordIds.length > 0) {
             const allWordsFromDb = await db.words.where('id').anyOf(saved.allSessionWordIds).toArray();
+            if (generation !== loadGenerationRef.current) return;
             const wordMap = new Map(allWordsFromDb.map(w => [w.id, w]));
             const restoredAll = saved.allSessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
             const restoredActive = saved.sessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
@@ -166,17 +197,18 @@ export const FastSkimPage: React.FC = () => {
               setShowRecapModal(false);
 
               const cats = await courseRepository.getDownloadedCategories();
+              if (generation !== loadGenerationRef.current) return;
               setAvailableCategories(cats);
               return;
             }
           } else {
             // Legacy session without allSessionWordIds: backward compatibility fallback
             const words = await db.words.where('id').anyOf(saved.sessionWordIds).toArray();
+            if (generation !== loadGenerationRef.current) return;
             const wordMap = new Map(words.map(w => [w.id, w]));
             const restored = saved.sessionWordIds.map(id => wordMap.get(id)).filter((w): w is Word => Boolean(w));
 
             if (restored.length > 0) {
-              // Populate full scope words for allWords so handleNextBatch won't be empty
               let scopeWords: Word[] = [];
               if (resolvedScope === 'starred') {
                 const starredItems = await progressRepository.getStarredWords(profileId);
@@ -186,15 +218,16 @@ export const FastSkimPage: React.FC = () => {
               } else if (resolvedScope.startsWith('course:')) {
                 const targetCourseId = resolvedScope.slice('course:'.length);
                 scopeWords = await courseRepository.getWordsForCourse(targetCourseId, {
-                  category: selectedCategory,
-                  shuffle: isShuffle
+                  category: saved.selectedCategory || effectiveCat,
+                  shuffle: saved.isShuffle ?? effectiveShuf
                 });
               } else {
                 scopeWords = await courseRepository.getAllDownloadedWords({
-                  category: selectedCategory,
-                  shuffle: isShuffle
+                  category: saved.selectedCategory || effectiveCat,
+                  shuffle: saved.isShuffle ?? effectiveShuf
                 });
               }
+              if (generation !== loadGenerationRef.current) return;
 
               setAllWords(scopeWords.length > 0 ? scopeWords : restored);
               setActiveWords(restored);
@@ -206,6 +239,7 @@ export const FastSkimPage: React.FC = () => {
               setShowRecapModal(false);
 
               const cats = await courseRepository.getDownloadedCategories();
+              if (generation !== loadGenerationRef.current) return;
               setAvailableCategories(cats);
               return;
             }
@@ -223,27 +257,24 @@ export const FastSkimPage: React.FC = () => {
       } else if (resolvedScope.startsWith('course:')) {
         const targetCourseId = resolvedScope.slice('course:'.length);
         loadedWords = await courseRepository.getWordsForCourse(targetCourseId, {
-          category: selectedCategory,
-          shuffle: isShuffle
+          category: effectiveCat,
+          shuffle: effectiveShuf
         });
-        if (loadedWords.length === 0) {
-          loadedWords = await courseRepository.getAllDownloadedWords({
-            category: selectedCategory,
-            shuffle: isShuffle
-          });
-        }
+        // CRITICAL: DO NOT fallback to getAllDownloadedWords if course is valid downloaded course!
+        // If course has no words for effectiveCat, loadedWords stays []
       } else {
         // resolvedScope === 'all'
         loadedWords = await courseRepository.getAllDownloadedWords({
-          category: selectedCategory,
-          shuffle: isShuffle
+          category: effectiveCat,
+          shuffle: effectiveShuf
         });
       }
 
+      if (generation !== loadGenerationRef.current) return;
       setAllWords(loadedWords);
 
-      // Micro-session batching: start at batch 0
-      const initialBatch = batchSize >= 999 ? loadedWords : loadedWords.slice(0, batchSize);
+      // Micro-session batching: start at batch 0 using studySessionService helper
+      const initialBatch = studySessionService.partitionWordsIntoBatch(loadedWords, 0, effectiveBatchSize);
       setActiveWords(initialBatch);
       setCurrentIndex(0);
       setCurrentBatchIndex(0);
@@ -258,22 +289,25 @@ export const FastSkimPage: React.FC = () => {
           allSessionWordIds: loadedWords.map(w => w.id),
           currentIndex: 0,
           currentBatchIndex: 0,
-          batchSize,
-          selectedCategory,
-          isShuffle,
+          batchSize: effectiveBatchSize,
+          selectedCategory: effectiveCat,
+          isShuffle: effectiveShuf,
           createdAt: Date.now(),
           updatedAt: Date.now()
         });
       }
 
       const cats = await courseRepository.getDownloadedCategories();
+      if (generation !== loadGenerationRef.current) return;
       setAvailableCategories(cats);
     } catch (err) {
       console.error('[FastSkim] Load words error:', err);
     } finally {
-      setIsLoading(false);
+      if (generation === loadGenerationRef.current) {
+        setIsLoading(false);
+      }
     }
-  }, [requestedScope, activeProfile, selectedCategory, isShuffle, batchSize, resolveEffectiveScope]);
+  }, [requestedScope, activeProfile, resolveEffectiveScope]);
 
   useEffect(() => {
     loadWords();
@@ -440,12 +474,54 @@ export const FastSkimPage: React.FC = () => {
     }
   };
 
+  const handleBatchSizeChange = (newSize: number) => {
+    setBatchSize(newSize);
+    batchSizeRef.current = newSize;
+
+    if (allWords.length > 0) {
+      const repartitioned = studySessionService.repartitionSession(allWords, newSize);
+      setActiveWords(repartitioned.activeWords);
+      setCurrentBatchIndex(repartitioned.batchIndex);
+      setCurrentIndex(0);
+      setRemainingTime(durationSec);
+      setShowRecapModal(false);
+
+      if (activeProfile && repartitioned.activeWords.length > 0) {
+        studySessionService.saveFastSkimSession({
+          sessionId: `skim_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+          profileId: activeProfile.id,
+          courseId: effectiveScope,
+          sessionWordIds: repartitioned.activeWords.map(w => w.id),
+          allSessionWordIds: allWords.map(w => w.id),
+          currentIndex: 0,
+          currentBatchIndex: 0,
+          batchSize: newSize,
+          selectedCategory,
+          isShuffle,
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        });
+      }
+    }
+  };
+
+  const handleCategoryChange = (newCat: string) => {
+    setSelectedCategory(newCat);
+    categoryRef.current = newCat;
+    loadWords(true, { selectedCategory: newCat });
+  };
+
+  const handleShuffleToggle = () => {
+    const nextShuffle = !isShuffle;
+    setIsShuffle(nextShuffle);
+    shuffleRef.current = nextShuffle;
+    loadWords(true, { isShuffle: nextShuffle });
+  };
+
   const handleNextBatch = () => {
     if (allWords.length === 0) return;
-    const totalBatches = Math.ceil(allWords.length / batchSize) || 1;
-    const nextBatchIndex = (currentBatchIndex + 1) >= totalBatches ? 0 : currentBatchIndex + 1;
-    const nextStart = nextBatchIndex * batchSize;
-    const nextWords = batchSize >= 999 ? allWords : allWords.slice(nextStart, nextStart + batchSize);
+    const nextBatchIndex = studySessionService.getNextBatchIndex(currentBatchIndex, allWords.length, batchSize);
+    const nextWords = studySessionService.partitionWordsIntoBatch(allWords, nextBatchIndex, batchSize);
 
     setCurrentBatchIndex(nextBatchIndex);
     setActiveWords(nextWords);
@@ -492,18 +568,33 @@ export const FastSkimPage: React.FC = () => {
   }
 
   if (allWords.length === 0) {
+    const isFilteredByCategory = selectedCategory !== 'all';
+
     return (
       <div className="bg-slate-800/40 border border-slate-700/80 rounded-3xl p-8 text-center space-y-4 max-w-sm mx-auto mt-6">
         <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto">
           <Settings2 size={26} />
         </div>
         <div>
-          <h3 className="text-base font-bold text-slate-100">尚未下載課程或無符合單字</h3>
-          <p className="text-xs text-slate-400 mt-1">請先至「課程」頁面下載題庫，或更換分類篩選。</p>
+          <h3 className="text-base font-bold text-slate-100">
+            {isFilteredByCategory ? '此課程在目前分類下沒有符合單字' : '尚未下載課程或無符合單字'}
+          </h3>
+          <p className="text-xs text-slate-400 mt-1">
+            {isFilteredByCategory
+              ? `目前主題「${selectedCategory}」中無單字，可切換回全部主題或前往課程頁面。`
+              : '請先至「課程」頁面下載題庫，或更換分類篩選。'}
+          </p>
         </div>
-        <Button size="md" variant="primary" onClick={() => navigate('/catalog')}>
-          前往課程題庫庫
-        </Button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
+          {isFilteredByCategory && (
+            <Button size="md" variant="primary" onClick={() => handleCategoryChange('all')}>
+              切換為全部主題
+            </Button>
+          )}
+          <Button size="md" variant={isFilteredByCategory ? 'secondary' : 'primary'} onClick={() => navigate('/catalog')}>
+            前往課程題庫
+          </Button>
+        </div>
       </div>
     );
   }
@@ -681,7 +772,7 @@ export const FastSkimPage: React.FC = () => {
             {/* Shuffle toggle */}
             <button
               type="button"
-              onClick={() => setIsShuffle(prev => !prev)}
+              onClick={handleShuffleToggle}
               aria-label={isShuffle ? '隨機洗牌已開啟' : '順序模式'}
               className={`p-1.5 rounded-lg text-xs font-semibold transition-colors ${
                 isShuffle ? 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40' : 'bg-slate-900 text-slate-400 border border-slate-700/70'
@@ -694,7 +785,7 @@ export const FastSkimPage: React.FC = () => {
             {/* Batch size selector */}
             <select
               value={batchSize}
-              onChange={(e) => setBatchSize(Number(e.target.value))}
+              onChange={(e) => handleBatchSizeChange(Number(e.target.value))}
               aria-label="每小節單字量"
               className="px-1.5 py-0.5 rounded-lg bg-slate-900 border border-slate-700 text-[11px] text-slate-200 font-bold focus:outline-none"
             >
@@ -738,7 +829,7 @@ export const FastSkimPage: React.FC = () => {
             <ListFilter size={12} className="text-slate-400" />
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => handleCategoryChange(e.target.value)}
               aria-label="商務主題分類"
               className="bg-transparent text-xs text-slate-300 font-semibold focus:outline-none border-b border-slate-700 pb-0.5"
             >
