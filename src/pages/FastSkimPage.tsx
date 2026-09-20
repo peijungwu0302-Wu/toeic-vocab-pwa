@@ -26,7 +26,7 @@ import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { audioService } from '../services/audioService';
-import { imageService, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
+import { imageService, preloadImage, OFFLINE_PLACEHOLDER_URL } from '../services/imageService';
 import { studySessionService } from '../services/studySessionService';
 import { manualQueueService } from '../services/manualQueueService';
 import { db } from '../db';
@@ -37,17 +37,55 @@ export const FastSkimPage: React.FC = () => {
   const { activeProfile, updateProfile } = useProfile();
   const { settings, updateSettings, headwordClass, definitionClass, exampleEnClass, exampleZhClass, supportingClass, zoomIn, zoomOut, currentPreset } = useTypography();
 
-  const courseId = searchParams.get('courseId');
+  const courseIdParam = searchParams.get('courseId');
+  const scopeParam = searchParams.get('scope');
   const queueParam = searchParams.get('queue');
-  const isManualQueue = courseId === 'manual' || queueParam === 'manual';
-  const isStarredQueue = courseId === 'starred' || searchParams.get('starred') === 'true';
+  const starredParam = searchParams.get('starred');
+
+  const isManualQueue = courseIdParam === 'manual' || queueParam === 'manual';
+  const isStarredQueue = courseIdParam === 'starred' || starredParam === 'true';
+  const isScopeAll = scopeParam === 'all' || courseIdParam === 'all';
+
+  // Resolved scope with clear priority and session isolation
   const skimScope = isManualQueue
     ? 'manual'
     : isStarredQueue
     ? 'starred'
-    : courseId
-    ? `course:${courseId}`
+    : isScopeAll
+    ? 'all'
+    : courseIdParam
+    ? `course:${courseIdParam}`
+    : activeProfile?.activeCourseId
+    ? `course:${activeProfile.activeCourseId}`
     : 'all';
+
+  const currentScopeType: 'today' | 'all' | 'starred' | 'manual' | 'custom_course' = isManualQueue
+    ? 'manual'
+    : isStarredQueue
+    ? 'starred'
+    : isScopeAll
+    ? 'all'
+    : courseIdParam && activeProfile?.activeCourseId && courseIdParam === activeProfile.activeCourseId
+    ? 'today'
+    : courseIdParam
+    ? 'custom_course'
+    : 'today';
+
+  const handleScopeChange = (newScope: string) => {
+    if (newScope === 'today') {
+      if (activeProfile?.activeCourseId) {
+        navigate(`/skim?courseId=${activeProfile.activeCourseId}`, { replace: true });
+      } else {
+        navigate('/skim?scope=all', { replace: true });
+      }
+    } else if (newScope === 'all') {
+      navigate('/skim?scope=all', { replace: true });
+    } else if (newScope === 'starred') {
+      navigate('/skim?courseId=starred', { replace: true });
+    } else if (newScope === 'manual') {
+      navigate('/skim?queue=manual', { replace: true });
+    }
+  };
 
   const [allWords, setAllWords] = useState<Word[]>([]);
   const [activeWords, setActiveWords] = useState<Word[]>([]);
@@ -112,13 +150,26 @@ export const FastSkimPage: React.FC = () => {
       }
 
       let loadedWords: Word[] = [];
-      if (courseId === 'starred') {
+      if (skimScope === 'starred') {
         const starredItems = await progressRepository.getStarredWords(profileId);
         loadedWords = starredItems.map(i => i.word);
-      } else if (courseId === 'manual' || searchParams.get('queue') === 'manual') {
+      } else if (skimScope === 'manual') {
         loadedWords = await manualQueueService.getQueueWords(profileId);
+      } else if (skimScope.startsWith('course:')) {
+        const targetCourseId = skimScope.slice('course:'.length);
+        loadedWords = await courseRepository.getWordsForCourse(targetCourseId, {
+          category: selectedCategory,
+          shuffle: isShuffle
+        });
+        if (loadedWords.length === 0) {
+          loadedWords = await courseRepository.getAllDownloadedWords({
+            category: selectedCategory,
+            shuffle: isShuffle
+          });
+        }
       } else {
-        loadedWords = await courseRepository.getWordsForCourse(courseId || 'all', {
+        // skimScope === 'all'
+        loadedWords = await courseRepository.getAllDownloadedWords({
           category: selectedCategory,
           shuffle: isShuffle
         });
@@ -157,7 +208,7 @@ export const FastSkimPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [skimScope, courseId, activeProfile, selectedCategory, isShuffle, batchSize, currentBatchIndex, searchParams]);
+  }, [skimScope, activeProfile, selectedCategory, isShuffle, batchSize, currentBatchIndex]);
 
   useEffect(() => {
     loadWords();
@@ -188,6 +239,29 @@ export const FastSkimPage: React.FC = () => {
       }
     }
   }, [currentIndex, currentBatchIndex, activeWords.length, isLoading, skimScope, activeProfile]);
+
+  // Look-Ahead Preloading for FastSkim (P0)
+  useEffect(() => {
+    if (!showImage || activeWords.length === 0) return;
+
+    const offsets = [1, 2, 3, -1];
+    offsets.forEach(offset => {
+      const targetIdx = currentIndex + offset;
+      if (targetIdx >= 0 && targetIdx < activeWords.length) {
+        const word = activeWords[targetIdx];
+        if (word) {
+          try {
+            const imgInfo = imageService.getImageForWord(word.headword, word.category, word.id);
+            if (imgInfo?.url) {
+              preloadImage(imgInfo.url);
+            }
+          } catch {
+            // non-blocking
+          }
+        }
+      }
+    });
+  }, [currentIndex, activeWords, showImage]);
 
   const handleRestartFromBeginning = () => {
     if (activeProfile) {
@@ -502,6 +576,22 @@ export const FastSkimPage: React.FC = () => {
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Minimal Scope Selector */}
+            <select
+              value={currentScopeType}
+              onChange={(e) => handleScopeChange(e.target.value)}
+              aria-label="速讀範圍"
+              className="px-2 py-0.5 rounded-full bg-slate-900/90 border border-slate-700/80 text-[11px] text-slate-200 font-semibold focus:outline-none cursor-pointer"
+            >
+              <option value="today" className="bg-slate-900">今日課程</option>
+              <option value="all" className="bg-slate-900">全部已下載</option>
+              <option value="starred" className="bg-slate-900">收藏單字</option>
+              <option value="manual" className="bg-slate-900">重點練習</option>
+              {currentScopeType === 'custom_course' && (
+                <option value="custom_course" className="bg-slate-900">指定課程</option>
+              )}
+            </select>
 
             <span className="text-[10px] text-slate-400">
               (第 {currentBatchIndex + 1} 節)
@@ -921,7 +1011,7 @@ export const FastSkimPage: React.FC = () => {
               size="md"
               variant="outline"
               fullWidth
-              onClick={() => navigate(`/review${courseId ? `?courseId=${courseId}` : ''}`)}
+              onClick={() => navigate(`/review${courseIdParam ? `?courseId=${courseIdParam}` : ''}`)}
             >
               <Repeat size={15} className="mr-1.5" /> 進入主動回想間隔複習
             </Button>

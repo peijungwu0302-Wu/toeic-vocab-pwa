@@ -27,7 +27,7 @@ export interface ValidatedCourseData {
 
 export const courseRepository = {
   async fetchCatalog(): Promise<DatasetCatalog> {
-    const res = await fetch(`${getBaseDataUrl('data/v1/catalog.json')}?t=${Date.now()}`, { cache: 'no-cache' });
+    const res = await fetch(getBaseDataUrl('data/v1/catalog.json'));
     if (!res.ok) {
       throw new Error(`Failed to fetch course catalog: HTTP ${res.status}`);
     }

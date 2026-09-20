@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   DownloadCloud,
@@ -36,6 +36,14 @@ export const CatalogPage: React.FC = () => {
   const { activeProfile, setActiveCourseId } = useProfile();
   const navigate = useNavigate();
 
+  const isMountedRef = useRef(true);
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
   const [catalog, setCatalog] = useState<DatasetCatalog | null>(null);
   const [downloadedMap, setDownloadedMap] = useState<Map<string, Course>>(new Map());
   const [progressCountMap, setProgressCountMap] = useState<Map<string, number>>(new Map());
@@ -46,6 +54,7 @@ export const CatalogPage: React.FC = () => {
   const [downloadingCourseId, setDownloadingCourseId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEnriching, setIsEnriching] = useState(false);
   const [isSyncingAll, setIsSyncingAll] = useState(false);
   const [syncSuccessMsg, setSyncSuccessMsg] = useState(false);
   const [cachingImagesCourseId, setCachingImagesCourseId] = useState<string | null>(null);
@@ -82,48 +91,75 @@ export const CatalogPage: React.FC = () => {
       setIsLoading(true);
       setErrorMessage(null);
 
-      // 1. Fetch catalog
-      const cat = await courseRepository.fetchCatalog();
+      // Phase A: Critical UI - Fetch catalog and downloaded courses in parallel
+      const [cat, localCourses] = await Promise.all([
+        courseRepository.fetchCatalog(),
+        courseRepository.getAll()
+      ]);
+
+      if (!isMountedRef.current) return;
+
       setCatalog(cat);
 
-      // 2. Fetch downloaded courses
-      const localCourses = await courseRepository.getAll();
       const map = new Map<string, Course>();
       localCourses.forEach(c => {
         if (c.isDownloaded) map.set(c.id, c);
       });
       setDownloadedMap(map);
 
-      // 3. Fetch student's progress counts per course
+      // Immediately unblock the critical UI
+      setIsLoading(false);
+
+      // Phase B: Asynchronous Background Enrichment
       if (activeProfile) {
-        const studentProgress = await progressRepository.getAllForProfile(activeProfile.id);
-        const learnedWordIds = new Set(studentProgress.map(p => p.wordId));
+        const currentProfileId = activeProfile.id;
+        setIsEnriching(true);
 
-        const countMap = new Map<string, number>();
-        for (const c of localCourses) {
-          if (c.isDownloaded) {
-            const courseWords = await courseRepository.getWordsForCourse(c.id);
-            const learnedCount = courseWords.filter(w => learnedWordIds.has(w.id)).length;
-            countMap.set(c.id, learnedCount);
-          }
-        }
-        setProgressCountMap(countMap);
+        (async () => {
+          try {
+            const studentProgress = await progressRepository.getAllForProfile(currentProfileId);
+            if (!isMountedRef.current || activeProfile?.id !== currentProfileId) return;
 
-        // 4. Populate offline media statuses for downloaded courses
-        const statusMap = new Map<string, { total: number; cached: number; isFullyCached: boolean }>();
-        for (const c of localCourses) {
-          if (c.isDownloaded) {
-            const status = await imageService.getCourseOfflineMediaStatus(c.id);
-            statusMap.set(c.id, status);
+            const learnedWordIds = new Set(studentProgress.map(p => p.wordId));
+            const countMap = new Map<string, number>();
+
+            for (const c of localCourses) {
+              if (c.isDownloaded) {
+                const courseWords = await courseRepository.getWordsForCourse(c.id);
+                const learnedCount = courseWords.filter(w => learnedWordIds.has(w.id)).length;
+                countMap.set(c.id, learnedCount);
+              }
+            }
+
+            if (!isMountedRef.current || activeProfile?.id !== currentProfileId) return;
+            setProgressCountMap(countMap);
+
+            // Populate offline media statuses for downloaded courses
+            const statusMap = new Map<string, { total: number; cached: number; isFullyCached: boolean }>();
+            for (const c of localCourses) {
+              if (c.isDownloaded) {
+                const status = await imageService.getCourseOfflineMediaStatus(c.id);
+                statusMap.set(c.id, status);
+              }
+            }
+
+            if (!isMountedRef.current || activeProfile?.id !== currentProfileId) return;
+            setOfflineStatusMap(statusMap);
+          } catch (enrichErr) {
+            console.warn('[CatalogPage] Background enrichment non-critical warning:', enrichErr);
+          } finally {
+            if (isMountedRef.current) {
+              setIsEnriching(false);
+            }
           }
-        }
-        setOfflineStatusMap(statusMap);
+        })();
       }
     } catch (err) {
       console.error('[CatalogPage] Load error:', err);
-      setErrorMessage('無法載入課程清單，請確認網路連線或靜態檔案。');
-    } finally {
-      setIsLoading(false);
+      if (isMountedRef.current) {
+        setErrorMessage('無法載入課程清單，請確認網路連線或靜態檔案。');
+        setIsLoading(false);
+      }
     }
   }, [activeProfile]);
 
@@ -453,11 +489,14 @@ export const CatalogPage: React.FC = () => {
           {displayedCourses.map((c) => {
             const isDownloaded = downloadedMap.has(c.id);
             const isDownloading = downloadingCourseId === c.id;
+            const hasProgress = progressCountMap.has(c.id);
             const learnedCount = progressCountMap.get(c.id) || 0;
             const progressPercent = c.wordCount > 0 ? Math.round((learnedCount / c.wordCount) * 100) : 0;
             const isExpanded = expandedCourseId === c.id;
             const wordsList = courseWordsMap.get(c.id) || [];
             const isLoadingWords = loadingWordsCourseId === c.id;
+            const offlineStatus = offlineStatusMap.get(c.id);
+            const isOfflineStatusChecking = isEnriching && !offlineStatus;
 
             return (
               <div
@@ -495,13 +534,13 @@ export const CatalogPage: React.FC = () => {
                 {isDownloaded && (
                   <div>
                     <div className="flex justify-between text-[11px] text-slate-400 mb-1">
-                      <span>學習進度：{learnedCount} / {c.wordCount} 字</span>
-                      <span className="font-bold text-emerald-400">{progressPercent}%</span>
+                      <span>學習進度：{hasProgress ? `${learnedCount} / ${c.wordCount} 字` : '計算中...'}</span>
+                      <span className="font-bold text-emerald-400">{hasProgress ? `${progressPercent}%` : '...'}</span>
                     </div>
                     <div className="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-emerald-500 rounded-full"
-                        style={{ width: `${progressPercent}%` }}
+                        className={`h-full bg-emerald-500 rounded-full transition-all duration-300 ${!hasProgress ? 'animate-pulse opacity-40 w-1/4' : ''}`}
+                        style={{ width: hasProgress ? `${progressPercent}%` : undefined }}
                       />
                     </div>
                   </div>
@@ -624,6 +663,8 @@ export const CatalogPage: React.FC = () => {
                             </>
                           ) : isPreparingEstimate === c.id ? (
                             <Loader2 size={13} className="animate-spin text-teal-400" />
+                          ) : isOfflineStatusChecking ? (
+                            <Loader2 size={13} className="animate-spin text-slate-500" />
                           ) : (
                             <ImageIcon size={14} />
                           )}

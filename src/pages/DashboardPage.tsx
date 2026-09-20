@@ -92,10 +92,11 @@ export const DashboardPage: React.FC = () => {
 
   const handleStartSkim = async (courseId?: string) => {
     await audioService.unlockAudio();
-    if (courseId) {
-      navigate(`/skim?courseId=${courseId}`);
+    const targetCourseId = courseId || activeProfile?.activeCourseId;
+    if (targetCourseId) {
+      navigate(`/skim?courseId=${targetCourseId}`);
     } else {
-      navigate('/skim');
+      navigate('/skim?scope=all');
     }
   };
 
