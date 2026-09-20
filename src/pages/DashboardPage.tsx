@@ -225,14 +225,14 @@ export const DashboardPage: React.FC = () => {
               <h3 className="text-sm font-black text-slate-100 flex items-center space-x-1.5">
                 <span>今日導引學習計畫</span>
                 {todaySession?.isCompleted ? (
-                  <Badge variant="emerald">今日已達成 🎉</Badge>
+                  <Badge variant="emerald">今日計畫已結束</Badge>
                 ) : (
                   <Badge variant="blue">5 步閉環</Badge>
                 )}
               </h3>
               <p className="text-[11px] text-slate-400 mt-0.5">
                 {todaySession?.isCompleted
-                  ? '您已完成今日複習、新詞學習與課後測驗！'
+                  ? '查看今日複習、學習與測驗紀錄'
                   : '複習舊詞 ➔ 預覽新詞 ➔ 深度學習 ➔ 驗收測驗'}
               </p>
             </div>

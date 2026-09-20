@@ -3,7 +3,7 @@ import { courseRepository, type ValidatedCourseData } from '../repositories/cour
 
 export const CURRENT_DATASET_VERSION = 17;
 export const DATASET_RELEASE_TAG = 'v17-master-syllabus';
-export const APP_RELEASE_VERSION = 'v1.3.4 (Rewind Peek & Front Gestures)';
+export const APP_RELEASE_VERSION = typeof __APP_VERSION__ !== 'undefined' ? `v${__APP_VERSION__}` : 'v1.3.4';
 
 export interface DatasetDiagnostics {
   appVersion: string;

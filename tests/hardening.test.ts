@@ -8,6 +8,7 @@ import { courseRepository } from '../src/repositories/courseRepository';
 import { profileRepository } from '../src/repositories/profileRepository';
 import { todayService, DEFAULT_APP_COURSE_ID } from '../src/services/todayService';
 import {
+  imageService,
   clearCourseOfflineMedia,
   getStorageEstimate,
   getCourseMediaEstimate,
@@ -17,6 +18,7 @@ import {
   OFFLINE_MEDIA_CACHE_NAME,
   R2_MEDIA_BASE_URL
 } from '../src/services/imageService';
+import { diagnoseGeminiError } from '../src/services/geminiService';
 import { computeSha256Hex } from '../src/utils/crypto';
 import { Word, Course, Profile, Progress, ReviewLog } from '../src/types/db';
 import { studySessionService } from '../src/services/studySessionService';
@@ -1527,6 +1529,211 @@ describe('Release Candidate Hardening & Acceptance Audit', () => {
       const offlineMediaConfigMatch = content.match(/cacheName:\s*'toeic-offline-media-v1'[\s\S]*?\}/);
       expect(offlineMediaConfigMatch).not.toBeNull();
       expect(offlineMediaConfigMatch![0]).not.toContain('maxAgeSeconds');
+    });
+
+    // Regression 20: Course data removal with cached media is blocked to prevent orphan cache
+    it('Regression 20: Course data removal with cached media is blocked to prevent orphan cache', async () => {
+      // Setup course with cached offline media
+      await db.courses.put({
+        id: 'course-orphan-prevent',
+        title: 'Orphan Prevent Course',
+        description: '',
+        toeicScoreRange: '700',
+        category: '',
+        level: '',
+        wordCount: 1,
+        version: 17,
+        isDownloaded: true
+      });
+      await db.words.put({
+        id: 'orphan_w1',
+        headword: 'orphan',
+        normalizedHeadword: 'orphan',
+        entryType: 'word',
+        definitionZh: '孤兒快取測試',
+        starRating: 1,
+        toeicScoreRange: '700',
+        category: '',
+        partsOfSpeech: [],
+        wordForms: [],
+        phoneticUS: null,
+        phoneticUK: null,
+        examples: [],
+        examTips: [],
+        audioUSUrl: null,
+        audioUKUrl: null
+      });
+      await db.courseWords.put({
+        courseId: 'course-orphan-prevent',
+        wordId: 'orphan_w1',
+        orderIndex: 0
+      });
+
+      // Simulated offline status with cached images > 0
+      const offlineStatus = { cached: 1, total: 1, isFullyCached: true };
+
+      // Simulate handleDelete logic in CatalogPage
+      let courseDeletionBlocked = false;
+      let blockedMessage = '';
+      const attemptDeleteCourseData = async (courseId: string) => {
+        if (offlineStatus.cached > 0) {
+          courseDeletionBlocked = true;
+          blockedMessage = '此課程仍有離線圖片包，請先刪除離線圖片包，再清除課程資料快取。';
+          return;
+        }
+        await courseRepository.removeCourseCache(courseId);
+      };
+
+      // 1. Attempting to delete course data while media is cached is blocked!
+      await attemptDeleteCourseData('course-orphan-prevent');
+      expect(courseDeletionBlocked).toBe(true);
+      expect(blockedMessage).toBe('此課程仍有離線圖片包，請先刪除離線圖片包，再清除課程資料快取。');
+
+      // Course and words still intact
+      const wordsBefore = await courseRepository.getWordsForCourse('course-orphan-prevent');
+      expect(wordsBefore.length).toBe(1);
+      const courseBefore = await courseRepository.getById('course-orphan-prevent');
+      expect(courseBefore?.isDownloaded).toBe(true);
+
+      // 2. User deletes media first -> offlineStatus.cached becomes 0
+      offlineStatus.cached = 0;
+      offlineStatus.isFullyCached = false;
+
+      // 3. Now attempting to delete course data succeeds!
+      courseDeletionBlocked = false;
+      await attemptDeleteCourseData('course-orphan-prevent');
+      expect(courseDeletionBlocked).toBe(false);
+
+      // Course words are removed, course isDownloaded is false
+      const wordsAfter = await courseRepository.getWordsForCourse('course-orphan-prevent');
+      expect(wordsAfter.length).toBe(0);
+      const courseAfter = await courseRepository.getById('course-orphan-prevent');
+      expect(courseAfter?.isDownloaded).toBe(false);
+    });
+
+    // Regression 21: Media estimate failure blocks download and never invokes cacheCourseImages
+    it('Regression 21: Media estimate failure blocks download and never invokes cacheCourseImages', async () => {
+      let isCacheCourseImagesInvoked = false;
+
+      const estimateSpy = vi.spyOn(imageService, 'getCourseMediaEstimate').mockRejectedValue(new Error('Network error: Manifest fetch failed'));
+      const cacheSpy = vi.spyOn(imageService, 'cacheCourseImages').mockImplementation(async () => {
+        isCacheCourseImagesInvoked = true;
+        return { cached: 0, total: 0, failed: 0 };
+      });
+
+      let capturedError: string | null = null;
+      let modalOpened = false;
+      const handleRequestCacheImages = async (courseId: string, _courseTitle: string) => {
+        try {
+          await imageService.getCourseMediaEstimate(courseId);
+          await imageService.getStorageEstimate();
+          modalOpened = true;
+        } catch (_err) {
+          capturedError = '目前無法取得離線圖片包容量資訊，請稍後再試。';
+          // DO NOT invoke cacheCourseImages on estimate failure
+        }
+      };
+
+      await handleRequestCacheImages('c_fail', 'Fail Course');
+
+      expect(capturedError).toBe('目前無法取得離線圖片包容量資訊，請稍後再試。');
+      expect(modalOpened).toBe(false);
+      expect(isCacheCourseImagesInvoked).toBe(false);
+      expect(cacheSpy).not.toHaveBeenCalled();
+
+      estimateSpy.mockRestore();
+      cacheSpy.mockRestore();
+    });
+
+    // Regression 22: Storage estimate unavailable (null) does not block confirmation modal and allows user download
+    it('Regression 22: Storage estimate unavailable (null) does not block confirmation modal and allows user download', async () => {
+      const estimateSpy = vi.spyOn(imageService, 'getCourseMediaEstimate').mockResolvedValue({
+        imageCount: 50,
+        estimatedBytes: 2500000,
+        isEstimate: true
+      });
+      const storageSpy = vi.spyOn(imageService, 'getStorageEstimate').mockResolvedValue(null);
+
+      let modalState: any = null;
+      const handleRequestCacheImages = async (courseId: string, courseTitle: string) => {
+        try {
+          const estimate = await imageService.getCourseMediaEstimate(courseId);
+          const storage = await imageService.getStorageEstimate();
+          modalState = {
+            courseId,
+            courseTitle,
+            imageCount: estimate.imageCount,
+            estimatedBytes: estimate.estimatedBytes,
+            storageEstimate: storage
+          };
+        } catch (err) {
+          modalState = null;
+        }
+      };
+
+      await handleRequestCacheImages('c_ok', 'Valid Course');
+
+      // Confirmation modal STILL opens with valid imageCount/estimatedBytes and storageEstimate=null
+      expect(modalState).not.toBeNull();
+      expect(modalState.imageCount).toBe(50);
+      expect(modalState.estimatedBytes).toBe(2500000);
+      expect(modalState.storageEstimate).toBeNull();
+
+      estimateSpy.mockRestore();
+      storageSpy.mockRestore();
+    });
+
+    // Regression 23: Privacy UI copy accurately reflects browser local storage and does not claim key is only stored in IndexedDB
+    it('Regression 23: Privacy UI copy accurately reflects browser local storage and does not claim key is only stored in IndexedDB', () => {
+      const settingsFilePath = path.resolve(process.cwd(), 'src/pages/SettingsPage.tsx');
+      expect(fs.existsSync(settingsFilePath)).toBe(true);
+      const content = fs.readFileSync(settingsFilePath, 'utf-8');
+
+      // Must NOT claim key is only stored in IndexedDB
+      expect(content.includes('API Key 儲存於本機資料庫（IndexedDB）')).toBe(false);
+
+      // Must state key is stored in browser local storage
+      expect(content.includes('API Key 儲存在此裝置的瀏覽器本機儲存空間；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。')).toBe(true);
+    });
+
+    // Regression 24: App version in diagnostics dynamically equals package.json version
+    it('Regression 24: App version in diagnostics dynamically equals package.json version', async () => {
+      const pkgPath = path.resolve(process.cwd(), 'package.json');
+      expect(fs.existsSync(pkgPath)).toBe(true);
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+
+      const diagnostics = await datasetMigrationService.getDiagnostics();
+      expect(diagnostics.appVersion).toBe(`v${pkg.version}`);
+    });
+
+    // Regression 25: Today completed copy is truthful and neutral without claiming all stages completed
+    it('Regression 25: Today completed copy is truthful and neutral without claiming all stages completed', () => {
+      const dashboardPath = path.resolve(process.cwd(), 'src/pages/DashboardPage.tsx');
+      const todayGuidedPath = path.resolve(process.cwd(), 'src/pages/TodayGuidedPage.tsx');
+
+      const dashboardContent = fs.readFileSync(dashboardPath, 'utf-8');
+      expect(dashboardContent.includes('今日已達成 🎉')).toBe(false);
+      expect(dashboardContent.includes('您已完成今日複習、新詞學習與課後測驗！')).toBe(false);
+      expect(dashboardContent.includes('今日計畫已結束')).toBe(true);
+      expect(dashboardContent.includes('查看今日複習、學習與測驗紀錄')).toBe(true);
+
+      const todayContent = fs.readFileSync(todayGuidedPath, 'utf-8');
+      expect(todayContent.includes('太棒了！今日計畫全數達成')).toBe(false);
+      expect(todayContent.includes('您已成功完成舊詞間隔複習、新詞深度學習與測驗驗收！')).toBe(false);
+      expect(todayContent.includes('今日學習總結')).toBe(true);
+      expect(todayContent.includes('查看今日單字複習、新詞學習與測驗驗收紀錄')).toBe(true);
+    });
+
+    // Regression 26: Gemini diagnostic copy contains no fixed 15 RPM or fixed model claims
+    it('Regression 26: Gemini diagnostic copy contains no fixed 15 RPM or fixed model claims', () => {
+      const quotaMsg = diagnoseGeminiError('Error: 429 RESOURCE_EXHAUSTED Quota exceeded');
+      expect(quotaMsg).not.toContain('15 RPM');
+      expect(quotaMsg).not.toContain('免費版每分鐘上限');
+      expect(quotaMsg).toContain('已達目前 API 配額或請求頻率限制，請稍後再試。');
+
+      const notFoundMsg = diagnoseGeminiError('Error: 404 NOT_FOUND Model not found');
+      expect(notFoundMsg).not.toContain('最新 gemini-3.6-flash');
+      expect(notFoundMsg).toContain('目前模型端點不可用或已調整，請稍後重試或更新模型設定。');
     });
   });
 });

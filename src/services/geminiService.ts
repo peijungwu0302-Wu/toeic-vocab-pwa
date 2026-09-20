@@ -83,11 +83,11 @@ export function diagnoseGeminiError(rawError: string): string {
   }
 
   if (err.includes('resource_exhausted') || err.includes('quota') || err.includes('429')) {
-    return '【請求頻率超限】已達 Google 免費版每分鐘上限（15 RPM），請稍候 5~10 秒後再次點擊重試。';
+    return '【配額與頻率限制】已達目前 API 配額或請求頻率限制，請稍後再試。';
   }
 
   if (err.includes('not found') || err.includes('404')) {
-    return '【模型端點調整】當前端點已更新為最新 gemini-3.6-flash。';
+    return '【模型端點不可用】目前模型端點不可用或已調整，請稍後重試或更新模型設定。';
   }
 
   return `【API 回應異常】：${rawError}`;

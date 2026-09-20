@@ -770,9 +770,9 @@ export const TodayGuidedPage: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="text-2xl font-black text-slate-100">太棒了！今日計畫全數達成</h2>
+          <h2 className="text-2xl font-black text-slate-100">今日學習總結</h2>
           <p className="text-xs text-slate-400 mt-1">
-            您已成功完成舊詞間隔複習、新詞深度學習與測驗驗收！
+            查看今日單字複習、新詞學習與測驗驗收紀錄
           </p>
         </div>
 

@@ -297,7 +297,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         <p className="text-[11px] text-slate-400 leading-relaxed">
-          Google AI Studio 提供<strong className="text-slate-200">免費調用額度</strong>。API Key 儲存於本機資料庫（IndexedDB）；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。
+          Google AI Studio 提供<strong className="text-slate-200">免費調用額度</strong>。API Key 儲存在此裝置的瀏覽器本機儲存空間；使用 AI 功能時，相關題目與單字提示會傳送至 Google Gemini API 處理。
         </p>
 
         <div className="space-y-2 pt-1">

@@ -146,6 +146,17 @@ export const CatalogPage: React.FC = () => {
   };
 
   const handleDelete = async (courseId: string) => {
+    // Prevent orphan offline image cache: must delete media pack first
+    const offlineStatus = offlineStatusMap.get(courseId);
+    if (offlineStatus && offlineStatus.cached > 0) {
+      const msg = '此課程仍有離線圖片包，請先刪除離線圖片包，再清除課程資料快取。';
+      setErrorMessage(msg);
+      if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+        alert(msg);
+      }
+      return;
+    }
+
     if (!confirm('確定要清除此課程的離線單字快取嗎？（已記錄的個人學習進度不會遺失，再次下載後可復原）')) {
       return;
     }
@@ -222,6 +233,7 @@ export const CatalogPage: React.FC = () => {
   const handleRequestCacheImages = async (courseId: string, courseTitle: string) => {
     try {
       setIsPreparingEstimate(courseId);
+      setErrorMessage(null);
       const estimate = await imageService.getCourseMediaEstimate(courseId);
       const storage = await imageService.getStorageEstimate();
       setMediaEstimateModal({
@@ -233,7 +245,7 @@ export const CatalogPage: React.FC = () => {
       });
     } catch (err) {
       console.warn('[CatalogPage] Failed to get media estimate:', err);
-      executeCacheImages(courseId);
+      setErrorMessage('目前無法取得離線圖片包容量資訊，請稍後再試。');
     } finally {
       setIsPreparingEstimate(null);
     }
