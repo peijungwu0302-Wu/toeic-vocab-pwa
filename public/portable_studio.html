@@ -223,7 +223,11 @@
     let currentTier = 'expert-high-part1';
     let currentWords = [];
     let selectedWord = null;
-    const stagedImages = new Map(); // slug -> { base64, ext, headword }
+    const stagedImages = new Map(); // wordId -> { blob, base64, sha256, ext, headword, wordId }
+    const reconciliationRequiredWords = new Set();
+    let imageProcessing = false;
+    let publishInProgress = false;
+    let publishingTargetWordId = null;
     const R2_WORKER_URL = "https://toeic-image-publisher.peijungwu0302.workers.dev";
     let runtimeManifest = null;
     const MANIFEST_CACHE_KEY = 'TOEIC_PORTABLE_STUDIO_MANIFEST_CACHE';
@@ -234,9 +238,9 @@
 
     function getWordImageInfo(w) {
       if (!w) return { isDone: false, isStaged: false, url: null, version: null, filename: null };
-      if (stagedImages.has(w.slug)) {
-        const item = stagedImages.get(w.slug);
-        return { isDone: true, isStaged: true, url: item.base64, version: null, filename: `${w.slug}.${item.ext} (本次貼圖暫存)` };
+      if (w.id && stagedImages.has(w.id)) {
+        const item = stagedImages.get(w.id);
+        return { isDone: true, isStaged: true, url: item.base64, version: null, filename: `${w.id}.${item.ext} (本次貼圖暫存)` };
       }
       if (w.cloudImageUrl) {
         return { isDone: true, isStaged: false, url: w.cloudImageUrl, version: null, filename: `${w.headword} ✅ 雲端圖檔` };
@@ -467,7 +471,7 @@
         const info = getWordImageInfo(w);
         const isStaged = info.isStaged;
         const isDone = info.isDone;
-        const isSelected = selectedWord && (selectedWord.id ? selectedWord.id === w.id : selectedWord.slug === w.slug);
+        const isSelected = selectedWord && selectedWord.id === w.id;
         const timeBadge = w.completedAt ? formatTime(w.completedAt) : '';
 
         const card = document.createElement('div');
@@ -610,21 +614,45 @@
         showToast('⚠️ 請先在左側選取要配圖的單字！', false);
         return;
       }
+      if (imageProcessing) {
+        showToast('⚠️ 圖片仍在轉換中，請稍候再貼圖！', false);
+        return;
+      }
+      const targetWord = selectedWord;
+      const target = Object.freeze({ wordId: targetWord.id, headword: targetWord.headword });
+      if (!target.wordId) {
+        showToast('❌ 此單字缺少 wordId，無法暫存圖片！', false);
+        return;
+      }
+      if (publishInProgress && publishingTargetWordId === target.wordId) {
+        showToast(`⚠️ "${target.headword}" 正在發布中，請完成後再貼圖！`, false);
+        return;
+      }
+      imageProcessing = true;
       try {
-        showToast('⏳ 正在轉換為標準 1:1 WebP 並計算 SHA-256...', false);
+        showToast(`⏳ 正在為 "${target.headword}" 轉換 WebP 並計算 SHA-256...`, false);
         const webpInfo = await processImageToWebP(file);
-        const key = selectedWord.id || selectedWord.slug;
-        stagedImages.set(key, { ...webpInfo, headword: selectedWord.headword, wordId: selectedWord.id });
+        if (!imageProcessing || targetWord.id !== target.wordId) {
+          throw new Error('貼圖目標已變更，未暫存圖片');
+        }
+        if (publishInProgress && publishingTargetWordId === target.wordId) {
+          showToast(`⚠️ "${target.headword}" 已開始發布，本次新貼圖未暫存！`, false);
+          return;
+        }
+        stagedImages.set(target.wordId, { ...webpInfo, headword: target.headword, wordId: target.wordId });
         
         stagedCount.textContent = stagedImages.size;
         zipCount.textContent = stagedImages.size;
         btnDownloadZip.disabled = stagedImages.size === 0;
 
-        selectWord(selectedWord);
-        showToast(`🎉 成功轉換並暫存 "${selectedWord.headword}" (WebP / 896x896)！`, true);
+        if (selectedWord && selectedWord.id === target.wordId) selectWord(targetWord);
+        else renderList();
+        showToast(`🎉 成功轉換並暫存 "${target.headword}" (WebP / 896x896)！`, true);
       } catch (err) {
         console.error('Image processing error:', err);
-        showToast('❌ 圖片轉檔失敗，請確認檔案格式！', false);
+        showToast(`❌ "${target.headword}" 圖片轉檔或暫存失敗，請確認檔案格式！`, false);
+      } finally {
+        imageProcessing = false;
       }
     }
 
@@ -644,9 +672,28 @@
     if (btnPublishR2) {
       btnPublishR2.onclick = async () => {
         if (!selectedWord) return;
-        const key = selectedWord.id || selectedWord.slug;
+        if (publishInProgress) {
+          showToast('⚠️ 圖片仍在發布中，請等待目前發布完成！', false);
+          return;
+        }
+        const targetWord = selectedWord;
+        const target = Object.freeze({
+          wordId: targetWord.id,
+          headword: targetWord.headword,
+          prompt: targetWord.prompt || ''
+        });
+        const key = target.wordId;
+        if (!key) {
+          showToast('❌ 此單字缺少 wordId，無法發布圖片！', false);
+          return;
+        }
         if (!stagedImages.has(key)) {
           showToast('⚠️ 請先貼上或拖入新圖片再進行發布！', false);
+          return;
+        }
+        const item = stagedImages.get(key);
+        if (reconciliationRequiredWords.has(key)) {
+          showToast('❌ 此圖片發布需要 reconciliation，請先核對 R2 狀態，勿直接重試！', false);
           return;
         }
         const secret = getStudioSecret();
@@ -654,20 +701,22 @@
           showToast('⚠️ 未提供發布金鑰，發布已取消！', false);
           return;
         }
-        const item = stagedImages.get(key);
+        publishInProgress = true;
+        publishingTargetWordId = target.wordId;
         btnPublishR2.disabled = true;
-        btnPublishR2.textContent = '⏳ 發布中...';
+        btnPublishR2.textContent = `⏳ 發布 ${target.headword} 中...`;
 
         try {
-          const reqId = 'req_studio_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+          const reqId = item.publishRequestId ||
+            (item.publishRequestId = 'req_studio_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8));
           const formData = new FormData();
-          formData.append('file', item.blob, `${selectedWord.id}.webp`);
+          formData.append('file', item.blob, `${target.wordId}.webp`);
           formData.append('metadata', JSON.stringify({
-            wordId: selectedWord.id,
+            wordId: target.wordId,
             imageSha256: item.sha256,
             prompt: {
               formulaVersion: 'v4-cinematic',
-              fullPromptText: selectedWord.prompt || ''
+              fullPromptText: target.prompt
             },
             generator: {
               provider: 'manual-studio',
@@ -688,14 +737,33 @@
           });
 
           const data = await res.json();
-          if (!res.ok) {
-            throw new Error(data.error || 'Publish failed');
+          if (data.reconciliationRequired === true) {
+            reconciliationRequiredWords.add(target.wordId);
+            throw new Error(`${data.code || 'PARTIAL_PUBLICATION'}: 需要 reconciliation，請勿直接重試`);
+          }
+          if (!res.ok || data.success !== true) {
+            throw new Error(data.error || data.code || 'Publish failed');
+          }
+          const validReceipt = data.wordId === target.wordId &&
+            data.publishRequestId === reqId &&
+            Number.isInteger(data.version) && data.version > 0 &&
+            data.imageKey === `words/${target.wordId}/v${data.version}.webp` &&
+            data.sha256 === item.sha256 &&
+            data.ledgerCommitted === true && data.manifestCommitted === true &&
+            data.publication?.objectStored === true &&
+            data.publication?.ledgerCommitted === true &&
+            data.publication?.manifestCommitted === true &&
+            data.publication?.verified === true &&
+            data.verifiedAtCommit === true && data.activeAtVerification === true &&
+            typeof data.verifiedAt === 'string' && !Number.isNaN(Date.parse(data.verifiedAt));
+          if (!validReceipt || targetWord.id !== target.wordId) {
+            throw new Error('發布回應驗證失敗：wordId、版本、SHA 或正式啟用狀態不符');
           }
 
-          selectedWord.hasImage = true;
-          selectedWord.cloudImageUrl = `${R2_WORKER_URL}/words/${selectedWord.id}/v${data.version}.webp`;
-          selectedWord.source = `☁️ R2 v${data.version}`;
-          selectedWord.completedAt = new Date().toISOString();
+          targetWord.hasImage = true;
+          targetWord.cloudImageUrl = `${R2_WORKER_URL}/words/${target.wordId}/v${data.version}.webp`;
+          targetWord.source = `☁️ R2 v${data.version}`;
+          targetWord.completedAt = new Date().toISOString();
 
           if (!runtimeManifest) {
             runtimeManifest = { manifestVersion: 1, count: 0, images: {} };
@@ -703,26 +771,31 @@
           if (!runtimeManifest.images) {
             runtimeManifest.images = {};
           }
-          runtimeManifest.images[selectedWord.id] = {
+          runtimeManifest.images[target.wordId] = {
             v: data.version,
-            sha256: item.sha256,
-            uploadedAt: new Date().toISOString()
+            h: item.sha256.slice(0, 16),
+            w: item.width,
+            ht: item.height
           };
           runtimeManifest.count = Object.keys(runtimeManifest.images).length;
           try {
             localStorage.setItem(MANIFEST_CACHE_KEY, JSON.stringify(runtimeManifest));
           } catch (e) {}
 
-          stagedImages.delete(key);
+          if (stagedImages.get(key) === item) stagedImages.delete(key);
           stagedCount.textContent = stagedImages.size;
           zipCount.textContent = stagedImages.size;
+          btnDownloadZip.disabled = stagedImages.size === 0;
 
-          selectWord(selectedWord);
-          showToast(`🚀 成功發布 "${selectedWord.headword}" 至 R2 (v${data.version})！耗時 ${data.latencyMs}ms`, true);
+          if (selectedWord && selectedWord.id === target.wordId) selectWord(targetWord);
+          else renderList();
+          showToast(`🚀 成功發布 "${target.headword}" 至 R2 (v${data.version})！耗時 ${data.latencyMs}ms`, true);
         } catch (err) {
           console.error('Publish error:', err);
           showToast(`❌ 發布失敗: ${err.message}`, false);
         } finally {
+          publishInProgress = false;
+          publishingTargetWordId = null;
           btnPublishR2.disabled = false;
           btnPublishR2.textContent = '🚀 核准並發布至 R2';
         }
@@ -751,18 +824,23 @@
     };
 
     btnDownloadSingle.onclick = () => {
-      if (!selectedWord || !stagedImages.has(selectedWord.slug)) return;
-      const item = stagedImages.get(selectedWord.slug);
+      if (!selectedWord || !selectedWord.id || !stagedImages.has(selectedWord.id)) return;
+      const item = stagedImages.get(selectedWord.id);
       const a = document.createElement('a');
       a.href = item.base64;
-      a.download = `${selectedWord.slug}.${item.ext}`;
+      a.download = `${selectedWord.id}.${item.ext}`;
       a.click();
     };
 
     btnNextWord.onclick = () => {
-      const idx = currentWords.findIndex(w => w.slug === selectedWord.slug);
-      if (idx >= 0 && idx + 1 < currentWords.length) {
-        selectWord(currentWords[idx + 1]);
+      if (!selectedWord || !selectedWord.id) return;
+      const ordered = DATASET[currentTier] || [];
+      const sorted = sortSelect.value === 'desc' ? ordered.slice().reverse() : ordered;
+      const anchor = sorted.findIndex(w => w.id === selectedWord.id);
+      const visibleIds = new Set(currentWords.map(w => w.id));
+      const next = anchor < 0 ? null : sorted.slice(anchor + 1).find(w => visibleIds.has(w.id));
+      if (next) {
+        selectWord(next);
       } else {
         showToast('🎉 本清單項目已全部瀏覽完畢！', true);
       }
@@ -773,9 +851,9 @@
       const zip = new JSZip();
       showToast('⏳ 正在打包 ZIP 壓縮檔...', false);
 
-      for (const [slug, item] of stagedImages.entries()) {
+      for (const [wordId, item] of stagedImages.entries()) {
         const base64Data = item.base64.replace(/^data:image\/\w+;base64,/, '');
-        zip.file(`${slug}.${item.ext}`, base64Data, { base64: true });
+        zip.file(`${wordId}.${item.ext}`, base64Data, { base64: true });
       }
 
       const content = await zip.generateAsync({ type: 'blob' });
