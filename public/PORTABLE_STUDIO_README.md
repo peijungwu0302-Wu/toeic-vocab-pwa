@@ -2,7 +2,7 @@
 
 > **檔案位置**：`public/portable_studio.html`  
 > **線上即時網址**：[https://toeic-vocab-pwa-delta.vercel.app/portable_studio.html](https://toeic-vocab-pwa-delta.vercel.app/portable_studio.html)  
-> **架構特性**：純前端單一 HTML 檔案、零外部後端依賴、全離線可用、自帶全量題庫與提示詞資料集。
+> **架構特性**：單一 HTML 行為來源在 `public/portable_studio.html`；正式圖片由 R2 Runtime Manifest 決定，題庫與提示詞內嵌於頁面。
 
 ---
 
@@ -62,16 +62,14 @@
 
 ## 🛠️ 開發與同步操作指南 (Workflow)
 
-### 1. 如何更新伴侶程式內的題庫與圖片標記？
-當本機執行完生圖任務或更新了提示詞，只需執行專屬同步腳本：
+### 1. 如何更新 Portable Studio 的內嵌題庫與提示詞？
+更新 `public/data/v1/courses/course-*.json` 後，執行唯一受支援的資料同步命令：
 ```bash
 python scripts/sync_portable_dataset.py
 ```
-此腳本會自動完成：
-1. 讀取 `public/data/v1/courses/course-*.json` 最新 v4 提示詞。
-2. 掃描 `public/assets/images/words/` 檢查磁碟 WebP 圖片。
-3. 自動建立連字號與底線相容別名（如 `warm-up.webp` ⇄ `warm_up.webp`）。
-4. 自動注入更新 `public/portable_studio.html` 與 `dist/portable_studio.html` 內嵌的 `DATASET`。
+此腳本從五份 course JSON 重建 `public/portable_studio.html` 的單一 `const DATASET` 區塊；頁面其餘 HTML/JS 行為原封不動。既有 legacy `hasImage/completedAt/source` 僅沿用同一 wordId 的舊值，不掃描本機 WebP，也不代表正式圖片狀態。正式完工狀態仍由 R2 Runtime Manifest 決定。同步採 atomic replace；`python scripts/sync_portable_dataset.py --check` 可唯讀檢查是否需要更新。
+
+`scripts/build-portable-studio.mjs` 是已退役的舊模板，執行會明確失敗，**不可**用它生成頁面。若要修改 UI/行為，直接修改唯一來源 `public/portable_studio.html` 並執行測試；`dist/portable_studio.html` 由正常 Vite build 複製，勿手動維護。
 
 ### 2. 如何發布更新至線上版？
 ```bash
@@ -79,7 +77,7 @@ python scripts/sync_portable_dataset.py
 cmd.exe /c "npm run build"
 
 # 2. 推送至 GitHub 觸發 Vercel 自動部署
-git add public/portable_studio.html dist/portable_studio.html
+git add public/portable_studio.html
 git commit -m "feat(studio): sync latest dataset and image status"
 git push origin main
 ```

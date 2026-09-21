@@ -1,88 +1,96 @@
 # -*- coding: utf-8 -*-
-import json, re, shutil, sys
+"""Refresh only Portable Studio's embedded vocabulary data, never its behavior."""
+
+import argparse
+import json
+import os
+import re
+import tempfile
 from pathlib import Path
 
-if hasattr(sys.stdout, 'reconfigure'):
-    sys.stdout.reconfigure(encoding='utf-8')
 
 ROOT = Path(__file__).resolve().parent.parent
-html_files = [ROOT / 'public' / 'portable_studio.html', ROOT / 'dist' / 'portable_studio.html']
+TIERS = (
+    'core-1200', 'advanced-2500', 'expert-high-part1',
+    'expert-high-part2', 'expert-high-part3',
+)
+DATASET_LINE = re.compile(r'(?m)^    const DATASET = (.+);(\r?\n)')
+
 
 def slugify(text):
-    clean = re.sub(r'[^a-zA-Z0-9]+', '_', text).strip('_').lower()
-    return clean if clean else 'word'
+    return re.sub(r'_+', '_', re.sub(r'[^a-z0-9_-]', '_', text.strip().lower())).strip('_')
 
-def sync():
-    course_prompt_map = {}
-    course_id_map = {}
-    for tier in ['core-1200', 'advanced-2500', 'expert-high-part1', 'expert-high-part2', 'expert-high-part3']:
-        p = ROOT / 'public' / 'data' / 'v1' / 'courses' / f'course-{tier}.json'
-        if p.exists():
-            d = json.load(open(p, encoding='utf-8'))
-            course_prompt_map[tier] = {w.get('headword'): w.get('visualAnchor', {}).get('imagePrompt') for w in d.get('words', []) if w.get('visualAnchor', {}).get('imagePrompt')}
-            course_id_map[tier] = {w.get('headword'): w.get('id') for w in d.get('words', [])}
 
-    words_dir = ROOT / 'public' / 'assets' / 'images' / 'words'
+def sync(html_path, courses_dir, check=False):
+    # Preserve the shell's exact line endings as well as its application logic.
+    with html_path.open('r', encoding='utf-8', newline='') as source:
+        original = source.read()
+    matches = list(DATASET_LINE.finditer(original))
+    if len(matches) != 1:
+        raise ValueError(f'Expected exactly one single-line DATASET declaration in {html_path}; found {len(matches)}')
+    match = matches[0]
+    previous = json.loads(match.group(1))
+    if set(previous) != set(TIERS):
+        raise ValueError('Embedded DATASET tier set is unexpected; refusing to alter application shell')
 
-    for h_path in html_files:
-        if not h_path.exists():
-            continue
-        c = open(h_path, encoding='utf-8').read()
-        idx = c.find('const DATASET = ')
-        if idx == -1:
-            continue
-        end_idx = c.find(';\n', idx)
-        raw_json = c[idx + len('const DATASET = '):end_idx]
-        data = json.loads(raw_json)
+    dataset = {}
+    for tier in TIERS:
+        course_path = courses_dir / f'course-{tier}.json'
+        course = json.loads(course_path.read_text(encoding='utf-8'))
+        old_by_id = {item['id']: item for item in previous[tier]}
+        items = []
+        seen = set()
+        for word in course['words']:
+            word_id = word['id']
+            if not word_id or word_id in seen:
+                raise ValueError(f'Missing or duplicate wordId in {course_path}: {word_id}')
+            seen.add(word_id)
+            old = old_by_id.get(word_id, {})
+            anchor = word.get('visualAnchor') or {}
+            example = (word.get('examples') or [{}])[0]
+            items.append({
+                'headword': word['headword'],
+                'slug': old.get('slug') or slugify(word['headword']),
+                'pos': ', '.join(word.get('partsOfSpeech') or []) or 'n.',
+                'zh': word.get('definitionZh') or '',
+                'en': anchor.get('shortEn') or example.get('en') or '',
+                'enZh': anchor.get('scene') or example.get('zh') or '',
+                'theme': anchor.get('domainTheme') or '',
+                'prompt': anchor.get('imagePrompt') or '',
+                # Legacy display metadata is retained, not inferred from decommissioned local media.
+                'hasImage': old.get('hasImage', False),
+                'completedAt': old.get('completedAt'),
+                'source': old.get('source'),
+                'id': word_id,
+            })
+        dataset[tier] = items
 
-        updated_prompts = 0
-        updated_imgs = 0
-        pending_stats = {}
+    replacement = json.dumps(dataset, ensure_ascii=False)
+    updated = original[:match.start(1)] + replacement + original[match.end(1):]
+    if updated == original:
+        print(f'{html_path}: up to date')
+        return
+    if check:
+        raise ValueError(f'{html_path}: DATASET is stale; run python scripts/sync_portable_dataset.py')
 
-        for tier, items in data.items():
-            prompts = course_prompt_map.get(tier, {})
-            id_map = course_id_map.get(tier, {})
-            pending_count = 0
-            for item in items:
-                hw = item.get('headword', '')
-                slug = item.get('slug', '')
-                norm_slug = slugify(hw)
+    # One atomic replacement of the authoritative source; dist is created by Vite.
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', newline='', dir=html_path.parent,
+                                         prefix=f'.{html_path.name}.', suffix='.tmp', delete=False) as output:
+            temporary = Path(output.name)
+            output.write(updated)
+        os.replace(temporary, html_path)
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+    print(f'{html_path}: updated DATASET only ({sum(map(len, dataset.values()))} words)')
 
-                if hw in id_map and id_map[hw]:
-                    item['id'] = id_map[hw]
-
-                if hw in prompts and prompts[hw]:
-                    item['prompt'] = prompts[hw]
-                    updated_prompts += 1
-
-                webp_norm = words_dir / f'{norm_slug}.webp'
-                webp_orig = words_dir / f'{slug}.webp'
-
-                has_file = False
-                if webp_norm.exists() and webp_norm.stat().st_size > 1000:
-                    has_file = True
-                    if not webp_orig.exists():
-                        shutil.copyfile(webp_norm, webp_orig)
-                elif webp_orig.exists() and webp_orig.stat().st_size > 1000:
-                    has_file = True
-                    if not webp_norm.exists():
-                        shutil.copyfile(webp_orig, webp_norm)
-
-                if has_file:
-                    item['hasImage'] = True
-                    updated_imgs += 1
-                else:
-                    item['hasImage'] = False
-                    pending_count += 1
-
-            pending_stats[tier] = pending_count
-
-        new_raw_json = json.dumps(data, ensure_ascii=False)
-        new_c = c[:idx + len('const DATASET = ')] + new_raw_json + c[end_idx:]
-        with open(h_path, 'w', encoding='utf-8') as f:
-            f.write(new_c)
-        print(f'Updated {h_path.name}: {updated_prompts} prompts, {updated_imgs} images flagged true.')
-        print(f'   Pending stats: {pending_stats}')
 
 if __name__ == '__main__':
-    sync()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--html', type=Path, default=ROOT / 'public' / 'portable_studio.html')
+    parser.add_argument('--courses-dir', type=Path, default=ROOT / 'public' / 'data' / 'v1' / 'courses')
+    parser.add_argument('--check', action='store_true', help='verify the embedded DATASET without writing')
+    args = parser.parse_args()
+    sync(args.html, args.courses_dir, args.check)

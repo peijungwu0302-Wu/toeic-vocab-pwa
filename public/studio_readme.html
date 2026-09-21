@@ -105,8 +105,8 @@
         生圖任務結束後，在專案終端機執行下列指令，即可同步圖檔並推播至線上網址：
       </p>
       <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-sky-300 space-y-2 overflow-x-auto">
-        <p><span class="text-slate-500"># 1. 自動校準伴侶程式題庫與圖片標記</span><br>python scripts/sync_portable_dataset.py</p>
-        <p><span class="text-slate-500"># 2. 打包建置並推送到 Vercel 上線</span><br>cmd.exe /c "npm run build"<br>git add public/portable_studio.html dist/portable_studio.html<br>git commit -m "feat(studio): sync latest dataset and image status"<br>git push origin main</p>
+        <p><span class="text-slate-500"># 1. 僅更新 Portable Studio 內嵌題庫與提示詞；正式圖片狀態由 R2 Manifest 決定</span><br>python scripts/sync_portable_dataset.py</p>
+        <p><span class="text-slate-500"># 2. 打包建置（dist 由 build 產生）</span><br>cmd.exe /c "npm run build"<br>git add public/portable_studio.html</p>
       </div>
     </div>
 
