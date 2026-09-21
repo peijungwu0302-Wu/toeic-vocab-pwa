@@ -23,7 +23,7 @@ export interface Env {
 
 interface PublishMetadata {
   wordId: string;
-  imageSha256: string;
+  imageSha256?: string;
   prompt?: {
     promptProvenance?: 'recovered-from-audit' | 'legacy-local-unrecorded' | 'unknown';
     historicalPrompt?: string | null;
@@ -64,6 +64,27 @@ interface RollbackRequestBody {
 const WORD_ID_REGEX = /^tw_[wp]_[a-f0-9]{12}$/;
 const SHA256_HEX_REGEX = /^[a-f0-9]{64}$/i;
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024; // 2MB limit
+const IDEMPOTENCY_WAIT_ATTEMPTS = 20;
+const IDEMPOTENCY_WAIT_MS = 300;
+const COMMIT_RETRY_ATTEMPTS = 10;
+
+interface PublicationState {
+  objectStored: boolean;
+  ledgerCommitted: boolean;
+  manifestCommitted: boolean;
+  verified: boolean;
+}
+
+interface IdempotencyRecord {
+  status?: 'in-flight' | 'completed' | 'failed' | 'staged';
+  httpStatus?: number;
+  result?: Record<string, unknown>;
+  publishRequestId?: string;
+  wordId?: string;
+  sha256?: string;
+  success?: boolean;
+  [key: string]: unknown;
+}
 
 function getCorsHeaders(request: Request, env: Env): HeadersInit {
   const origin = request.headers.get('Origin') || '*';
@@ -105,6 +126,27 @@ function isValidWebP(data: Uint8Array): boolean {
   // WEBP signature
   if (data[8] !== 0x57 || data[9] !== 0x45 || data[10] !== 0x42 || data[11] !== 0x50) return false;
   return true;
+}
+
+async function computeSha256(data: Uint8Array): Promise<string> {
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+async function waitForIdempotencyResult(
+  bucket: R2Bucket,
+  key: string
+): Promise<IdempotencyRecord | null> {
+  for (let wait = 0; wait < IDEMPOTENCY_WAIT_ATTEMPTS; wait++) {
+    await new Promise((resolve) => setTimeout(resolve, IDEMPOTENCY_WAIT_MS));
+    const recordObject = await bucket.get(key);
+    if (!recordObject) continue;
+    const record = await recordObject.json<IdempotencyRecord>();
+    if (record.status !== 'in-flight') return record;
+  }
+  return null;
 }
 
 export default {
@@ -250,61 +292,197 @@ export default {
           return jsonResponse({ error: `Failed to parse multipart data: ${err.message}` }, 400, corsHeaders);
         }
 
-        // Schema validation
+        // Validate all client input and verify the actual bytes before claiming idempotency
+        // or creating any publication-side R2 object.
         if (!meta.wordId || !WORD_ID_REGEX.test(meta.wordId)) {
-          return jsonResponse({ error: `Invalid wordId format: ${meta.wordId}` }, 400, corsHeaders);
+          return jsonResponse(
+            { success: false, code: 'INVALID_WORD_ID', error: `Invalid wordId format: ${meta.wordId}` },
+            400,
+            corsHeaders
+          );
         }
         if (!meta.publishRequestId || typeof meta.publishRequestId !== 'string') {
-          return jsonResponse({ error: 'Missing publishRequestId' }, 400, corsHeaders);
+          return jsonResponse(
+            { success: false, code: 'MISSING_PUBLISH_REQUEST_ID', error: 'Missing publishRequestId' },
+            400,
+            corsHeaders
+          );
         }
-        if (!meta.imageSha256 || !SHA256_HEX_REGEX.test(meta.imageSha256)) {
-          return jsonResponse({ error: 'Invalid or missing imageSha256 (expected 64-char hex)' }, 400, corsHeaders);
+        if (meta.imageSha256 !== undefined && (
+          typeof meta.imageSha256 !== 'string' || !SHA256_HEX_REGEX.test(meta.imageSha256)
+        )) {
+          return jsonResponse(
+            { success: false, code: 'INVALID_IMAGE_SHA256', error: 'Invalid imageSha256 (expected 64-char hex)' },
+            400,
+            corsHeaders
+          );
+        }
+        if (imageBytes.length > MAX_IMAGE_BYTES) {
+          return jsonResponse(
+            {
+              success: false,
+              code: 'IMAGE_TOO_LARGE',
+              error: `Image size (${imageBytes.length} bytes) exceeds 2MB limit`,
+            },
+            413,
+            corsHeaders
+          );
+        }
+        if (!isValidWebP(imageBytes)) {
+          return jsonResponse(
+            { success: false, code: 'INVALID_WEBP', error: 'Image binary is not a valid WebP file' },
+            400,
+            corsHeaders
+          );
         }
 
-        // Concurrency-Safe Idempotency Claim:
+        const serverSha256 = await computeSha256(imageBytes);
+        const expectedSha256 = meta.imageSha256?.toLowerCase();
+        if (expectedSha256 && expectedSha256 !== serverSha256) {
+          return jsonResponse(
+            {
+              success: false,
+              code: 'IMAGE_SHA256_MISMATCH',
+              error: 'Client imageSha256 does not match the uploaded image bytes',
+              expectedSha256,
+              actualSha256: serverSha256,
+            },
+            400,
+            corsHeaders
+          );
+        }
+
         const idempotencyKey = `idempotency/${meta.publishRequestId}.json`;
-        const existingRecord = await env.PRIVATE_BUCKET.get(idempotencyKey);
-        if (existingRecord) {
-          const cachedResult = await existingRecord.json<any>();
-          if (cachedResult.status === 'in-flight') {
-            // Wait for winning in-flight request to finish:
-            for (let wait = 0; wait < 20; wait++) {
-              await new Promise((r) => setTimeout(r, 300));
-              const finishedRecord = await env.PRIVATE_BUCKET.get(idempotencyKey);
-              if (finishedRecord) {
-                const res = await finishedRecord.json<any>();
-                if (res.status !== 'in-flight') {
-                  const latencyMs = Math.round(performance.now() - startTime);
-                  return jsonResponse(
-                    {
-                      ...res,
-                      idempotentReplay: true,
-                      latencyMs,
-                    },
-                    200,
-                    corsHeaders
-                  );
-                }
-              }
-            }
-          } else {
-            const latencyMs = Math.round(performance.now() - startTime);
+        const publicationIsCurrent = (
+          ledger: any,
+          manifest: any,
+          wordId: string,
+          version: number,
+          sha256: string,
+          imageKey: string
+        ): boolean => Boolean(
+          ledger?.wordId === wordId &&
+          ledger?.activeVersion === version &&
+          ledger?.currentPublishedVersion === version &&
+          ledger?.history?.[version]?.version === version &&
+          ledger?.history?.[version]?.storage?.publicWebpKey === imageKey &&
+          ledger?.history?.[version]?.storage?.publicWebpSha256 === sha256 &&
+          manifest?.images?.[wordId]?.v === version &&
+          manifest?.images?.[wordId]?.h === sha256.slice(0, 16)
+        );
+        const replayIdempotencyRecord = async (record: IdempotencyRecord): Promise<Response> => {
+          const recordWordId = record.wordId ?? (record.result?.wordId as string | undefined);
+          const recordSha = record.sha256 ?? (record.result?.sha256 as string | undefined);
+          if ((recordWordId && recordWordId !== meta.wordId) || (recordSha && recordSha !== serverSha256)) {
             return jsonResponse(
               {
-                ...cachedResult,
-                idempotentReplay: true,
-                latencyMs,
+                success: false,
+                code: 'IDEMPOTENCY_KEY_REUSED',
+                error: 'publishRequestId is already associated with different publication input',
+                publishRequestId: meta.publishRequestId,
               },
-              200,
+              409,
               corsHeaders
             );
           }
+
+          const cachedResult = record.result ?? record;
+          const cachedPublication = cachedResult.publication as PublicationState | undefined;
+          if (
+            cachedResult.success === true &&
+            !(
+              record.status === 'completed' &&
+              cachedPublication?.objectStored === true &&
+              cachedPublication?.ledgerCommitted === true &&
+              cachedPublication?.manifestCommitted === true &&
+              cachedPublication?.verified === true
+            )
+          ) {
+            return jsonResponse(
+              {
+                success: false,
+                code: 'IDEMPOTENCY_RESULT_UNVERIFIED',
+                error: 'Existing idempotency result predates verified publication receipts',
+                publishRequestId: meta.publishRequestId,
+                wordId: meta.wordId,
+                sha256: serverSha256,
+                reconciliationRequired: true,
+              },
+              409,
+              corsHeaders
+            );
+          }
+          const status = record.httpStatus ?? (cachedResult.success === true ? 200 : 503);
+          let currentState: { verifiedAtCommit: boolean; activeAtVerification: boolean; verifiedAt: string } | Record<string, never> = {};
+          if (cachedResult.success === true) {
+            try {
+              const [ledgerObject, manifestObject] = await Promise.all([
+                env.PRIVATE_BUCKET.get(`ledger/words/${meta.wordId}.json`),
+                env.PUBLIC_BUCKET.get('manifests/current.json'),
+              ]);
+              const ledger = ledgerObject ? await ledgerObject.json<any>() : null;
+              const manifest = manifestObject ? await manifestObject.json<any>() : null;
+              currentState = {
+                verifiedAtCommit: true,
+                activeAtVerification: publicationIsCurrent(
+                  ledger,
+                  manifest,
+                  meta.wordId,
+                  cachedResult.version as number,
+                  serverSha256,
+                  cachedResult.imageKey as string
+                ),
+                verifiedAt: new Date().toISOString(),
+              };
+            } catch {
+              return jsonResponse({
+                success: false,
+                code: 'CURRENT_STATE_READ_FAILED',
+                error: 'Could not verify whether the historical publication is currently active',
+                publishRequestId: meta.publishRequestId,
+              }, 503, corsHeaders);
+            }
+          }
+          return jsonResponse(
+            {
+              ...cachedResult,
+              ...currentState,
+              idempotentReplay: true,
+              replayed: true,
+              latencyMs: Math.round(performance.now() - startTime),
+            },
+            status,
+            corsHeaders
+          );
+        };
+        const inFlightResponse = (): Response => jsonResponse(
+          {
+            success: false,
+            code: 'PUBLISH_IN_FLIGHT',
+            error: 'A publication with this publishRequestId is still in flight',
+            publishRequestId: meta.publishRequestId,
+          },
+          409,
+          { ...corsHeaders, 'Retry-After': '2' }
+        );
+
+        const existingRecordObject = await env.PRIVATE_BUCKET.get(idempotencyKey);
+        if (existingRecordObject) {
+          const existingRecord = await existingRecordObject.json<IdempotencyRecord>();
+          if (existingRecord.status !== 'in-flight') return replayIdempotencyRecord(existingRecord);
+          const finishedRecord = await waitForIdempotencyResult(env.PRIVATE_BUCKET, idempotencyKey);
+          return finishedRecord ? replayIdempotencyRecord(finishedRecord) : inFlightResponse();
         }
 
-        // Claim this publishRequestId immediately with If-None-Match: *
         const claimResult = await env.PRIVATE_BUCKET.put(
           idempotencyKey,
-          JSON.stringify({ status: 'in-flight', startedAt: new Date().toISOString() }),
+          JSON.stringify({
+            status: 'in-flight',
+            startedAt: new Date().toISOString(),
+            publishRequestId: meta.publishRequestId,
+            wordId: meta.wordId,
+            sha256: serverSha256,
+          }),
           {
             onlyIf: { etagDoesNotMatch: '*' },
             httpMetadata: { contentType: 'application/json' },
@@ -312,48 +490,70 @@ export default {
         );
 
         if (claimResult === null) {
-          // Lost the race to claim this publishRequestId! Wait for winner to finish:
-          for (let wait = 0; wait < 20; wait++) {
-            await new Promise((r) => setTimeout(r, 300));
-            const finishedRecord = await env.PRIVATE_BUCKET.get(idempotencyKey);
-            if (finishedRecord) {
-              const res = await finishedRecord.json<any>();
-              if (res.status !== 'in-flight') {
-                const latencyMs = Math.round(performance.now() - startTime);
-                return jsonResponse(
-                  {
-                    ...res,
-                    idempotentReplay: true,
-                    latencyMs,
-                  },
-                  200,
-                  corsHeaders
-                );
-              }
-            }
-          }
+          const finishedRecord = await waitForIdempotencyResult(env.PRIVATE_BUCKET, idempotencyKey);
+          return finishedRecord ? replayIdempotencyRecord(finishedRecord) : inFlightResponse();
         }
 
-        // Check image size
-        if (imageBytes.length > MAX_IMAGE_BYTES) {
-          return jsonResponse(
-            { error: `Image size (${imageBytes.length} bytes) exceeds 2MB limit` },
-            413,
-            corsHeaders
-          );
-        }
-
-        // Fast WebP magic byte validation (<0.01ms CPU)
-        if (!isValidWebP(imageBytes)) {
-          return jsonResponse({ error: 'Image binary is not a valid WebP file' }, 400, corsHeaders);
-        }
-
-        // --- Optimistic Concurrency 1: Conditional Create for Image Object ---
-        // Uses If-None-Match: * semantics (onlyIf: { etagDoesNotMatch: '*' })
-        // Guarantees zero overwrites: if candidate version already exists, put returns null!
-        const ledgerKey = `ledger/words/${meta.wordId}.json`;
+        const publication: PublicationState = {
+          objectStored: false,
+          ledgerCommitted: false,
+          manifestCommitted: false,
+          verified: false,
+        };
         let allocatedVersion = 0;
         let targetImageKey = '';
+
+        const persistOutcome = async (
+          status: 'completed' | 'failed' | 'staged',
+          httpStatus: number,
+          result: Record<string, unknown>
+        ): Promise<Response> => {
+          await env.PRIVATE_BUCKET.put(
+            idempotencyKey,
+            JSON.stringify({
+              status,
+              httpStatus,
+              publishRequestId: meta.publishRequestId,
+              wordId: meta.wordId,
+              sha256: serverSha256,
+              result,
+            }),
+            { httpMetadata: { contentType: 'application/json' } }
+          );
+          return jsonResponse(result, httpStatus, corsHeaders);
+        };
+
+        const failPartialPublication = async (
+          code: string,
+          error: string,
+          manifestUri: string | null = null
+        ): Promise<Response> => {
+          const failureReceipt = {
+            publishRequestId: meta.publishRequestId,
+            wordId: meta.wordId,
+            version: allocatedVersion || null,
+            imageKey: targetImageKey || null,
+            sha256: serverSha256,
+            manifestUri,
+            reconciliationRequired: publication.objectStored,
+            publication: { ...publication },
+          };
+          return persistOutcome('failed', 503, {
+            success: false,
+            code,
+            error,
+            publishRequestId: meta.publishRequestId,
+            wordId: meta.wordId,
+            version: allocatedVersion || null,
+            imageKey: targetImageKey || null,
+            sha256: serverSha256,
+            reconciliationRequired: publication.objectStored,
+            failureReceipt,
+          });
+        };
+
+        // --- Optimistic Concurrency 1: Conditional Create for Image Object ---
+        const ledgerKey = `ledger/words/${meta.wordId}.json`;
         let createdImageObj: R2Object | null = null;
         const MAX_ALLOC_RETRIES = 12;
 
@@ -365,15 +565,13 @@ export default {
           }
 
           const historyVersions = Object.keys(ledgerData?.history || {}).map(Number).filter((n) => !isNaN(n));
-          let candidateVersion = Math.max(
+          const candidateVersion = Math.max(
             0,
             ledgerData?.latestAllocatedVersion || 0,
             ...historyVersions
           ) + 1 + attempt;
 
           targetImageKey = `words/${meta.wordId}/v${candidateVersion}.webp`;
-
-          // Conditional PUT with If-None-Match: * (etagDoesNotMatch: '*')
           createdImageObj = await env.PUBLIC_BUCKET.put(targetImageKey, imageBytes, {
             onlyIf: { etagDoesNotMatch: '*' },
             httpMetadata: {
@@ -381,7 +579,7 @@ export default {
               cacheControl: 'public, max-age=31536000, immutable',
             },
             customMetadata: {
-              'x-amz-meta-sha256': meta.imageSha256,
+              'x-amz-meta-sha256': serverSha256,
               'x-amz-meta-wordid': meta.wordId,
               'x-amz-meta-version': String(candidateVersion),
             },
@@ -389,16 +587,22 @@ export default {
 
           if (createdImageObj !== null) {
             allocatedVersion = candidateVersion;
+            publication.objectStored = true;
             break;
           }
         }
 
         if (createdImageObj === null) {
-          return jsonResponse(
-            { error: 'Version allocation collision: max retries exceeded' },
-            409,
-            corsHeaders
-          );
+          return persistOutcome('failed', 409, {
+            success: false,
+            code: 'VERSION_ALLOCATION_FAILED',
+            error: 'Version allocation collision: max retries exceeded',
+            publishRequestId: meta.publishRequestId,
+            wordId: meta.wordId,
+            sha256: serverSha256,
+            reconciliationRequired: false,
+            publication: { ...publication },
+          });
         }
 
         // --- Optimistic Concurrency 2: Per-Word Ledger CAS Loop ---
@@ -411,7 +615,7 @@ export default {
           generator: meta.generator || { provider: 'manual-studio', model: 'gemini-web', costTwd: 0, generatedBy: 'studio-user' },
           storage: {
             publicWebpKey: targetImageKey,
-            publicWebpSha256: meta.imageSha256,
+            publicWebpSha256: serverSha256,
             byteSizeWebp: imageBytes.length,
             dimensions,
           },
@@ -422,9 +626,10 @@ export default {
           },
         };
 
-        for (let attempt = 0; attempt < 10; attempt++) {
+        let ledgerCasCommitted = false;
+        for (let attempt = 0; attempt < COMMIT_RETRY_ATTEMPTS; attempt++) {
           const curLedgerObj = await env.PRIVATE_BUCKET.get(ledgerKey);
-          let curLedgerData: any = null;
+          let curLedgerData: any;
           let ledgerEtag: string | null = null;
           if (curLedgerObj) {
             curLedgerData = await curLedgerObj.json();
@@ -454,110 +659,193 @@ export default {
           );
 
           if (putLedgerResult !== null) {
+            ledgerCasCommitted = true;
             break;
           }
         }
 
+        if (!ledgerCasCommitted) {
+          return failPartialPublication('LEDGER_COMMIT_FAILED', 'Ledger CAS retries exhausted');
+        }
+
+        const committedLedgerObject = await env.PRIVATE_BUCKET.get(ledgerKey);
+        const committedLedger = committedLedgerObject ? await committedLedgerObject.json<any>() : null;
+        const committedVersion = committedLedger?.history?.[allocatedVersion];
+        if (
+          committedLedger?.wordId !== meta.wordId ||
+          committedLedger?.activeVersion !== allocatedVersion ||
+          committedLedger?.currentPublishedVersion !== allocatedVersion ||
+          committedVersion?.version !== allocatedVersion ||
+          committedVersion?.storage?.publicWebpKey !== targetImageKey ||
+          committedVersion?.storage?.publicWebpSha256 !== serverSha256
+        ) {
+          return failPartialPublication('LEDGER_VERIFICATION_FAILED', 'Ledger read-back verification failed');
+        }
+        publication.ledgerCommitted = true;
+
+        if (meta.skipManifestCommit) {
+          return persistOutcome('staged', 409, {
+            success: false,
+            status: 'staged',
+            code: 'PUBLISH_STAGED',
+            error: 'Object and ledger are staged; Runtime Manifest has not been committed',
+            publishRequestId: meta.publishRequestId,
+            wordId: meta.wordId,
+            version: allocatedVersion,
+            imageKey: targetImageKey,
+            sha256: serverSha256,
+            ledgerCommitted: true,
+            manifestCommitted: false,
+            reconciliationRequired: false,
+            publication: { ...publication },
+          });
+        }
+
         // --- Optimistic Concurrency 3: Global Runtime Manifest Update ---
-        // If skipManifestCommit is true, skip updating current.json (used during batch migration!)
         let immutableManifestKey = '';
         let updatedCount = 0;
+        let manifestCasCommitted = false;
 
-        if (!meta.skipManifestCommit) {
-          for (let attempt = 0; attempt < 10; attempt++) {
-            const curManifestObj = await env.PUBLIC_BUCKET.get('manifests/current.json');
-            let currentManifest: any = {
-              schemaVersion: '1.0',
-              manifestUri: null,
-              manifestVersion: 0,
-              generatedAt: nowIso,
-              count: 0,
-              images: {},
-            };
-            let manifestEtag: string | null = null;
-            if (curManifestObj) {
-              currentManifest = await curManifestObj.json<any>();
-              manifestEtag = curManifestObj.etag;
+        for (let attempt = 0; attempt < COMMIT_RETRY_ATTEMPTS; attempt++) {
+          const curManifestObj = await env.PUBLIC_BUCKET.get('manifests/current.json');
+          let currentManifest: any = {
+            schemaVersion: '1.0',
+            manifestUri: null,
+            manifestVersion: 0,
+            generatedAt: nowIso,
+            count: 0,
+            images: {},
+          };
+          let manifestEtag: string | null = null;
+          if (curManifestObj) {
+            currentManifest = await curManifestObj.json<any>();
+            manifestEtag = curManifestObj.etag;
+          }
+
+          const imagesMap = currentManifest.images || {};
+          imagesMap[meta.wordId] = {
+            v: allocatedVersion,
+            h: serverSha256.slice(0, 16),
+            w: dimensions.width,
+            ht: dimensions.height,
+          };
+          updatedCount = Object.keys(imagesMap).length;
+          const manifestTimestamp = Date.now();
+          immutableManifestKey = `manifests/manifest-${manifestTimestamp}.json`;
+
+          const newManifestPayload = {
+            schemaVersion: '1.0',
+            manifestUri: immutableManifestKey,
+            manifestVersion: manifestTimestamp,
+            generatedAt: nowIso,
+            count: updatedCount,
+            images: imagesMap,
+          };
+
+          const snapshotPut = await env.PUBLIC_BUCKET.put(
+            immutableManifestKey,
+            JSON.stringify(newManifestPayload),
+            {
+              onlyIf: { etagDoesNotMatch: '*' },
+              httpMetadata: {
+                contentType: 'application/json',
+                cacheControl: 'public, max-age=31536000, immutable',
+              },
             }
+          );
 
-            const imagesMap = currentManifest.images || {};
-            imagesMap[meta.wordId] = {
-              v: allocatedVersion,
-              h: meta.imageSha256.slice(0, 16),
-              w: dimensions.width,
-              ht: dimensions.height,
-            };
-            updatedCount = Object.keys(imagesMap).length;
-            const manifestTimestamp = Date.now();
-            immutableManifestKey = `manifests/manifest-${manifestTimestamp}.json`;
+          if (snapshotPut === null) continue;
 
-            const newManifestPayload = {
-              schemaVersion: '1.0',
-              manifestUri: immutableManifestKey,
-              manifestVersion: manifestTimestamp,
-              generatedAt: nowIso,
-              count: updatedCount,
-              images: imagesMap,
-            };
-
-            // STRICT PUBLICATION ORDER:
-            // 1. Write immutable snapshot FIRST
-            const snapshotPut = await env.PUBLIC_BUCKET.put(
-              immutableManifestKey,
-              JSON.stringify(newManifestPayload),
-              {
-                onlyIf: { etagDoesNotMatch: '*' },
-                httpMetadata: {
-                  contentType: 'application/json',
-                  cacheControl: 'public, max-age=31536000, immutable',
-                },
-              }
-            );
-
-            if (snapshotPut === null) {
-              // Timestamp collided, retry
-              continue;
+          const putManifestResult = await env.PUBLIC_BUCKET.put(
+            'manifests/current.json',
+            JSON.stringify(newManifestPayload),
+            {
+              onlyIf: manifestEtag ? { etagMatches: manifestEtag } : { etagDoesNotMatch: '*' },
+              httpMetadata: {
+                contentType: 'application/json',
+                cacheControl: 'no-cache, must-revalidate',
+              },
             }
+          );
 
-            // 2. CAS update manifests/current.json pointer
-            const putManifestResult = await env.PUBLIC_BUCKET.put(
-              'manifests/current.json',
-              JSON.stringify(newManifestPayload),
-              {
-                onlyIf: manifestEtag ? { etagMatches: manifestEtag } : { etagDoesNotMatch: '*' },
-                httpMetadata: {
-                  contentType: 'application/json',
-                  cacheControl: 'no-cache, must-revalidate',
-                },
-              }
-            );
-
-            if (putManifestResult !== null) {
-              break;
-            }
-            // Manifest CAS conflict, loop and retry pointer CAS
+          if (putManifestResult !== null) {
+            manifestCasCommitted = true;
+            break;
           }
         }
 
+        if (!manifestCasCommitted) {
+          return failPartialPublication(
+            'MANIFEST_COMMIT_FAILED',
+            'Runtime Manifest CAS retries exhausted',
+            immutableManifestKey || null
+          );
+        }
+        publication.manifestCommitted = true;
+
+        const [publishedObject, verifiedLedgerObject, committedManifestObject] = await Promise.all([
+          env.PUBLIC_BUCKET.head(targetImageKey),
+          env.PRIVATE_BUCKET.get(ledgerKey),
+          env.PUBLIC_BUCKET.get('manifests/current.json'),
+        ]);
+        const verifiedLedger = verifiedLedgerObject ? await verifiedLedgerObject.json<any>() : null;
+        const verifiedManifest = committedManifestObject ? await committedManifestObject.json<any>() : null;
+        if (
+          verifiedLedger?.wordId === meta.wordId &&
+          (verifiedLedger?.activeVersion !== allocatedVersion ||
+            verifiedLedger?.currentPublishedVersion !== allocatedVersion)
+        ) {
+          return failPartialPublication(
+            'PUBLISH_SUPERSEDED_DURING_COMMIT',
+            'Another publication advanced the active ledger version during commit',
+            immutableManifestKey
+          );
+        }
+        const verificationPassed = Boolean(
+          publishedObject &&
+          publishedObject.customMetadata?.['x-amz-meta-wordid'] === meta.wordId &&
+          publishedObject.customMetadata?.['x-amz-meta-version'] === String(allocatedVersion) &&
+          publishedObject.customMetadata?.['x-amz-meta-sha256'] === serverSha256 &&
+          publicationIsCurrent(
+            verifiedLedger,
+            verifiedManifest,
+            meta.wordId,
+            allocatedVersion,
+            serverSha256,
+            targetImageKey
+          )
+        );
+
+        if (!verificationPassed) {
+          return failPartialPublication(
+            'PUBLICATION_VERIFICATION_FAILED',
+            'Publication read-back did not match wordId, version, and server-computed SHA',
+            immutableManifestKey
+          );
+        }
+        publication.verified = true;
+
         const latencyMs = Math.round(performance.now() - startTime);
+        // This is a point-in-time read-back, not a lock against later publications or rollbacks.
         const resultResponse = {
           success: true,
+          verifiedAtCommit: true,
+          activeAtVerification: true,
+          verifiedAt: new Date().toISOString(),
+          publishRequestId: meta.publishRequestId,
           wordId: meta.wordId,
           version: allocatedVersion,
           imageKey: targetImageKey,
-          sha256: meta.imageSha256,
-          manifestUri: immutableManifestKey || null,
-          manifestCommitted: !meta.skipManifestCommit,
+          sha256: serverSha256,
+          manifestUri: immutableManifestKey,
+          ledgerCommitted: true,
+          manifestCommitted: true,
+          publication: { ...publication },
           totalManifestCount: updatedCount,
           latencyMs,
         };
 
-        // Save to idempotency store
-        await env.PRIVATE_BUCKET.put(idempotencyKey, JSON.stringify(resultResponse), {
-          httpMetadata: { contentType: 'application/json' },
-        });
-
-        return jsonResponse(resultResponse, 200, corsHeaders);
+        return persistOutcome('completed', 200, resultResponse);
       }
 
       // Route: POST /api/manifest/batch-commit (Batch publication endpoint)
@@ -580,7 +868,7 @@ export default {
         const idempotencyKey = `idempotency/batch_${body.batchRequestId}.json`;
         const existingBatchRecord = await env.PRIVATE_BUCKET.get(idempotencyKey);
         if (existingBatchRecord) {
-          const cachedResult = await existingBatchRecord.json();
+          const cachedResult = await existingBatchRecord.json<Record<string, unknown>>();
           const latencyMs = Math.round(performance.now() - startTime);
           return jsonResponse({ ...cachedResult, idempotentReplay: true, latencyMs }, 200, corsHeaders);
         }
