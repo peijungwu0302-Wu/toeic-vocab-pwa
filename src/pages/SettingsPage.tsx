@@ -32,6 +32,8 @@ import { useReviewStyle } from '../contexts/ReviewStyleContext';
 import { backupService } from '../services/backupService';
 import { teacherReportService } from '../services/teacherReportService';
 import { getSupabaseClient } from '../services/supabaseClient';
+import { resolveOwnerIdentity, OwnerIdentity } from '../services/ownerAuth';
+import { startAutomationRun, AutomationStartResult } from '../services/automationStart';
 import { datasetMigrationService } from '../services/datasetMigrationService';
 import { geminiService } from '../services/geminiService';
 import { BackupDataV1, ImportPreviewSummary, ImportStrategy } from '../types/backup';
@@ -41,7 +43,7 @@ import { Modal } from '../components/ui/Modal';
 
 export const SettingsPage: React.FC = () => {
   const { activeProfile, profiles, switchProfile, createProfile, updateProfile, deleteProfile } = useProfile();
-  const { syncState, triggerSync } = useSync();
+  const { triggerSync } = useSync();
   const { settings, updateSettings, resetSettings, applyPreset, pixelMetrics, headwordClass, definitionClass, exampleEnClass, exampleZhClass } = useTypography();
   const { navStyle, setNavStyle, navOffset, setNavOffset } = useNavigationStyle();
   const { reviewStyle, setReviewStyle, handPreference, setHandPreference } = useReviewStyle();
@@ -77,6 +79,11 @@ export const SettingsPage: React.FC = () => {
   const [isSendingMagicLink, setIsSendingMagicLink] = useState(false);
   const [magicLinkSentMsg, setMagicLinkSentMsg] = useState<string | null>(null);
   const [magicLinkError, setMagicLinkError] = useState<string | null>(null);
+  const [ownerIdentity, setOwnerIdentity] = useState<OwnerIdentity | null>(null);
+  const [isOwnerAuthLoading, setIsOwnerAuthLoading] = useState(true);
+  const [activeAutomationRun, setActiveAutomationRun] = useState<AutomationStartResult | null>(null);
+  const [isStartingAutomation, setIsStartingAutomation] = useState(false);
+  const [automationStartError, setAutomationStartError] = useState<string | null>(null);
 
   // Dataset Version & Real-Time Diagnostics
   const [isRefreshingDataset, setIsRefreshingDataset] = useState(false);
@@ -94,6 +101,44 @@ export const SettingsPage: React.FC = () => {
 
   useEffect(() => {
     loadDiagnostics();
+  }, []);
+
+  useEffect(() => {
+    const client = getSupabaseClient();
+    if (!client) {
+      setIsOwnerAuthLoading(false);
+      return;
+    }
+
+    let active = true;
+    const refreshOwnerIdentity = async () => {
+      const identity = await resolveOwnerIdentity(client);
+      if (active) {
+        setOwnerIdentity(identity);
+        if (identity) {
+          try {
+            const stored = window.localStorage.getItem('toeic-automation-active-run');
+            const parsed = stored ? JSON.parse(stored) as AutomationStartResult : null;
+            setActiveAutomationRun(parsed?.ownerId === identity.id ? parsed : null);
+          } catch {
+            setActiveAutomationRun(null);
+          }
+        } else {
+          setActiveAutomationRun(null);
+        }
+        setIsOwnerAuthLoading(false);
+      }
+    };
+
+    void refreshOwnerIdentity();
+    const { data: { subscription } } = client.auth.onAuthStateChange(() => {
+      window.setTimeout(() => void refreshOwnerIdentity(), 0);
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleForceRefreshDataset = async () => {
@@ -145,7 +190,30 @@ export const SettingsPage: React.FC = () => {
     const client = getSupabaseClient();
     if (client) {
       await client.auth.signOut();
+      setOwnerIdentity(null);
       window.location.reload();
+    }
+  };
+
+  const handleStartAutomation = async () => {
+    if (!ownerIdentity || isStartingAutomation || activeAutomationRun) return;
+    const client = getSupabaseClient();
+    if (!client) {
+      setAutomationStartError('尚未啟用 Supabase 雲端環境。');
+      return;
+    }
+
+    setIsStartingAutomation(true);
+    setAutomationStartError(null);
+    try {
+      const result = await startAutomationRun(client);
+      if (result.ownerId !== ownerIdentity.id) throw new Error('OWNER_ID_CHANGED');
+      setActiveAutomationRun(result);
+      window.localStorage.setItem('toeic-automation-active-run', JSON.stringify(result));
+    } catch (err) {
+      setAutomationStartError(err instanceof Error ? err.message : 'START_FAILED');
+    } finally {
+      setIsStartingAutomation(false);
     }
   };
 
@@ -1254,16 +1322,19 @@ export const SettingsPage: React.FC = () => {
             <Cloud size={16} className="text-indigo-400" />
             <span>雲端帳號與網路連結登入</span>
           </h3>
-          <Badge variant={syncState.cloudUserEmail ? 'emerald' : 'slate'}>
-            {syncState.cloudUserEmail ? '🟢 已連線' : '🔵 本機模式'}
+          <Badge variant={ownerIdentity ? 'emerald' : 'slate'}>
+            {ownerIdentity ? '🟢 已登入' : '🔵 本機模式'}
           </Badge>
         </div>
 
-        {syncState.cloudUserEmail ? (
+        {isOwnerAuthLoading ? (
+          <p className="text-xs text-slate-400">正在確認雲端登入狀態...</p>
+        ) : ownerIdentity ? (
           <div className="space-y-3">
             <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-700 flex items-center justify-between">
               <div>
-                <p className="text-xs font-bold text-slate-100">{syncState.cloudUserEmail}</p>
+                <p className="text-xs font-bold text-slate-100">Logged in as {ownerIdentity.email ?? 'authenticated user'}</p>
+                <p className="text-[10px] text-slate-400 mt-0.5 break-all">Owner ID: {ownerIdentity.id}</p>
                 <p className="text-[10px] text-emerald-400 mt-0.5">本機學習進度已備份至雲端</p>
               </div>
               <div className="flex space-x-1.5">
@@ -1274,6 +1345,30 @@ export const SettingsPage: React.FC = () => {
                   <LogOut size={13} className="mr-1" /> 登出
                 </Button>
               </div>
+            </div>
+            <div className="p-3 bg-indigo-950/30 rounded-xl border border-indigo-800/60 space-y-2">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-bold text-slate-100">今日自動化控制</p>
+                  <p className="text-[10px] text-slate-400">只建立今日 run，不會在瀏覽器 claim job。</p>
+                </div>
+                <Button
+                  size="sm"
+                  variant="primary"
+                  onClick={handleStartAutomation}
+                  disabled={isStartingAutomation || Boolean(activeAutomationRun)}
+                >
+                  {isStartingAutomation ? '啟動中...' : activeAutomationRun ? '今日 Run 已啟動' : '開始今日自動化'}
+                </Button>
+              </div>
+              {activeAutomationRun && (
+                <p className="text-[10px] text-indigo-200 break-all">
+                  Run ID: {activeAutomationRun.runId} · state: {activeAutomationRun.runState}
+                </p>
+              )}
+              {automationStartError && (
+                <p className="text-[10px] text-rose-300 break-words">START 失敗：{automationStartError}</p>
+              )}
             </div>
           </div>
         ) : (

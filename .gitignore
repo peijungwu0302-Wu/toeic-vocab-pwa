@@ -62,6 +62,8 @@ GEMINI.md
 .agents/
 .wrangler/
 .dev.vars
+.local/
+automation-artifacts/
 
 # Decommissioned Local Media (Hosted on Cloudflare R2)
 public/assets/images/words/
